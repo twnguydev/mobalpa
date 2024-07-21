@@ -18,4 +18,4 @@ jobs:
               echo "$file has $line_count lines, which is more than the $max_lines lines allowed."
               exit 1
             fi
-          don
+          done

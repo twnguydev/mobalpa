@@ -47,11 +47,14 @@ jobs:
 
       - name: Configure ESLint for camelCase
         run: |
-          echo '{
-            "rules": {
-              "camelcase": ["error", { "properties": "always" }]
+          echo 'export default [
+            {
+              "files": ["**/*.ts"],
+              "rules": {
+                "camelcase": ["error", { "properties": "always" }]
+              }
             }
-          }' > .eslintrc.json
+          ];' > eslint.config.js
 
       - name: Run ESLint
         run: |
