@@ -1,0 +1,15 @@
+name: Prevent Push to Main
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  prevent_push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Prevent direct push to main
+        run: |
+          echo "Direct push to the main branch is not allowed. Please create a pull request."
+          exit 1

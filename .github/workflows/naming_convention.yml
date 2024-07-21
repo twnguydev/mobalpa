@@ -1,0 +1,57 @@
+name: Check Naming Convention
+
+on: [push, pull_request]
+
+jobs:
+  check_naming:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+
+      - name: Install Checkstyle
+        run: |
+          curl -LJO https://github.com/checkstyle/checkstyle/releases/download/checkstyle-8.42/checkstyle-8.42-all.jar
+          echo '<?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE module PUBLIC "-//Checkstyle//DTD Checkstyle Configuration 1.3//EN" "https://checkstyle.org/dtds/configuration_1_3.dtd">
+          <module name="Checker">
+            <module name="TreeWalker">
+              <module name="LocalVariableName">
+                <property name="format" value="^[a-z][a-zA-Z0-9]*$"/>
+              </module>
+              <module name="MemberName">
+                <property name="format" value="^[a-z][a-zA-Z0-9]*$"/>
+              </module>
+              <module name="MethodName">
+                <property name="format" value="^[a-z][a-zA-Z0-9]*$"/>
+              </module>
+            </module>
+          </module>' > checkstyle.xml
+
+      - name: Run Checkstyle
+        run: |
+          java -jar checkstyle-8.42-all.jar -c checkstyle.xml $(find . -name '*.java')
+
+      - name: Install npm
+        run: |
+          curl -L https://www.npmjs.com/install.sh | sh
+
+      - name: Install ESLint
+        run: npm install -g eslint
+
+      - name: Configure ESLint for camelCase
+        run: |
+          echo '{
+            "rules": {
+              "camelcase": ["error", { "properties": "always" }]
+            }
+          }' > .eslintrc.json
+
+      - name: Run ESLint
+        run: |
+          eslint $(find . -name '*.ts')

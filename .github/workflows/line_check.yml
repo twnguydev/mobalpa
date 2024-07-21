@@ -1,0 +1,21 @@
+name: Check File Line Count
+
+on: [push, pull_request]
+
+jobs:
+  check_lines:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Check for files with more than 500 lines
+        run: |
+          max_lines=500
+          find . -type f \( -name "*.ts" -o -name "*.html" \) | while read file; do
+            line_count=$(wc -l < "$file")
+            if [ "$line_count" -gt "$max_lines" ]; then
+              echo "$file has $line_count lines, which is more than the $max_lines lines allowed."
+              exit 1
+            fi
+          done
