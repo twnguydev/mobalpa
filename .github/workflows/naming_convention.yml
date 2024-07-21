@@ -45,13 +45,19 @@ jobs:
       - name: Install ESLint
         run: npm install -g eslint
 
+      - name: Create package.json
+        run: |
+          echo '{
+            "type": "module"
+          }' > package.json
+
       - name: Configure ESLint for camelCase
         run: |
           echo 'export default [
             {
-              "files": ["**/*.ts"],
-              "rules": {
-                "camelcase": ["error", { "properties": "always" }]
+              files: ["**/*.ts"],
+              rules: {
+                camelcase: ["error", { properties: "always" }]
               }
             }
           ];' > eslint.config.js
