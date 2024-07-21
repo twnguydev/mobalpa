@@ -1,0 +1,29 @@
+name: Validate Admin Merge
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+
+jobs:
+  enforce_admin_merge:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if the merge was done by an admin
+        run: |
+          admin_users=("twnguydev")
+          merger=$(jq -r .pull_request.merged_by.login "$GITHUB_EVENT_PATH")
+          is_admin=false
+          for admin in "${admin_users[@]}"; do
+            if [[ "$admin" == "$merger" ]]; then
+              is_admin=true
+              break
+            fi
+          done
+          if [ "$is_admin" = false ]; then
+            echo "Only administrators can merge pull requests."
+            # Optionally, revert the merge if not by an admin
+            git revert -m 1 $(jq -r .pull_request.merge_commit_sha "$GITHUB_EVENT_PATH")
+            git push origin $(jq -r .pull_request.base.ref "$GITHUB_EVENT_PATH")
+            exit 1
+          fi
