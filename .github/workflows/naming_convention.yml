@@ -47,7 +47,14 @@ jobs:
         run: npm install -g @angular/cli
 
       - name: Install dependencies
-        run: npm ci
+        working-directory: ./front
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
 
       - name: Run ng lint
-        run: ng lint
+        working-directory: ./front
+        run: npx ng lint
