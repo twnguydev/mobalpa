@@ -34,9 +34,16 @@ jobs:
             </module>
           </module>' > checkstyle.xml
 
-      - name: Run Checkstyle
+      - name: Get Changed Java Files
+        id: changed_files
         run: |
-          java -jar checkstyle-8.42-all.jar -c checkstyle.xml $(find . -name '*.java')
+          echo "##[set-output name=java;]$(git diff --name-only ${{ github.sha }} -- '*.java')"
+
+      - name: Run Checkstyle
+        if: steps.changed_files.outputs.java != ''
+        run: |
+          java_files=$(echo ${{ steps.changed_files.outputs.java }} | tr '\n' ' ')
+          java -jar checkstyle-8.42-all.jar -c checkstyle.xml $java_files
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -60,6 +67,14 @@ jobs:
             npm install
           fi
 
+      - name: Get Changed TypeScript Files
+        id: changed_ts_files
+        run: |
+          echo "##[set-output name=ts;]$(git diff --name-only ${{ github.sha }} -- '*.ts')"
+
       - name: Run ng lint
+        if: steps.changed_ts_files.outputs.ts != ''
         working-directory: ./front
-        run: npx ng lint
+        run: |
+          ts_files=$(echo ${{ steps.changed_ts_files.outputs.ts }} | tr '\n' ' ')
+          npx ng lint --files $ts_files
