@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Check for files with more than 500 lines
         run: |
@@ -18,4 +18,4 @@ jobs:
               echo "$file has $line_count lines, which is more than the $max_lines lines allowed."
               exit 1
             fi
-          done
+          don
