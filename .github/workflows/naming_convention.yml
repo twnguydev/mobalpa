@@ -46,6 +46,11 @@ jobs:
       - name: Install Angular CLI
         run: npm install -g @angular/cli
 
+      - name: Install @angular-eslint/schematics
+        working-directory: ./front
+        run: |
+          npx ng add @angular-eslint/schematics --skip-confirmation || true
+
       - name: Install dependencies
         working-directory: ./front
         run: |
