@@ -13,7 +13,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: '11'
+          java-version: '17'
 
       - name: Install Checkstyle
         run: |
@@ -38,30 +38,16 @@ jobs:
         run: |
           java -jar checkstyle-8.42-all.jar -c checkstyle.xml $(find . -name '*.java')
 
-      - name: Install npm
-        run: |
-          curl -L https://www.npmjs.com/install.sh | sh
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
 
-      - name: Install ESLint
-        run: npm install -g eslint
+      - name: Install Angular CLI
+        run: npm install -g @angular/cli
 
-      - name: Create package.json
-        run: |
-          echo '{
-            "type": "module"
-          }' > package.json
+      - name: Install dependencies
+        run: npm ci
 
-      - name: Configure ESLint for camelCase
-        run: |
-          echo 'export default [
-            {
-              files: ["**/*.ts"],
-              rules: {
-                camelcase: ["error", { properties: "always" }]
-              }
-            }
-          ];' > eslint.config.js
-
-      - name: Run ESLint
-        run: |
-          eslint $(find . -name '*.ts')
+      - name: Run ng lint
+        run: ng lint
