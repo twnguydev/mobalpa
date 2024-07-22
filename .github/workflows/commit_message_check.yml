@@ -1,0 +1,25 @@
+name: Commit Message Check
+
+on: [push, pull_request]
+
+jobs:
+  check_commit_messages:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Check commit message
+        run: |
+          # Define the commit message pattern
+          pattern="^(feat|fix|docs|style|refactor|perf|test|chore|revert)(\\([a-zA-Z0-9_-]+\\))?: .+ #[0-9]+$"
+
+          # Get the last commit message
+          last_commit_message=$(git log -1 --pretty=format:"%s")
+
+          # Check if the last commit message matches the pattern
+          if [[ ! "$last_commit_message" =~ $pattern ]]; then
+            echo "Invalid commit message: '$last_commit_message'"
+            echo "Commit messages must follow the pattern: <type>(<optional scope>): <description> <#ticket_id>"
+            exit 1
+          fi
