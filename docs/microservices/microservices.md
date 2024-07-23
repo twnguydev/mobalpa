@@ -9,14 +9,14 @@ Voici une description approfondie des microservices :
 ## Table des matières
 
 - [Microservices internes (API principale e-commerce)](#microservices-internes-api-principale-e-commerce)
-  - [User Service](./user-service.md)
-  - [Order Service](./order-service.md)
-  - [Commerce Service](./commerce-service.md)
-  - [Customer Service](./customer-service.md)
-  - [Emailing Service](#emailing-service)
-  - [Analytics Service](./analytics-service.md)
+  - [User Service](./ecommerce/user-service.md)
+  - [Order Service](./ecommerce/order-service.md)
+  - [Commerce Service](./ecommerce/commerce-service.md)
+  - [Customer Service](./ecommerce/customer-service.md)
+  - [Emailing Service](./ecommerce/emailing-service.md)
+  - [Analytics Service](./ecommerce/analytics-service.md)
 - [Interactions avec catalogue-api et delivery-api](#interactions-avec-catalogue-api-et-delivery-api)
-  - [Catalogue Service](../catalogue.md)
-  - [Delivery Service](../delivery.md)
+  - [Catalogue Service](./catalogue.md)
+  - [Delivery Service](./delivery.md)
 
 Ces services sont intégrés avec les microservices internes pour fournir une solution complète de gestion des commandes et des livraisons, ainsi que la gestion des produits et des catalogues.
