@@ -28,9 +28,7 @@ Content-Type: application/json
       "quantity": 2
     }
   ],
-  "vat": 59.90,
   "reduction": 10,
-  "taxDelivery": 5.60,
   "totalHt": 599.99,
 }
 
@@ -50,7 +48,8 @@ Content-Type: application/json
   "reduction": 10,
   "taxDelivery": 5.60,
   "warranty": "2030-07-22T10:00:00Z",
-  "totalHt": 599.99,
+  "totalHt": 524.49,
+  "totalTtc": 599.99,
 }
 ```
 
