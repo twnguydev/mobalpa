@@ -12,6 +12,7 @@
 - `PATCH /api/users/{id}`: Modification d'un utilisateur.
 - `GET /api/users/{id}`: Récupération des données d'un utilisateur.
 - `GET /api/users/{id}/wishlist`: Récupération de la liste de souhaits de l'utilisateur.
+- `PATCH /api/users/{id}/wishlist`: Modification de la liste de souhaits de l'utilisateur.
 - `GET /api/users/{id}/orders`: Récupération des commandes de l'utilisateur.
 
 #### Exemple d'utilisation :
@@ -44,4 +45,20 @@ Content-Type: application/json
 GET /api/users/a4801d5a-cbac-417e-8d99-d690b3832f19/wishlist
 Authorization: Bearer <token>
 Content-Type: application/json
+```
+
+##### Création/Modification/Suppression de la wishlist
+```http
+PATCH /api/users/a4801d5a-cbac-417e-8d99-d690b3832f19/wishlist
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{
+  "action": "add",
+  "item": {
+    "productId": "67890",
+    "productName": "Table Basse",
+    "quantity": 1
+  }
+}
 ```
