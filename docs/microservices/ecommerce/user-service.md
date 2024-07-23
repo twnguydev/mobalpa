@@ -23,9 +23,21 @@ POST /api/users/register
 Content-Type: application/json
 
 {
-  "username": "john_doe",
+  "firstname": "John",
+  "lastname": "Doe",
   "password": "password123",
   "email": "john@example.com"
+}
+
+HTTP/1.1 201 Created
+Content-Type: application/json
+
+{
+  "id": "a4801d5a-cbac-417e-8d99-d690b3832f19",
+  "firstname": "John",
+  "lastname": "Doe",
+  "email": "john@example.com",
+  "createdAt": "2023-07-22T10:00:00Z"
 }
 ```
 
@@ -35,8 +47,39 @@ POST /api/users/login
 Content-Type: application/json
 
 {
-  "username": "john_doe",
+  "email": "john@example.com",
   "password": "password123"
+}
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "token": "<jwt_token>"
+}
+```
+
+##### Modification d'un utilisateur
+```http
+PATCH /api/users/a4801d5a-cbac-417e-8d99-d690b3832f19
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{
+  "firstname": "Marie",
+  "lastname": "Moe",
+}
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "id": "a4801d5a-cbac-417e-8d99-d690b3832f19",
+  "firstname": "Marie",
+  "lastname": "Moe",
+  "email": "john@example.com",
+  "createdAt": "2023-07-22T10:00:00Z",
+  "updatedAt": "2023-07-22T10:00:00Z"
 }
 ```
 
@@ -45,9 +88,24 @@ Content-Type: application/json
 GET /api/users/a4801d5a-cbac-417e-8d99-d690b3832f19/wishlist
 Authorization: Bearer <token>
 Content-Type: application/json
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "user_uuid": "a4801d5a-cbac-417e-8d99-d690b3832f19",
+  "items": [
+    {
+      "productId": "12345",
+      "productName": "Canapé Moderne",
+      "quantity": 1
+    }
+  ]
+}
 ```
 
-##### Création/Modification/Suppression de la wishlist
+##### Modification de la wishlist
+###### Ajout d'un item
 ```http
 PATCH /api/users/a4801d5a-cbac-417e-8d99-d690b3832f19/wishlist
 Authorization: Bearer <token>
@@ -62,6 +120,28 @@ Content-Type: application/json
   }
 }
 
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "user_uuid": "a4801d5a-cbac-417e-8d99-d690b3832f19",
+  "items": [
+    {
+      "productId": "12345",
+      "productName": "Canapé Moderne",
+      "quantity": 1
+    },
+    {
+      "productId": "67890",
+      "productName": "Table Basse",
+      "quantity": 1
+    }
+  ]
+}
+```
+
+###### Suppression d'un item
+```http
 PATCH /api/users/a4801d5a-cbac-417e-8d99-d690b3832f19/wishlist
 Authorization: Bearer <token>
 Content-Type: application/json
@@ -72,4 +152,47 @@ Content-Type: application/json
     "productId": "12345"
   }
 }
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "user_uuid": "a4801d5a-cbac-417e-8d99-d690b3832f19",
+  "items": [
+    {
+      "productId": "67890",
+      "productName": "Table Basse",
+      "quantity": 1
+    }
+  ]
+}
+```
+
+##### Récupération des commandes de l'utilisateur
+```http
+GET /api/users/a4801d5a-cbac-417e-8d99-d690b3832f19/orders
+Authorization: Bearer <token>
+Content-Type: application/json
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+[
+  {
+    "orderId": "54321",
+    "items": [
+      {
+        "productId": "12345",
+        "productName": "Canapé Moderne",
+        "quantity": 1
+      }
+    ],
+    "vat": 59.90,
+    "reduction": 10,
+    "taxDelivery": 5.60,
+    "warranty": "2030-07-22T10:00:00Z",
+    "totalHt": 599.99,
+    "createdAt": "2023-07-22T10:00:00Z"
+  }
+]
 ```
