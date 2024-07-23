@@ -61,4 +61,15 @@ Content-Type: application/json
     "quantity": 1
   }
 }
+
+PATCH /api/users/a4801d5a-cbac-417e-8d99-d690b3832f19/wishlist
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{
+  "action": "remove",
+  "item": {
+    "productId": "12345"
+  }
+}
 ```
