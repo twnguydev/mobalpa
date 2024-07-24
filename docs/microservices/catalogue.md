@@ -2,6 +2,8 @@
 
 Le microservice de catalogue est une composante critique de l'architecture microservices d'Archidéco. Il est responsable de la gestion de tous les aspects relatifs aux produits, catégories et stocks.
 
+### L'API Catalogue est disponible sur le port `8081`.
+
 ## Responsabilités
 
 - Gestion des catégories de produits, meilleures ventes, aiguillage en magasin.

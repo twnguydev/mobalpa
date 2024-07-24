@@ -4,6 +4,8 @@ Pour répondre aux exigences de l'architecture du projet **Archidéco**, nous al
 
 Cette architecture microservices permet une gestion modulaire et évolutive de toutes les fonctionnalités nécessaires au fonctionnement de la plateforme e-commerce **Archidéco**. Chaque microservice est responsable d'une partie spécifique du système, ce qui facilite le développement, le déploiement et la maintenance. Les intégrations avec des API externes et l'utilisation de technologies modernes garantissent une performance optimale et une excellente expérience utilisateur.
 
+### L'API interne est accessible sur le port `8080`.
+
 Voici une description approfondie des microservices :
 
 ## Table des matières

@@ -2,6 +2,8 @@
 
 Le microservice de livraison est une composante essentielle de l'architecture microservices d'Archidéco. Il est responsable de la gestion de toutes les opérations liées à la livraison des produits commandés par les clients.
 
+### L'API Catalogue est disponible sur le port `8082`.
+
 ## Responsabilités
 
 - Gestion des livraisons.
