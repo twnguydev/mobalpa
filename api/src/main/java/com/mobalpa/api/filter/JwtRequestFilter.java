@@ -4,13 +4,16 @@ import com.mobalpa.api.dto.UserDTO;
 import com.mobalpa.api.mapper.UserMapper;
 import com.mobalpa.api.model.User;
 import com.mobalpa.api.util.JwtUtil;
+
 import io.jsonwebtoken.Claims;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -61,9 +64,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                     userDTO.setEmail(claims.get("email", String.class));
                     userDTO.setFirstname(claims.get("firstname", String.class));
                     userDTO.setLastname(claims.get("lastname", String.class));
-                    userDTO.setUuid(UUID.fromString(claims.get("id", String.class))); // Extract UUID correctly
+                    userDTO.setUuid(UUID.fromString(claims.get("id", String.class)));
 
-                    // Convert Date to LocalDateTime
                     Instant createdTimeInstant = Instant.ofEpochMilli(Long.parseLong(claims.get("createdTime", String.class)));
                     LocalDateTime createdAt = LocalDateTime.ofInstant(createdTimeInstant, ZoneId.systemDefault());
                     userDTO.setCreatedAt(createdAt.toLocalDate());
@@ -76,7 +78,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                     userModel,
-                    null, // You should use null for credentials as it's not needed here
+                    null,
                     userModel.getAuthorities());
             authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(authentication);
