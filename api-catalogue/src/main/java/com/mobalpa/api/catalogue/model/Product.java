@@ -36,5 +36,5 @@ public class Product {
     private Brand brand;
     
     @DBRef
-    private Color color;
+    private List<Color> color;
 }
