@@ -53,4 +53,7 @@ public class UserDTO {
 
     @JsonProperty("active")
     private boolean active;
+
+    @JsonProperty("wishlist")
+    private WishlistDTO wishlist;
 }
