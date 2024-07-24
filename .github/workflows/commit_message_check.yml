@@ -23,5 +23,6 @@ jobs:
           if [[ ! "$last_commit_message" =~ $pattern ]]; then
             echo "Invalid commit message: '$last_commit_message'"
             echo "Commit messages must follow the pattern: <type>(<optional scope>): <description> <#ticket_id>"
+            git reset --soft HEAD~1
             exit 1
           fi
