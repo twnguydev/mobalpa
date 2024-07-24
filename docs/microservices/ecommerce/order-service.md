@@ -49,7 +49,7 @@ Content-Type: application/json
   "taxDelivery": 5.60,
   "warranty": "2030-07-22T10:00:00Z",
   "totalHt": 524.49,
-  "totalTtc": 599.99,
+  "totalTtc": 599.99
 }
 ```
 
@@ -68,19 +68,47 @@ Content-Type: application/json
     "userId": "a4801d5a-cbac-417e-8d99-d690b3832f19",
     "items": [
       {
-        "productId": "12345",
-        "quantity": 1
+        "productId": "101",
+        "quantity": 2
       }
     ],
-    "total": 599.99,
-    "createdAt": "2023-07-22T10:00:00Z"
+    "vat": 59.90,
+    "reduction": 10,
+    "taxDelivery": 5.60,
+    "warranty": "2030-07-22T10:00:00Z",
+    "totalHt": 524.49,
+    "totalTtc": 599.99
   }
 ]
 ```
 
 ##### Récupération d'une commande
 ```http
+GET /api/orders/54321
+Authorization: Bearer <token>
+Content-Type: application/json
 
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "orderId": "54321",
+  "userId": "a4801d5a-cbac-417e-8d99-d690b3832f19",
+  "items": [
+    {
+      "productId": "101",
+      "quantity": 2
+    }
+  ],
+  "vat": 59.90,
+  "reduction": 10,
+  "taxDelivery": 5.60,
+  "warranty": "2030-07-22T10:00:00Z",
+  "totalHt": 524.49,
+  "totalTtc": 599.99
+}
+
+```
 
 ##### Traitement du paiement par Stripe
 ```http
@@ -96,6 +124,13 @@ Content-Type: application/json
     "cvv": "123"
   }
 }
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "status": "Accepted"
+}
 ```
 
 ##### Application d'un coupon de réduction
@@ -106,5 +141,12 @@ Content-Type: application/json
 
 {
   "couponCode": "SUMMER2023"
+}
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "discountRate": 20
 }
 ```
