@@ -1,6 +1,12 @@
 name: Check File Line Count
 
-on: [push, pull_request]
+on:
+  push:
+    branches: 
+      - '*'
+  pull_request:
+    branches: 
+      - '*'
 
 jobs:
   check_lines:
