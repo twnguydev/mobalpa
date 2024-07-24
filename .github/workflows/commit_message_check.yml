@@ -3,10 +3,10 @@ name: Commit Message Check
 on:
   push:
     branches: 
-      - '*'
+      - '**'
   pull_request:
     branches: 
-      - '*'
+      - '**'
 
 jobs:
   check_commit_messages:
@@ -24,4 +24,19 @@ jobs:
             echo "Invalid commit message: '$last_commit_message'"
             echo "Commit messages must follow the pattern: <type>(<optional scope>): <description> <#ticket_id>"
             exit 1
-          fi
+          else
+            echo "Commit message is valid: '$last_commit_message'"
+      - name: Set commit status
+        run: |
+          # Setting the commit status to success
+          COMMIT_SHA=$(git rev-parse HEAD)
+          GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
+          curl -XPOST -H "Authorization: token $GITHUB_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "state": "success",
+              "context": "commit-message-check",
+              "description": "Commit message meets the requirements",
+              "target_url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            }' \
+            https://api.github.com/repos/${{ github.repository }}/statuses/$COMMIT_SHA
