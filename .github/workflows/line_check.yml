@@ -28,6 +28,5 @@ jobs:
           done
           if [ "$error" = true ]; then
             ## Optionally, fail the commit if there are files with more than 500 lines
-            git reset --soft HEAD~1
             exit 1
           fi
