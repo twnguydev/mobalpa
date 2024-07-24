@@ -13,4 +13,5 @@ jobs:
         if: github.actor != 'twnguydev' || github.actor != 'RomainEpitech'
         run: |
           echo "Direct push to the main branch is not allowed. Please create a pull request."
+          echo github.actor
           exit 1
