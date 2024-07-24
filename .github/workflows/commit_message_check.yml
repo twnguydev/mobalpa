@@ -28,12 +28,15 @@ jobs:
           else
             echo "Commit message is valid: '$last_commit_message'"
 
-      - name: Set commit status
-        if: success()
+      - name: Create commit status
         run: |
-          COMMIT_SHA=$(git rev-parse HEAD)
-          GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
-          curl -XPOST -H "Authorization: token $GITHUB_TOKEN" \
+          echo "::set-output name=status::success"
+        id: create_status
+
+      - name: Update commit status on GitHub
+        run: |
+          curl -X POST \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             -H "Content-Type: application/json" \
             -d '{
               "state": "success",
@@ -41,6 +44,5 @@ jobs:
               "description": "Commit message meets the requirements",
               "target_url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
             }' \
-            https://api.github.com/repos/${{ github.repository }}/statuses/$COMMIT_SHA
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            "https://api.github.com/repos/${{ github.repository }}/statuses/${{ github.event.pull_request.head.sha }}"
+        if: steps.create_status.outputs.status == 'success'
