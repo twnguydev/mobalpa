@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Prevent direct push to main
-        if: github.actor != 'twnguydev' || github.actor != 'RomainEpitech' || github.actor != 'NathanMatounga'
+        if: github.actor != 'twnguydev' || github.actor != 'RomainEpitech'
         run: |
           echo "Direct push to the main branch is not allowed. Please create a pull request."
           exit 1
