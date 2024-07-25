@@ -34,6 +34,6 @@ Nous avons choisi MySQL comme base de données pour l'API e-commerce pour plusie
 
 L'utilisation de MySQL pour l'API e-commerce de la plateforme **Archidéco** permet de garantir une gestion efficace des transactions, une haute performance et une intégrité des données, tout en profitant de l'écosystème riche et du support communautaire de MySQL.
 
-![Archidéco E-commerce Database](./assets/db_ecommerce.png)
+![Archidéco E-commerce Database](./assets/db_e-commerce.png)
 
 ![Ticketing Type](./assets/tracking_type.png) ![Tracking Type](./assets/tracking_type.png) ![Emailing Type](./assets/emailing_type.png) ![Promo Type](./assets/promo_type.png)
