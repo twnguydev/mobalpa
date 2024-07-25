@@ -22,3 +22,18 @@ Voici une description approfondie des microservices :
   - [Delivery Service](./delivery.md)
 
 Ces services sont intégrés avec les microservices internes pour fournir une solution complète de gestion des commandes et des livraisons, ainsi que la gestion des produits et des catalogues.
+
+## Modélisation de la base de données
+
+Nous avons choisi MySQL comme base de données pour l'API e-commerce pour plusieurs raisons :
+
+- **Fiabilité et maturité** : base de données relationnelle éprouvée et fiable, utilisée par de nombreuses entreprises à travers le monde. Sa maturité et sa stabilité en font un choix sûr pour les applications critiques.
+- **Support des transactions** : support complet des transactions, ce qui est essentiel pour garantir la cohérence et l'intégrité des données dans une application e-commerce.
+- **Performances optimisées** : optimisé pour les performances avec des capacités d'indexation avancées, des options de configuration pour optimiser les requêtes et une gestion efficace de la mémoire.
+- **Large écosystème** : dispose d'un large écosystème d'outils, de bibliothèques et de frameworks qui facilitent le développement, la gestion et la maintenance des bases de données.
+- **Communauté active** : bénéficie d'une communauté active et de ressources abondantes, ce qui permet de trouver facilement de l'aide et des solutions aux problèmes courants.
+- **Compatibilité avec les standards SQL** : compatibilité avec les standards SQL, ce qui facilite la migration et l'intégration avec d'autres systèmes de gestion de bases de données.
+
+L'utilisation de MySQL pour l'API e-commerce de la plateforme **Archidéco** permet de garantir une gestion efficace des transactions, une haute performance et une intégrité des données, tout en profitant de l'écosystème riche et du support communautaire de MySQL.
+
+![Archidéco E-commerce Database](./assets/db_ecommerce.png)

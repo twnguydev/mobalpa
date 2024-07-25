@@ -22,7 +22,7 @@ Nous avons choisi MongoDB comme base de données pour plusieurs raisons :
 
 L'utilisation de MongoDB nous permet de répondre aux exigences de flexibilité, de scalabilité et de performance de la plateforme e-commerce **Archidéco**, tout en simplifiant la gestion et l'évolution des données.
 
-![Archidéco Data Database](./assets/db_catalogue.png)
+![Archidéco Catalogue Database](./assets/db_catalogue.png)
 
 ## Endpoints nécessaires
 
