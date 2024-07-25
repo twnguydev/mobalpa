@@ -4,7 +4,10 @@ Pour répondre aux besoins d'analyse et de gestion des données de la plateforme
 
 Cette approche modulaire permet une gestion efficace et évolutive des données, facilitant ainsi le développement, le déploiement et la maintenance des fonctionnalités analytiques de la plateforme.
 
-### L'API interne est accessible sur le port `8080`.
+Les différentes API du projet Archidéco sont disponibles aux ports suivants :
+- API interne : `8080`
+- API Catalogue : `8081`
+- API Delivery : `8082`
 
 ## Table des matières
 
