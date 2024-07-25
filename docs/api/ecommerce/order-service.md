@@ -50,7 +50,6 @@ Content-Type: application/json
   "warranty": "2030-07-22T10:00:00Z",
   "totalHt": 524.49,
   "totalTtc": 599.99
-}
 ```
 
 ##### Récupération des commandes

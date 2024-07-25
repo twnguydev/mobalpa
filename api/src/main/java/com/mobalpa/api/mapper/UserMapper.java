@@ -9,6 +9,7 @@ import com.mobalpa.api.model.User;
 import com.mobalpa.api.model.Wishlist;
 import com.mobalpa.api.model.Role;
 import com.mobalpa.api.service.UserService;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
