@@ -23,7 +23,7 @@ class SalesAnalyzer:
         self.model = LinearRegression()
         self.model.fit(X_train, y_train)
     
-    def predict_sales(self, periods, freq='M'):
+    def predict_sales(self, periods, freq='ME'):
         future_dates = pd.date_range(start=datetime.datetime.now(), periods=periods, freq=freq)
         future_data = pd.DataFrame({
             'date': future_dates,

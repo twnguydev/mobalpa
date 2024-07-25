@@ -1,7 +1,7 @@
-import mysql.connector
 import pandas as pd
-import json
+from sqlalchemy import create_engine
 import requests
+from sqlalchemy.orm import sessionmaker
 
 class DataExtractor:
     def __init__(self, host, user, password, database, api_url):
@@ -10,48 +10,31 @@ class DataExtractor:
         self.password = password
         self.database = database
         self.api_url = api_url
+
+        # Create an SQLAlchemy engine and session
+        self.database_url = f"mysql+mysqlconnector://{self.user}:{self.password}@{self.host}/{self.database}"
+        self.engine = create_engine(self.database_url)
+        self.Session = sessionmaker(bind=self.engine)
     
     def extract_sales_data(self):
-        conn = mysql.connector.connect(
-            host=self.host,
-            user=self.user,
-            password=self.password,
-            database=self.database
-        )
+        session = self.Session()
         query = """
-        SELECT uuid, createdAt as date, items, totalHt, totalTtc, status 
+        SELECT createdAt as date, totalHt, totalTtc, 
+               totalTtc - totalHt as vat, status 
         FROM orders 
         WHERE status = 'completed'
         """
-        sales_data = pd.read_sql(query, conn)
-        conn.close()
+        sales_data = pd.read_sql(query, self.engine)
+        session.close()
         
         sales_data['date'] = pd.to_datetime(sales_data['date'])
-        sales_data['vat'] = sales_data['totalTtc'] - sales_data['totalHt']
-        sales_data['revenue'] = sales_data['totalHt']
-        sales_data['total'] = sales_data['totalTtc']
-
-        product_details = []
-        for items in sales_data['items']:
-            item_list = json.loads(items)
-            for item in item_list:
-                product_info = self.fetch_product_details(item['product_id'])
-                product_info['quantity'] = item['quantity']
-                product_details.append(product_info)
-
-        product_data = pd.DataFrame(product_details)
-        return sales_data, product_data
+        return sales_data
     
     def extract_admin_users(self):
-        conn = mysql.connector.connect(
-            host=self.host,
-            user=self.user,
-            password=self.password,
-            database=self.database
-        )
+        session = self.Session()
         query = "SELECT email FROM user WHERE role IN ('ROLE_ADMIN', 'ROLE_SUPER_ADMIN')"
-        admin_users = pd.read_sql(query, conn)
-        conn.close()
+        admin_users = pd.read_sql(query, self.engine)
+        session.close()
         return admin_users['email'].tolist()
     
     def fetch_product_details(self, product_id):

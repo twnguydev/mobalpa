@@ -77,4 +77,3 @@ while True:
     schedule.run_pending()
     check_and_run_monthly_task()
     check_and_run_yearly_task()
-    time.sleep(60)
