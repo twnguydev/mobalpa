@@ -1,6 +1,8 @@
 package com.mobalpa.api.model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,10 +12,12 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Set;
+import java.util.HashSet;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Entity
+@NoArgsConstructor
 @Table(name = "user")
 @Data
 public class User implements UserDetails {
@@ -51,18 +55,10 @@ public class User implements UserDetails {
         joinColumns = @JoinColumn(name = "user_uuid"),
         inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    private Set<Role> roles;
+    private Set<Role> roles = new HashSet<>();
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Wishlist wishlist;
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

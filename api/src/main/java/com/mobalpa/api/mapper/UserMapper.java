@@ -25,63 +25,77 @@ import java.util.stream.Collectors;
 public abstract class UserMapper {
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    protected PasswordEncoder passwordEncoder;
 
     @Autowired
-    private ObjectMapper objectMapper;
+    protected UserService userService;
 
-    @Autowired
-    private UserService userService;
-
-    @Mapping(target = "roles", source = "roles", qualifiedByName = "rolesToString")
-    @Mapping(target = "wishlist", source = "wishlist")
+    @Mapping(target = "wishlist", source = "wishlist", qualifiedByName = "wishlistToWishlistDTO")
+    @Mapping(target = "role", source = "roles", qualifiedByName = "rolesToString")
     public abstract UserDTO userToUserDTO(User user);
 
+    @Mapping(target = "password", expression = "java(encodePassword(userDTO.getPassword()))")
     @Mapping(target = "roles", ignore = true)
-    @Mapping(target = "password", expression = "java(hashPassword(userDTO.getPassword()))")
     @Mapping(target = "authorities", ignore = true)
-    @Mapping(target = "wishlist", source = "wishlist")
+    @Mapping(target = "wishlist", source = "wishlist", qualifiedByName = "wishlistDTOToWishlist")
     public abstract User userDTOToUser(UserDTO userDTO);
 
-    @Mapping(target = "userUuid", source = "user.uuid")
-    @Mapping(target = "items", source = "items", qualifiedByName = "jsonToProducts")
-    public abstract WishlistDTO wishlistToWishlistDTO(Wishlist wishlist);
-
-    @Mapping(target = "user", source = "userUuid", qualifiedByName = "uuidToUser")
-    @Mapping(target = "items", source = "items", qualifiedByName = "productsToJson")
-    public abstract Wishlist wishlistDTOToWishlist(WishlistDTO wishlistDTO);
-
-    @Named("rolesToString")
-    protected String rolesToString(Set<Role> roles) {
-        return roles.stream()
-                .map(Role::getName)
-                .collect(Collectors.joining(", "));
-    }
-
     @Named("uuidToUser")
-    protected User uuidToUser(UUID uuid) {
+    public User uuidToUser(UUID uuid) {
         return userService.getUserByUuid(uuid);
     }
 
-    protected String hashPassword(String password) {
+    @Named("rolesToString")
+    public String rolesToString(Set<Role> roles) {
+        return roles.stream().map(Role::getName).collect(Collectors.joining(","));
+    }
+
+    @Named("encodePassword")
+    public String encodePassword(String password) {
         return passwordEncoder.encode(password);
     }
 
-    @Named("jsonToProducts")
-    protected List<CatalogueProductDTO> jsonToProducts(String json) {
+    @Named("jsonToProductList")
+    public List<CatalogueProductDTO> jsonToProductList(String json) {
         try {
+            ObjectMapper objectMapper = new ObjectMapper();
             return objectMapper.readValue(json, objectMapper.getTypeFactory().constructCollectionType(List.class, CatalogueProductDTO.class));
         } catch (IOException e) {
-            throw new RuntimeException("Error converting JSON to List<ProductDTO>", e);
+            throw new RuntimeException("Error deserializing JSON to List<CatalogueProductDTO>", e);
         }
     }
 
-    @Named("productsToJson")
-    protected String productsToJson(List<CatalogueProductDTO> products) {
+    @Named("productListToJson")
+    public String productListToJson(List<CatalogueProductDTO> products) {
         try {
+            ObjectMapper objectMapper = new ObjectMapper();
             return objectMapper.writeValueAsString(products);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException("Error converting List<ProductDTO> to JSON", e);
+            throw new RuntimeException("Error serializing List<CatalogueProductDTO> to JSON", e);
         }
+    }
+
+    @Named("wishlistDTOToWishlist")
+    public Wishlist wishlistDTOToWishlist(WishlistDTO wishlistDTO) {
+        if (wishlistDTO == null) {
+            return null;
+        }
+        Wishlist wishlist = new Wishlist();
+        wishlist.setId(wishlistDTO.getId());
+        wishlist.setItems(productListToJson(wishlistDTO.getItems()));
+        wishlist.setUser(uuidToUser(wishlistDTO.getUserUuid()));
+        return wishlist;
+    }
+
+    @Named("wishlistToWishlistDTO")
+    public WishlistDTO wishlistToWishlistDTO(Wishlist wishlist) {
+        if (wishlist == null) {
+            return null;
+        }
+        WishlistDTO wishlistDTO = new WishlistDTO();
+        wishlistDTO.setId(wishlist.getId());
+        wishlistDTO.setItems(jsonToProductList(wishlist.getItems()));
+        wishlistDTO.setUserUuid(wishlist.getUser().getUuid());
+        return wishlistDTO;
     }
 }
