@@ -36,5 +36,11 @@ public class Product {
     private Brand brand;
     
     @DBRef
-    private List<Color> color;
+    private List<Color> colors;
+
+    @DBRef
+    private List<Image> images;
+
+    @DBRef
+    private List<Store> stores;
 }
