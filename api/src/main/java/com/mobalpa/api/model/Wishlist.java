@@ -20,3 +20,4 @@ public class Wishlist {
     @Column(columnDefinition = "json", nullable = false)
     private String items;
 }
+

@@ -1,7 +1,5 @@
 package com.mobalpa.api.filter;
 
-import com.mobalpa.api.dto.UserDTO;
-import com.mobalpa.api.mapper.UserMapper;
 import com.mobalpa.api.model.User;
 import com.mobalpa.api.util.JwtUtil;
 
@@ -31,9 +29,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     @Autowired
     private JwtUtil jwtUtil;
 
-    @Autowired
-    private UserMapper userMapper;
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
@@ -54,32 +49,30 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             Claims claims;
-            UserDTO userDTO = new UserDTO();
+            User user = new User();
 
             try {
                 claims = jwtUtil.extractAllClaims(jwt);
                 if (!jwtUtil.validateToken(jwt, claims.get("email", String.class))) {
                     logger.warn("Invalid or expired JWT token");
                 } else {
-                    userDTO.setEmail(claims.get("email", String.class));
-                    userDTO.setFirstname(claims.get("firstname", String.class));
-                    userDTO.setLastname(claims.get("lastname", String.class));
-                    userDTO.setUuid(UUID.fromString(claims.get("id", String.class)));
+                    user.setEmail(claims.get("email", String.class));
+                    user.setFirstname(claims.get("firstname", String.class));
+                    user.setLastname(claims.get("lastname", String.class));
+                    user.setUuid(UUID.fromString(claims.get("id", String.class)));
 
                     Instant createdTimeInstant = Instant.ofEpochMilli(Long.parseLong(claims.get("createdTime", String.class)));
                     LocalDateTime createdAt = LocalDateTime.ofInstant(createdTimeInstant, ZoneId.systemDefault());
-                    userDTO.setCreatedAt(createdAt.toLocalDate());
+                    user.setCreatedAt(createdAt);
                 }
             } catch (Exception e) {
                 logger.error("Error validating JWT token", e);
             }
 
-            User userModel = userMapper.userDTOToUser(userDTO);
-
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                    userModel,
+                    user,
                     null,
-                    userModel.getAuthorities());
+                    user.getAuthorities());
             authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
