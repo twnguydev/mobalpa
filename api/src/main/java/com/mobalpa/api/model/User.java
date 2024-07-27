@@ -26,11 +26,22 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID uuid;
 
+    @Column(nullable = false)
     private String firstname;
+
+    @Column(nullable = false)
     private String lastname;
+
+    @Column(nullable = false, unique = true)
     private String email;
+
+    @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false)
     private String phoneNumber;
+
+    @Column(nullable = true)
     private LocalDate birthdate;
 
     @Column(nullable = true)
@@ -45,8 +56,13 @@ public class User implements UserDetails {
     @Column(nullable = true)
     private String token;
 
-    private boolean active;
+    @Column(nullable = true)
+    private boolean active = true;
+
+    @Column(nullable = false)
     private LocalDateTime createdAt;
+
+    @Column(nullable = true)
     private LocalDateTime updatedAt;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -59,6 +75,12 @@ public class User implements UserDetails {
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Wishlist wishlist;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<Payment> payments = new HashSet<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<Order> orders = new HashSet<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
