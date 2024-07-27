@@ -34,7 +34,7 @@ class TestMain(unittest.TestCase):
             'date': pd.to_datetime(['2023-01-08']),
             'totalTtc': [130.0]
         })
-
+    
         main.automate_sales_report(report_type='weekly')
 
         MockCSVGenerator.assert_called_once()
@@ -67,11 +67,19 @@ class TestMain(unittest.TestCase):
     @patch('main.check_and_run_yearly_task')
     @patch('main.time.sleep', return_value=None)
     def test_main_loop(self, mock_sleep, mock_check_and_run_yearly_task, mock_check_and_run_monthly_task, mock_run_pending):
-        for _ in range(3):
-            main.schedule.run_pending()
-            main.check_and_run_monthly_task()
-            main.check_and_run_yearly_task()
-            
+        stop_flag = [False]
+
+        def stop_loop(*args, **kwargs):
+            if len(stop_flag) < 3:
+                stop_flag.append(False)
+            else:
+                stop_flag[0] = True
+
+        mock_sleep.side_effect = stop_loop
+
+        with patch('builtins.exit') as mock_exit:
+            main.main_loop()
+
         mock_run_pending.assert_called()
         mock_check_and_run_monthly_task.assert_called()
         mock_check_and_run_yearly_task.assert_called()

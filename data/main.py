@@ -73,8 +73,12 @@ def check_and_run_yearly_task():
     if now.month == 1 and now.day == 30 and now.hour == 18 and now.minute == 0:
         automate_sales_report(report_type='yearly')
 
-while True:
-    schedule.run_pending()
-    check_and_run_monthly_task()
-    check_and_run_yearly_task()
-    time.sleep(60)
+def main_loop():
+    while True:
+        schedule.run_pending()
+        check_and_run_monthly_task()
+        check_and_run_yearly_task()
+        time.sleep(60)
+
+if __name__ == "__main__":
+    main_loop()
