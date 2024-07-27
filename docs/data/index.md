@@ -22,6 +22,13 @@ Les différentes API du projet Archidéco sont disponibles aux ports suivants :
 - [Planification des tâches](#planification-des-tâches)
   - [Scheduler](./data/scheduler.md)
 
+## Commandes
+
+- `source venv/bin/activate`: activer l'environnement virtuel.
+- `pip install -r requirements.txt`: installer les dépendances.
+- `pip list`: vérifier que les dépendances sont bien installées.
+- `python -m unittest discover unit_tests`: exécuter les tests unitaires.
+
 ## Extraction des données
 
 ### Data Extractor
