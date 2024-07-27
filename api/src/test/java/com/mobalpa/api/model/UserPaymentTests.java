@@ -12,10 +12,9 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDateTime;
 import java.util.Set;
-import java.util.UUID;
 
 @DataJpaTest
-public class UserPaymentTest {
+public class UserPaymentTests {
 
     @Autowired
     private UserRepository userRepository;
