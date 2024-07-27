@@ -6,6 +6,7 @@ from SalesAnalyzer import SalesAnalyzer
 from CSVGenerator import CSVGenerator
 from EmailSender import EmailSender
 from dotenv import load_dotenv
+from sqlalchemy import create_engine
 import os
 
 load_dotenv()
@@ -16,16 +17,28 @@ SMTP_USERNAME = os.getenv('SMTP_USERNAME')
 SMTP_PASSWORD = os.getenv('SMTP_PASSWORD')
 
 MYSQL_HOST = os.getenv('MYSQL_HOST')
+MYSQL_PORT = int(os.getenv('MYSQL_PORT'))
 MYSQL_USERNAME = os.getenv('MYSQL_USERNAME')
 MYSQL_PASSWORD = os.getenv('MYSQL_PASSWORD')
 MYSQL_DBNAME = os.getenv('MYSQL_DBNAME')
 
 API_URL = os.getenv('API_URL')
+API_KEY = os.getenv('API_KEY')
+
+database_url = f"mysql+mysqlconnector://{MYSQL_USERNAME}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/{MYSQL_DBNAME}"
+engine = create_engine(database_url)
+
+try:
+    connection = engine.connect()
+    print("Connection to MySQL successful!")
+    connection.close()
+except Exception as e:
+    print(f"An error occurred: {e}")
 
 def automate_sales_report(report_type):
     try:
-        extractor = DataExtractor(MYSQL_HOST, MYSQL_USERNAME, MYSQL_PASSWORD, MYSQL_DBNAME, API_URL)
-        sales_data = extractor.extract_sales_data()
+        extractor = DataExtractor(engine, API_URL, API_KEY)
+        sales_data, product_data = extractor.extract_sales_data()
         
         analyzer = SalesAnalyzer(sales_data)
         analyzer.preprocess_data()
@@ -73,12 +86,17 @@ def check_and_run_yearly_task():
     if now.month == 1 and now.day == 30 and now.hour == 18 and now.minute == 0:
         automate_sales_report(report_type='yearly')
 
-def main_loop():
+def main_loop(iterations=None):
+    count = 0
     while True:
         schedule.run_pending()
         check_and_run_monthly_task()
         check_and_run_yearly_task()
-        time.sleep(60)
+        time.sleep(1)
+        if iterations is not None:
+            count += 1
+            if count >= iterations:
+                break
 
 if __name__ == "__main__":
     main_loop()

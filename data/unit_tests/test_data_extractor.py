@@ -4,6 +4,7 @@ import pandas as pd
 from dotenv import load_dotenv
 import os
 import sys
+import json
 
 # Ajouter le répertoire parent au sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -24,31 +25,41 @@ class TestDataExtractor(unittest.TestCase):
         mock_create_engine.return_value = mock_engine
         mock_engine.connect.return_value = mock_conn
         mock_read_sql.return_value = pd.DataFrame({
+            'uuid': ['123'],
             'date': pd.to_datetime(['2023-01-01']),
+            'items': [json.dumps([{'product_id': '1', 'quantity': 2}])],
             'totalHt': [100.0],
             'totalTtc': [120.0],
-            'vat': [20.0],
             'status': ['completed']
         })
         
         extractor = DataExtractor(
-            os.getenv('MYSQL_HOST'), 
-            os.getenv('MYSQL_USERNAME'), 
-            os.getenv('MYSQL_PASSWORD'), 
-            os.getenv('MYSQL_DBNAME'), 
-            os.getenv('API_URL')
+            mock_engine,
+            os.getenv('API_URL'),
+            os.getenv('API_KEY')
         )
-        result = extractor.extract_sales_data()
+        sales_data, product_data = extractor.extract_sales_data()
         
-        expected = pd.DataFrame({
+        expected_sales_data = pd.DataFrame({
+            'uuid': ['123'],
             'date': pd.to_datetime(['2023-01-01']),
+            'items': [json.dumps([{'product_id': '1', 'quantity': 2}])],
             'totalHt': [100.0],
             'totalTtc': [120.0],
+            'status': ['completed'],
             'vat': [20.0],
-            'status': ['completed']
+            'revenue': [100.0],
+            'total': [120.0]
         })
         
-        pd.testing.assert_frame_equal(result, expected)
+        expected_product_data = pd.DataFrame({
+            'id': ['1'],
+            'name': ['Test Product'],
+            'quantity': [2]
+        })
+        
+        pd.testing.assert_frame_equal(sales_data, expected_sales_data)
+        pd.testing.assert_frame_equal(product_data, expected_product_data)
         mock_read_sql.assert_called_once()
 
     @patch('sqlalchemy.create_engine')
@@ -62,11 +73,9 @@ class TestDataExtractor(unittest.TestCase):
         })
         
         extractor = DataExtractor(
-            os.getenv('MYSQL_HOST'), 
-            os.getenv('MYSQL_USERNAME'), 
-            os.getenv('MYSQL_PASSWORD'), 
-            os.getenv('MYSQL_DBNAME'), 
-            os.getenv('API_URL')
+            mock_engine,
+            os.getenv('API_URL'),
+            os.getenv('API_KEY')
         )
         result = extractor.extract_admin_users()
         
@@ -78,18 +87,17 @@ class TestDataExtractor(unittest.TestCase):
         mock_response = MagicMock()
         mock_get.return_value = mock_response
         mock_response.status_code = 200
-        mock_response.json.return_value = {'id': '123', 'name': 'Test Product'}
+        mock_response.json.return_value = {'id': '1', 'name': 'Test Product'}
         
         extractor = DataExtractor(
-            os.getenv('MYSQL_HOST'), 
-            os.getenv('MYSQL_USERNAME'), 
-            os.getenv('MYSQL_PASSWORD'), 
-            os.getenv('MYSQL_DBNAME'), 
-            os.getenv('API_URL')
+            MagicMock(),
+            os.getenv('API_URL'),
+            os.getenv('API_KEY')
         )
-        result = extractor.fetch_product_details('123')
+        result = extractor.fetch_product_details('1')
         
-        self.assertEqual(result, {'id': '123', 'name': 'Test Product'})
+        self.assertEqual(result, {'id': '1', 'name': 'Test Product'})
+        mock_get.assert_called_once_with(f"{os.getenv('API_URL')}/products/1", headers={'X-API-KEY': os.getenv('API_KEY')})
 
 if __name__ == '__main__':
     unittest.main()

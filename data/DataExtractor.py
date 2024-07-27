@@ -1,30 +1,22 @@
-import mysql.connector
 import pandas as pd
-import json
+from sqlalchemy import create_engine
 import requests
+import json
 
 class DataExtractor:
-    def __init__(self, host, user, password, database, api_url):
-        self.host = host
-        self.user = user
-        self.password = password
-        self.database = database
+    def __init__(self, engine, api_url, api_key):
+        self.engine = engine
         self.api_url = api_url
+        self.api_key = api_key
     
     def extract_sales_data(self):
-        conn = mysql.connector.connect(
-            host=self.host,
-            user=self.user,
-            password=self.password,
-            database=self.database
-        )
         query = """
-        SELECT uuid, createdAt as date, items, totalHt, totalTtc, status 
-        FROM orders 
-        WHERE status = 'completed'
+        SELECT *
+        FROM order 
+        WHERE status = 'COMPLETED'
         """
-        sales_data = pd.read_sql(query, conn)
-        conn.close()
+        with self.engine.connect() as conn:
+            sales_data = pd.read_sql(query, conn)
         
         sales_data['date'] = pd.to_datetime(sales_data['date'])
         sales_data['vat'] = sales_data['totalTtc'] - sales_data['totalHt']
@@ -43,19 +35,14 @@ class DataExtractor:
         return sales_data, product_data
     
     def extract_admin_users(self):
-        conn = mysql.connector.connect(
-            host=self.host,
-            user=self.user,
-            password=self.password,
-            database=self.database
-        )
         query = "SELECT email FROM user WHERE role IN ('ROLE_ADMIN', 'ROLE_SUPER_ADMIN')"
-        admin_users = pd.read_sql(query, conn)
-        conn.close()
+        with self.engine.connect() as conn:
+            admin_users = pd.read_sql(query, conn)
         return admin_users['email'].tolist()
     
     def fetch_product_details(self, product_id):
-        response = requests.get(f"{self.api_url}/products/{product_id}")
+        headers = {'X-API-KEY': self.api_key}
+        response = requests.get(f"{self.api_url}/products/{product_id}", headers=headers)
         if response.status_code == 200:
             return response.json()
         else:
