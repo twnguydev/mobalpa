@@ -1,1 +1,27 @@
-/* You can add global styles to this file, and also import other style files */
+@font-face {
+  font-family: "Gotham Book";
+  src: url("https://db.onlinewebfonts.com/t/924ee4158324c02e3e0d62e54cafd14f.eot");
+  src: url("https://db.onlinewebfonts.com/t/924ee4158324c02e3e0d62e54cafd14f.eot?#iefix")format("embedded-opentype"),
+  url("https://db.onlinewebfonts.com/t/924ee4158324c02e3e0d62e54cafd14f.woff2")format("woff2"),
+  url("https://db.onlinewebfonts.com/t/924ee4158324c02e3e0d62e54cafd14f.woff")format("woff"),
+  url("https://db.onlinewebfonts.com/t/924ee4158324c02e3e0d62e54cafd14f.ttf")format("truetype"),
+  url("https://db.onlinewebfonts.com/t/924ee4158324c02e3e0d62e54cafd14f.svg#Gotham Book")format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Aquawax Medium";
+  src: url("https://db.onlinewebfonts.com/t/5e563553c41cf550109cfcd23067745d.eot");
+  src: url("https://db.onlinewebfonts.com/t/5e563553c41cf550109cfcd23067745d.eot?#iefix")format("embedded-opentype"),
+  url("https://db.onlinewebfonts.com/t/5e563553c41cf550109cfcd23067745d.woff2")format("woff2"),
+  url("https://db.onlinewebfonts.com/t/5e563553c41cf550109cfcd23067745d.woff")format("woff"),
+  url("https://db.onlinewebfonts.com/t/5e563553c41cf550109cfcd23067745d.ttf")format("truetype"),
+  url("https://db.onlinewebfonts.com/t/5e563553c41cf550109cfcd23067745d.svg#Aquawax Medium")format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
