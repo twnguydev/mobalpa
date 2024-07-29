@@ -2,6 +2,8 @@ package com.mobalpa.catalogue.controller;
 
 import com.mobalpa.catalogue.model.Category;
 import com.mobalpa.catalogue.service.CategoryService;
+import com.mobalpa.catalogue.model.Subcategory;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +26,11 @@ public class CategoryController {
   @GetMapping("/{id}")
   public ResponseEntity<Category> getCategoryById(@PathVariable UUID id) {
     return categoryService.getCategoryById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+  }
+
+  @GetMapping("/{id}/sub")
+  public ResponseEntity<List<Subcategory>> getSubcategoriesByCategoryId(@PathVariable UUID id) {
+    return ResponseEntity.ok(categoryService.getSubcategoriesByCategoryId(id));
   }
 
   @PostMapping

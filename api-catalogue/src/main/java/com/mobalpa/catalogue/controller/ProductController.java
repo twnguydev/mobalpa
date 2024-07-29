@@ -21,6 +21,21 @@ public class ProductController {
         return ResponseEntity.ok(productService.getAllProducts());
     }
 
+    @GetMapping("/store/{id}")
+    public ResponseEntity<List<Product>> getProductsByStoreId(@PathVariable UUID id) {
+        return ResponseEntity.ok(productService.getProductsByStoreId(id));
+    }
+
+    @GetMapping("/category/{id}")
+    public ResponseEntity<List<Product>> getProductsByCategoryId(@PathVariable UUID id) {
+        return ResponseEntity.ok(productService.getProductsByCategoryId(id));
+    }
+
+    @GetMapping("/sub/{id}")
+    public ResponseEntity<List<Product>> getProductsBySubcategoryId(@PathVariable UUID id) {
+        return ResponseEntity.ok(productService.getProductsBySubcategoryId(id));
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable UUID id) {
         return productService.getProductById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
