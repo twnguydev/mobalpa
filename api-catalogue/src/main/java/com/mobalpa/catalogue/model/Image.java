@@ -11,7 +11,7 @@ import java.util.UUID;
 public class Image {
 
     @Id
-    private UUID uuid;
+    private UUID uuid = UUID.randomUUID();
     private String uri;
 
     @DBRef
