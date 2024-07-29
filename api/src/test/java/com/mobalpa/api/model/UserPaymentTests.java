@@ -9,24 +9,24 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 
 import java.time.LocalDateTime;
 import java.util.Set;
 
 @DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class UserPaymentTests {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private PaymentRepository paymentRepository;
 
     @Test
     public void testUserPaymentRelation() {
         User user = new User();
         user.setFirstname("test");
         user.setLastname("user");
+        user.setPhoneNumber("+33612345678");
         user.setPassword("password");
         user.setEmail("test@example.com");
 

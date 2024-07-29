@@ -1,11 +1,14 @@
 package com.mobalpa.api.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
@@ -20,6 +23,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @Table(name = "user")
 @Data
+@EqualsAndHashCode(exclude = {"payments", "orders", "roles", "wishlist"})
 public class User implements UserDetails {
 
     @Id
@@ -60,7 +64,7 @@ public class User implements UserDetails {
     private boolean active = true;
 
     @Column(nullable = false)
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(nullable = true)
     private LocalDateTime updatedAt;
@@ -74,12 +78,15 @@ public class User implements UserDetails {
     private Set<Role> roles = new HashSet<>();
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
     private Wishlist wishlist;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<Payment> payments = new HashSet<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<Order> orders = new HashSet<>();
 
     @Override
