@@ -12,7 +12,7 @@ import java.util.List;
 public class Subcategory {
 
     @Id
-    private UUID uuid;
+    private UUID uuid = UUID.randomUUID();
     private String name;
     private String description;
 

@@ -4,6 +4,7 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.util.List;
 
 import java.time.LocalDateTime;
@@ -14,17 +15,16 @@ import java.util.UUID;
 public class Product {
 
     @Id
-    private UUID uuid;
+    private UUID uuid = UUID.randomUUID();
     private String name;
     private String description;
     private double price;
     private int stock;
     private LocalDateTime estimatedDelivery;
-    private List<String> imageUrls;
     private double weight;
     private double height;
     private double width;
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
     
     @DBRef
     private Category category;
