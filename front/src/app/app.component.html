@@ -3,6 +3,15 @@
     <h1 class="text-3xl font-bold">Mobalpa</h1>
   </div>
 
+  <nav>
+    <a routerLink="/">Home</a>
+    <a *ngIf="!authService.isAuthenticated()" routerLink="/login">Login</a>
+    <button *ngIf="authService.isAuthenticated()" (click)="logout()">Logout</button>
+  </nav>
+  
+  <router-outlet>
+  </router-outlet>
+
   <div class="p-8">
     <div class="mb-8">
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
