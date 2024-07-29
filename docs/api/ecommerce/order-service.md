@@ -28,6 +28,7 @@ Content-Type: application/json
       "quantity": 2
     }
   ],
+  "deliveryMethod": "Chronopost",
   "reduction": 10,
   "totalHt": 599.99,
 }
