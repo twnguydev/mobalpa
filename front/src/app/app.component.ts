@@ -1,13 +1,24 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet, RouterLink } from '@angular/router';
+import { AuthService } from '@services/auth.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  imports: [
+    RouterOutlet,
+    RouterLink,
+    CommonModule
+  ]
 })
 export class AppComponent {
-  title = 'front';
+  title = 'Hello World from Angular!';
+
+  constructor(public authService: AuthService) { }
+
+  logout() {
+    this.authService.logout();
+  }
 }
