@@ -1,0 +1,26 @@
+<header class="bg-mobalpa-green">
+    <div class="bg-emerald-green h-6"></div>
+    <div class="flex items-center justify-between p-8 mr-11 ml-11">
+        <div class="flex items-center gap-10">
+        <div>
+            <img src="assets/logo-MA2.png" alt="" class="h-14 ml-3 mr-11  ">
+        </div>
+        <div class="flex items-center gap-10">
+            <div class="font-gotham text-white flex gap-9">
+                <a href="#">Nos produits</a>
+                <a href="#">Nouveautés</a>
+                <a href="#">Promo</a>
+            </div>
+        </div>
+        </div>
+        <div class="flex h-8 gap-7 justify-end">
+            <div class="searchBar" *ngIf="showSearchBar">
+                <input type="text" name="search" class="rounded-md w-60 flex items-center p-1">
+            </div>
+            <button (click)="toggleSearchBar()"> <img src="assets/icon/loupe (1).png" alt="" class="h-8"></button>
+            <img src="assets/icon/user.png" alt="">
+            <img src="assets/icon/heart (2).png" alt="">
+            <img src="assets/icon/shopping-bag (2).png" alt="">
+        </div>
+    </div>
+</header>
