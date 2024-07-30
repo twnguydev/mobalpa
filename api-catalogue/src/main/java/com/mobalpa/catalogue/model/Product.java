@@ -35,16 +35,13 @@ public class Product {
 
     @DBRef
     private Subcategory subcategory;
-    
+
     @DBRef
     private Brand brand;
-    
+
     @DBRef
     private List<Color> colors;
 
     @DBRef
     private List<Image> images;
-
-    @DBRef
-    private List<Store> stores;
 }

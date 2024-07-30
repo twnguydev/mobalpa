@@ -5,7 +5,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -24,9 +23,8 @@ public class Subcategory {
     private String description;
 
     @DBRef
-    @JsonBackReference
-    private Category category;
+    private List<Product> products = new ArrayList<>();
 
     @DBRef
-    private List<Product> products = new ArrayList<>();
+    private Category category;
 }

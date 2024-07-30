@@ -13,7 +13,6 @@ import com.mobalpa.catalogue.model.Subcategory;
 import com.mobalpa.catalogue.model.Brand;
 import com.mobalpa.catalogue.model.Color;
 import com.mobalpa.catalogue.model.Image;
-import com.mobalpa.catalogue.model.Store;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -56,60 +55,47 @@ public class ProductService {
     }
 
     public Product updateProduct(UUID id, Product product) {
-        Optional<Product> existingProductOpt = productRepository.findById(id);
-        if (!existingProductOpt.isPresent()) {
-            throw new RuntimeException("Product not found");
-        }
+        return productRepository.findById(id).map(existingProduct -> {
+            if (product.getName() != null) existingProduct.setName(product.getName());
+            if (product.getDescription() != null) existingProduct.setDescription(product.getDescription());
+            if (product.getPrice() != null) existingProduct.setPrice(product.getPrice());
+            if (product.getStock() != null) existingProduct.setStock(product.getStock());
+            if (product.getWeight() != null) existingProduct.setWeight(product.getWeight());
+            if (product.getHeight() != null) existingProduct.setHeight(product.getHeight());
+            if (product.getWidth() != null) existingProduct.setWidth(product.getWidth());
+            if (product.getCategory() != null) existingProduct.setCategory(product.getCategory());
+            if (product.getSubcategory() != null) existingProduct.setSubcategory(product.getSubcategory());
+            if (product.getBrand() != null) existingProduct.setBrand(product.getBrand());
+            if (product.getColors() != null) existingProduct.setColors(product.getColors());
+            if (product.getImages() != null) existingProduct.setImages(product.getImages());
 
-        Product existingProduct = existingProductOpt.get();
-
-        if (product.getName() != null) {
-            existingProduct.setName(product.getName());
-        }
-        if (product.getDescription() != null) {
-            existingProduct.setDescription(product.getDescription());
-        }
-        if (product.getPrice() != null) {
-            existingProduct.setPrice(product.getPrice());
-        }
-        if (product.getStock() != null) {
-            existingProduct.setStock(product.getStock());
-        }
-        if (product.getEstimatedDelivery() != null) {
-            existingProduct.setEstimatedDelivery(product.getEstimatedDelivery());
-        }
-        if (product.getWeight() != null) {
-            existingProduct.setWeight(product.getWeight());
-        }
-        if (product.getHeight() != null) {
-            existingProduct.setHeight(product.getHeight());
-        }
-        if (product.getWidth() != null) {
-            existingProduct.setWidth(product.getWidth());
-        }
-        if (product.getCategory() != null) {
-            existingProduct.setCategory(product.getCategory());
-        }
-        if (product.getSubcategory() != null) {
-            existingProduct.setSubcategory(product.getSubcategory());
-        }
-        if (product.getBrand() != null) {
-            existingProduct.setBrand(product.getBrand());
-        }
-        if (product.getColors() != null) {
-            existingProduct.setColors(product.getColors());
-        }
-        if (product.getImages() != null) {
-            existingProduct.setImages(product.getImages());
-        }
-        if (product.getStores() != null) {
-            existingProduct.setStores(product.getStores());
-        }
-
-        return productRepository.save(existingProduct);
+            return productRepository.save(existingProduct);
+        }).orElseThrow(() -> new RuntimeException("Product not found with id " + id));
     }
 
     public Product createProduct(Product product) {
+        if (product.getName() == null) {
+            throw new RuntimeException("Name is required");
+        }
+        if (product.getDescription() == null) {
+            throw new RuntimeException("Description is required");
+        }
+        if (product.getPrice() == null) {
+            throw new RuntimeException("Price is required");
+        }
+        if (product.getStock() == null) {
+            throw new RuntimeException("Stock is required");
+        }
+        if (product.getWeight() == null) {
+            throw new RuntimeException("Weight is required");
+        }
+        if (product.getHeight() == null) {
+            throw new RuntimeException("Height is required");
+        }
+        if (product.getWidth() == null) {
+            throw new RuntimeException("Width is required");
+        }
+
         if (product.getCategory() != null) {
             Optional<Category> category = categoryRepository.findByName(product.getCategory().getName());
             if (!category.isPresent()) {
@@ -117,6 +103,8 @@ public class ProductService {
             } else {
                 product.setCategory(category.get());
             }
+        } else {
+            throw new RuntimeException("Category is required");
         }
 
         if (product.getSubcategory() != null) {
@@ -151,6 +139,8 @@ public class ProductService {
             }
             subcategoryEntity.getProducts().add(product);
             subcategoryRepository.save(subcategoryEntity);
+        } else {
+            throw new RuntimeException("Subcategory is required");
         }
 
         if (product.getBrand() != null) {
@@ -160,6 +150,8 @@ public class ProductService {
             } else {
                 product.setBrand(brand.get());
             }
+        } else {
+            throw new RuntimeException("Brand is required");
         }
 
         if (product.getColors() != null) {
@@ -173,6 +165,8 @@ public class ProductService {
                     colors.set(i, existingColor.get());
                 }
             }
+        } else {
+            throw new RuntimeException("Colors are required");
         }
 
         if (product.getImages() != null) {
@@ -193,19 +187,8 @@ public class ProductService {
                 }
                 imageRepository.save(image);
             }
-        }
-
-        if (product.getStores() != null) {
-            List<Store> stores = product.getStores();
-            for (int i = 0; i < stores.size(); i++) {
-                Store store = stores.get(i);
-                Optional<Store> existingStore = storeRepository.findByName(store.getName());
-                if (!existingStore.isPresent()) {
-                    storeRepository.save(store);
-                } else {
-                    stores.set(i, existingStore.get());
-                }
-            }
+        } else {
+            throw new RuntimeException("Images are required");
         }
 
         return productRepository.save(product);
