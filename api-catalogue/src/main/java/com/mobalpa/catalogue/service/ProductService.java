@@ -18,7 +18,6 @@ import com.mobalpa.catalogue.model.Store;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.Optional;
@@ -61,35 +60,32 @@ public class ProductService {
     }
 
     public Product createProduct(Product product) {
-        List<String> errors = new ArrayList<>();
-
         if (product.getCategory() != null) {
             Optional<Category> category = categoryRepository.findByName(product.getCategory().getName());
-            if (category.isPresent()) {
-                product.setCategory(category.get());
+            if (!category.isPresent()) {
+                categoryRepository.save(product.getCategory());
             } else {
-                errors.add("Category not found: " + product.getCategory().getName());
+                product.setCategory(category.get());
             }
         }
 
         if (product.getSubcategory() != null) {
             Optional<Subcategory> subcategory = subcategoryRepository.findByName(product.getSubcategory().getName());
-            if (subcategory.isPresent()) {
-                if (product.getCategory() != null) {
-                    subcategory.get().setCategory(product.getCategory());
-                }
-                product.setSubcategory(subcategory.get());
+            if (!subcategory.isPresent()) {
+                Subcategory newSubcategory = product.getSubcategory();
+                newSubcategory.setCategory(product.getCategory());
+                subcategoryRepository.save(newSubcategory);
             } else {
-                errors.add("Subcategory not found: " + product.getSubcategory().getName());
+                product.setSubcategory(subcategory.get());
             }
         }
 
         if (product.getBrand() != null) {
             Optional<Brand> brand = brandRepository.findByName(product.getBrand().getName());
-            if (brand.isPresent()) {
-                product.setBrand(brand.get());
+            if (!brand.isPresent()) {
+                brandRepository.save(product.getBrand());
             } else {
-                errors.add("Brand not found: " + product.getBrand().getName());
+                product.setBrand(brand.get());
             }
         }
 
@@ -98,27 +94,31 @@ public class ProductService {
             for (int i = 0; i < colors.size(); i++) {
                 Color color = colors.get(i);
                 Optional<Color> existingColor = colorRepository.findByName(color.getName());
-                if (existingColor.isPresent()) {
-                    colors.set(i, existingColor.get());
+                if (!existingColor.isPresent()) {
+                    colorRepository.save(color);
                 } else {
-                    errors.add("This color does not exist: " + color.getName());
+                    colors.set(i, existingColor.get());
                 }
             }
         }
 
         if (product.getImages() != null) {
             List<Image> images = product.getImages();
+            List<Color> availableColors = product.getColors();
             for (int i = 0; i < images.size(); i++) {
                 Image image = images.get(i);
                 if (image.getColor() != null) {
-                    Optional<Color> existingColor = colorRepository.findByName(image.getColor().getName());
-                    if (existingColor.isPresent()) {
-                        image.setColor(existingColor.get());
-                        images.set(i, image);
+                    Optional<Color> imageColor = availableColors.stream()
+                            .filter(c -> c.getName().equals(image.getColor().getName()))
+                            .findFirst();
+
+                    if (imageColor.isPresent()) {
+                        image.setColor(imageColor.get());
                     } else {
-                        errors.add("This color does not exist: " + image.getColor().getName() + " for image " + image.getUri());
+                        throw new RuntimeException("This color does not exist for the product: " + image.getColor().getName() + " for image " + image.getUri());
                     }
                 }
+                imageRepository.save(image);
             }
         }
 
@@ -127,16 +127,12 @@ public class ProductService {
             for (int i = 0; i < stores.size(); i++) {
                 Store store = stores.get(i);
                 Optional<Store> existingStore = storeRepository.findByName(store.getName());
-                if (existingStore.isPresent()) {
-                    stores.set(i, existingStore.get());
+                if (!existingStore.isPresent()) {
+                    storeRepository.save(store);
                 } else {
-                    errors.add("This store does not exist: " + store.getName());
+                    stores.set(i, existingStore.get());
                 }
             }
-        }
-
-        if (!errors.isEmpty()) {
-            throw new RuntimeException("Product creation failed with the following errors: " + String.join(", ", errors));
         }
 
         return productRepository.save(product);
