@@ -2,6 +2,8 @@ package com.mobalpa.catalogue.controller;
 
 import com.mobalpa.catalogue.model.Product;
 import com.mobalpa.catalogue.service.ProductService;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -42,8 +44,13 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
-        return ResponseEntity.ok(productService.createProduct(product));
+    public ResponseEntity<?> createProduct(@RequestBody Product product) {
+        try {
+            Product createdProduct = productService.createProduct(product);
+            return new ResponseEntity<>(createdProduct, HttpStatus.CREATED);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PatchMapping("/{id}")
