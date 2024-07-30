@@ -22,8 +22,8 @@ public class SubcategoryService {
   @Autowired
   private CategoryRepository categoryRepository;
 
-  public List<Subcategory> getAllSubcategories() {
-    return subcategoryRepository.findAll();
+  public Optional<List<Subcategory>> getAllSubcategories() {
+    return Optional.of(subcategoryRepository.findAll());
   }
 
   public Optional<Subcategory> getSubcategoryById(UUID id) {
@@ -51,12 +51,31 @@ public class SubcategoryService {
         throw new IllegalArgumentException("Category with name " + category.getName() + " does not exist");
       }
     }
+    subcategory.setProducts(new ArrayList<>());
     return subcategoryRepository.save(subcategory);
   }
 
   public Subcategory updateSubcategory(UUID id, Subcategory subcategory) {
-    subcategory.setUuid(id);
-    return subcategoryRepository.save(subcategory);
+    return subcategoryRepository.findById(id).map(existingSubcategory -> {
+      if (subcategory.getName() != null) existingSubcategory.setName(subcategory.getName());
+      if (subcategory.getDescription() != null) existingSubcategory.setDescription(subcategory.getDescription());
+      if (subcategory.getCategory() != null) {
+        Category category = subcategory.getCategory();
+        Optional<Category> existingCategory = categoryRepository.findByName(category.getName());
+        if (existingCategory.isPresent()) {
+          Category existingCategoryEntity = existingCategory.get();
+          existingSubcategory.setCategory(existingCategoryEntity);
+          if (existingCategoryEntity.getSubcategories() == null) {
+            existingCategoryEntity.setSubcategories(new ArrayList<>());
+          }
+          existingCategoryEntity.getSubcategories().add(existingSubcategory);
+          categoryRepository.save(existingCategoryEntity);
+        } else {
+          throw new IllegalArgumentException("Category with name " + category.getName() + " does not exist");
+        }
+      }
+      return subcategoryRepository.save(existingSubcategory);
+    }).orElseThrow(() -> new RuntimeException("Product not found with id " + id));
   }
 
   public void deleteSubcategory(UUID id) {

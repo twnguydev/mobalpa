@@ -43,6 +43,29 @@ public class CatalogueService {
         return storeRepository.findById(id);
     }
 
+    public Store createStore(Store store) {
+        Optional<Store> existingStore = storeRepository.findByName(store.getName());
+        if (existingStore.isPresent()) {
+            throw new IllegalArgumentException("Store with name " + store.getName() + " already exists");
+        }
+
+        if (store.getProducts() != null) {
+            List<Product> products = store.getProducts();
+            for (int i = 0; i < products.size(); i++) {
+                Product product = products.get(i);
+                Optional<Product> existingProduct = productRepository.findByName(product.getName());
+                if (existingProduct.isPresent()) {
+                    Product existingProductEntity = existingProduct.get();
+                    store.getProducts().set(i, existingProductEntity);
+                } else {
+                    throw new IllegalArgumentException("Product with name " + product.getName() + " does not exist");
+                }
+            }
+        }
+
+        return storeRepository.save(store);
+    }
+
     public List<Product> getBestSellers() {
         List<Map<String, Object>> orders = fetchOrdersFromEcommerceApi();
         Map<UUID, Integer> productSalesCount = new HashMap<>();

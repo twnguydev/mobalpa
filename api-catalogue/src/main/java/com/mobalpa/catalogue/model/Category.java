@@ -4,7 +4,8 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
@@ -14,6 +15,7 @@ import java.util.List;
 
 @Document(collection = "category")
 @Data
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "uuid")
 public class Category {
 
     @Id
@@ -22,6 +24,5 @@ public class Category {
     private String description;
 
     @DBRef
-    @JsonManagedReference
     private List<Subcategory> subcategories = new ArrayList<>();
 }
