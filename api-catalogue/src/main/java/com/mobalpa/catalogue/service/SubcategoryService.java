@@ -8,13 +8,14 @@ import com.mobalpa.catalogue.model.Category;
 import com.mobalpa.catalogue.model.Subcategory;
 import com.mobalpa.catalogue.repository.CategoryRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
 public class SubcategoryService {
-  
+
   @Autowired
   private SubcategoryRepository subcategoryRepository;
 
@@ -39,8 +40,13 @@ public class SubcategoryService {
     if (category != null) {
       Optional<Category> existingCategory = categoryRepository.findByName(category.getName());
       if (existingCategory.isPresent()) {
-        subcategory.setCategory(existingCategory.get());
-        category.getSubcategories().add(subcategory);
+        Category existingCategoryEntity = existingCategory.get();
+        subcategory.setCategory(existingCategoryEntity);
+        if (existingCategoryEntity.getSubcategories() == null) {
+          existingCategoryEntity.setSubcategories(new ArrayList<>());
+        }
+        existingCategoryEntity.getSubcategories().add(subcategory);
+        categoryRepository.save(existingCategoryEntity);
       } else {
         throw new IllegalArgumentException("Category with name " + category.getName() + " does not exist");
       }
