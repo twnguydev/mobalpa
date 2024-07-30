@@ -13,8 +13,12 @@ import { CommonModule } from '@angular/common';
 })
 export class MainHeaderComponent {
   showSearchBar = false;
+ 
 
   toggleSearchBar(): void {
     this.showSearchBar = !this.showSearchBar;
   }
+
+
+  
 }

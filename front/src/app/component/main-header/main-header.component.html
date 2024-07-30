@@ -1,26 +1,26 @@
-<header class="bg-mobalpa-green">
+<header class="bg-mobalpa-green ">
     <div class="bg-emerald-green h-6"></div>
-    <div class="flex items-center justify-between p-8 mr-11 ml-11">
-        <div class="flex items-center gap-10">
-        <div>
-            <img src="assets/logo-MA2.png" alt="" class="h-14 ml-3 mr-11  ">
-        </div>
-        <div class="flex items-center gap-10">
-            <div class="font-gotham text-white flex gap-9">
-                <a href="#">Nos produits</a>
-                <a href="#">Nouveautés</a>
-                <a href="#">Promo</a>
+    <div class="container mx-auto px-28 py-6 flex items-center justify-between">
+        <div class="flex items-center space-x-10">
+            <div class="w-56 flex-shrink-0">
+                <img src="assets/logo-MA2.png" alt="Logo" class="h-14 w-auto">
             </div>
+            <nav class="hidden md:flex space-x-9">
+                <a href="#" class="text-white font-gotham">Nos produits</a>
+                <a href="#" class="text-white font-gotham">Nouveautés</a>
+                <a href="#" class="text-white font-gotham">Promo</a>
+            </nav>
         </div>
-        </div>
-        <div class="flex h-8 gap-7 justify-end">
+        <div class="flex items-center space-x-7">
             <div class="searchBar" *ngIf="showSearchBar">
-                <input type="text" name="search" class="rounded-md w-60 flex items-center p-1">
+                <input type="text" name="search" class="rounded-md w-60 p-1">
             </div>
-            <button (click)="toggleSearchBar()"> <img src="assets/icon/loupe (1).png" alt="" class="h-8"></button>
-            <img src="assets/icon/user.png" alt="">
-            <img src="assets/icon/heart (2).png" alt="">
-            <img src="assets/icon/shopping-bag (2).png" alt="">
+            <button (click)="toggleSearchBar()" class="w-8 h-8 flex-shrink-0">
+                <img src="assets/icon/loupe (1).png" alt="Search" class="w-full h-full object-contain">
+            </button>
+            <img src="assets/icon/user.png" alt="User" class="w-8 h-8">
+            <img src="assets/icon/heart (2).png" alt="Favorites" class="w-8 h-8">
+            <img src="assets/icon/shopping-bag (2).png" alt="Cart" class="w-8 h-8">
         </div>
     </div>
 </header>
