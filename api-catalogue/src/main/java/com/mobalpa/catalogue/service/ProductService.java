@@ -54,9 +54,61 @@ public class ProductService {
         return productRepository.findById(id);
     }
 
-    public Product updateProduct(UUID id, Product product) {
-        product.setUuid(id);
-        return productRepository.save(product);
+    public Product updateProduct(UUID id, Product updatedProduct) {
+        // Récupérer le produit existant à partir de la base de données
+        Optional<Product> existingProductOpt = productRepository.findById(id);
+        if (!existingProductOpt.isPresent()) {
+            throw new RuntimeException("Product not found");
+        }
+
+        Product existingProduct = existingProductOpt.get();
+
+        // Mettre à jour uniquement les champs non nuls de updatedProduct
+        if (updatedProduct.getName() != null) {
+            existingProduct.setName(updatedProduct.getName());
+        }
+        if (updatedProduct.getDescription() != null) {
+            existingProduct.setDescription(updatedProduct.getDescription());
+        }
+        if (updatedProduct.getPrice() != null) {
+            existingProduct.setPrice(updatedProduct.getPrice());
+        }
+        if (updatedProduct.getStock() != null) {
+            existingProduct.setStock(updatedProduct.getStock());
+        }
+        if (updatedProduct.getEstimatedDelivery() != null) {
+            existingProduct.setEstimatedDelivery(updatedProduct.getEstimatedDelivery());
+        }
+        if (updatedProduct.getWeight() != null) {
+            existingProduct.setWeight(updatedProduct.getWeight());
+        }
+        if (updatedProduct.getHeight() != null) {
+            existingProduct.setHeight(updatedProduct.getHeight());
+        }
+        if (updatedProduct.getWidth() != null) {
+            existingProduct.setWidth(updatedProduct.getWidth());
+        }
+        if (updatedProduct.getCategory() != null) {
+            existingProduct.setCategory(updatedProduct.getCategory());
+        }
+        if (updatedProduct.getSubcategory() != null) {
+            existingProduct.setSubcategory(updatedProduct.getSubcategory());
+        }
+        if (updatedProduct.getBrand() != null) {
+            existingProduct.setBrand(updatedProduct.getBrand());
+        }
+        if (updatedProduct.getColors() != null) {
+            existingProduct.setColors(updatedProduct.getColors());
+        }
+        if (updatedProduct.getImages() != null) {
+            existingProduct.setImages(updatedProduct.getImages());
+        }
+        if (updatedProduct.getStores() != null) {
+            existingProduct.setStores(updatedProduct.getStores());
+        }
+
+        // Sauvegarder le produit mis à jour
+        return productRepository.save(existingProduct);
     }
 
     public Product createProduct(Product product) {

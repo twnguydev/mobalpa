@@ -18,12 +18,12 @@ public class Product {
     private UUID uuid = UUID.randomUUID();
     private String name;
     private String description;
-    private double price;
-    private int stock;
+    private Double price;
+    private Integer stock;
     private LocalDateTime estimatedDelivery;
-    private double weight;
-    private double height;
-    private double width;
+    private Double weight;
+    private Double height;
+    private Double width;
     private LocalDateTime createdAt = LocalDateTime.now();
     
     @DBRef
