@@ -144,6 +144,13 @@ public class ProductService {
                 }
                 product.setSubcategory(subcategory.get());
             }
+
+            Subcategory subcategoryEntity = product.getSubcategory();
+            if (subcategoryEntity.getProducts() == null) {
+                subcategoryEntity.setProducts(new ArrayList<>());
+            }
+            subcategoryEntity.getProducts().add(product);
+            subcategoryRepository.save(subcategoryEntity);
         }
 
         if (product.getBrand() != null) {

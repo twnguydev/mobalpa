@@ -51,6 +51,7 @@ public class SubcategoryService {
         throw new IllegalArgumentException("Category with name " + category.getName() + " does not exist");
       }
     }
+    subcategory.setProducts(new ArrayList<>());
     return subcategoryRepository.save(subcategory);
   }
 
