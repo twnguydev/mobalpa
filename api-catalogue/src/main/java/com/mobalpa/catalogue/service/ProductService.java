@@ -18,6 +18,7 @@ import com.mobalpa.catalogue.model.Store;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.Optional;
@@ -126,8 +127,24 @@ public class ProductService {
             if (!subcategory.isPresent()) {
                 Subcategory newSubcategory = product.getSubcategory();
                 newSubcategory.setCategory(product.getCategory());
+
+                if (product.getCategory() != null) {
+                    Category category = product.getCategory();
+                    if (category.getSubcategories() == null) {
+                        category.setSubcategories(new ArrayList<>());
+                    }
+                    category.getSubcategories().add(newSubcategory);
+                    categoryRepository.save(category);
+                }
+
                 subcategoryRepository.save(newSubcategory);
             } else {
+                if (!subcategory.get().getCategory().getUuid().equals(product.getCategory().getUuid())) {
+                    throw new RuntimeException("This subcategory does not belong to the category: " + product.getCategory().getName());
+                }
+                if (product.getCategory() == null) {
+                    product.setCategory(subcategory.get().getCategory());
+                }
                 product.setSubcategory(subcategory.get());
             }
         }
