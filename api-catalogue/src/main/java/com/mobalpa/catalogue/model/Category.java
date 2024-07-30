@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.util.UUID;
+import java.util.ArrayList;
 import java.util.List;
 
 @Document(collection = "category")
@@ -22,5 +23,5 @@ public class Category {
 
     @DBRef
     @JsonManagedReference
-    private List<Subcategory> subcategories;
+    private List<Subcategory> subcategories = new ArrayList<>();
 }

@@ -56,8 +56,57 @@ public class ProductService {
     }
 
     public Product updateProduct(UUID id, Product product) {
-        product.setUuid(id);
-        return productRepository.save(product);
+        Optional<Product> existingProductOpt = productRepository.findById(id);
+        if (!existingProductOpt.isPresent()) {
+            throw new RuntimeException("Product not found");
+        }
+
+        Product existingProduct = existingProductOpt.get();
+
+        if (product.getName() != null) {
+            existingProduct.setName(product.getName());
+        }
+        if (product.getDescription() != null) {
+            existingProduct.setDescription(product.getDescription());
+        }
+        if (product.getPrice() != null) {
+            existingProduct.setPrice(product.getPrice());
+        }
+        if (product.getStock() != null) {
+            existingProduct.setStock(product.getStock());
+        }
+        if (product.getEstimatedDelivery() != null) {
+            existingProduct.setEstimatedDelivery(product.getEstimatedDelivery());
+        }
+        if (product.getWeight() != null) {
+            existingProduct.setWeight(product.getWeight());
+        }
+        if (product.getHeight() != null) {
+            existingProduct.setHeight(product.getHeight());
+        }
+        if (product.getWidth() != null) {
+            existingProduct.setWidth(product.getWidth());
+        }
+        if (product.getCategory() != null) {
+            existingProduct.setCategory(product.getCategory());
+        }
+        if (product.getSubcategory() != null) {
+            existingProduct.setSubcategory(product.getSubcategory());
+        }
+        if (product.getBrand() != null) {
+            existingProduct.setBrand(product.getBrand());
+        }
+        if (product.getColors() != null) {
+            existingProduct.setColors(product.getColors());
+        }
+        if (product.getImages() != null) {
+            existingProduct.setImages(product.getImages());
+        }
+        if (product.getStores() != null) {
+            existingProduct.setStores(product.getStores());
+        }
+
+        return productRepository.save(existingProduct);
     }
 
     public Product createProduct(Product product) {
