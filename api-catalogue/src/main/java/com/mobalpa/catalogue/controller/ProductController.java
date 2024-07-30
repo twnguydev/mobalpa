@@ -43,7 +43,7 @@ public class ProductController {
         return productService.getProductById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping
+    @PostMapping(consumes = "application/json", produces = "application/json")
     public ResponseEntity<?> createProduct(@RequestBody Product product) {
         try {
             Product createdProduct = productService.createProduct(product);

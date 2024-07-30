@@ -3,6 +3,9 @@ package com.mobalpa.catalogue.model;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.util.UUID;
@@ -18,5 +21,6 @@ public class Category {
     private String description;
 
     @DBRef
+    @JsonManagedReference
     private List<Subcategory> subcategories;
 }
