@@ -132,4 +132,45 @@ public class UserTests {
         assertEquals(1, savedUser.getOrders().size());
         assertEquals("PENDING", savedUser.getOrders().iterator().next().getStatus());
     }
+
+    public void testUpdateUser() {
+        User user = new User();
+        user.setFirstname("Charlie");
+        user.setLastname("Davis");
+        user.setEmail("bob.brown@example.com");
+        user.setPassword("password");
+        user.setPhoneNumber("3334445555");
+        user.setCreatedAt(LocalDateTime.now());
+        userRepository.save(user);
+
+        User updatedUser = new User();
+        updatedUser.setFirstname("Charlie");
+        updatedUser.setLastname("Davis");
+        updatedUser.setEmail("bob.brown@example.com");
+        updatedUser.setPassword("newpassword");
+        updatedUser.setPhoneNumber("4445556666");
+        updatedUser.setCreatedAt(LocalDateTime.now());
+        userRepository.save(updatedUser);
+
+        User savedUser = userRepository.findById(user.getUuid()).orElse(null);
+        assertNotNull(savedUser);
+        assertEquals("newpassword", savedUser.getPassword());
+        assertEquals("4445556666", savedUser.getPhoneNumber());
+    }
+
+    public void testDeleteUser() {
+        User user = new User();
+        user.setFirstname("David");
+        user.setLastname("Evans");
+        user.setEmail("bob.brown@example.com");
+        user.setPassword("password");
+        user.setPhoneNumber("5556667777");
+        user.setCreatedAt(LocalDateTime.now());
+        userRepository.save(user);
+
+        userRepository.deleteById(user.getUuid());
+
+        User savedUser = userRepository.findById(user.getUuid()).orElse(null);
+        assertEquals(null, savedUser);
+    }
 }
