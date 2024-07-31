@@ -14,7 +14,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import com.mobalpa.api.repository.RoleRepository;
 import com.mobalpa.api.repository.UserRepository;
-import com.mobalpa.api.repository.WishlistRepository;
 
 @DataJpaTest
 public class UserTests {
