@@ -2,18 +2,19 @@ package com.mobalpa.api.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import com.mobalpa.api.repository.OrderRepository;
-import com.mobalpa.api.repository.PaymentRepository;
 import com.mobalpa.api.repository.RoleRepository;
 import com.mobalpa.api.repository.UserRepository;
+import com.mobalpa.api.repository.WishlistRepository;
 
 @DataJpaTest
 public class UserTests {
@@ -25,10 +26,7 @@ public class UserTests {
     private RoleRepository roleRepository;
 
     @Autowired
-    private PaymentRepository paymentRepository;
-
-    @Autowired
-    private OrderRepository orderRepository;
+    private WishlistRepository wishlistRepository;
 
     @Test
     public void testCreateUser() {
@@ -133,24 +131,20 @@ public class UserTests {
         assertEquals("PENDING", savedUser.getOrders().iterator().next().getStatus());
     }
 
+    @Test
     public void testUpdateUser() {
         User user = new User();
         user.setFirstname("Charlie");
         user.setLastname("Davis");
-        user.setEmail("bob.brown@example.com");
+        user.setEmail("charlie.davis@example.com");
         user.setPassword("password");
         user.setPhoneNumber("3334445555");
         user.setCreatedAt(LocalDateTime.now());
         userRepository.save(user);
 
-        User updatedUser = new User();
-        updatedUser.setFirstname("Charlie");
-        updatedUser.setLastname("Davis");
-        updatedUser.setEmail("bob.brown@example.com");
-        updatedUser.setPassword("newpassword");
-        updatedUser.setPhoneNumber("4445556666");
-        updatedUser.setCreatedAt(LocalDateTime.now());
-        userRepository.save(updatedUser);
+        user.setPassword("newpassword");
+        user.setPhoneNumber("4445556666");
+        userRepository.save(user);
 
         User savedUser = userRepository.findById(user.getUuid()).orElse(null);
         assertNotNull(savedUser);
@@ -158,19 +152,21 @@ public class UserTests {
         assertEquals("4445556666", savedUser.getPhoneNumber());
     }
 
+    @Test
     public void testDeleteUser() {
         User user = new User();
         user.setFirstname("David");
         user.setLastname("Evans");
-        user.setEmail("bob.brown@example.com");
+        user.setEmail("david.evans@example.com");
         user.setPassword("password");
         user.setPhoneNumber("5556667777");
         user.setCreatedAt(LocalDateTime.now());
         userRepository.save(user);
 
-        userRepository.deleteById(user.getUuid());
+        UUID userId = user.getUuid();
+        userRepository.deleteById(userId);
 
-        User savedUser = userRepository.findById(user.getUuid()).orElse(null);
-        assertEquals(null, savedUser);
+        User savedUser = userRepository.findById(userId).orElse(null);
+        assertNull(savedUser);
     }
 }
