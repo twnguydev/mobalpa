@@ -25,9 +25,6 @@ public class UserTests {
     @Autowired
     private RoleRepository roleRepository;
 
-    @Autowired
-    private WishlistRepository wishlistRepository;
-
     @Test
     public void testCreateUser() {
         User user = new User();
