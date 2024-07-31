@@ -1,17 +1,27 @@
 package com.mobalpa.api.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.mobalpa.api.model.User;
+import com.mobalpa.api.model.Wishlist;
+import com.mobalpa.api.model.WishlistItem;
 import com.mobalpa.api.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.util.UUID;
+import java.util.List;
 
 @Service
 public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     public User getUserByUuid(UUID uuid) {
         return userRepository.findById(uuid).orElseThrow(() -> new RuntimeException("User not found"));
@@ -41,5 +51,56 @@ public class UserService {
 
     public void deleteUser(UUID uuid) {
         userRepository.deleteById(uuid);
+    }
+
+
+    public Wishlist addToWishlist(UUID userId, WishlistItem newItem) throws JsonProcessingException {
+        User user = getUserByUuid(userId);
+        Wishlist wishlist = user.getWishlist();
+
+        List<WishlistItem> items = objectMapper.readValue(wishlist.getItems(), new TypeReference<List<WishlistItem>>() {});
+        boolean itemExists = false;
+
+        for (WishlistItem item : items) {
+            if (item.getProductId().equals(newItem.getProductId())) {
+                item.setQuantity(item.getQuantity() + 1);
+                itemExists = true;
+                break;
+            }
+        }
+
+        if (!itemExists) {
+            items.add(newItem);
+        }
+
+        wishlist.setItems(objectMapper.writeValueAsString(items));
+        user.setWishlist(wishlist);
+        userRepository.save(user);
+
+        return wishlist;
+    }
+
+    public Wishlist removeFromWishlist(UUID userId, String productId, Integer quantity) throws JsonProcessingException {
+        User user = getUserByUuid(userId);
+        Wishlist wishlist = user.getWishlist();
+
+        List<WishlistItem> items = objectMapper.readValue(wishlist.getItems(), new TypeReference<List<WishlistItem>>() {});
+        items.removeIf(item -> {
+            if (item.getProductId().equals(productId)) {
+                if (quantity == null || item.getQuantity() <= quantity) {
+                    return true;
+                } else {
+                    item.setQuantity(item.getQuantity() - quantity);
+                    return false;
+                }
+            }
+            return false;
+        });
+
+        wishlist.setItems(objectMapper.writeValueAsString(items));
+        user.setWishlist(wishlist);
+        userRepository.save(user);
+
+        return wishlist;
     }
 }

@@ -1,7 +1,10 @@
 package com.mobalpa.api.controllers;
 
 import com.mobalpa.api.service.UserService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.mobalpa.api.model.User;
+import com.mobalpa.api.model.Wishlist;
+import com.mobalpa.api.dto.WishlistDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +18,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
-  
+
   @Autowired
   private UserService userService;
 
@@ -53,5 +56,41 @@ public class UserController {
   public ResponseEntity<?> deleteUser(@PathVariable UUID uuid) {
     userService.deleteUser(uuid);
     return ResponseEntity.status(HttpStatus.NO_CONTENT).body("User deleted");
+  }
+
+  @GetMapping("/{id}/wishlist")
+  public ResponseEntity<?> getWishlist(@PathVariable UUID id) {
+    User user = userService.getUserByUuid(id);
+    if (user == null) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+    }
+
+    Wishlist wishlist = user.getWishlist();
+    if (wishlist == null || wishlist.getItems().isEmpty()) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("This user has no items in their wishlist");
+    }
+
+    return ResponseEntity.ok(wishlist);
+  }
+
+  @PatchMapping("/{id}/wishlist")
+  public ResponseEntity<?> modifyWishlist(@PathVariable UUID id, @RequestBody WishlistDTO request) {
+    try {
+      Wishlist wishlist;
+      switch (request.getAction().toLowerCase()) {
+        case "add":
+          wishlist = userService.addToWishlist(id, request.getItem());
+          break;
+        case "remove":
+          wishlist = userService.removeFromWishlist(id, request.getItem().getProductId(),
+              request.getItem().getQuantity());
+          break;
+        default:
+          return ResponseEntity.badRequest().body("Invalid action for wishlist");
+      }
+      return ResponseEntity.ok(wishlist);
+    } catch (JsonProcessingException e) {
+      return ResponseEntity.status(500).body("Error processing wishlist");
+    }
   }
 }
