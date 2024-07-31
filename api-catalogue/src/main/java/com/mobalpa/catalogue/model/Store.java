@@ -4,11 +4,17 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import java.util.UUID;
 import java.util.List;
+import java.util.ArrayList;
 
 @Document(collection = "stores")
 @Data
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "uuid")
 public class Store {
 
     @Id
@@ -20,5 +26,5 @@ public class Store {
     private String openingHours;
 
     @DBRef
-    private List<Product> products;
+    private List<Product> products = new ArrayList<>();
 }

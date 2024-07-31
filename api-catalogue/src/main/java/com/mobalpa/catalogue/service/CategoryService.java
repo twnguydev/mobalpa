@@ -18,8 +18,8 @@ public class CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    public List<Category> getAllCategories() {
-        return categoryRepository.findAll();
+    public Optional<List<Category>> getAllCategories() {
+        return Optional.of(categoryRepository.findAll());
     }
 
     public Optional<Category> getCategoryById(UUID id) {
@@ -31,8 +31,18 @@ public class CategoryService {
     }
 
     public Category updateCategory(UUID id, Category category) {
-        category.setUuid(id);
-        return categoryRepository.save(category);
+        return categoryRepository.findById(id).map(existingCategory -> {
+            if (category.getName() != null) {
+                existingCategory.setName(category.getName());
+            }
+            if (category.getDescription() != null) {
+                existingCategory.setDescription(category.getDescription());
+            }
+            if (category.getSubcategories() != null) {
+                existingCategory.setSubcategories(category.getSubcategories());
+            }
+            return categoryRepository.save(existingCategory);
+        }).orElseThrow(() -> new IllegalArgumentException("Category with id " + id + " not found"));
     }
 
     public void deleteCategory(UUID id) {

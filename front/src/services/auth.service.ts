@@ -73,7 +73,7 @@ export class AuthService {
     );
   }
 
-  checkInputsSignup(data: IUser): boolean {
+  checkInputsSignup(data: IUser): boolean | '' | null | undefined {
     const birthdateRegex = new RegExp(/^\d{2}\/\d{2}\/\d{4}$/);
     const emailRegex = new RegExp(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/);
     const phoneRegex = new RegExp(/^\d{10}$/);
@@ -100,7 +100,7 @@ export class AuthService {
   }
 
   getAuthHeaders(): HttpHeaders {
-    const token = localStorage.getItem('token');
+    const token: string | null = localStorage.getItem('token');
     return new HttpHeaders({
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
