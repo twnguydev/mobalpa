@@ -17,6 +17,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;  
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
@@ -34,11 +35,40 @@ public class AuthControllerTest {
     private AuthenticationManager authenticationManager;
 
     @Mock
-    private Authentication authentication; 
+    private Authentication authentication;
 
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
+    }
+
+    @Test
+    public void testRegisterUser_Success() {
+        User user = new User();
+        user.setEmail("uniqueemailused_" + System.currentTimeMillis() + "@gmail.com");
+        user.setPassword("123456");
+        user.setActive(true);
+
+        when(userService.registerUser(any(User.class))).thenReturn(user);
+
+        ResponseEntity<String> response = authController.registerUser(user);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("Registration successful. Please check your email for confirmation.", response.getBody());
+    }
+
+    @Test
+    public void testRegisterUser_EmailAlreadyUsed() {
+        User user = new User();
+        user.setEmail("test_email_" + System.currentTimeMillis() + "@gmail.com");
+        user.setPassword("123456");
+
+        doThrow(new RuntimeException("Email is already in use")).when(userService).registerUser(any(User.class));
+
+        Exception exception = assertThrows(RuntimeException.class, () -> {
+            authController.registerUser(user);
+        });
+
+        assertEquals("Email is already in use", exception.getMessage());
     }
 
     @Test
@@ -98,16 +128,15 @@ public class AuthControllerTest {
     @Test
     public void testLoginUser_AuthenticationException() {
         LoginDTO loginDTO = new LoginDTO();
-        loginDTO.setEmail("nathanmatounga@gmail.com");
+        loginDTO.setEmail("nonexistentuser@gmail.com"); 
         loginDTO.setPassword("123456");
-    
+
         doThrow(new AuthenticationException("Authentication failed") {
         }).when(authenticationManager)
-            .authenticate(any(UsernamePasswordAuthenticationToken.class));
-    
+                .authenticate(any(UsernamePasswordAuthenticationToken.class));
+
         ResponseEntity<String> response = authController.loginUser(loginDTO);
         assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
         assertEquals("Authentication failed", response.getBody());
     }
-    
 }
