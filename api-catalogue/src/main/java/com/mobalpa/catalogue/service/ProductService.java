@@ -14,6 +14,8 @@ import com.mobalpa.catalogue.model.Brand;
 import com.mobalpa.catalogue.model.Color;
 import com.mobalpa.catalogue.model.Image;
 
+import com.mobalpa.catalogue.filter.ProductFilter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.Optional;
+
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 
 @Service
 public class ProductService {
@@ -46,14 +52,21 @@ public class ProductService {
     @Autowired
     private StoreRepository storeRepository;
 
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
+    @Autowired
+    private MongoTemplate mongoTemplate;
+
+    public List<Product> getAllProducts(ProductFilter productFilter) {
+        Query query = new Query();
+        Criteria criteria = productFilter.toCriteria(brandRepository, colorRepository);
+        query.addCriteria(criteria);
+
+        return mongoTemplate.find(query, Product.class);
     }
 
     public Optional<Product> getProductById(UUID id) {
         return productRepository.findById(id);
     }
-
+    
     public Product updateProduct(UUID id, Product product) {
         return productRepository.findById(id).map(existingProduct -> {
             if (product.getName() != null) existingProduct.setName(product.getName());

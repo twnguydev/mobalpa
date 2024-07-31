@@ -8,7 +8,10 @@ import com.mobalpa.catalogue.service.CatalogueService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.*;
+
+import com.mobalpa.catalogue.filter.ProductFilter;
 
 import java.util.List;
 import java.util.UUID;
@@ -25,9 +28,20 @@ public class ProductController {
     private CatalogueService catalogueService;
 
     @GetMapping
-    public ResponseEntity<?> getAllProducts() {
-        List<Product> products = productService.getAllProducts();
-        if (!products.isEmpty() && products != null) {
+    public ResponseEntity<?> getAllProducts(
+            @RequestParam(value = "maxPrice", required = false) Double maxPrice,
+            @RequestParam(value = "minPrice", required = false) Double minPrice,
+            @RequestParam(value = "brand", required = false) String brand,
+            @RequestParam(value = "color", required = false) String color) {
+
+        ProductFilter productFilter = new ProductFilter();
+        productFilter.setMaxPrice(maxPrice);
+        productFilter.setMinPrice(minPrice);
+        productFilter.setBrandName(brand);
+        productFilter.setColorName(color);
+
+        List<Product> products = productService.getAllProducts(productFilter);
+        if (!products.isEmpty()) {
             return ResponseEntity.ok(products);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No products found");
