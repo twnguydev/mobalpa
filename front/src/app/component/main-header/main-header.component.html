@@ -1,16 +1,44 @@
-<header class="bg-mobalpa-green ">
-    <div class="bg-emerald-green h-6"></div>
-    <div class="container mx-auto px-28 py-6 flex items-center justify-between">
-        <div class="flex items-center space-x-10">
-            <div class="w-56 flex-shrink-0">
-                <img src="assets/logo-MA2.png" alt="Logo" class="h-14 w-auto">
+<header class="bg-mobalpa-green relative">
+    <div class="bg-emerald-green h-8  ">
+        <div class="flex p-1  justify-around overflow-hidden ">
+            <div class="flex text_move">
+                <img class='w-6' src="/assets/icon/truck.png" alt="">
+                <p class="px-4 md:text-base text-xs ">LIVRAISON RAPIDE !</p>
             </div>
-            <nav class="hidden md:flex space-x-9">
+            <div class="flex text_move">
+                <img class='w-6' src="/assets/icon/discount.png" alt="">
+                <p class="px-4 md:text-base text-xs">PROMO DU MOMENT !</p>
+            </div>
+            <div class='flex text_move'>
+                <img class='w-6' src="/assets/icon/back-arrow.png" alt="">
+                <p class="px-4 md:text-base text-xs">RETOUR GRATUIT !</p>
+            </div>
+        </div>
+    </div>
+    <div class="container mx-auto px-6 py-4 flex items-center justify-between relative">
+        <div class="flex items-center space-x-6">
+            <div class="w-40 flex-shrink-0">
+                <img src="/assets/logo-MA2.png" alt="Logo" class="h-12 w-auto">
+            </div>
+
+            <!-- Menu Burger pour les petits écrans -->
+            <button (click)="toggleMenu()" class="md:hidden text-white focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7">
+                    </path>
+                </svg>
+            </button>
+
+            <!-- Menu pour grands écrans -->
+            <nav class="hidden md:flex space-x-6">
                 <a href="#" class="text-white font-gotham">Nos produits</a>
                 <a href="#" class="text-white font-gotham">Nouveautés</a>
                 <a href="#" class="text-white font-gotham">Promo</a>
             </nav>
         </div>
+
+        <!-- Autres éléments -->
         <div class="flex items-center space-x-7">
             <div class="searchBar" *ngIf="showSearchBar">
                 <input type="text" name="search" class="rounded-md w-60 p-1">
@@ -18,9 +46,16 @@
             <button (click)="toggleSearchBar()" class="w-8 h-8 flex-shrink-0">
                 <img src="assets/icon/loupe (1).png" alt="Search" class="w-full h-full object-contain">
             </button>
-            <img src="assets/icon/user.png" alt="User" class="w-8 h-8">
-            <img src="assets/icon/heart (2).png" alt="Favorites" class="w-8 h-8">
-            <img src="assets/icon/shopping-bag (2).png" alt="Cart" class="w-8 h-8">
+            <img src="assets/icon/user.png" alt="User" class="w-6 h-6 md:w-8 md:h-8">
+            <img src="assets/icon/heart (2).png" alt="Favorites" class="w-6 h-6 md:w-8 md:h-8">
+            <img src="assets/icon/shopping-bag (2).png" alt="Cart" class="w-6 h-6 md:w-8 md:h-8">
         </div>
+    </div>
+
+    <!-- Menu déroulant pour petits écrans -->
+    <div id="menu" class="md:hidden bg-mobalpa-green text-white font-gotham text-center absolute top-full left-0 right-0 z-50 hidden">
+        <a href="#" class="block px-4 py-2 hover:bg-mobalpa-green-alternate">Nos produits</a>
+        <a href="#" class="block px-4 py-2 hover:bg-mobalpa-green-alternate">Nouveautés</a>
+        <a href="#" class="block px-4 py-2 hover:bg-mobalpa-green-alternate">Promo</a>
     </div>
 </header>

@@ -13,8 +13,14 @@ import { CommonModule } from '@angular/common';
 })
 export class MainHeaderComponent {
   showSearchBar = false;
- 
-
+  menuOpen = false;
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen;
+    const menu = document.getElementById('menu');
+    if (menu) {
+      menu.classList.toggle('hidden', !this.menuOpen);
+    }
+  }
   toggleSearchBar(): void {
     this.showSearchBar = !this.showSearchBar;
   }

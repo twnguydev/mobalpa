@@ -7,6 +7,7 @@ module.exports = {
     extend: {
       colors: {
         'mobalpa-green': '#1E4347',
+        'mobalpa-green-alternate': '#316a70',
         'emerald-green': '#639D87',
         'custom-red': '#772C21',
         'custom-blue': '#2C5B75',
@@ -19,6 +20,13 @@ module.exports = {
       },
       height: {
         '0.1': '0.1rem',
+        '84': '16rem',
+        '86': '18rem',
+        '88': '19rem',
+        '90': '21rem',
+        '90': '21rem',
+        '95': '23rem',
+
         '100': '25rem', 
         '110': '26rem', 
         '114': '27rem', 
