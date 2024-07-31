@@ -110,58 +110,42 @@ public class ProductService {
         }
 
         if (product.getCategory() != null) {
-            Optional<Category> category = categoryRepository.findByName(product.getCategory().getName());
-            if (!category.isPresent()) {
-                categoryRepository.save(product.getCategory());
+            Optional<Category> categoryOpt = categoryRepository.findByName(product.getCategory().getName());
+            if (!categoryOpt.isPresent()) {
+                throw new RuntimeException("Category " + product.getCategory().getName() + " doesn't exist");
+            }
+            Category category = categoryOpt.get();
+            product.setCategory(category);
+
+            if (product.getSubcategory() != null) {
+                Optional<Subcategory> subcategoryOpt = subcategoryRepository.findByName(product.getSubcategory().getName());
+                if (!subcategoryOpt.isPresent()) {
+                    throw new RuntimeException("Subcategory " + product.getSubcategory().getName() + " doesn't exist in " + product.getCategory().getName());
+                }
+                Subcategory subcategory = subcategoryOpt.get();
+                if (!subcategory.getCategory().getUuid().equals(category.getUuid())) {
+                    throw new RuntimeException("This subcategory does not belong to the category: " + product.getCategory().getName());
+                }
+                product.setSubcategory(subcategory);
+
+                if (subcategory.getProducts() == null) {
+                    subcategory.setProducts(new ArrayList<>());
+                }
+                subcategory.getProducts().add(product);
+                subcategoryRepository.save(subcategory);
             } else {
-                product.setCategory(category.get());
+                throw new RuntimeException("Subcategory is required");
             }
         } else {
             throw new RuntimeException("Category is required");
         }
 
-        if (product.getSubcategory() != null) {
-            Optional<Subcategory> subcategory = subcategoryRepository.findByName(product.getSubcategory().getName());
-            if (!subcategory.isPresent()) {
-                Subcategory newSubcategory = product.getSubcategory();
-                newSubcategory.setCategory(product.getCategory());
-
-                if (product.getCategory() != null) {
-                    Category category = product.getCategory();
-                    if (category.getSubcategories() == null) {
-                        category.setSubcategories(new ArrayList<>());
-                    }
-                    category.getSubcategories().add(newSubcategory);
-                    categoryRepository.save(category);
-                }
-
-                subcategoryRepository.save(newSubcategory);
-            } else {
-                if (!subcategory.get().getCategory().getUuid().equals(product.getCategory().getUuid())) {
-                    throw new RuntimeException("This subcategory does not belong to the category: " + product.getCategory().getName());
-                }
-                if (product.getCategory() == null) {
-                    product.setCategory(subcategory.get().getCategory());
-                }
-                product.setSubcategory(subcategory.get());
-            }
-
-            Subcategory subcategoryEntity = product.getSubcategory();
-            if (subcategoryEntity.getProducts() == null) {
-                subcategoryEntity.setProducts(new ArrayList<>());
-            }
-            subcategoryEntity.getProducts().add(product);
-            subcategoryRepository.save(subcategoryEntity);
-        } else {
-            throw new RuntimeException("Subcategory is required");
-        }
-
         if (product.getBrand() != null) {
-            Optional<Brand> brand = brandRepository.findByName(product.getBrand().getName());
-            if (!brand.isPresent()) {
+            Optional<Brand> brandOpt = brandRepository.findByName(product.getBrand().getName());
+            if (!brandOpt.isPresent()) {
                 brandRepository.save(product.getBrand());
             } else {
-                product.setBrand(brand.get());
+                product.setBrand(brandOpt.get());
             }
         } else {
             throw new RuntimeException("Brand is required");
