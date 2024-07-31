@@ -14,9 +14,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Lazy;
 
-import java.util.ArrayList;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.ArrayList;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -40,7 +40,6 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        logger.debug("Loading user by email: {}", email);
         User user = userRepository.findByEmail(email);
         if (user == null) {
             throw new UsernameNotFoundException("User not found with email: " + email);
@@ -49,12 +48,10 @@ public class UserService implements UserDetailsService {
     }
 
     public Optional<User> getUserByUuid(UUID uuid) {
-        logger.debug("Fetching user by UUID: {}", uuid);
         return userRepository.findById(uuid);
     }
 
     public User registerUser(User user) {
-        logger.debug("Registering new user with email: {}", user.getEmail());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setToken(UUID.randomUUID().toString());
         user.setActive(false);
@@ -64,14 +61,12 @@ public class UserService implements UserDetailsService {
     }
 
     public void sendConfirmationEmail(User user) {
-        logger.debug("Sending confirmation email to: {}", user.getEmail());
         String confirmationUrl = appBaseUrl + "/api/users/confirm?token=" + user.getToken();
         String message = "Please confirm your email by clicking the link below:\n" + confirmationUrl;
         emailService.sendEmail(user.getEmail(), "Email Confirmation", message);
     }
 
     public User confirmUser(String token) {
-        logger.debug("Confirming user with token: {}", token);
         User user = userRepository.findByToken(token);
         if (user != null) {
             user.setActive(true);
@@ -82,12 +77,32 @@ public class UserService implements UserDetailsService {
     }
 
     public String generateToken(User user) {
-        logger.debug("Generating token for user with email: {}", user.getEmail());
         return jwtUtil.generateToken(user);
     }
 
     public User getUserByEmail(String email) {
-        logger.debug("Fetching user by email: {}", email);
         return userRepository.findByEmail(email);
+    }
+
+    public void sendPasswordResetEmail(User user) {
+        String resetToken = UUID.randomUUID().toString();
+        user.setToken(resetToken);
+        userRepository.save(user);
+    
+        String resetUrl = appBaseUrl + "/api/users/reset-password?token=" + resetToken;
+        String message = "Please reset your password by clicking the link below:\n" + resetUrl;
+        emailService.sendEmail(user.getEmail(), "Password Reset", message);
+    }
+    
+    public User resetPassword(String token, String newPassword) {
+        User user = userRepository.findByToken(token);
+        if (user != null) {
+            user.setPassword(passwordEncoder.encode(newPassword));
+            user.setToken(null);
+            userRepository.save(user);
+            return user;
+        } else {
+            return null;
+        }
     }
 }

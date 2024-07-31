@@ -20,6 +20,14 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig {
 
+    private static final String[] PUBLIC_URLS = {
+        "/api/users/register",
+        "/api/users/confirm",
+        "/api/users/login",
+        "/api/users/forgot-password",
+        "/api/users/reset-password"
+    };
+
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
 
@@ -31,11 +39,11 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/users/register", "/api/users/confirm", "/api/users/login").permitAll()
+                .requestMatchers(PUBLIC_URLS).permitAll()
                 .anyRequest().authenticated()
             )
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-    
+
         http.authenticationProvider(authenticationProvider());
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     

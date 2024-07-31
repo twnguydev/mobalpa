@@ -16,12 +16,15 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;  
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.when;
 
 public class AuthControllerTest {
 
@@ -138,5 +141,68 @@ public class AuthControllerTest {
         ResponseEntity<String> response = authController.loginUser(loginDTO);
         assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
         assertEquals("Authentication failed", response.getBody());
+    }
+
+    @Test
+    public void testForgotPassword_UserExists() {
+        String email = "testuser@gmail.com";
+        User user = new User();
+        user.setEmail(email);
+        user.setActive(true);
+
+        Map<String, String> body = new HashMap<>();
+        body.put("email", email);
+
+        when(userService.getUserByEmail(email)).thenReturn(user);
+
+        ResponseEntity<String> response = authController.forgotPassword(body);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("Password reset email sent.", response.getBody());
+    }
+
+    @Test
+    public void testForgotPassword_UserNotFound() {
+        String email = "nonexistentuser@gmail.com";
+
+        Map<String, String> body = new HashMap<>();
+        body.put("email", email);
+
+        when(userService.getUserByEmail(email)).thenReturn(null);
+
+        ResponseEntity<String> response = authController.forgotPassword(body);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("User not found or inactive", response.getBody());
+    }
+
+    @Test
+    public void testResetPassword_Success() {
+        String token = "validToken";
+        String newPassword = "newPassword123";
+        User user = new User();
+        user.setEmail("testuser@gmail.com");
+
+        Map<String, String> body = new HashMap<>();
+        body.put("newPassword", newPassword);
+
+        when(userService.resetPassword(token, newPassword)).thenReturn(user);
+
+        ResponseEntity<String> response = authController.resetPassword(token, body);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("Password reset successful.", response.getBody());
+    }
+
+    @Test
+    public void testResetPassword_InvalidToken() {
+        String token = "invalidToken";
+        String newPassword = "newPassword123";
+
+        Map<String, String> body = new HashMap<>();
+        body.put("newPassword", newPassword);
+
+        when(userService.resetPassword(token, newPassword)).thenReturn(null);
+
+        ResponseEntity<String> response = authController.resetPassword(token, body);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("Invalid token or user not found.", response.getBody());
     }
 }
