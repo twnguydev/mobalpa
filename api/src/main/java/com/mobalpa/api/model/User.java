@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 
 @Entity
 @NoArgsConstructor
-@Table(name = "user")
+@Table(name = "\"user\"")
 @Data
 @EqualsAndHashCode(exclude = {"payments", "orders", "roles", "wishlist"})
 public class User implements UserDetails {

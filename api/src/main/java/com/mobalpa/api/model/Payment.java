@@ -18,7 +18,7 @@ public class Payment {
     private UUID uuid;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_uuid", nullable = false)
     @JsonIgnore
     private User user;
 
