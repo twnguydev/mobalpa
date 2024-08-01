@@ -1,5 +1,5 @@
 <header class="bg-mobalpa-green relative">
-    <div class="bg-emerald-green h-8  ">
+    <div class="bg-emerald-green h-8 hidden md:block ">
         <div class="flex p-1  justify-around overflow-hidden ">
             <div class="flex text_move">
                 <img class='w-6' src="/assets/icon/truck.png" alt="">
@@ -16,30 +16,23 @@
         </div>
     </div>
     <div class="container mx-auto px-6 py-4 flex items-center justify-between relative">
-        <div class="flex items-center space-x-6">
+        <div class="flex items-center space-x-6 justify-between">
             <div class="w-40 flex-shrink-0">
                 <img src="/assets/logo-MA2.png" alt="Logo" class="h-12 w-auto">
             </div>
 
-            <!-- Menu Burger pour les petits écrans -->
-            <button (click)="toggleMenu()" class="md:hidden text-white focus:outline-none">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7">
-                    </path>
-                </svg>
-            </button>
+
 
             <!-- Menu pour grands écrans -->
             <nav class="hidden md:flex space-x-6">
-                <a href="#" class="text-white font-gotham">Nos produits</a>
+                <button (click)="toggleSousMenu()" class="text-white font-gotham">Nos produits</button>
                 <a href="#" class="text-white font-gotham">Nouveautés</a>
                 <a href="#" class="text-white font-gotham">Promo</a>
             </nav>
         </div>
 
         <!-- Autres éléments -->
-        <div class="flex items-center space-x-7">
+        <div class="flex items-center space-x-7 hidden md:flex">
             <div class="searchBar" *ngIf="showSearchBar">
                 <input type="text" name="search" class="rounded-md w-60 p-1">
             </div>
@@ -50,12 +43,91 @@
             <img src="assets/icon/heart (2).png" alt="Favorites" class="w-6 h-6 md:w-8 md:h-8">
             <img src="assets/icon/shopping-bag (2).png" alt="Cart" class="w-6 h-6 md:w-8 md:h-8">
         </div>
+
+
+
+        <div class="flex gap-5 block md:hidden"><img src="assets/icon/shopping-bag (2).png" alt="Cart" class="block md:hidden w-6 h-6 md:w-8 md:h-8">
+            <button (click)="toggleMenu()" class="md:hidden text-white focus:outline-none ">
+                <svg class="w-6 h-6   " fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7">
+                    </path>
+                </svg>
+            </button>
+        </div>
+        <!-- Menu Burger pour les petits écrans -->
+
+
+
     </div>
 
     <!-- Menu déroulant pour petits écrans -->
-    <div id="menu" class="md:hidden bg-mobalpa-green text-white font-gotham text-center absolute top-full left-0 right-0 z-50 hidden">
+    <div id="menu"
+        class="md:hidden bg-mobalpa-green text-white font-gotham text-center absolute top-full left-0 right-0 z-50 hidden">
+        <input type="text" name="search" class=" md:hidden w-4/5 md:w-1/2 lg:w-1/3 rounded-md p-1 mx-4">
+
         <a href="#" class="block px-4 py-2 hover:bg-mobalpa-green-alternate">Nos produits</a>
         <a href="#" class="block px-4 py-2 hover:bg-mobalpa-green-alternate">Nouveautés</a>
         <a href="#" class="block px-4 py-2 hover:bg-mobalpa-green-alternate">Promo</a>
+        <a href="#" class="block px-4 py-2 hover:bg-mobalpa-green-alternate">Se connecter</a>
+        <a href="#" class="block px-4 py-2 hover:bg-mobalpa-green-alternate">Promo</a>
+        <a href="#" class="block px-4 py-2 hover:bg-mobalpa-green-alternate">Liste de souhaits</a>
+
+
+    </div>
+
+
+
+    <div id="sous-menu"
+        class=" bg-white text-black font-gotham text-center absolute top-full left-0 right-0 z-50 hidden">
+        <table class="flex flex-col">
+            <thead>
+                <tr class=" flex justify-around ">
+                    <th>Cuisine</th>
+                    <th>Petit électroménager</th>
+                    <th>Grand électroménager</th>
+                    <th>Salle de bain</th>
+                    <th>Accessoire</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class=" flex  justify-around">
+                    <td>Plan de travail</td>
+                    <td>Grille pain</td>
+                    <td>Four</td>
+                    <td>Douche</td>
+                    <td>Ustensile de cuisine</td>
+                </tr>
+                <tr class=" flex justify-around ">
+                    <td>Table</td>
+                    <td>Micro-onde</td>
+                    <td>Donnée 2.3</td>
+                    <td>Donnée 2.4</td>
+                    <td>Donnée 2.5</td>
+                </tr>
+                <tr class=" flex  justify-around">
+                    <td>Plan de travail</td>
+                    <td>Grille pain</td>
+                    <td>Donnée 1.3</td>
+                    <td>Donnée 1.4</td>
+                    <td>Donnée 1.5</td>
+                </tr>
+                <tr class=" flex justify-around ">
+                    <td>Table</td>
+                    <td>Micro-onde</td>
+                    <td>Donnée 2.3</td>
+                    <td>Donnée 2.4</td>
+                    <td>Donnée 2.5</td>
+                </tr>
+                <tr class=" flex justify-around ">
+                    <td>Table</td>
+                    <td>Micro-onde</td>
+                    <td>Donnée 2.3</td>
+                    <td>Donnée 2.4</td>
+                    <td>Donnée 2.5</td>
+                </tr>
+                <!-- Ajoutez plus de lignes ici si nécessaire -->
+            </tbody>
+        </table>
     </div>
 </header>

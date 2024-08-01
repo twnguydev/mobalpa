@@ -21,6 +21,15 @@ export class MainHeaderComponent {
       menu.classList.toggle('hidden', !this.menuOpen);
     }
   }
+
+
+  toggleSousMenu() {
+    this.menuOpen = !this.menuOpen;
+    const menu = document.getElementById('sous-menu');
+    if (menu) {
+      menu.classList.toggle('hidden', !this.menuOpen);
+    }
+  }
   toggleSearchBar(): void {
     this.showSearchBar = !this.showSearchBar;
   }

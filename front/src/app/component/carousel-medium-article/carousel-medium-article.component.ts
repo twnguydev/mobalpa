@@ -24,7 +24,6 @@ export class CarouselMediumArticleComponent {
     { name: 'Produit 3', description: 'Description 3', image: 'image3.jpg', price: 30 },
     { name: 'Produit 3', description: 'Description 3', image: 'image3.jpg', price: 30 },
     { name: 'Produit 3', description: 'Description 3', image: 'image3.jpg', price: 30 },
-    // Ajoutez d'autres produits ici
   ];
   currentIndex = 0;
   itemsToShow = 4;

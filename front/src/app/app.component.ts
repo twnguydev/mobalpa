@@ -6,11 +6,12 @@ import { PromoComponent } from "./component/promo/promo.component";
 import { ShowCategorieOnPageComponent } from './component/show-categorie-on-page/show-categorie-on-page.component';
 import { SeparatorComponent } from './component/separator/separator.component';
 import { CarouselMediumArticleComponent } from './component/carousel-medium-article/carousel-medium-article.component';
+import { FooterComponent } from './component/footer/footer.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, MainHeaderComponent, BigCarouselComponent, PromoComponent, ShowCategorieOnPageComponent, SeparatorComponent, CarouselMediumArticleComponent],
+  imports: [RouterOutlet, MainHeaderComponent, BigCarouselComponent, PromoComponent, ShowCategorieOnPageComponent, SeparatorComponent, CarouselMediumArticleComponent,FooterComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
