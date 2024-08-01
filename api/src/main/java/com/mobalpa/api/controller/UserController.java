@@ -2,9 +2,11 @@ package com.mobalpa.api.controller;
 
 import com.mobalpa.api.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
+
 import com.mobalpa.api.model.User;
 import com.mobalpa.api.model.Wishlist;
 import com.mobalpa.api.dto.WishlistDTO;
+import com.mobalpa.api.service.WishlistService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +23,9 @@ public class UserController {
 
   @Autowired
   private UserService userService;
+
+  @Autowired
+  private WishlistService wishlistService;
 
   @GetMapping("/{uuid}")
   public ResponseEntity<?> getUserByUuid(@PathVariable UUID uuid) {
@@ -67,7 +72,7 @@ public class UserController {
 
     Wishlist wishlist = user.getWishlist();
     if (wishlist == null || wishlist.getItems().isEmpty()) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("This user has no items in their wishlist");
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("This user has no items in his wishlist");
     }
 
     return ResponseEntity.ok(wishlist);
@@ -79,10 +84,10 @@ public class UserController {
       Wishlist wishlist;
       switch (request.getAction().toLowerCase()) {
         case "add":
-          wishlist = userService.addToWishlist(id, request.getItem());
+          wishlist = wishlistService.addToWishlist(id, request.getItem());
           break;
         case "remove":
-          wishlist = userService.removeFromWishlist(id, request.getItem().getProductId(),
+          wishlist = wishlistService.removeFromWishlist(id, request.getItem().getProductId(),
               request.getItem().getQuantity());
           break;
         default:

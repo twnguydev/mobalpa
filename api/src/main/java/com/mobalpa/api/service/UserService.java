@@ -1,14 +1,9 @@
 package com.mobalpa.api.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import com.mobalpa.api.model.User;
-import com.mobalpa.api.model.Wishlist;
-import com.mobalpa.api.model.WishlistItem;
 import com.mobalpa.api.repository.UserRepository;
 import com.mobalpa.api.util.JwtUtil;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,18 +11,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Lazy;
 
-import java.util.Optional;
 import java.util.UUID;
 import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class UserService implements UserDetailsService {
-    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     @Autowired
     private UserRepository userRepository;
@@ -44,9 +34,6 @@ public class UserService implements UserDetailsService {
 
     @Value("${app.base.url}")
     private String appBaseUrl;
-    
-    @Autowired
-    private ObjectMapper objectMapper;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -140,56 +127,5 @@ public class UserService implements UserDetailsService {
 
     public void deleteUser(UUID uuid) {
         userRepository.deleteById(uuid);
-    }
-
-
-    public Wishlist addToWishlist(UUID userId, WishlistItem newItem) throws JsonProcessingException {
-        User user = getUserByUuid(userId);
-        Wishlist wishlist = user.getWishlist();
-
-        List<WishlistItem> items = objectMapper.readValue(wishlist.getItems(), new TypeReference<List<WishlistItem>>() {});
-        boolean itemExists = false;
-
-        for (WishlistItem item : items) {
-            if (item.getProductId().equals(newItem.getProductId())) {
-                item.setQuantity(item.getQuantity() + 1);
-                itemExists = true;
-                break;
-            }
-        }
-
-        if (!itemExists) {
-            items.add(newItem);
-        }
-
-        wishlist.setItems(objectMapper.writeValueAsString(items));
-        user.setWishlist(wishlist);
-        userRepository.save(user);
-
-        return wishlist;
-    }
-
-    public Wishlist removeFromWishlist(UUID userId, String productId, Integer quantity) throws JsonProcessingException {
-        User user = getUserByUuid(userId);
-        Wishlist wishlist = user.getWishlist();
-
-        List<WishlistItem> items = objectMapper.readValue(wishlist.getItems(), new TypeReference<List<WishlistItem>>() {});
-        items.removeIf(item -> {
-            if (item.getProductId().equals(productId)) {
-                if (quantity == null || item.getQuantity() <= quantity) {
-                    return true;
-                } else {
-                    item.setQuantity(item.getQuantity() - quantity);
-                    return false;
-                }
-            }
-            return false;
-        });
-
-        wishlist.setItems(objectMapper.writeValueAsString(items));
-        user.setWishlist(wishlist);
-        userRepository.save(user);
-
-        return wishlist;
     }
 }

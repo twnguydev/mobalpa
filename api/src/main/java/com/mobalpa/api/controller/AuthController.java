@@ -3,6 +3,7 @@ package com.mobalpa.api.controller;
 import com.mobalpa.api.dto.LoginDTO;
 import com.mobalpa.api.model.User;
 import com.mobalpa.api.service.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,15 +13,12 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import java.util.Map;
 
 @RestController
 @RequestMapping("api/users")
 public class AuthController {
-
-    private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
     @Autowired
     private UserService userService;
@@ -50,13 +48,19 @@ public class AuthController {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword()));
             User user = userService.getUserByEmail(loginDTO.getEmail());
-
+    
             if (user == null || !user.isActive()) {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Account is not active or does not exist");
             }
-
-            String token = userService.generateToken(user);
-            return ResponseEntity.ok(token);
+    
+            if (authentication.isAuthenticated()) {
+                String token = userService.generateToken(user);
+                user.setToken(token);
+                userService.updateUser(user.getUuid(), user);
+                return ResponseEntity.ok(token);
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authentication failed");
+            }
         } catch (BadCredentialsException e) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid credentials");
         } catch (AuthenticationException e) {
@@ -64,7 +68,7 @@ public class AuthController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred");
         }
-    }
+    }    
 
     @PostMapping("/forgot-password")
     public ResponseEntity<String> forgotPassword(@RequestBody Map<String, String> body) {
