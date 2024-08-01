@@ -168,11 +168,9 @@ public class ProductService {
                 if (!subcategoryOpt.isPresent()) {
                     throw new RuntimeException("Subcategory " + product.getSubcategory().getName() + " doesn't exist in " + product.getCategory().getName());
                 }
-                subcategoryRepository.save(newSubcategory);
-            } else {
-                if (!subcategory.get().getCategory().getUuid().equals(product.getCategory().getUuid())) {
-                    throw new RuntimeException(
-                            "This subcategory does not belong to the category: " + product.getCategory().getName());
+                Subcategory subcategory = subcategoryOpt.get();
+                if (!subcategory.getCategory().getUuid().equals(category.getUuid())) {
+                    throw new RuntimeException("This subcategory does not belong to the category: " + product.getCategory().getName());
                 }
                 product.setSubcategory(subcategory);
 
