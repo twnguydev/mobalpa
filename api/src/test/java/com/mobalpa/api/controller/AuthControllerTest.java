@@ -86,10 +86,12 @@ public class AuthControllerTest {
 
         when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
                 .thenReturn(authentication);
+        when(authentication.isAuthenticated()).thenReturn(true);
         when(userService.getUserByEmail(anyString())).thenReturn(user);
         when(userService.generateToken(user)).thenReturn("token");
 
         ResponseEntity<String> response = authController.loginUser(loginDTO);
+
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals("token", response.getBody());
     }
@@ -97,16 +99,36 @@ public class AuthControllerTest {
     @Test
     public void testLoginUser_InvalidCredentials() {
         LoginDTO loginDTO = new LoginDTO();
-        loginDTO.setEmail("nathanmatounga@gmail.com");
+        loginDTO.setEmail("invalid@example.com");
         loginDTO.setPassword("wrongpassword");
 
-        doThrow(new BadCredentialsException("Invalid credentials"))
-                .when(authenticationManager)
-                .authenticate(any(UsernamePasswordAuthenticationToken.class));
+        when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
+                .thenThrow(new BadCredentialsException("Invalid credentials"));
 
         ResponseEntity<String> response = authController.loginUser(loginDTO);
+
         assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
         assertEquals("Invalid credentials", response.getBody());
+    }
+
+    @Test
+    public void testLoginUser_AccountNotActive() {
+        LoginDTO loginDTO = new LoginDTO();
+        loginDTO.setEmail("inactive@example.com");
+        loginDTO.setPassword("123456");
+
+        User user = new User();
+        user.setEmail("inactive@example.com");
+        user.setActive(false);
+
+        when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
+                .thenReturn(authentication);
+        when(userService.getUserByEmail(anyString())).thenReturn(user);
+
+        ResponseEntity<String> response = authController.loginUser(loginDTO);
+
+        assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
+        assertEquals("Account is not active or does not exist", response.getBody());
     }
 
     @Test
@@ -129,18 +151,33 @@ public class AuthControllerTest {
     }
 
     @Test
-    public void testLoginUser_AuthenticationException() {
+    public void testLoginUser_AuthenticationFailed() {
         LoginDTO loginDTO = new LoginDTO();
-        loginDTO.setEmail("nonexistentuser@gmail.com"); 
+        loginDTO.setEmail("fail@example.com");
         loginDTO.setPassword("123456");
 
-        doThrow(new AuthenticationException("Authentication failed") {
-        }).when(authenticationManager)
-                .authenticate(any(UsernamePasswordAuthenticationToken.class));
+        when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
+                .thenThrow(new AuthenticationException("Authentication failed") {});
 
         ResponseEntity<String> response = authController.loginUser(loginDTO);
+
         assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
         assertEquals("Authentication failed", response.getBody());
+    }
+
+    @Test
+    public void testLoginUser_InternalServerError() {
+        LoginDTO loginDTO = new LoginDTO();
+        loginDTO.setEmail("error@example.com");
+        loginDTO.setPassword("123456");
+
+        when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
+                .thenThrow(new RuntimeException("Unexpected error"));
+
+        ResponseEntity<String> response = authController.loginUser(loginDTO);
+
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+        assertEquals("An error occurred", response.getBody());
     }
 
     @Test
