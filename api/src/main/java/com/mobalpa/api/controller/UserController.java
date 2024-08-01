@@ -1,4 +1,4 @@
-package com.mobalpa.api.controllers;
+package com.mobalpa.api.controller;
 
 import com.mobalpa.api.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
