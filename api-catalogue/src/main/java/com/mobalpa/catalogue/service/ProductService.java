@@ -69,18 +69,64 @@ public class ProductService {
     
     public Product updateProduct(UUID id, Product product) {
         return productRepository.findById(id).map(existingProduct -> {
-            if (product.getName() != null) existingProduct.setName(product.getName());
-            if (product.getDescription() != null) existingProduct.setDescription(product.getDescription());
-            if (product.getPrice() != null) existingProduct.setPrice(product.getPrice());
-            if (product.getStock() != null) existingProduct.setStock(product.getStock());
-            if (product.getWeight() != null) existingProduct.setWeight(product.getWeight());
-            if (product.getHeight() != null) existingProduct.setHeight(product.getHeight());
-            if (product.getWidth() != null) existingProduct.setWidth(product.getWidth());
-            if (product.getCategory() != null) existingProduct.setCategory(product.getCategory());
-            if (product.getSubcategory() != null) existingProduct.setSubcategory(product.getSubcategory());
-            if (product.getBrand() != null) existingProduct.setBrand(product.getBrand());
-            if (product.getColors() != null) existingProduct.setColors(product.getColors());
-            if (product.getImages() != null) existingProduct.setImages(product.getImages());
+            Optional.ofNullable(product.getName()).ifPresent(existingProduct::setName);
+            Optional.ofNullable(product.getDescription()).ifPresent(existingProduct::setDescription);
+            Optional.ofNullable(product.getPrice()).ifPresent(existingProduct::setPrice);
+            Optional.ofNullable(product.getStock()).ifPresent(existingProduct::setStock);
+            Optional.ofNullable(product.getWeight()).ifPresent(existingProduct::setWeight);
+            Optional.ofNullable(product.getHeight()).ifPresent(existingProduct::setHeight);
+            Optional.ofNullable(product.getWidth()).ifPresent(existingProduct::setWidth);
+
+            if (product.getCategory() != null) {
+                Optional<Category> existingCategory = categoryRepository.findByName(product.getCategory().getName());
+                if (existingCategory.isPresent()) {
+                    existingProduct.setCategory(existingCategory.get());
+                } else {
+                    throw new RuntimeException("Category " + product.getCategory().getName() + " doesn't exist");
+                }
+            }
+
+            if (product.getSubcategory() != null) {
+                Optional<Subcategory> existingSubcategory = subcategoryRepository
+                        .findByName(product.getSubcategory().getName());
+                if (existingSubcategory.isPresent()) {
+                    Category categoryToCheck = product.getCategory() != null ? product.getCategory()
+                            : existingProduct.getCategory();
+                    if (existingSubcategory.get().getCategory().getUuid().equals(categoryToCheck.getUuid())) {
+                        existingProduct.setSubcategory(existingSubcategory.get());
+                    } else {
+                        throw new RuntimeException("Subcategory " + product.getSubcategory().getName()
+                                + " doesn't belong to category " + categoryToCheck.getName());
+                    }
+                } else {
+                    throw new RuntimeException("Subcategory " + product.getSubcategory().getName() + " doesn't exist");
+                }
+            }
+
+            Optional.ofNullable(product.getBrand()).ifPresent(brand -> {
+                Optional<Brand> existingBrand = brandRepository.findByName(brand.getName());
+                existingBrand.ifPresent(existingProduct::setBrand);
+            });
+
+            Optional.ofNullable(product.getColors()).ifPresent(colors -> {
+                List<Color> updatedColors = new ArrayList<>();
+                for (Color color : colors) {
+                    colorRepository.findByName(color.getName()).ifPresent(updatedColors::add);
+                }
+                existingProduct.setColors(updatedColors);
+            });
+
+            Optional.ofNullable(product.getImages()).ifPresent(images -> {
+                List<Image> updatedImages = new ArrayList<>();
+                for (Image image : images) {
+                    Color imageColor = colorRepository.findByName(image.getColor().getName())
+                            .orElseThrow(() -> new RuntimeException("Color " + image.getColor().getName()
+                                    + " doesn't exist for image " + image.getUri()));
+                    image.setColor(imageColor);
+                    updatedImages.add(image);
+                }
+                existingProduct.setImages(updatedImages);
+            });
 
             return productRepository.save(existingProduct);
         }).orElseThrow(() -> new RuntimeException("Product not found with id " + id));
@@ -122,9 +168,11 @@ public class ProductService {
                 if (!subcategoryOpt.isPresent()) {
                     throw new RuntimeException("Subcategory " + product.getSubcategory().getName() + " doesn't exist in " + product.getCategory().getName());
                 }
-                Subcategory subcategory = subcategoryOpt.get();
-                if (!subcategory.getCategory().getUuid().equals(category.getUuid())) {
-                    throw new RuntimeException("This subcategory does not belong to the category: " + product.getCategory().getName());
+                subcategoryRepository.save(newSubcategory);
+            } else {
+                if (!subcategory.get().getCategory().getUuid().equals(product.getCategory().getUuid())) {
+                    throw new RuntimeException(
+                            "This subcategory does not belong to the category: " + product.getCategory().getName());
                 }
                 product.setSubcategory(subcategory);
 
@@ -179,7 +227,8 @@ public class ProductService {
                     if (imageColor.isPresent()) {
                         image.setColor(imageColor.get());
                     } else {
-                        throw new RuntimeException("This color does not exist for the product: " + image.getColor().getName() + " for image " + image.getUri());
+                        throw new RuntimeException("This color does not exist for the product: "
+                                + image.getColor().getName() + " for image " + image.getUri());
                     }
                 }
                 imageRepository.save(image);
