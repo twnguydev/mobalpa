@@ -90,7 +90,7 @@ public class AuthControllerTest {
         when(userService.getUserByEmail(anyString())).thenReturn(user);
         when(userService.generateToken(user)).thenReturn("token");
 
-        ResponseEntity<String> response = authController.loginUser(loginDTO);
+        ResponseEntity<?> response = authController.loginUser(loginDTO);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals("token", response.getBody());
@@ -105,7 +105,7 @@ public class AuthControllerTest {
         when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
                 .thenThrow(new BadCredentialsException("Invalid credentials"));
 
-        ResponseEntity<String> response = authController.loginUser(loginDTO);
+        ResponseEntity<?> response = authController.loginUser(loginDTO);
 
         assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
         assertEquals("Invalid credentials", response.getBody());
@@ -125,7 +125,7 @@ public class AuthControllerTest {
                 .thenReturn(authentication);
         when(userService.getUserByEmail(anyString())).thenReturn(user);
 
-        ResponseEntity<String> response = authController.loginUser(loginDTO);
+        ResponseEntity<?> response = authController.loginUser(loginDTO);
 
         assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
         assertEquals("Account is not active or does not exist", response.getBody());
@@ -145,7 +145,7 @@ public class AuthControllerTest {
                 .thenReturn(authentication);
         when(userService.getUserByEmail(anyString())).thenReturn(user);
 
-        ResponseEntity<String> response = authController.loginUser(loginDTO);
+        ResponseEntity<?> response = authController.loginUser(loginDTO);
         assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
         assertEquals("Account is not active or does not exist", response.getBody());
     }
@@ -159,7 +159,7 @@ public class AuthControllerTest {
         when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
                 .thenThrow(new AuthenticationException("Authentication failed") {});
 
-        ResponseEntity<String> response = authController.loginUser(loginDTO);
+        ResponseEntity<?> response = authController.loginUser(loginDTO);
 
         assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
         assertEquals("Authentication failed", response.getBody());
@@ -174,7 +174,7 @@ public class AuthControllerTest {
         when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
                 .thenThrow(new RuntimeException("Unexpected error"));
 
-        ResponseEntity<String> response = authController.loginUser(loginDTO);
+        ResponseEntity<?> response = authController.loginUser(loginDTO);
 
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
         assertEquals("An error occurred", response.getBody());

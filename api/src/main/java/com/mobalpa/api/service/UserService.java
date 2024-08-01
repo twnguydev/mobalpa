@@ -3,6 +3,7 @@ package com.mobalpa.api.service;
 import com.mobalpa.api.model.User;
 import com.mobalpa.api.repository.UserRepository;
 import com.mobalpa.api.util.JwtUtil;
+import com.mobalpa.api.model.Role;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,6 +30,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private EmailService emailService;
+
+    @Autowired
+    private RoleService roleService;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -62,13 +66,17 @@ public class UserService implements UserDetailsService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setToken(UUID.randomUUID().toString());
         user.setActive(false);
+
+        Role userRole = roleService.getRoleByName("ROLE_USER");
+        user.getRoles().add(userRole);
+
         userRepository.save(user);
         sendConfirmationEmail(user);
         return user;
     }
 
     public void sendConfirmationEmail(User user) {
-        String confirmationUrl = appBaseUrl + "/api/users/confirm?token=" + user.getToken();
+        String confirmationUrl = appBaseUrl + "api/users/confirm?token=" + user.getToken();
         String message = "Please confirm your email by clicking the link below:\n" + confirmationUrl;
         emailService.sendEmail(user.getEmail(), "Email Confirmation", message);
     }

@@ -21,11 +21,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private static final String[] PUBLIC_URLS = {
-        "/api/users/register",
-        "/api/users/confirm",
-        "/api/users/login",
-        "/api/users/forgot-password",
-        "/api/users/reset-password"
+            "/api/users/register",
+            "/api/users/confirm",
+            "/api/users/login",
+            "/api/users/forgot-password",
+            "/api/users/reset-password",
+            "/api/users/me"
     };
 
     @Autowired
@@ -37,16 +38,15 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers(PUBLIC_URLS).permitAll()
-                .anyRequest().authenticated()
-            )
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(PUBLIC_URLS).permitAll()
+                        .anyRequest().authenticated())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         http.authenticationProvider(authenticationProvider());
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-    
+
         return http.build();
     }
 
