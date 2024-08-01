@@ -52,8 +52,13 @@ public class CategoryController {
   }
 
   @PostMapping
-  public ResponseEntity<Category> createCategory(@RequestBody Category category) {
-    return ResponseEntity.ok(categoryService.createCategory(category));
+  public ResponseEntity<?> createCategory(@RequestBody Category category) {
+    try {
+      Category createdCategory = categoryService.createCategory(category);
+      return ResponseEntity.status(HttpStatus.CREATED).body(createdCategory);
+    } catch (IllegalArgumentException e) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
   }
 
   @PatchMapping("/{id}")
