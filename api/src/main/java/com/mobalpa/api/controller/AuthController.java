@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.authentication.BadCredentialsException;
 
@@ -28,8 +27,12 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@RequestBody User user) {
-        userService.registerUser(user);
-        return ResponseEntity.ok("Registration successful. Please check your email for confirmation.");
+        try {
+            userService.registerUser(user);
+            return ResponseEntity.ok("Registration successful. Please check your email for confirmation.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @GetMapping("/confirm")
@@ -45,22 +48,16 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<String> loginUser(@RequestBody LoginDTO loginDTO) {
         try {
-            Authentication authentication = authenticationManager.authenticate(
+            authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword()));
             User user = userService.getUserByEmail(loginDTO.getEmail());
-    
+
             if (user == null || !user.isActive()) {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Account is not active or does not exist");
             }
-    
-            if (authentication.isAuthenticated()) {
-                String token = userService.generateToken(user);
-                user.setToken(token);
-                userService.updateUser(user.getUuid(), user);
-                return ResponseEntity.ok(token);
-            } else {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authentication failed");
-            }
+
+            String token = userService.generateToken(user);
+            return ResponseEntity.ok(token);
         } catch (BadCredentialsException e) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid credentials");
         } catch (AuthenticationException e) {
@@ -68,7 +65,7 @@ public class AuthController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred");
         }
-    }    
+    }
 
     @PostMapping("/forgot-password")
     public ResponseEntity<String> forgotPassword(@RequestBody Map<String, String> body) {

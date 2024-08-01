@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Lazy;
 
 import java.util.UUID;
 import java.util.ArrayList;
+import java.util.Optional;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -53,6 +54,11 @@ public class UserService implements UserDetailsService {
     }
 
     public User registerUser(User user) {
+        Optional<User> existingUser = Optional.ofNullable(userRepository.findByEmail(user.getEmail()));
+        if (existingUser.isPresent()) {
+            throw new IllegalArgumentException("User with email " + user.getEmail() + " already exists");
+        }
+        
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setToken(UUID.randomUUID().toString());
         user.setActive(false);
