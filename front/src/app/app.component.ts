@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterOutlet, RouterLink } from '@angular/router';
-import { AuthService } from '@services/auth.service';
+import { LoginComponent } from '../app/components/login-components/login.component'
+import { HomeComponent } from '../app/components/home-components/home.component'
 
 @Component({
   selector: 'app-root',
@@ -10,15 +11,12 @@ import { AuthService } from '@services/auth.service';
   imports: [
     RouterOutlet,
     RouterLink,
-    CommonModule
+    CommonModule,
+    LoginComponent,
+    HomeComponent
   ]
 })
 export class AppComponent {
   title = 'Hello World from Angular!';
 
-  constructor(public authService: AuthService) { }
-
-  logout() {
-    this.authService.logout();
-  }
 }

@@ -53,7 +53,7 @@ export class AuthService {
       return of(null);
     }
 
-    return this.http.post<any>(`${this.apiUrl}/signup`, {
+    return this.http.post<any>(`${this.apiUrl}/register`, {
       ...data,
       birthdate: new Date(data.birthdate).toISOString()
     }, {
@@ -73,8 +73,9 @@ export class AuthService {
     );
   }
 
+
   checkInputsSignup(data: IUser): boolean | '' | null | undefined {
-    const birthdateRegex = new RegExp(/^\d{2}\/\d{2}\/\d{4}$/);
+    const birthdateRegex = new RegExp(/^\d{4}-\d{2}-\d{2}$/);
     const emailRegex = new RegExp(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/);
     const phoneRegex = new RegExp(/^\d{10}$/);
     return (
@@ -83,10 +84,7 @@ export class AuthService {
       emailRegex.test(data.email) &&
       (data.password.length > 5 && data.password === data.confirmPassword) &&
       birthdateRegex.test(data.birthdate) &&
-      data.phoneNumber && phoneRegex.test(data.phoneNumber) &&
-      data.address && data.address.length > 3 &&
-      data.city && data.city.length > 3 &&
-      data.zipcode && data.zipcode.length > 3
+      data.phoneNumber && phoneRegex.test(data.phoneNumber)
     );
   }
 
