@@ -8,4 +8,5 @@ import java.util.Optional;
 
 public interface CategoryRepository extends MongoRepository<Category, UUID> {
   Optional<Category> findByName(String name);
+  Optional<Category> findByUri(String uri);
 }

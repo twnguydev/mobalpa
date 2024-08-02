@@ -8,4 +8,5 @@ import java.util.Optional;
 
 public interface SubcategoryRepository extends MongoRepository<Subcategory, UUID> {
   Optional<Subcategory> findByName(String name);
+  Optional<Subcategory> findByUri(String uri);
 }
