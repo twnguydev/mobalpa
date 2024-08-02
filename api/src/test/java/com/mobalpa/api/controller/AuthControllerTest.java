@@ -1,6 +1,7 @@
 package com.mobalpa.api.controller;
 
 import com.mobalpa.api.dto.LoginDTO;
+import com.mobalpa.api.dto.LoginResponse;
 import com.mobalpa.api.model.User;
 import com.mobalpa.api.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
@@ -93,7 +94,8 @@ public class AuthControllerTest {
         ResponseEntity<?> response = authController.loginUser(loginDTO);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals("token", response.getBody());
+        LoginResponse expectedResponse = new LoginResponse(user, "token");
+        assertEquals(expectedResponse, response.getBody());
     }
 
     @Test
