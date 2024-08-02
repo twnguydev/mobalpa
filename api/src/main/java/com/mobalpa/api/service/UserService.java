@@ -7,11 +7,12 @@ import com.mobalpa.api.model.Role;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Lazy;
 
 import java.util.UUID;
@@ -37,6 +38,9 @@ public class UserService implements UserDetailsService {
     @Autowired
     private JwtUtil jwtUtil;
 
+    @Autowired
+    private TokenService tokenService;
+
     @Value("${app.base.url}")
     private String appBaseUrl;
 
@@ -46,13 +50,14 @@ public class UserService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("User not found with email: " + email);
         }
-        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), new ArrayList<>());
+        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
+                new ArrayList<>());
     }
-  
+
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
-  
+
     public User getUserByUuid(UUID uuid) {
         return userRepository.findById(uuid).orElseThrow(() -> new RuntimeException("User not found"));
     }
@@ -62,7 +67,7 @@ public class UserService implements UserDetailsService {
         if (existingUser.isPresent()) {
             throw new IllegalArgumentException("User with email " + user.getEmail() + " already exists");
         }
-        
+
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setToken(UUID.randomUUID().toString());
         user.setActive(false);
@@ -91,20 +96,32 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
+
+    @Transactional
     public String generateToken(User user) {
-        return jwtUtil.generateToken(user);
+        Optional<User> existingUser = Optional.of(userRepository.findByEmail(user.getEmail()));
+        if (existingUser.isEmpty()) {
+            throw new IllegalArgumentException("User with email " + user.getEmail() + " not found");
+        }
+
+        String token = tokenService.getTokenByEmail(user.getEmail());
+        if (token == null) {
+            token = jwtUtil.generateToken(user);
+            tokenService.saveToken(user.getEmail(), token);
+        }
+        return token;
     }
 
     public void sendPasswordResetEmail(User user) {
         String resetToken = UUID.randomUUID().toString();
         user.setToken(resetToken);
         userRepository.save(user);
-    
+
         String resetUrl = appBaseUrl + "/api/users/reset-password?token=" + resetToken;
         String message = "Please reset your password by clicking the link below:\n" + resetUrl;
         emailService.sendEmail(user.getEmail(), "Password Reset", message);
     }
-    
+
     public User resetPassword(String token, String newPassword) {
         User user = userRepository.findByToken(token);
         if (user != null) {
@@ -123,18 +140,30 @@ public class UserService implements UserDetailsService {
 
     public User updateUser(UUID uuid, User user) {
         return userRepository.findById(uuid).map(existingUser -> {
-            if (user.getFirstname() != null) existingUser.setFirstname(user.getFirstname());
-            if (user.getLastname() != null) existingUser.setLastname(user.getLastname());
-            if (user.getEmail() != null) existingUser.setEmail(user.getEmail());
-            if (user.getPassword() != null) existingUser.setPassword(user.getPassword());
-            if (user.getPhoneNumber() != null) existingUser.setPhoneNumber(user.getPhoneNumber());
-            if (user.getBirthdate() != null) existingUser.setBirthdate(user.getBirthdate());
-            if (user.getToken() != null) existingUser.setToken(user.getToken());
-            if (user.getZipcode() != null) existingUser.setZipcode(user.getZipcode());
-            if (user.getCity() != null) existingUser.setCity(user.getCity());
-            if (user.getAddress() != null) existingUser.setAddress(user.getAddress());
-            if (user.getUpdatedAt() != null) existingUser.setUpdatedAt(user.getUpdatedAt());
-            if (user.getRoles() != null) existingUser.setRoles(user.getRoles());
+            if (user.getFirstname() != null)
+                existingUser.setFirstname(user.getFirstname());
+            if (user.getLastname() != null)
+                existingUser.setLastname(user.getLastname());
+            if (user.getEmail() != null)
+                existingUser.setEmail(user.getEmail());
+            if (user.getPassword() != null)
+                existingUser.setPassword(user.getPassword());
+            if (user.getPhoneNumber() != null)
+                existingUser.setPhoneNumber(user.getPhoneNumber());
+            if (user.getBirthdate() != null)
+                existingUser.setBirthdate(user.getBirthdate());
+            if (user.getToken() != null)
+                existingUser.setToken(user.getToken());
+            if (user.getZipcode() != null)
+                existingUser.setZipcode(user.getZipcode());
+            if (user.getCity() != null)
+                existingUser.setCity(user.getCity());
+            if (user.getAddress() != null)
+                existingUser.setAddress(user.getAddress());
+            if (user.getUpdatedAt() != null)
+                existingUser.setUpdatedAt(user.getUpdatedAt());
+            if (user.getRoles() != null)
+                existingUser.setRoles(user.getRoles());
             return userRepository.save(existingUser);
         }).orElseThrow(() -> new IllegalArgumentException("User with id " + uuid + " not found"));
     }
