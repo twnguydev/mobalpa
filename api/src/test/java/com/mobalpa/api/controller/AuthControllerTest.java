@@ -179,7 +179,7 @@ public class AuthControllerTest {
         ResponseEntity<?> response = authController.loginUser(loginDTO);
 
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
-        assertEquals("An error occurred", response.getBody());
+        assertEquals("An error occurred while logging in", response.getBody());
     }
 
     @Test
