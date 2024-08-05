@@ -1,7 +1,11 @@
 package com.mobalpa.api.service;
 
-import com.mobalpa.api.dto.*;
+import com.mobalpa.api.dto.catalogue.CategoryDTO;
+import com.mobalpa.api.dto.catalogue.ProductDTO;
+import com.mobalpa.api.dto.catalogue.SubcategoryDTO;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -15,58 +19,74 @@ public class CatalogueService {
     @Autowired
     private RestTemplate restTemplate;
 
-    private static final String BASE_URL = "http://localhost:8081/api/catalogue";
+    @Value("${catalogue.base-url}")
+    private String baseUrl;
 
-    public List<CatalogueCategoryDTO> getAllCategories() {
-        CatalogueCategoryDTO[] categories = restTemplate.getForObject(BASE_URL + "/categories", CatalogueCategoryDTO[].class);
+    @Value("${catalogue.api-key}")
+    private String apiKey;
+
+    public List<CategoryDTO> getAllCategories() {
+        CategoryDTO[] categories = restTemplate.getForObject(this.baseUrl + "/categories", CategoryDTO[].class);
         return Arrays.asList(categories);
     }
 
-    public List<CatalogueProductDTO> getBestSellers() {
-        CatalogueProductDTO[] products = restTemplate.getForObject(BASE_URL + "/best-sellers", CatalogueProductDTO[].class);
+    public List<ProductDTO> getBestSellers() {
+        ProductDTO[] products = restTemplate.getForObject(this.baseUrl + "/best-sellers", ProductDTO[].class);
         return Arrays.asList(products);
     }
 
     public String getStoreById(UUID id) {
-        return restTemplate.getForObject(BASE_URL + "/store/" + id, String.class);
+        return restTemplate.getForObject(this.baseUrl + "/store/" + id, String.class);
     }
 
-    public List<CatalogueProductDTO> getAllProducts() {
-        CatalogueProductDTO[] products = restTemplate.getForObject(BASE_URL + "/products", CatalogueProductDTO[].class);
+    public List<ProductDTO> getAllProducts() {
+        ProductDTO[] products = restTemplate.getForObject(this.baseUrl + "/products", ProductDTO[].class);
         return Arrays.asList(products);
     }
 
-    public List<CatalogueProductDTO> getProductsByCategoryId(UUID categoryId) {
-        CatalogueProductDTO[] products = restTemplate.getForObject(BASE_URL + "/products/" + categoryId, CatalogueProductDTO[].class);
+    public ProductDTO getProductById(UUID id) {
+        return restTemplate.getForObject(this.baseUrl + "/products/" + id, ProductDTO.class);
+    }
+
+    public CategoryDTO getCategoryById(UUID id) {
+        return restTemplate.getForObject(this.baseUrl + "/categories/" + id, CategoryDTO.class);
+    }
+
+    public SubcategoryDTO getSubcategoryById(UUID id) {
+        return restTemplate.getForObject(this.baseUrl + "/subcategories/" + id, SubcategoryDTO.class);
+    }
+
+    public List<ProductDTO> getProductsByCategoryId(UUID categoryId) {
+        ProductDTO[] products = restTemplate.getForObject(this.baseUrl + "/products/" + categoryId, ProductDTO[].class);
         return Arrays.asList(products);
     }
 
-    public CatalogueProductDTO createProduct(CatalogueProductDTO productDTO) {
-        return restTemplate.postForObject(BASE_URL + "/products", productDTO, CatalogueProductDTO.class);
+    public ProductDTO createProduct(ProductDTO productDTO) {
+        return restTemplate.postForObject(this.baseUrl + "/products", productDTO, ProductDTO.class);
     }
 
-    public void updateProduct(UUID id, CatalogueProductDTO productDTO) {
-        restTemplate.patchForObject(BASE_URL + "/products/" + id, productDTO, Void.class);
+    public void updateProduct(UUID id, ProductDTO productDTO) {
+        restTemplate.patchForObject(this.baseUrl + "/products/" + id, productDTO, Void.class);
     }
 
     public void deleteProduct(UUID id) {
-        restTemplate.delete(BASE_URL + "/products/" + id);
+        restTemplate.delete(this.baseUrl + "/products/" + id);
     }
 
-    public List<CatalogueSubcategoryDTO> getAllProductCategories() {
-        CatalogueSubcategoryDTO[] categories = restTemplate.getForObject(BASE_URL + "/products/categories", CatalogueSubcategoryDTO[].class);
+    public List<SubcategoryDTO> getAllProductCategories() {
+        SubcategoryDTO[] categories = restTemplate.getForObject(this.baseUrl + "/products/categories", SubcategoryDTO[].class);
         return Arrays.asList(categories);
     }
 
-    public CatalogueSubcategoryDTO createProductCategory(CatalogueSubcategoryDTO categoryDTO) {
-        return restTemplate.postForObject(BASE_URL + "/products/categories", categoryDTO, CatalogueSubcategoryDTO.class);
+    public SubcategoryDTO createProductCategory(SubcategoryDTO categoryDTO) {
+        return restTemplate.postForObject(this.baseUrl + "/products/categories", categoryDTO, SubcategoryDTO.class);
     }
 
-    public void updateProductCategory(UUID id, CatalogueSubcategoryDTO categoryDTO) {
-        restTemplate.patchForObject(BASE_URL + "/products/categories/" + id, categoryDTO, Void.class);
+    public void updateProductCategory(UUID id, SubcategoryDTO categoryDTO) {
+        restTemplate.patchForObject(this.baseUrl + "/products/categories/" + id, categoryDTO, Void.class);
     }
 
     public void deleteProductCategory(UUID id) {
-        restTemplate.delete(BASE_URL + "/products/categories/" + id);
+        restTemplate.delete(this.baseUrl + "/products/categories/" + id);
     }
 }

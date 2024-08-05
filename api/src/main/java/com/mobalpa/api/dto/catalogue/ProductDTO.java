@@ -1,4 +1,4 @@
-package com.mobalpa.api.dto;
+package com.mobalpa.api.dto.catalogue;
 
 import lombok.Data;
 
@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
-public class CatalogueProductDTO {
+public class ProductDTO {
 
     private UUID uuid;
     private String name;
@@ -15,10 +15,10 @@ public class CatalogueProductDTO {
     private int stock;
     private LocalDateTime estimatedDelivery;
     private LocalDateTime createdAt;
-    private CatalogueCategoryDTO category;
-    private CatalogueBrandDTO brand;
+    private CategoryDTO category;
+    private BrandDTO brand;
     private double weight;
     private double height;
     private double width;
-    private CatalogueColorDTO color;
+    private ColorDTO color;
 }

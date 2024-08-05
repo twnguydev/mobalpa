@@ -1,7 +1,7 @@
 package com.mobalpa.api.controller;
 
 import com.mobalpa.api.dto.LoginDTO;
-import com.mobalpa.api.dto.LoginResponse;
+import com.mobalpa.api.dto.LoginRequestDTO;
 import com.mobalpa.api.model.User;
 import com.mobalpa.api.service.UserService;
 
@@ -58,7 +58,7 @@ public class AuthController {
             }
 
             String token = userService.generateToken(user);
-            return ResponseEntity.ok(new LoginResponse(user, token));
+            return ResponseEntity.ok(new LoginRequestDTO(user, token));
         } catch (BadCredentialsException e) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid credentials");
         } catch (AuthenticationException e) {

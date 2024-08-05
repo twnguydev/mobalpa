@@ -2,6 +2,8 @@ package com.mobalpa.api.model;
 
 import lombok.Data;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -15,6 +17,7 @@ public class Wishlist {
 
     @OneToOne
     @JoinColumn(name = "user_uuid", referencedColumnName = "uuid")
+    @JsonIgnore
     private User user;
 
     @Column(columnDefinition = "json", nullable = false)
