@@ -9,6 +9,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+
+import org.springframework.http.ResponseEntity;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -26,67 +33,148 @@ public class CatalogueService {
     private String apiKey;
 
     public List<CategoryDTO> getAllCategories() {
-        CategoryDTO[] categories = restTemplate.getForObject(this.baseUrl + "/categories", CategoryDTO[].class);
-        return Arrays.asList(categories);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("X-API-KEY", this.apiKey);
+        HttpEntity<String> request = new HttpEntity<>(headers);
+
+        ResponseEntity<CategoryDTO[]> response = restTemplate.exchange(
+            this.baseUrl + "/categories", HttpMethod.GET, request, CategoryDTO[].class);
+        return Arrays.asList(response.getBody());
     }
 
     public List<ProductDTO> getBestSellers() {
-        ProductDTO[] products = restTemplate.getForObject(this.baseUrl + "/best-sellers", ProductDTO[].class);
-        return Arrays.asList(products);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("X-API-KEY", this.apiKey);
+        HttpEntity<String> request = new HttpEntity<>(headers);
+
+        ResponseEntity<ProductDTO[]> response = restTemplate.exchange(
+            this.baseUrl + "/best-sellers", HttpMethod.GET, request, ProductDTO[].class);
+        return Arrays.asList(response.getBody());
     }
 
     public String getStoreById(UUID id) {
-        return restTemplate.getForObject(this.baseUrl + "/store/" + id, String.class);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("X-API-KEY", this.apiKey);
+        HttpEntity<String> request = new HttpEntity<>(headers);
+
+        ResponseEntity<String> response = restTemplate.exchange(
+            this.baseUrl + "/store/" + id, HttpMethod.GET, request, String.class);
+        return response.getBody();
     }
 
     public List<ProductDTO> getAllProducts() {
-        ProductDTO[] products = restTemplate.getForObject(this.baseUrl + "/products", ProductDTO[].class);
-        return Arrays.asList(products);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("X-API-KEY", this.apiKey);
+        HttpEntity<String> request = new HttpEntity<>(headers);
+
+        ResponseEntity<ProductDTO[]> response = restTemplate.exchange(
+            this.baseUrl + "/products", HttpMethod.GET, request, ProductDTO[].class);
+        return Arrays.asList(response.getBody());
     }
 
     public ProductDTO getProductById(UUID id) {
-        return restTemplate.getForObject(this.baseUrl + "/products/" + id, ProductDTO.class);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("X-API-KEY", this.apiKey);
+        HttpEntity<String> request = new HttpEntity<>(headers);
+
+        ResponseEntity<ProductDTO> response = restTemplate.exchange(
+            this.baseUrl + "/products/" + id, HttpMethod.GET, request, ProductDTO.class);
+        return response.getBody();
     }
 
     public CategoryDTO getCategoryById(UUID id) {
-        return restTemplate.getForObject(this.baseUrl + "/categories/" + id, CategoryDTO.class);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("X-API-KEY", this.apiKey);
+        HttpEntity<String> request = new HttpEntity<>(headers);
+
+        ResponseEntity<CategoryDTO> response = restTemplate.exchange(
+            this.baseUrl + "/categories/" + id, HttpMethod.GET, request, CategoryDTO.class);
+        return response.getBody();
     }
 
     public SubcategoryDTO getSubcategoryById(UUID id) {
-        return restTemplate.getForObject(this.baseUrl + "/subcategories/" + id, SubcategoryDTO.class);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("X-API-KEY", this.apiKey);
+        HttpEntity<String> request = new HttpEntity<>(headers);
+
+        ResponseEntity<SubcategoryDTO> response = restTemplate.exchange(
+            this.baseUrl + "/subcategories/" + id, HttpMethod.GET, request, SubcategoryDTO.class);
+        return response.getBody();
     }
 
     public List<ProductDTO> getProductsByCategoryId(UUID categoryId) {
-        ProductDTO[] products = restTemplate.getForObject(this.baseUrl + "/products/" + categoryId, ProductDTO[].class);
-        return Arrays.asList(products);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("X-API-KEY", this.apiKey);
+        HttpEntity<String> request = new HttpEntity<>(headers);
+
+        ResponseEntity<ProductDTO[]> response = restTemplate.exchange(
+            this.baseUrl + "/categories/" + categoryId + "/products", HttpMethod.GET, request, ProductDTO[].class);
+        return Arrays.asList(response.getBody());
     }
 
     public ProductDTO createProduct(ProductDTO productDTO) {
-        return restTemplate.postForObject(this.baseUrl + "/products", productDTO, ProductDTO.class);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("X-API-KEY", this.apiKey);
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<ProductDTO> request = new HttpEntity<>(productDTO, headers);
+
+        ResponseEntity<ProductDTO> response = restTemplate.exchange(
+            this.baseUrl + "/products", HttpMethod.POST, request, ProductDTO.class);
+        return response.getBody();
     }
 
     public void updateProduct(UUID id, ProductDTO productDTO) {
-        restTemplate.patchForObject(this.baseUrl + "/products/" + id, productDTO, Void.class);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("X-API-KEY", this.apiKey);
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<ProductDTO> request = new HttpEntity<>(productDTO, headers);
+
+        restTemplate.exchange(this.baseUrl + "/products/" + id, HttpMethod.PATCH, request, Void.class);
     }
 
     public void deleteProduct(UUID id) {
-        restTemplate.delete(this.baseUrl + "/products/" + id);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("X-API-KEY", this.apiKey);
+        HttpEntity<String> request = new HttpEntity<>(headers);
+
+        restTemplate.exchange(this.baseUrl + "/products/" + id, HttpMethod.DELETE, request, Void.class);
     }
 
     public List<SubcategoryDTO> getAllProductCategories() {
-        SubcategoryDTO[] categories = restTemplate.getForObject(this.baseUrl + "/products/categories", SubcategoryDTO[].class);
-        return Arrays.asList(categories);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("X-API-KEY", this.apiKey);
+        HttpEntity<String> request = new HttpEntity<>(headers);
+
+        ResponseEntity<SubcategoryDTO[]> response = restTemplate.exchange(
+            this.baseUrl + "/products/categories", HttpMethod.GET, request, SubcategoryDTO[].class);
+        return Arrays.asList(response.getBody());
     }
 
     public SubcategoryDTO createProductCategory(SubcategoryDTO categoryDTO) {
-        return restTemplate.postForObject(this.baseUrl + "/products/categories", categoryDTO, SubcategoryDTO.class);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("X-API-KEY", this.apiKey);
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<SubcategoryDTO> request = new HttpEntity<>(categoryDTO, headers);
+
+        ResponseEntity<SubcategoryDTO> response = restTemplate.exchange(
+            this.baseUrl + "/products/categories", HttpMethod.POST, request, SubcategoryDTO.class);
+        return response.getBody();
     }
 
     public void updateProductCategory(UUID id, SubcategoryDTO categoryDTO) {
-        restTemplate.patchForObject(this.baseUrl + "/products/categories/" + id, categoryDTO, Void.class);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("X-API-KEY", this.apiKey);
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<SubcategoryDTO> request = new HttpEntity<>(categoryDTO, headers);
+
+        restTemplate.exchange(this.baseUrl + "/products/categories/" + id, HttpMethod.PATCH, request, Void.class);
     }
 
     public void deleteProductCategory(UUID id) {
-        restTemplate.delete(this.baseUrl + "/products/categories/" + id);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("X-API-KEY", this.apiKey);
+        HttpEntity<String> request = new HttpEntity<>(headers);
+
+        restTemplate.exchange(this.baseUrl + "/products/categories/" + id, HttpMethod.DELETE, request, Void.class);
     }
 }
