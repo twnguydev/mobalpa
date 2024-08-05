@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterOutlet, RouterLink } from '@angular/router';
-import { LoginComponent } from '../app/components/login-components/login.component'
-import { HomeComponent } from '../app/components/home-components/home.component'
+import { LoginComponent } from '../app/components/login-components/login.component';
+import { HomeComponent } from '../app/components/home-components/home.component';
+// import { CategoryComponent } from '../app/category-components/category.component';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,7 @@ import { HomeComponent } from '../app/components/home-components/home.component'
     RouterLink,
     CommonModule,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
   ]
 })
 export class AppComponent {

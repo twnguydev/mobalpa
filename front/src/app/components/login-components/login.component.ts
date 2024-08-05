@@ -30,30 +30,30 @@ export class LoginComponent implements OnInit {
   ngOnInit() {}
 
   onSubmit() {
-    console.log('Form submitted', this.form.value);
-    this.formSubmitted = true;
+  //   console.log('Form submitted', this.form.value);
+  //   this.formSubmitted = true;
 
-    if (this.form.valid) {
-      const formData = { ...this.form.value };
+  //   if (this.form.valid) {
+  //     const formData = { ...this.form.value };
 
-      console.log('Info', formData);
+  //     console.log('Info', formData);
 
-      this.authService.login(formData).subscribe({
-        next: (response) => {
-          console.log('Login successful', response);
-          this.successMessage = 'Connexion réussie !';
-          this.errorMessage = '';
-          setTimeout(() => this.router.navigate(['/home']), 3000);
-        },
-        error: (error) => {
-          console.error('Login error', error);
-          this.errorMessage = 'Erreur lors de la connexion. Veuillez réessayer.';
-          this.successMessage = '';
-        }
-      });
-    } else {
-      this.logFormErrors();
-    }
+  //     this.authService.login(formData).subscribe({
+  //       next: (response) => {
+  //         console.log('Login successful', response);
+  //         this.successMessage = 'Connexion réussie !';
+  //         this.errorMessage = '';
+  //         setTimeout(() => this.router.navigate(['/home']), 3000);
+  //       },
+  //       error: (error) => {
+  //         console.error('Login error', error);
+  //         this.errorMessage = 'Erreur lors de la connexion. Veuillez réessayer.';
+  //         this.successMessage = '';
+  //       }
+  //     });
+  //   } else {
+  //     this.logFormErrors();
+  //   }
   }
 
   togglePasswordVisibility() {
