@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -9,7 +10,7 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  imports: [ReactiveFormsModule, FormsModule]
+  imports: [ReactiveFormsModule, FormsModule, CommonModule]
 })
 export class LoginComponent implements OnInit {
   form: FormGroup;
@@ -47,6 +48,8 @@ export class LoginComponent implements OnInit {
 
   async onSubmit() {
     this.submitted = true;
+    this.errorMessage = ''; // Réinitialiser le message d'erreur
+
     if (this.form.valid) {
       const { email, password } = this.form.value;
 
@@ -61,13 +64,29 @@ export class LoginComponent implements OnInit {
             localStorage.removeItem('rememberedEmail');
             localStorage.removeItem('rememberedPassword');
           }
+          // Rediriger vers le profil ou une autre page
           // this.router.navigate(['/Profile']);
         },
         error: error => {
           console.error('Login error', error);
-          this.errorMessage = 'Invalid email or password. Please try again.';
+          this.handleError(error); // Appeler la méthode de gestion des erreurs
         }
       });
+    }
+  }
+
+  private handleError(error: any) {
+    // Traitement des erreurs
+    if (error.status === 400) {
+      this.errorMessage = 'Mauvaise requête. Veuillez vérifier vos informations.';
+    } else if (error.status === 403) {
+      this.errorMessage = 'Email ou mot de passe invalide.';
+    } else if (error.status === 404) {
+      this.errorMessage = 'Service non trouvé. Veuillez réessayer plus tard.';
+    } else if (error.status === 500) {
+      this.errorMessage = 'Erreur interne du serveur. Veuillez réessayer.';
+    } else {
+      this.errorMessage = 'Une erreur est survenue. Veuillez réessayer.';
     }
   }
 
@@ -104,13 +123,17 @@ export class LoginComponent implements OnInit {
         },
         error: error => {
           console.error('Forgot password error', error);
-          if (error && error.error && typeof error.error === 'string') {
-            this.errorMessage = error.error;
-          } else {
-            this.errorMessage = 'Erreur lors de l\'envoi de l\'email de réinitialisation. Veuillez réessayer.';
-          }
+          this.handleForgotPasswordError(error); // Appeler la méthode de gestion des erreurs
         }
       });
+    }
+  }
+
+  private handleForgotPasswordError(error: any) {
+    if (error && error.error && typeof error.error === 'string') {
+      this.errorMessage = error.error;
+    } else {
+      this.errorMessage = 'Erreur lors de l\'envoi de l\'email de réinitialisation. Veuillez réessayer.';
     }
   }
 }

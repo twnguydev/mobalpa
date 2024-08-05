@@ -11,8 +11,8 @@
                  formControlName="email" type="email" name="email"
                  class="bg-emerald-green text-xl pl-2 bg-opacity-30 rounded-xl h-12 w-64">
           <span class="text-red" *ngIf="form.get('email')?.invalid && form.get('email')?.touched">
-            <span *ngIf="form.get('email')?.errors?.['required']">Ecrire email</span>
-            <span *ngIf="form.get('email')?.errors?.['email']">Format de email incorrect</span>
+            <span class="text-red-600" *ngIf="form.get('email')?.errors?.['required']">Veuillez entrer un email</span>
+            <span class="text-red-600" *ngIf="form.get('email')?.errors?.['email']">Format de email incorrect</span>
           </span>
 
           <p class="mb-4 text-xl mt-12 font-bold text-mobalpa-green flex justify-between">
@@ -27,8 +27,8 @@
                  class="w-8 h-10 absolute right-2 top-1 cursor-pointer z-30">
           </div>
           <span class="text-red" *ngIf="form.get('password')?.invalid && form.get('password')?.touched">
-            <span *ngIf="form.get('password')?.errors?.['required']">Ecrire le mot de passe</span>
-            <span *ngIf="form.get('password')?.errors?.['minlength']">Minimum 6 caractères</span>
+            <span class="text-red-600" *ngIf="form.get('password')?.errors?.['required']">Veuillez entrer un mot de passe</span>
+            <span class="text-red-600" *ngIf="form.get('password')?.errors?.['minlength']">Minimum 6 caractères</span>
           </span>
           <div class="mb-8">
             <a href="#" (click)="showForgotPassword()" class="text-mobalpa-green text-sm font-normal">Mot de passe oublié?</a>
@@ -45,9 +45,12 @@
 
 
       </div>
-      <a href="/register" class="text-l hover:underline font-normal text-white">
-        <p class="mt-3">Vous n'avez pas encore de compte?Inscrivez-vous !</p>
-      </a>
+      <div class="text-center flex  justify-start  mt-2 p-2">
+        <a href="/register" class="text-l hover:underline font-normal text-white">
+        <p class="text-white">Vous n'avez pas encore de compte?</p>
+          <p>Inscrivez-vous !</p>
+        </a>
+      </div>
     </div>
   </div>
 
@@ -66,8 +69,8 @@
         Réinitialiser le mot de passe
       </button>
       <span class="text-red-600" *ngIf="forgotPasswordForm.get('forgotPasswordEmail')?.invalid && forgotPasswordForm.get('forgotPasswordEmail')?.touched">
-        <span *ngIf="forgotPasswordForm.get('forgotPasswordEmail')?.errors?.['required']">Veuillez entrer un email</span>
-        <span *ngIf="forgotPasswordForm.get('forgotPasswordEmail')?.errors?.['email']">Format de email incorrect</span>
+        <span class="text-red-600" *ngIf="forgotPasswordForm.get('forgotPasswordEmail')?.errors?.['required']">Veuillez entrer un email</span>
+        <span class="text-red-600" *ngIf="forgotPasswordForm.get('forgotPasswordEmail')?.errors?.['email']">Format de email incorrect</span>
       </span>
     </form>
   </div>

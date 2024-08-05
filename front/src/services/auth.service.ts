@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import type { IUser } from '@interfaces/user.interface';
 import { environment } from '../environments/environment';
@@ -20,30 +20,19 @@ export class AuthService {
         'X-API-KEY': `${environment.apiKey}`
       }
     }).pipe(
-      switchMap(response => {
+      map(response => {
         if (response && response.token) {
           localStorage.setItem('token', response.token);
-          return this.http.get<any>(`${this.apiUrl}/me`, {
-            headers: this.getAuthHeaders()
-          }).pipe(
-            map(user => {
-              localStorage.setItem('currentUser', JSON.stringify(user));
-              return { ...response, user };
-            }),
-            catchError(fetchError => {
-              console.error('Fetch user data error', fetchError);
-              return of(null);
-            })
-          );
         }
-        return of(null);
+        return response;
       }),
       catchError(error => {
         console.error('Login error', error);
-        return of(null);
+        return throwError(error);
       })
     );
   }
+
 
 
   signup(data: IUser): Observable<any> {
