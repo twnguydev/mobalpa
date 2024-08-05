@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
 
   async onSubmit() {
     this.submitted = true;
-    this.errorMessage = ''; // Réinitialiser le message d'erreur
+    this.errorMessage = '';
 
     if (this.form.valid) {
       const { email, password } = this.form.value;
@@ -64,12 +64,11 @@ export class LoginComponent implements OnInit {
             localStorage.removeItem('rememberedEmail');
             localStorage.removeItem('rememberedPassword');
           }
-          // Rediriger vers le profil ou une autre page
           // this.router.navigate(['/Profile']);
         },
         error: error => {
           console.error('Login error', error);
-          this.handleError(error); // Appeler la méthode de gestion des erreurs
+          this.handleError(error);
         }
       });
     }
@@ -79,8 +78,10 @@ export class LoginComponent implements OnInit {
     // Traitement des erreurs
     if (error.status === 400) {
       this.errorMessage = 'Mauvaise requête. Veuillez vérifier vos informations.';
+    } else if (error.status === 401) {
+      this.errorMessage = 'Authentification échouée. Veuillez vérifier vos identifiants.';
     } else if (error.status === 403) {
-      this.errorMessage = 'Email ou mot de passe invalide.';
+      this.errorMessage = 'Accès refusé. Votre email ou votre mot de passe est incorrecte.';
     } else if (error.status === 404) {
       this.errorMessage = 'Service non trouvé. Veuillez réessayer plus tard.';
     } else if (error.status === 500) {
@@ -88,7 +89,10 @@ export class LoginComponent implements OnInit {
     } else {
       this.errorMessage = 'Une erreur est survenue. Veuillez réessayer.';
     }
+
+      console.error('Erreur capturée:', error);
   }
+
 
   private hashPassword(password: string): string {
     return btoa(password);
