@@ -15,6 +15,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.context.annotation.Lazy;
 
+import jakarta.mail.MessagingException; 
+import java.io.IOException; 
+
 import java.util.UUID;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -82,8 +85,19 @@ public class UserService implements UserDetailsService {
 
     public void sendConfirmationEmail(User user) {
         String confirmationUrl = appBaseUrl + "api/users/confirm?token=" + user.getToken();
-        String message = "Please confirm your email by clicking the link below:\n" + confirmationUrl;
-        emailService.sendEmail(user.getEmail(), "Email Confirmation", message);
+        try {
+            emailService.sendHtmlEmail(
+                user.getEmail(),
+                "Confirmation de l'email",
+                "confirmationEmailTemplate.html",
+                "${user.firstName}", user.getFirstname(),
+                "${confirmationUrl}", confirmationUrl,
+                "${appName}", "Mobalpa"
+            );
+        } catch (MessagingException | IOException e) {
+            // Gérer l'exception, par exemple en la journalisant
+            e.printStackTrace();
+        }
     }
 
     public User confirmUser(String token) {
@@ -117,10 +131,22 @@ public class UserService implements UserDetailsService {
         user.setToken(resetToken);
         userRepository.save(user);
 
-        String resetUrl = appBaseUrl + "/api/users/reset-password?token=" + resetToken;
-        String message = "Please reset your password by clicking the link below:\n" + resetUrl;
-        emailService.sendEmail(user.getEmail(), "Password Reset", message);
+    
+        String resetUrlWithToken =  "http://localhost:4200/reset-password?token=" + resetToken;
+        try {
+            emailService.sendHtmlEmail(user.getEmail(),
+                "Réinitialisation du mot de passe",
+                "passwordResetTemplate.html",
+                "${resetUrlWithToken}", resetUrlWithToken,
+                "${appName}", "Mobalpa");
+        } catch (MessagingException | IOException e) {
+            e.printStackTrace();
+        }
     }
+    
+    
+    
+
 
     public User resetPassword(String token, String newPassword) {
         User user = userRepository.findByToken(token);

@@ -1,0 +1,78 @@
+<div class="h-screen flex justify-center">
+  <div class="h-screen -ml-48 w-96 z-1 bg-emerald-green"></div>
+  <div class="absolute z-20 mt-20">
+    <div class="ml-4">
+      <p class="mb-6 text-5xl font-bold text-white">Connexion</p>
+      <div class="bg-white shadow-[0_35px_60px_-15px_rgba(0,0,0,0.9)] h-98 rounded-3xl p-2 pl-12 pt-5">
+        <span class="text-red-600" *ngIf="errorMessage">{{ errorMessage }}</span> <!-- Message d'erreur global -->
+
+        <form class="w-64 mr-10" [formGroup]="form" (ngSubmit)="onSubmit()" method="post" action="#">
+          <p class="mb-4 text-xl font-bold text-mobalpa-green">E-mail</p>
+          <input id="email"
+                 [ngClass]="{'bg-red-600': form.get('email')?.invalid && form.get('email')?.touched}"
+                 formControlName="email" type="email" name="email"
+                 class="bg-emerald-green text-xl pl-2 bg-opacity-30 rounded-xl h-12 w-64">
+          <span class="text-red" *ngIf="form.get('email')?.invalid && form.get('email')?.touched">
+            <span class="text-red-600" *ngIf="form.get('email')?.errors?.['required']">Veuillez entrer un email</span>
+            <span class="text-red-600" *ngIf="form.get('email')?.errors?.['email']">Format de email incorrect</span>
+          </span>
+
+          <p class="mb-4 text-xl mt-12 font-bold text-mobalpa-green flex justify-between">
+            Mot de passe
+          </p>
+          <div class="relative flex">
+            <input id="password"
+                   [ngClass]="{'bg-red-600': form.get('password')?.invalid && form.get('password')?.touched}"
+                   formControlName="password" [type]="showPassword ? 'text' : 'password'" name="password"
+                   class="bg-emerald-green text-xl pl-2 bg-opacity-30 rounded-xl h-12 w-64 mb-2">
+            <img src="assets/login-and-register/eye-icon.png" (click)="togglePasswordVisibility()"
+                 class="w-8 h-10 absolute right-2 top-1 cursor-pointer z-30">
+          </div>
+          <span class="text-red" *ngIf="form.get('password')?.invalid && form.get('password')?.touched">
+            <span class="text-red-600" *ngIf="form.get('password')?.errors?.['required']">Veuillez entrer un mot de passe</span>
+            <span class="text-red-600" *ngIf="form.get('password')?.errors?.['minlength']">Minimum 6 caractères</span>
+          </span>
+          <div class="mb-8">
+            <a href="#" (click)="showForgotPassword()" class="text-mobalpa-green text-sm font-normal">Mot de passe oublié?</a>
+          </div>
+          <button type="submit" [disabled]="form.invalid"
+                  class="bg-mobalpa-green bg-opacity-70 ml-full px-7 py-2 rounded-xl font-bold text-white text-xl mb-1">
+            Connexion
+          </button>
+        </form>
+        <div class="w-64">
+          <input type="checkbox" [(ngModel)]="rememberMe" class="mb-8" name="rememberMe" id="remember">
+          <label for="remember" class="text-mobalpa-green ml-1 text-sm font-normal">Souvenez-vous de moi</label>
+        </div>
+      </div>
+      <div class="text-center flex justify-start mt-2 p-2">
+        <a href="/register" class="text-l hover:underline font-normal text-white">
+          <p class="text-white">Vous n'avez pas encore de compte?</p>
+          <p>Inscrivez-vous !</p>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="forgotPasswordVisible" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+    <div class="bg-white rounded-lg p-8 shadow-lg relative w-96">
+      <button class="absolute top-2 right-2 text-black" (click)="hideForgotPassword()">×</button>
+      <p class="text-xl font-bold text-mobalpa-green mb-4">Entrez votre email pour réinitialiser votre mot de passe</p>
+
+      <span class="text-red-600 mb-2" *ngIf="errorMessage">{{ errorMessage }}</span>
+
+      <form [formGroup]="forgotPasswordForm" (ngSubmit)="onForgotPassword()">
+        <input id="forgot-password-email" formControlName="forgotPasswordEmail" type="email" name="email" placeholder="E-mail"
+               class="bg-emerald-green text-xl pl-2 bg-opacity-30 rounded-xl h-12 w-full mb-2">
+        <button type="submit" [disabled]="forgotPasswordForm.get('forgotPasswordEmail')?.invalid"
+                class="bg-mobalpa-green hover:bg-emerald-green cursor-pointer bg-opacity-70 w-full px-7 py-2 rounded-xl font-bold text-white text-xl mb-1">
+          Réinitialiser le mot de passe
+        </button>
+        <span class="text-red-600" *ngIf="forgotPasswordForm.get('forgotPasswordEmail')?.invalid && forgotPasswordForm.get('forgotPasswordEmail')?.touched">
+          <span class="text-red-600" *ngIf="forgotPasswordForm.get('forgotPasswordEmail')?.errors?.['required']">Veuillez entrer un email</span>
+          <span class="text-red-600" *ngIf="forgotPasswordForm.get('forgotPasswordEmail')?.errors?.['email']">Format de email incorrect</span>
+        </span>
+      </form>
+    </div>
+  </div>
+</div>

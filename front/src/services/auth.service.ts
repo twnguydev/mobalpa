@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import type { IUser } from '@interfaces/user.interface';
 import { environment } from '../environments/environment';
 
@@ -21,31 +21,19 @@ export class AuthService {
       }
     }).pipe(
       map(response => {
-        localStorage.setItem('token', response.token);
-        this.fetchUserData(response.token);
+        if (response && response.token) {
+          localStorage.setItem('token', response.token);
+        }
         return response;
       }),
       catchError(error => {
         console.error('Login error', error);
-        return of(null);
+        return throwError(error);
       })
     );
   }
 
-  fetchUserData(token: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/me`, {
-      headers: this.getAuthHeaders()
-    }).pipe(
-      map(user => {
-        localStorage.setItem('currentUser', JSON.stringify(user));
-        return user;
-      }),
-      catchError(error => {
-        console.error('Fetch user data error', error);
-        return of(null);
-      })
-    );
-  }
+
 
   signup(data: IUser): Observable<any> {
     if (!this.checkInputsSignup(data)) {
@@ -53,7 +41,7 @@ export class AuthService {
       return of(null);
     }
 
-    return this.http.post<any>(`${this.apiUrl}/signup`, {
+    return this.http.post<any>(`${this.apiUrl}/register`, {
       ...data,
       birthdate: new Date(data.birthdate).toISOString()
     }, {
@@ -73,8 +61,46 @@ export class AuthService {
     );
   }
 
+
+  forgotPassword(email: string): Observable<string> {
+    return this.http.post(`${this.apiUrl}/forgot-password`, { email }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'X-API-KEY': `${environment.apiKey}`
+      },
+      responseType: 'text' as 'json'
+    }).pipe(
+      map(response => {
+        return response as string;
+      }),
+      catchError(error => {
+        console.error('Forgot password error', error);
+        return of('An error occurred');
+      })
+    );
+  }
+
+  resetPassword(token: string, newPassword: string): Observable<string> {
+    return this.http.post(`${this.apiUrl}/reset-password`, { newPassword }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'X-API-KEY': `${environment.apiKey}`
+      },
+      params: { token },
+      responseType: 'text' as 'json'
+    }).pipe(
+      map(response => {
+        return response as string;
+      }),
+      catchError(error => {
+        console.error('Reset password error', error);
+        return of('An error occurred');
+      })
+    );
+  }
+
   checkInputsSignup(data: IUser): boolean | '' | null | undefined {
-    const birthdateRegex = new RegExp(/^\d{2}\/\d{2}\/\d{4}$/);
+    const birthdateRegex = new RegExp(/^\d{4}-\d{2}-\d{2}$/);
     const emailRegex = new RegExp(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/);
     const phoneRegex = new RegExp(/^\d{10}$/);
     return (
@@ -83,10 +109,7 @@ export class AuthService {
       emailRegex.test(data.email) &&
       (data.password.length > 5 && data.password === data.confirmPassword) &&
       birthdateRegex.test(data.birthdate) &&
-      data.phoneNumber && phoneRegex.test(data.phoneNumber) &&
-      data.address && data.address.length > 3 &&
-      data.city && data.city.length > 3 &&
-      data.zipcode && data.zipcode.length > 3
+      data.phoneNumber && phoneRegex.test(data.phoneNumber)
     );
   }
 
@@ -105,5 +128,9 @@ export class AuthService {
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
     });
+  }
+
+  validResetPassword(token: string, newPassword: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/reset-password?token=${token}`, { newPassword });
   }
 }
