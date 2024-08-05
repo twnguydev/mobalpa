@@ -31,9 +31,22 @@ public class SubcategoryService {
   }
 
   public Subcategory createSubcategory(Subcategory subcategory) {
+    if (subcategory.getName() == null)
+      throw new IllegalArgumentException("Subcategory name is required");
+    if (subcategory.getUri() == null)
+      throw new IllegalArgumentException("Subcategory uri is required");
+    if (subcategory.getDescription() == null)
+      throw new IllegalArgumentException("Subcategory description is required");
+    if (subcategory.getCategory() == null)
+      throw new IllegalArgumentException("Subcategory category is required");
+
     Optional<Subcategory> existingSubcategory = subcategoryRepository.findByName(subcategory.getName());
+    Optional<Subcategory> existingUri = subcategoryRepository.findByUri(subcategory.getUri());
+
     if (existingSubcategory.isPresent()) {
       throw new IllegalArgumentException("Subcategory with name " + subcategory.getName() + " already exists");
+    } else if (existingUri.isPresent()) {
+      throw new IllegalArgumentException("Subcategory with uri " + subcategory.getUri() + " already exists");
     }
 
     Category category = subcategory.getCategory();
@@ -51,14 +64,24 @@ public class SubcategoryService {
         throw new IllegalArgumentException("Category with name " + category.getName() + " does not exist");
       }
     }
+
+    String categoryUri = subcategory.getCategory().getUri();
+    if (!categoryUri.endsWith("/"))
+      categoryUri += "/";
+    if (subcategory.getUri().startsWith("/"))
+      subcategory.setUri(subcategory.getUri().substring(1));
+    subcategory.setUri(categoryUri + subcategory.getUri());
+
     subcategory.setProducts(new ArrayList<>());
     return subcategoryRepository.save(subcategory);
   }
 
   public Subcategory updateSubcategory(UUID id, Subcategory subcategory) {
     return subcategoryRepository.findById(id).map(existingSubcategory -> {
-      if (subcategory.getName() != null) existingSubcategory.setName(subcategory.getName());
-      if (subcategory.getDescription() != null) existingSubcategory.setDescription(subcategory.getDescription());
+      if (subcategory.getName() != null)
+        existingSubcategory.setName(subcategory.getName());
+      if (subcategory.getDescription() != null)
+        existingSubcategory.setDescription(subcategory.getDescription());
       if (subcategory.getCategory() != null) {
         Category category = subcategory.getCategory();
         Optional<Category> existingCategory = categoryRepository.findByName(category.getName());

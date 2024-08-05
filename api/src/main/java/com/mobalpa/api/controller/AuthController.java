@@ -77,11 +77,13 @@ public class AuthController {
         } catch (BadCredentialsException e) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Identifiants invalides.");
         } catch (AuthenticationException e) {
+
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Échec de l'authentification.");
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Une erreur est survenue lors de la connexion.");
+
         }
     }
 
