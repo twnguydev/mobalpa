@@ -20,7 +20,6 @@ export class AuthService {
         'X-API-KEY': `${environment.apiKey}`
       }
     }).pipe(
-      // Une fois connecté, on récupère les données utilisateur
       switchMap(response => {
         if (response && response.token) {
           localStorage.setItem('token', response.token);
@@ -29,19 +28,19 @@ export class AuthService {
           }).pipe(
             map(user => {
               localStorage.setItem('currentUser', JSON.stringify(user));
-              return { ...response, user }; // Retourne le token et les données utilisateur
+              return { ...response, user };
             }),
             catchError(fetchError => {
               console.error('Fetch user data error', fetchError);
-              return of(null); // Gestion des erreurs de récupération des données utilisateur
+              return of(null);
             })
           );
         }
-        return of(null); // Si pas de token, retourner null
+        return of(null);
       }),
       catchError(error => {
         console.error('Login error', error);
-        return of(null); // Gestion des erreurs de connexion
+        return of(null);
       })
     );
   }
