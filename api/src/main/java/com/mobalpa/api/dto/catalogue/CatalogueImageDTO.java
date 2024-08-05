@@ -1,4 +1,4 @@
-package com.mobalpa.api.dto;
+package com.mobalpa.api.dto.catalogue;
 
 import lombok.Data;
 
