@@ -1,0 +1,18 @@
+.truncated {
+    display: -webkit-box;
+    /* Utilisation du modèle de boîte flexible WebKit */
+    -webkit-box-orient: vertical;
+    /* Orientation verticale des éléments */
+    -webkit-line-clamp: 3;
+    /* Limite à 3 lignes visibles */
+    overflow: hidden;
+    /* Cache le texte qui dépasse */
+    text-overflow: ellipsis;
+    /* Ajoute des points de suspension */
+
+    /* Pour la compatibilité avec d'autres navigateurs, vous pouvez utiliser les propriétés suivantes, mais elles ne sont pas obligatoires pour line-clamp */
+    display: -moz-box;
+    /* Ancien préfixe pour Firefox */
+    -moz-box-orient: vertical;
+    /* Ancien préfixe pour Firefox */
+}

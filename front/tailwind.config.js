@@ -5,6 +5,7 @@ module.exports = {
   ],
   theme: {
     extend: {
+     
       colors: {
         'mobalpa-green': '#1E4347',
         'mobalpa-green-alternate': '#316a70',
@@ -64,6 +65,8 @@ module.exports = {
         'medium-carrousel': '285px',
         
       }
+      
+
     },
   },
   plugins: [],
