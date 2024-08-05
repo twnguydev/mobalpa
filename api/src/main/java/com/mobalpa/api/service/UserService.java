@@ -7,12 +7,16 @@ import com.mobalpa.api.model.Role;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Lazy;
+
+import jakarta.mail.MessagingException; // Pour Jakarta Mail
+import java.io.IOException; // Pour IOException
 
 import java.util.UUID;
 import java.util.ArrayList;
@@ -37,6 +41,9 @@ public class UserService implements UserDetailsService {
     @Autowired
     private JwtUtil jwtUtil;
 
+    @Autowired
+    private TokenService tokenService;
+
     @Value("${app.base.url}")
     private String appBaseUrl;
 
@@ -46,13 +53,14 @@ public class UserService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("User not found with email: " + email);
         }
-        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), new ArrayList<>());
+        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
+                new ArrayList<>());
     }
-  
+
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
-  
+
     public User getUserByUuid(UUID uuid) {
         return userRepository.findById(uuid).orElseThrow(() -> new RuntimeException("User not found"));
     }
@@ -62,7 +70,7 @@ public class UserService implements UserDetailsService {
         if (existingUser.isPresent()) {
             throw new IllegalArgumentException("User with email " + user.getEmail() + " already exists");
         }
-        
+
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setToken(UUID.randomUUID().toString());
         user.setActive(false);
@@ -77,8 +85,19 @@ public class UserService implements UserDetailsService {
 
     public void sendConfirmationEmail(User user) {
         String confirmationUrl = appBaseUrl + "api/users/confirm?token=" + user.getToken();
-        String message = "Please confirm your email by clicking the link below:\n" + confirmationUrl;
-        emailService.sendEmail(user.getEmail(), "Email Confirmation", message);
+        try {
+            emailService.sendHtmlEmail(
+                user.getEmail(),
+                "Confirmation de l'email",
+                "confirmationEmailTemplate.html",
+                "${user.firstName}", user.getFirstname(),
+                "${confirmationUrl}", confirmationUrl,
+                "${appName}", "Mobalpa"
+            );
+        } catch (MessagingException | IOException e) {
+            // Gérer l'exception, par exemple en la journalisant
+            e.printStackTrace();
+        }
     }
 
     public User confirmUser(String token) {
@@ -91,8 +110,20 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
+
+    @Transactional
     public String generateToken(User user) {
-        return jwtUtil.generateToken(user);
+        Optional<User> existingUser = Optional.of(userRepository.findByEmail(user.getEmail()));
+        if (existingUser.isEmpty()) {
+            throw new IllegalArgumentException("User with email " + user.getEmail() + " not found");
+        }
+
+        String token = tokenService.getTokenByEmail(user.getEmail());
+        if (token == null) {
+            token = jwtUtil.generateToken(user);
+            tokenService.saveToken(user.getEmail(), token);
+        }
+        return token;
     }
 
     public void sendPasswordResetEmail(User user) {
@@ -100,11 +131,21 @@ public class UserService implements UserDetailsService {
         user.setToken(resetToken);
         userRepository.save(user);
     
-        String resetUrl = appBaseUrl + "/api/users/reset-password?token=" + resetToken;
-        String message = "Please reset your password by clicking the link below:\n" + resetUrl;
-        emailService.sendEmail(user.getEmail(), "Password Reset", message);
+        String resetUrlWithToken =  "http://localhost:4200/reset-password?token=" + resetToken;
+        try {
+            emailService.sendHtmlEmail(user.getEmail(),
+                "Réinitialisation du mot de passe",
+                "passwordResetTemplate.html",
+                "${resetUrlWithToken}", resetUrlWithToken,
+                "${appName}", "Mobalpa");
+        } catch (MessagingException | IOException e) {
+            e.printStackTrace();
+        }
     }
     
+    
+    
+
     public User resetPassword(String token, String newPassword) {
         User user = userRepository.findByToken(token);
         if (user != null) {
@@ -123,18 +164,30 @@ public class UserService implements UserDetailsService {
 
     public User updateUser(UUID uuid, User user) {
         return userRepository.findById(uuid).map(existingUser -> {
-            if (user.getFirstname() != null) existingUser.setFirstname(user.getFirstname());
-            if (user.getLastname() != null) existingUser.setLastname(user.getLastname());
-            if (user.getEmail() != null) existingUser.setEmail(user.getEmail());
-            if (user.getPassword() != null) existingUser.setPassword(user.getPassword());
-            if (user.getPhoneNumber() != null) existingUser.setPhoneNumber(user.getPhoneNumber());
-            if (user.getBirthdate() != null) existingUser.setBirthdate(user.getBirthdate());
-            if (user.getToken() != null) existingUser.setToken(user.getToken());
-            if (user.getZipcode() != null) existingUser.setZipcode(user.getZipcode());
-            if (user.getCity() != null) existingUser.setCity(user.getCity());
-            if (user.getAddress() != null) existingUser.setAddress(user.getAddress());
-            if (user.getUpdatedAt() != null) existingUser.setUpdatedAt(user.getUpdatedAt());
-            if (user.getRoles() != null) existingUser.setRoles(user.getRoles());
+            if (user.getFirstname() != null)
+                existingUser.setFirstname(user.getFirstname());
+            if (user.getLastname() != null)
+                existingUser.setLastname(user.getLastname());
+            if (user.getEmail() != null)
+                existingUser.setEmail(user.getEmail());
+            if (user.getPassword() != null)
+                existingUser.setPassword(user.getPassword());
+            if (user.getPhoneNumber() != null)
+                existingUser.setPhoneNumber(user.getPhoneNumber());
+            if (user.getBirthdate() != null)
+                existingUser.setBirthdate(user.getBirthdate());
+            if (user.getToken() != null)
+                existingUser.setToken(user.getToken());
+            if (user.getZipcode() != null)
+                existingUser.setZipcode(user.getZipcode());
+            if (user.getCity() != null)
+                existingUser.setCity(user.getCity());
+            if (user.getAddress() != null)
+                existingUser.setAddress(user.getAddress());
+            if (user.getUpdatedAt() != null)
+                existingUser.setUpdatedAt(user.getUpdatedAt());
+            if (user.getRoles() != null)
+                existingUser.setRoles(user.getRoles());
             return userRepository.save(existingUser);
         }).orElseThrow(() -> new IllegalArgumentException("User with id " + uuid + " not found"));
     }

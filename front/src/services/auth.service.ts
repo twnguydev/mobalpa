@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import type { IUser } from '@interfaces/user.interface';
 import { environment } from '../environments/environment';
 
@@ -20,32 +20,32 @@ export class AuthService {
         'X-API-KEY': `${environment.apiKey}`
       }
     }).pipe(
-      map(response => {
-        localStorage.setItem('token', response.token);
-        this.fetchUserData(response.token);
-        return response;
+      // Une fois connecté, on récupère les données utilisateur
+      switchMap(response => {
+        if (response && response.token) {
+          localStorage.setItem('token', response.token);
+          return this.http.get<any>(`${this.apiUrl}/me`, {
+            headers: this.getAuthHeaders()
+          }).pipe(
+            map(user => {
+              localStorage.setItem('currentUser', JSON.stringify(user));
+              return { ...response, user }; // Retourne le token et les données utilisateur
+            }),
+            catchError(fetchError => {
+              console.error('Fetch user data error', fetchError);
+              return of(null); // Gestion des erreurs de récupération des données utilisateur
+            })
+          );
+        }
+        return of(null); // Si pas de token, retourner null
       }),
       catchError(error => {
         console.error('Login error', error);
-        return of(null);
+        return of(null); // Gestion des erreurs de connexion
       })
     );
   }
 
-  fetchUserData(token: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/me`, {
-      headers: this.getAuthHeaders()
-    }).pipe(
-      map(user => {
-        localStorage.setItem('currentUser', JSON.stringify(user));
-        return user;
-      }),
-      catchError(error => {
-        console.error('Fetch user data error', error);
-        return of(null);
-      })
-    );
-  }
 
   signup(data: IUser): Observable<any> {
     if (!this.checkInputsSignup(data)) {
@@ -73,6 +73,43 @@ export class AuthService {
     );
   }
 
+
+  forgotPassword(email: string): Observable<string> {
+    return this.http.post(`${this.apiUrl}/forgot-password`, { email }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'X-API-KEY': `${environment.apiKey}`
+      },
+      responseType: 'text' as 'json'
+    }).pipe(
+      map(response => {
+        return response as string;
+      }),
+      catchError(error => {
+        console.error('Forgot password error', error);
+        return of('An error occurred');
+      })
+    );
+  }
+
+  resetPassword(token: string, newPassword: string): Observable<string> {
+    return this.http.post(`${this.apiUrl}/reset-password`, { newPassword }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'X-API-KEY': `${environment.apiKey}`
+      },
+      params: { token },
+      responseType: 'text' as 'json'
+    }).pipe(
+      map(response => {
+        return response as string;
+      }),
+      catchError(error => {
+        console.error('Reset password error', error);
+        return of('An error occurred');
+      })
+    );
+  }
 
   checkInputsSignup(data: IUser): boolean | '' | null | undefined {
     const birthdateRegex = new RegExp(/^\d{4}-\d{2}-\d{2}$/);
@@ -103,5 +140,9 @@ export class AuthService {
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
     });
+  }
+
+  validResetPassword(token: string, newPassword: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/reset-password?token=${token}`, { newPassword });
   }
 }
