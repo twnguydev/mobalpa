@@ -93,7 +93,7 @@ HTTP/1.1 200 OK
 Content-Type: application/json
 
 {
-  "user_uuid": "a4801d5a-cbac-417e-8d99-d690b3832f19",
+  "userUuid": "a4801d5a-cbac-417e-8d99-d690b3832f19",
   "items": [
     {
       "productId": "12345",
@@ -124,7 +124,7 @@ HTTP/1.1 200 OK
 Content-Type: application/json
 
 {
-  "user_uuid": "a4801d5a-cbac-417e-8d99-d690b3832f19",
+  "userUuid": "a4801d5a-cbac-417e-8d99-d690b3832f19",
   "items": [
     {
       "productId": "12345",
@@ -142,7 +142,7 @@ Content-Type: application/json
 
 ###### Suppression d'un item
 ```http
-PATCH /api/users/a4801d5a-cbac-417e-8d99-d690b3832f19/wishlist
+PATCH /api/users/{userUuid}/wishlist
 Authorization: Bearer <token>
 Content-Type: application/json
 
@@ -157,7 +157,7 @@ HTTP/1.1 200 OK
 Content-Type: application/json
 
 {
-  "user_uuid": "a4801d5a-cbac-417e-8d99-d690b3832f19",
+  "userUuid": "a4801d5a-cbac-417e-8d99-d690b3832f19",
   "items": [
     {
       "productId": "67890",
@@ -170,7 +170,7 @@ Content-Type: application/json
 
 ##### Récupération des commandes de l'utilisateur
 ```http
-GET /api/users/a4801d5a-cbac-417e-8d99-d690b3832f19/orders
+GET /api/users/{userUuid}/orders
 Authorization: Bearer <token>
 Content-Type: application/json
 
@@ -192,6 +192,32 @@ Content-Type: application/json
     "taxDelivery": 5.60,
     "warranty": "2030-07-22T10:00:00Z",
     "totalHt": 599.99,
+    "createdAt": "2023-07-22T10:00:00Z"
+  }
+]
+```
+
+##### Récupération des moyens de paiement d'un utilisateur
+```http
+GET /api/users/{userUuid}/payments
+Authorization: Bearer <token>
+Content-Type: application/json
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+[
+  {
+    "paymentUuid": "54321",
+    "paymentMethod": "CREDIT_CARD",
+    "cardHolder": "Test user",
+    "cardNumber": "12345678910",
+    "expirationDate": "23/12/2025",
+    "cvv": "678",
+    "paypalEmail": null,
+    "user": {
+
+    },
     "createdAt": "2023-07-22T10:00:00Z"
   }
 ]

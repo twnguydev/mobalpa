@@ -21,24 +21,25 @@ Authorization: Bearer <token>
 Content-Type: application/json
 
 {
-  "userId": "a4801d5a-cbac-417e-8d99-d690b3832f19",
+  "userUuid": "30915e65-4cd6-4475-9f13-ea96d00f4b85",
   "items": [
     {
       "productId": "101",
       "quantity": 2
     }
   ],
-  "deliveryMethod": "Chronopost",
   "reduction": 10,
-  "totalHt": 599.99,
+  "deliveryMethod": "UPS",
+  "deliveryAddress": "123 St. John",
+  "totalHt": 599.99
 }
 
 HTTP/1.1 201 Created
 Content-Type: application/json
 
 {
-  "orderId": "54321",
-  "userId": "a4801d5a-cbac-417e-8d99-d690b3832f19",
+  "orderUuid": "54321",
+  "userId": "30915e65-4cd6-4475-9f13-ea96d00f4b85",
   "items": [
     {
       "productId": "101",
@@ -65,8 +66,8 @@ Content-Type: application/json
 
 [
   {
-    "orderId": "54321",
-    "userId": "a4801d5a-cbac-417e-8d99-d690b3832f19",
+    "orderUuid": "54321",
+    "userUuid": "a4801d5a-cbac-417e-8d99-d690b3832f19",
     "items": [
       {
         "productId": "101",
@@ -93,8 +94,8 @@ HTTP/1.1 200 OK
 Content-Type: application/json
 
 {
-  "orderId": "54321",
-  "userId": "a4801d5a-cbac-417e-8d99-d690b3832f19",
+  "orderUuid": "54321",
+  "userUuid": "a4801d5a-cbac-417e-8d99-d690b3832f19",
   "items": [
     {
       "productId": "101",
@@ -136,7 +137,7 @@ Content-Type: application/json
 
 ##### Application d'un coupon de réduction
 ```http
-POST /api/orders/{id}/apply-coupon
+POST /api/orders/{userUuid}/apply-coupon
 Authorization: Bearer <token>
 Content-Type: application/json
 
