@@ -1,7 +1,7 @@
 package com.mobalpa.api.controller;
 
 import com.mobalpa.api.dto.LoginDTO;
-import com.mobalpa.api.dto.LoginResponse;
+import com.mobalpa.api.dto.LoginRequestDTO;
 import com.mobalpa.api.model.User;
 import com.mobalpa.api.service.UserService;
 
@@ -13,6 +13,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.authentication.BadCredentialsException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.io.IOException;
 
 import java.util.Map;
 
@@ -39,12 +42,24 @@ public class AuthController {
     @GetMapping("/confirm")
     public ResponseEntity<String> confirmUser(@RequestParam("token") String token) {
         User user = userService.confirmUser(token);
-        if (user != null) {
-            return ResponseEntity.ok("Account confirmed successfully.");
-        } else {
-            return ResponseEntity.badRequest().body("Invalid token.");
+        
+        try {
+            String templatePath;
+            if (user != null) {
+                templatePath = "src/main/resources/templates/successTemplate.html"; 
+            } else {
+                templatePath = "src/main/resources/templates/errorTemplate.html"; 
+            }
+    
+            String htmlContent = Files.readString(Paths.get(templatePath));
+            return ResponseEntity.ok(htmlContent);
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erreur lors de la génération du contenu HTML.");
         }
     }
+
 
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody LoginDTO loginDTO) {
@@ -54,17 +69,21 @@ public class AuthController {
             User user = userService.getUserByEmail(loginDTO.getEmail());
 
             if (user == null || !user.isActive()) {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Account is not active or does not exist");
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Le compte n'est pas actif ou n'existe pas.");
             }
 
             String token = userService.generateToken(user);
-            return ResponseEntity.ok(new LoginResponse(user, token));
+            return ResponseEntity.ok(new LoginRequestDTO(user, token));
         } catch (BadCredentialsException e) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid credentials");
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Identifiants invalides.");
         } catch (AuthenticationException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authentication failed");
+
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Échec de l'authentification.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Une erreur est survenue lors de la connexion.");
+
         }
     }
 

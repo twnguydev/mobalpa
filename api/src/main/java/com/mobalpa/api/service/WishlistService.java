@@ -61,6 +61,12 @@ public class WishlistService {
         User user = userService.getUserByUuid(userId);
         Wishlist wishlist = user.getWishlist();
 
+        if (wishlist == null) {
+            wishlist = new Wishlist();
+            wishlist.setUser(user);
+            wishlist.setItems("[]");
+        }
+
         List<WishlistItem> items = objectMapper.readValue(wishlist.getItems(), new TypeReference<List<WishlistItem>>() {
         });
         boolean itemExists = false;

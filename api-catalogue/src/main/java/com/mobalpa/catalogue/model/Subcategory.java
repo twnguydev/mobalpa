@@ -21,6 +21,7 @@ public class Subcategory {
     private UUID uuid = UUID.randomUUID();
     private String name;
     private String description;
+    private String uri;
 
     @DBRef
     private List<Product> products = new ArrayList<>();

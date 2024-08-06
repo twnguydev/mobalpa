@@ -28,6 +28,7 @@ public class Product {
     private Double weight;
     private Double height;
     private Double width;
+    private String uri;
     private LocalDateTime createdAt = LocalDateTime.now();
     
     @DBRef
