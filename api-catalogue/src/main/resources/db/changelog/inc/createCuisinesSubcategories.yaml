@@ -1,0 +1,60 @@
+databaseChangeLog:
+  - changeSet:
+      id: 3
+      author: Saskoue
+      changes:
+        - insertMany:
+            collectionName: "subcategory"
+            documents: |
+              [
+                {
+                  "_id": {"$binary": {"base64": "jUBzEwv4EBu2gqn367EavA==", "subType": "03"}},
+                  "name": "Plan de travail",
+                  "description": "Sous-catégorie de meubles",
+                  "products": [
+                    {"$ref": "product", "$id": {"$binary": {"base64": "DEIS5Wjt27A9whsacnLikw==", "subType": "03"}}}
+                  ],
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "bkQwUIC3k4R8r3ZrTsocow==", "subType": "03"}}},
+                  "_class": "com.mobalpa.catalogue.model.Subcategory"
+                },
+                {
+                  "_id": {"$binary": {"base64": "kUBzEwv4EBu2gqn367EavA==", "subType": "03"}},
+                  "name": "Table",
+                  "description": "Sous-catégorie de meubles",
+                  "products": [
+                    {"$ref": "product", "$id": {"$binary": {"base64": "H2r7V4RFHJz67zXcOud31A==", "subType": "03"}}}
+                  ],
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "bkQwUIC3k4R8r3ZrTsocow==", "subType": "03"}}},
+                  "_class": "com.mobalpa.catalogue.model.Subcategory"
+                },
+                {
+                  "_id": {"$binary": {"base64": "lUBzEwv4EBu2gqn367EavA==", "subType": "03"}},
+                  "name": "Chaise",
+                  "description": "Sous-catégorie de meubles",
+                  "products": [
+                    {"$ref": "product", "$id": {"$binary": {"base64": "Q1z9zY4vXt8hQvJfG2s1oA==", "subType": "03"}}}
+                  ],
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "bkQwUIC3k4R8r3ZrTsocow==", "subType": "03"}}},
+                  "_class": "com.mobalpa.catalogue.model.Subcategory"
+                },
+                {
+                  "_id": {"$binary": {"base64": "mUBzEwv4EBu2gqn367EavA==", "subType": "03"}},
+                  "name": "Decoration",
+                  "description": "Sous-catégorie de meubles",
+                  "products": [
+                    {"$ref": "product", "$id": {"$binary": {"base64": "W3y6vR1lIv6tTfPqF3w2jA==", "subType": "03"}}}
+                  ],
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "bkQwUIC3k4R8r3ZrTsocow==", "subType": "03"}}},
+                  "_class": "com.mobalpa.catalogue.model.Subcategory"
+                },
+                {
+                  "_id": {"$binary": {"base64": "nUBzEwv4EBu2gqn367EavA==", "subType": "03"}},
+                  "name": "Meuble de rangement",
+                  "description": "Sous-catégorie de meubles",
+                  "products": [
+                    {"$ref": "product", "$id": {"$binary": {"base64": "T2f8tW2nOv5rLfOnG3v5kA==", "subType": "03"}}}
+                  ],
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "bkQwUIC3k4R8r3ZrTsocow==", "subType": "03"}}},
+                  "_class": "com.mobalpa.catalogue.model.Subcategory"
+                }
+              ]

@@ -1,0 +1,40 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: Saskoue
+      changes:
+        - insertMany:
+            collectionName: "colors"
+            documents: |
+              [
+                {
+                  "_id": {"$binary": {"base64": "GE8esJRMho/wUZfnAf81pA==", "subType": "03"}},
+                  "name": "Red",
+                  "_class": "com.mobalpa.catalogue.model.Color"
+                },
+                {
+                  "_id": {"$binary": {"base64": "LUSI2mi0zpRNFJTZbEQOgg==", "subType": "03"}},
+                  "name": "Blue",
+                  "_class": "com.mobalpa.catalogue.model.Color"
+                },
+                {
+                  "_id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}},
+                  "name": "Black",
+                  "_class": "com.mobalpa.catalogue.model.Color"
+                },
+                {
+                  "_id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}},
+                  "name": "White",
+                  "_class": "com.mobalpa.catalogue.model.Color"
+                },
+                {
+                  "_id": {"$binary": {"base64": "Gx+KvG6zSbeY6kI5C1z5YA==", "subType": "03"}},
+                  "name": "Gray",
+                  "_class": "com.mobalpa.catalogue.model.Color"
+                },
+                {
+                  "_id": {"$binary": {"base64": "Pv+kU6+xSsuN7kA0x3P4zQ==", "subType": "03"}},
+                  "name": "Purple",
+                  "_class": "com.mobalpa.catalogue.model.Color"
+                }
+              ]

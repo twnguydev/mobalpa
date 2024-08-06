@@ -1,0 +1,20 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2
+      author: Saskoue
+      changes:
+        - insertMany:
+            collectionName: "brand"
+            documents: |
+              [
+                {
+                  "_id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}},
+                  "name": "Archideco",
+                  "_class": "com.mobalpa.catalogue.model.Brand"
+                },
+                {
+                  "_id": {"$binary": {"base64": "Y8sB2mASGqiY3msNSocRzg==", "subType": "03"}},
+                  "name": "Mobalpa",
+                  "_class": "com.mobalpa.catalogue.model.Brand"
+                }
+              ]

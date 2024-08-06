@@ -1,0 +1,140 @@
+databaseChangeLog:
+  - changeSet:
+      id: 5
+      author: Saskoue
+      changes:
+        - insertMany:
+            collectionName: "product"
+            documents: |
+              [
+                  {
+                    "_id": {"$binary": {"base64": "1Uu9ZZjt27A9whsacnLikw==", "subType": "03"}},
+                    "name": "Grille pain Deluxe",
+                    "description": "This is an example product description for Grille pain.",
+                    "price": 49.99,
+                    "stock": 100,
+                    "estimatedDelivery": {"$date": "2024-08-10T08:00:00.000Z"},
+                    "weight": 1.0,
+                    "height": 15.0,
+                    "width": 25.0,
+                    "createdAt": {"$date": "2024-08-05T14:24:23.967Z"},
+                    "category": {"$ref": "category", "$id": {"$binary": {"base64": "E0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                    "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "aUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                    "colors": [
+                      {"$ref": "colors", "$id": {"$binary": {"base64": "GE8esJRMho/wUZfnAf81pA==", "subType": "03"}}}
+                    ],
+                    "images": [
+                      {
+                        "_id": {"$binary": {"base64": "jE4GGTSY9QdpmgEZQt8snA==", "subType": "03"}},
+                        "uri": "/public/images/pem/grillepain.png",
+                        "color": {"$ref": "colors", "$id": {"$binary": {"base64": "GE8esJRMho/wUZfnAf81pA==", "subType": "03"}}}
+                      }
+                    ],
+                    "_class": "com.mobalpa.catalogue.model.Product"
+                  },
+                  {
+                    "_id": {"$binary": {"base64": "2Vu7YYgt37A9whsacnLikw==", "subType": "03"}},
+                    "name": "Micro-onde Pro",
+                    "description": "This is an example product description for Four à micro-onde.",
+                    "price": 89.99,
+                    "stock": 75,
+                    "estimatedDelivery": {"$date": "2024-08-12T08:00:00.000Z"},
+                    "weight": 2.0,
+                    "height": 20.0,
+                    "width": 30.0,
+                    "createdAt": {"$date": "2024-08-05T14:24:23.967Z"},
+                    "category": {"$ref": "category", "$id": {"$binary": {"base64": "E0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                    "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "bUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                    "colors": [
+                      {"$ref": "colors", "$id": {"$binary": {"base64": "GE8esJRMho/wUZfnAf81pA==", "subType": "03"}}}
+                    ],
+                    "images": [
+                      {
+                        "_id": {"$binary": {"base64": "wUVjFX29i1Wb/7CZ04pZuQ==", "subType": "03"}},
+                        "uri": "/public/images/pem/microonde5.png",
+                        "color": {"$ref": "colors", "$id": {"$binary": {"base64": "GE8esJRMho/wUZfnAf81pA==", "subType": "03"}}}
+                      }
+                    ],
+                    "_class": "com.mobalpa.catalogue.model.Product"
+                  },
+                  {
+                    "_id": {"$binary": {"base64": "3Wv6ZZjt27A9whsacnLikw==", "subType": "03"}},
+                    "name": "Mixeur Turbo",
+                    "description": "This is an example product description for Mixeur.",
+                    "price": 59.99,
+                    "stock": 80,
+                    "estimatedDelivery": {"$date": "2024-08-15T08:00:00.000Z"},
+                    "weight": 1.2,
+                    "height": 25.0,
+                    "width": 15.0,
+                    "createdAt": {"$date": "2024-08-05T14:24:23.967Z"},
+                    "category": {"$ref": "category", "$id": {"$binary": {"base64": "E0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                    "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "cUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                    "colors": [
+                      {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                    ],
+                    "images": [
+                      {
+                        "_id": {"$binary": {"base64": "kE3GGTSY9QdpmgEZQt8snA==", "subType": "03"}},
+                        "uri": "/public/images/pem/mixeur1.png",
+                        "color": {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                      }
+                    ],
+                    "_class": "com.mobalpa.catalogue.model.Product"
+                  },
+                  {
+                    "_id": {"$binary": {"base64": "4Xy6VVgt37A9whsacnLikw==", "subType": "03"}},
+                    "name": "Friteuse Pro",
+                    "description": "This is an example product description for Friteuse.",
+                    "price": 79.99,
+                    "stock": 90,
+                    "estimatedDelivery": {"$date": "2024-08-18T08:00:00.000Z"},
+                    "weight": 2.5,
+                    "height": 20.0,
+                    "width": 20.0,
+                    "createdAt": {"$date": "2024-08-05T14:24:23.967Z"},
+                    "category": {"$ref": "category", "$id": {"$binary": {"base64": "E0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                    "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "dUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                    "colors": [
+                      {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                    ],
+                    "images": [
+                      {
+                        "_id": {"$binary": {"base64": "pF4GGTSY9QdpmgEZQt8snA==", "subType": "03"}},
+                        "uri": "/public/images/pem/friteuse.jpeg",
+                        "color": {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                      }
+                    ],
+                    "_class": "com.mobalpa.catalogue.model.Product"
+                  },
+                  {
+                    "_id": {"$binary": {"base64": "5Zz8YYht47A9whsacnLikw==", "subType": "03"}},
+                    "name": "Machine à café Deluxe",
+                    "description": "This is an example product description for Machine à café.",
+                    "price": 129.99,
+                    "stock": 50,
+                    "estimatedDelivery": {"$date": "2024-08-20T08:00:00.000Z"},
+                    "weight": 3.0,
+                    "height": 35.0,
+                    "width": 20.0,
+                    "createdAt": {"$date": "2024-08-05T14:24:23.967Z"},
+                    "category": {"$ref": "category", "$id": {"$binary": {"base64": "E0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                    "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "eUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                    "colors": [
+                      {"$ref": "colors", "$id": {"$binary": {"base64": "Gx+KvG6zSbeY6kI5C1z5YA==", "subType": "03"}}}
+                    ],
+                    "images": [
+                      {
+                        "_id": {"$binary": {"base64": "nG5GGTSY9QdpmgEZQt8snA==", "subType": "03"}},
+                        "uri": "/public/images/pem/cafe2.png",
+                        "color": {"$ref": "colors", "$id": {"$binary": {"base64": "Gx+KvG6zSbeY6kI5C1z5YA==", "subType": "03"}}}
+                      }
+                    ],
+                    "_class": "com.mobalpa.catalogue.model.Product"
+                  }
+              ]

@@ -1,0 +1,146 @@
+databaseChangeLog:
+  - changeSet:
+      id: 3
+      author: Saskoue
+      changes:
+        - insertMany:
+            collectionName: "product"
+            documents: |
+              [
+                  {
+                    "_id": {"$binary": {"base64": "DEIS5Wjt27A9whsacnLikw==", "subType": "03"}},
+                    "name": "Plan de travail",
+                    "description": "This is an example product description.",
+                    "price": 99.99,
+                    "stock": 50,
+                    "estimatedDelivery": {"$date": "2024-08-01T08:00:00.000Z"},
+                    "weight": 1.5,
+                    "height": 10.0,
+                    "width": 20.0,
+                    "createdAt": {"$date": "2024-08-05T14:24:23.967Z"},
+                    "category": {"$ref": "category", "$id": {"$binary": {"base64": "bkQwUIC3k4R8r3ZrTsocow==", "subType": "03"}}},
+                    "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "jUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                    "colors": [
+                      {"$ref": "colors", "$id": {"$binary": {"base64": "GE8esJRMho/wUZfnAf81pA==", "subType": "03"}}},
+                      {"$ref": "colors", "$id": {"$binary": {"base64": "LUSI2mi0zpRNFJTZbEQOgg==", "subType": "03"}}}
+                    ],
+                    "images": [
+                      {
+                        "_id": {"$binary": {"base64": "jE4GGTSY9QdpmgEZQt8snA==", "subType": "03"}},
+                        "uri": "/public/images/kitchen-ecommerce/escapade-saumon.png",
+                        "color": {"$ref": "colors", "$id": {"$binary": {"base64": "GE8esJRMho/wUZfnAf81pA==", "subType": "03"}}}
+                      },
+                      {
+                        "_id": {"$binary": {"base64": "wUVjFX29i1Wb/7CZ04pZuQ==", "subType": "03"}},
+                        "uri": "/public/images/kitchen-ecommerce/escapade-turquoise.png",
+                        "color": {"$ref": "colors", "$id": {"$binary": {"base64": "LUSI2mi0zpRNFJTZbEQOgg==", "subType": "03"}}}
+                      }
+                    ],
+                    "_class": "com.mobalpa.catalogue.model.Product"
+                  },
+                  {
+                    "_id": {"$binary": {"base64": "H2r7V4RFHJz67zXcOud31A==", "subType": "03"}},
+                    "name": "Table de cuisine",
+                    "description": "Modern kitchen table with sleek design.",
+                    "price": 150.00,
+                    "stock": 30,
+                    "estimatedDelivery": {"$date": "2024-08-10T08:00:00.000Z"},
+                    "weight": 20.0,
+                    "height": 75.0,
+                    "width": 120.0,
+                    "createdAt": {"$date": "2024-08-01T14:24:23.967Z"},
+                    "category": {"$ref": "category", "$id": {"$binary": {"base64": "bkQwUIC3k4R8r3ZrTsocow==", "subType": "03"}}},
+                    "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "kUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "Y8sB2mASGqiY3msNSocRzg==", "subType": "03"}}},
+                    "colors": [
+                      {"$ref": "colors", "$id": {"$binary": {"base64": "LUSI2mi0zpRNFJTZbEQOgg==", "subType": "03"}}}
+                    ],
+                    "images": [
+                      {
+                        "_id": {"$binary": {"base64": "i9d8Fz8h8Ux7DfFm90a5lA==", "subType": "03"}},
+                        "uri": "/public/images/kitchen-ecommerce/esthete-blue.png",
+                        "color": {"$ref": "colors", "$id": {"$binary": {"base64": "LUSI2mi0zpRNFJTZbEQOgg==", "subType": "03"}}}
+                      }
+                    ],
+                    "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                    "_id": {"$binary": {"base64": "Q1z9zY4vXt8hQvJfG2s1oA==", "subType": "03"}},
+                    "name": "Chaise de bureau",
+                    "description": "Comfortable office chair with ergonomic design.",
+                    "price": 200.00,
+                    "stock": 40,
+                    "estimatedDelivery": {"$date": "2024-08-15T08:00:00.000Z"},
+                    "weight": 15.0,
+                    "height": 110.0,
+                    "width": 50.0,
+                    "createdAt": {"$date": "2024-08-03T14:24:23.967Z"},
+                    "category": {"$ref": "category", "$id": {"$binary": {"base64": "bkQwUIC3k4R8r3ZrTsocow==", "subType": "03"}}},
+                    "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "lUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "Y8sB2mASGqiY3msNSocRzg==", "subType": "03"}}},
+                    "colors": [
+                      {"$ref": "colors", "$id": {"$binary": {"base64": "LUSI2mi0zpRNFJTZbEQOgg==", "subType": "03"}}}
+                    ],
+                    "images": [
+                      {
+                        "_id": {"$binary": {"base64": "m4o7Pz9y2Wx1LfNh50b6lA==", "subType": "03"}},
+                        "uri": "/public/images/kitchen-ecommerce/symb-turquoise.png",
+                        "color": {"$ref": "colors", "$id": {"$binary": {"base64": "LUSI2mi0zpRNFJTZbEQOgg==", "subType": "03"}}}
+                      }
+                    ],
+                    "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                    "_id": {"$binary": {"base64": "W3y6vR1lIv6tTfPqF3w2jA==", "subType": "03"}},
+                    "name": "Meuble TV",
+                    "description": "Elegant TV stand with storage compartments.",
+                    "price": 250.00,
+                    "stock": 20,
+                    "estimatedDelivery": {"$date": "2024-08-20T08:00:00.000Z"},
+                    "weight": 25.0,
+                    "height": 60.0,
+                    "width": 150.0,
+                    "createdAt": {"$date": "2024-08-05T14:24:23.967Z"},
+                    "category": {"$ref": "category", "$id": {"$binary": {"base64": "bkQwUIC3k4R8r3ZrTsocow==", "subType": "03"}}},
+                    "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "mUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "Y8sB2mASGqiY3msNSocRzg==", "subType": "03"}}},
+                    "colors": [
+                      {"$ref": "colors", "$id": {"$binary": {"base64": "GE8esJRMho/wUZfnAf81pA==", "subType": "03"}}}
+                    ],
+                    "images": [
+                      {
+                        "_id": {"$binary": {"base64": "k9e6Ez7u6Tx5DfLm40e7lA==", "subType": "03"}},
+                        "uri": "/public/images/kitchen-ecommerce/ressource-rose.png",
+                        "color": {"$ref": "colors", "$id": {"$binary": {"base64": "GE8esJRMho/wUZfnAf81pA==", "subType": "03"}}}
+                      }
+                    ],
+                    "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                    "_id": {"$binary": {"base64": "T2f8tW2nOv5rLfOnG3v5kA==", "subType": "03"}},
+                    "name": "Canapé",
+                    "description": "Luxurious sofa with comfortable cushions.",
+                    "price": 500.00,
+                    "stock": 15,
+                    "estimatedDelivery": {"$date": "2024-08-25T08:00:00.000Z"},
+                    "weight": 35.0,
+                    "height": 90.0,
+                    "width": 200.0,
+                    "createdAt": {"$date": "2024-08-07T14:24:23.967Z"},
+                    "category": {"$ref": "category", "$id": {"$binary": {"base64": "bkQwUIC3k4R8r3ZrTsocow==", "subType": "03"}}},
+                    "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "nUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "Y8sB2mASGqiY3msNSocRzg==", "subType": "03"}}},
+                    "colors": [
+                      {"$ref": "colors", "$id": {"$binary": {"base64": "GE8esJRMho/wUZfnAf81pA==", "subType": "03"}}}
+                    ],
+                    "images": [
+                      {
+                        "_id": {"$binary": {"base64": "u9o6Gz7v8Tx6GgMm20e8lA==", "subType": "03"}},
+                        "uri": "/public/images/kitchen-ecommerce/chill-saumon.png",
+                        "color": {"$ref": "colors", "$id": {"$binary": {"base64": "GE8esJRMho/wUZfnAf81pA==", "subType": "03"}}}
+                      }
+                    ],
+                    "_class": "com.mobalpa.catalogue.model.Product"
+                }
+              ]

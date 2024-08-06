@@ -1,0 +1,72 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2
+      author: Saskoue
+      changes:
+        - insertMany:
+            collectionName: "category"
+            documents: |
+              [
+                {
+                  "_id": {"$binary": {"base64": "bkQwUIC3k4R8r3ZrTsocow==", "subType": "03"}},
+                  "name": "Cuisines",
+                  "description": "Catégorie de meubles",
+                  "subcategories": [
+                    {"$ref": "subcategory", "$id": {"$binary": {"base64": "jUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    {"$ref": "subcategory", "$id": {"$binary": {"base64": "kUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    {"$ref": "subcategory", "$id": {"$binary": {"base64": "lUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    {"$ref": "subcategory", "$id": {"$binary": {"base64": "mUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    {"$ref": "subcategory", "$id": {"$binary": {"base64": "nUBzEwv4EBu2gqn367EavA==", "subType": "03"}}}
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Category"
+                },
+                {
+                  "_id": {"$binary": {"base64": "E0oZQEgbc/27DcERW8OFmA==", "subType": "03"}},
+                  "name": "Petit électroménager",
+                  "description": "Catégorie de meubles",
+                  "subcategories": [
+                    {"$ref": "subcategory", "$id": {"$binary": {"base64": "aUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    {"$ref": "subcategory", "$id": {"$binary": {"base64": "bUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    {"$ref": "subcategory", "$id": {"$binary": {"base64": "cUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    {"$ref": "subcategory", "$id": {"$binary": {"base64": "dUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    {"$ref": "subcategory", "$id": {"$binary": {"base64": "eUBzEwv4EBu2gqn367EavA==", "subType": "03"}}}
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Category"
+                },
+                {
+                  "_id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}},
+                  "name": "Grand électroménager",
+                  "description": "Catégorie de meubles",
+                  "subcategories": [
+                    {"$ref": "subcategory", "$id": {"$binary": {"base64": "a1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    {"$ref": "subcategory", "$id": {"$binary": {"base64": "b1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    {"$ref": "subcategory", "$id": {"$binary": {"base64": "c1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    {"$ref": "subcategory", "$id": {"$binary": {"base64": "d1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    {"$ref": "subcategory", "$id": {"$binary": {"base64": "e1BzEwv4EBu2gqn367EavA==", "subType": "03"}}}
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Category"
+                },
+                {
+                  "_id": {"$binary": {"base64": "A0oZQEgbc/27DcERW8OFmA==", "subType": "03"}},
+                  "name": "Salle de bain",
+                  "description": "Catégorie de meubles",
+                  "subcategories": [
+                    {"$ref": "subcategory", "$id": {"$binary": {"base64": "fUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    {"$ref": "subcategory", "$id": {"$binary": {"base64": "gUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    {"$ref": "subcategory", "$id": {"$binary": {"base64": "hUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    {"$ref": "subcategory", "$id": {"$binary": {"base64": "iUBzEwv4EBu2gqn367EavA==", "subType": "03"}}}
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Category"
+                },
+                {
+                  "_id": {"$binary": {"base64": "C0oZQEgbc/27DcERW8OFmA==", "subType": "03"}},
+                  "name": "Accessoires",
+                  "description": "Catégorie de meubles",
+                  "subcategories": [
+                    {"$ref": "subcategory", "$id": {"$binary": {"base64": "j0BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    {"$ref": "subcategory", "$id": {"$binary": {"base64": "k0BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    {"$ref": "subcategory", "$id": {"$binary": {"base64": "l0BzEwv4EBu2gqn367EavA==", "subType": "03"}}}
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Category"
+                }
+              ]
