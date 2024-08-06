@@ -1,19 +1,11 @@
-package com.mobalpa.delivery.model;
+package com.mobalpa.delivery.dto;
 
 import lombok.Data;
 
-import jakarta.persistence.*;
 import java.util.List;
 
-@Entity
-@Table(name = "parcels")
 @Data
-public class Parcel {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
+public class ParcelDTO {
     private String name;
     private String companyName;
     private String email;
@@ -29,12 +21,14 @@ public class Parcel {
     private String toPostNumber;
     private String customsInvoiceNr;
     private String customsShipmentType;
+    private List<ParcelItemDTO> parcelItems;
     private Double weight;
     private Double length;
     private Double width;
     private Double height;
     private Double totalOrderValue;
     private String totalOrderValueCurrency;
+    private ShipmentDTO shipment;
     private String shippingMethodCheckoutName;
     private String senderAddress;
     private Integer quantity;
@@ -43,12 +37,4 @@ public class Parcel {
     private Boolean requestLabel;
     private Boolean applyShippingRules;
     private Boolean requestLabelAsync;
-    private String status;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "shipment_id", referencedColumnName = "id")
-    private Shipment shipment;
-
-    @OneToMany(mappedBy = "parcel", cascade = CascadeType.ALL)
-    private List<ParcelItem> parcelItems;
 }
