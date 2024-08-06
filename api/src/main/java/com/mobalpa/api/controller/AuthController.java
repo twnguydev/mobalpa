@@ -69,21 +69,19 @@ public class AuthController {
             User user = userService.getUserByEmail(loginDTO.getEmail());
 
             if (user == null || !user.isActive()) {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Le compte n'est pas actif ou n'existe pas.");
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Account is not active or does not exist");
             }
 
             String token = userService.generateToken(user);
             return ResponseEntity.ok(new LoginRequestDTO(user, token));
         } catch (BadCredentialsException e) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Identifiants invalides.");
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid credentials");
         } catch (AuthenticationException e) {
-
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Échec de l'authentification.");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authentication failed");
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Une erreur est survenue lors de la connexion.");
-
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while logging in");
         }
     }
 
