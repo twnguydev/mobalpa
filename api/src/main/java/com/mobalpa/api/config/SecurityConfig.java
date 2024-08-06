@@ -26,6 +26,7 @@ public class SecurityConfig {
             "/api/users/login",
             "/api/users/forgot-password",
             "/api/users/reset-password",
+            "/api/emails/send",
             "/api/orders"
     };
 
