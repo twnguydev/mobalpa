@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:mongodb="http://www.liquibase.org/xml/ns/mongodb"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+    http://www.liquibase.org/xml/ns/mongodb
+    http://www.liquibase.org/xml/ns/mongodb/liquibase-mongodb-latest.xsd">
+
+    <include file="src/main/resources/db/changelog/inc/createCollections.xml" />
+    <include file="src/main/resources/db/changelog/inc/createCategories.yaml" />
+
+    <include file="src/main/resources/db/changelog/inc/createCuisinesSubcategories.yaml" />
+    <include file="src/main/resources/db/changelog/inc/createGrandElectromenagerSubcategories.yaml" />
+    <include file="src/main/resources/db/changelog/inc/createPetitElectromenagerSubCategories.yaml" />
+    <include file="src/main/resources/db/changelog/inc/createSalleDeBainSubcategories.yaml" />
+    <include file="src/main/resources/db/changelog/inc/createAccessoiresSubcategories.yaml" />
+
+    <include file="src/main/resources/db/changelog/inc/createProductColors.yaml" />
+    <include file="src/main/resources/db/changelog/inc/createProductBrands.yaml" />
+
+    <include file="src/main/resources/db/changelog/inc/createProductCuisines.yaml" />
+    <include file="src/main/resources/db/changelog/inc/createProductPetitElectromenager.yaml" />
+    <include file="src/main/resources/db/changelog/inc/createProductGrandElectromenager.yaml" />
+    <include file="src/main/resources/db/changelog/inc/createProductSalleDeBain.yaml" />
+    <include file="src/main/resources/db/changelog/inc/createProductAccessoires.yaml" />
+</databaseChangeLog>

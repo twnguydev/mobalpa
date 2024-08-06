@@ -1,0 +1,114 @@
+databaseChangeLog:
+  - changeSet:
+      id: 9
+      author: Saskoue
+      changes:
+        - insertMany:
+            collectionName: "product"
+            documents: |
+              [
+                {
+                  "_id": {"$binary": {"base64": "y1a1ZZjt27A9whsacnLikw==", "subType": "03"}},
+                  "name": "Douche moderne",
+                  "description": "Douche moderne avec parois en verre",
+                  "price": 499.99,
+                  "stock": 15,
+                  "estimatedDelivery": {"$date": "2024-10-01T08:00:00.000Z"},
+                  "weight": 120.0,
+                  "height": 210.0,
+                  "width": 90.0,
+                  "createdAt": {"$date": "2024-09-01T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "A0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "fUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "Gx+KvG6zSbeY6kI5C1z5YA==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "zE1GGTSY9QdpmgEZQt8snA==", "subType": "03"}},
+                      "uri": "/resources/db/changelog/inc/images/douche_1.jpg",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "Gx+KvG6zSbeY6kI5C1z5YA==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "z2b2ZZjt27A9whsacnLikw==", "subType": "03"}},
+                  "name": "Rideau de douche",
+                  "description": "Rideau de douche étanche et résistant",
+                  "price": 19.99,
+                  "stock": 50,
+                  "estimatedDelivery": {"$date": "2024-10-05T08:00:00.000Z"},
+                  "weight": 1.0,
+                  "height": 200.0,
+                  "width": 180.0,
+                  "createdAt": {"$date": "2024-09-02T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "A0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "gUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "Pv+kU6+xSsuN7kA0x3P4zQ==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "bE2GGTSY9QdpmgEZQt8snA==", "subType": "03"}},
+                      "uri": "/resources/db/changelog/inc/images/rideau_1.jpg",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "Pv+kU6+xSsuN7kA0x3P4zQ==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "W5f5ZZjt27A9whsacnLikw==", "subType": "03"}},
+                  "name": "Lavabo design",
+                  "description": "Lavabo en céramique avec meuble intégré",
+                  "price": 249.99,
+                  "stock": 20,
+                  "estimatedDelivery": {"$date": "2024-10-10T08:00:00.000Z"},
+                  "weight": 40.0,
+                  "height": 85.0,
+                  "width": 60.0,
+                  "createdAt": {"$date": "2024-09-03T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "A0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "hUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "dE3GGTSY9QdpmgEZQt8snA==", "subType": "03"}},
+                      "uri": "/resources/db/changelog/inc/images/lavabo_1.jpg",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "V6g6ZZjt27A9whsacnLikw==", "subType": "03"}},
+                  "name": "Meuble de rangement",
+                  "description": "Meuble de rangement pour salle de bain",
+                  "price": 149.99,
+                  "stock": 25,
+                  "estimatedDelivery": {"$date": "2024-10-15T08:00:00.000Z"},
+                  "weight": 35.0,
+                  "height": 150.0,
+                  "width": 60.0,
+                  "createdAt": {"$date": "2024-09-04T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "A0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "iUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "fE4GGTSY9QdpmgEZQt8snA==", "subType": "03"}},
+                      "uri": "/resources/db/changelog/inc/images/meuble_rangement_1.jpg",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                }
+              ]

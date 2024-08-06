@@ -1,0 +1,60 @@
+databaseChangeLog:
+  - changeSet:
+      id: 6
+      author: Saskoue
+      changes:
+        - insertMany:
+            collectionName: "subcategory"
+            documents: |
+              [
+                {
+                  "_id": {"$binary": {"base64": "a1BzEwv4EBu2gqn367EavA==", "subType": "03"}},
+                  "name": "Four",
+                  "description": "Sous-catégorie de Grand électroménager",
+                  "products": [
+                    {"$ref": "product", "$id": {"$binary": {"base64": "Z1a1ZZjt27A9whsacnLikw==", "subType": "03"}}}
+                  ],
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "_class": "com.mobalpa.catalogue.model.Subcategory"
+                },
+                {
+                  "_id": {"$binary": {"base64": "b1BzEwv4EBu2gqn367EavA==", "subType": "03"}},
+                  "name": "Cuisinière",
+                  "description": "Sous-catégorie de Grand électroménager",
+                  "products": [
+                    {"$ref": "product", "$id": {"$binary": {"base64": "Y2b2ZZjt27A9whsacnLikw==", "subType": "03"}}}
+                  ],
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "_class": "com.mobalpa.catalogue.model.Subcategory"
+                },
+                {
+                  "_id": {"$binary": {"base64": "c1BzEwv4EBu2gqn367EavA==", "subType": "03"}},
+                  "name": "Machine à laver",
+                  "description": "Sous-catégorie de Grand électroménager",
+                  "products": [
+                    {"$ref": "product", "$id": {"$binary": {"base64": "X3d3ZZjt27A9whsacnLikw==", "subType": "03"}}}
+                  ],
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "_class": "com.mobalpa.catalogue.model.Subcategory"
+                },
+                {
+                  "_id": {"$binary": {"base64": "d1BzEwv4EBu2gqn367EavA==", "subType": "03"}},
+                  "name": "Frigo",
+                  "description": "Sous-catégorie de Grand électroménager",
+                  "products": [
+                    {"$ref": "product", "$id": {"$binary": {"base64": "W4e4ZZjt27A9whsacnLikw==", "subType": "03"}}}
+                  ],
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "_class": "com.mobalpa.catalogue.model.Subcategory"
+                },
+                {
+                  "_id": {"$binary": {"base64": "e1BzEwv4EBu2gqn367EavA==", "subType": "03"}},
+                  "name": "Lave-vaiselle",
+                  "description": "Sous-catégorie de Grand électroménager",
+                  "products": [
+                    {"$ref": "product", "$id": {"$binary": {"base64": "V5f5ZZjt27A9whsacnLikw==", "subType": "03"}}}
+                  ],
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "_class": "com.mobalpa.catalogue.model.Subcategory"
+                }
+              ]

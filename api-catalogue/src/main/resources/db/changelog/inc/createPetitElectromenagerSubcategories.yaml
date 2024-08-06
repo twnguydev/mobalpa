@@ -1,0 +1,60 @@
+databaseChangeLog:
+  - changeSet:
+      id: 4
+      author: Saskoue
+      changes:
+        - insertMany:
+            collectionName: "subcategory"
+            documents: |
+              [
+                {
+                  "_id": {"$binary": {"base64": "aUBzEwv4EBu2gqn367EavA==", "subType": "03"}},
+                  "name": "Grille pain",
+                  "description": "Sous-catégorie de Petit électroménager",
+                  "products": [
+                    {"$ref": "product", "$id": {"$binary": {"base64": "1Uu9ZZjt27A9whsacnLikw==", "subType": "03"}}}
+                  ],
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "E0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "_class": "com.mobalpa.catalogue.model.Subcategory"
+                },
+                {
+                  "_id": {"$binary": {"base64": "bUBzEwv4EBu2gqn367EavA==", "subType": "03"}},
+                  "name": "Four à micro-onde",
+                  "description": "Sous-catégorie de Petit électroménager",
+                  "products": [
+                    {"$ref": "product", "$id": {"$binary": {"base64": "2Vu7YYgt37A9whsacnLikw==", "subType": "03"}}}
+                  ],
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "E0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "_class": "com.mobalpa.catalogue.model.Subcategory"
+                },
+                {
+                  "_id": {"$binary": {"base64": "cUBzEwv4EBu2gqn367EavA==", "subType": "03"}},
+                  "name": "Mixeur",
+                  "description": "Sous-catégorie de Petit électroménager",
+                  "products": [
+                    {"$ref": "product", "$id": {"$binary": {"base64": "3Wv6ZZjt27A9whsacnLikw==", "subType": "03"}}}
+                  ],
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "E0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "_class": "com.mobalpa.catalogue.model.Subcategory"
+                },
+                {
+                  "_id": {"$binary": {"base64": "dUBzEwv4EBu2gqn367EavA==", "subType": "03"}},
+                  "name": "Friteuse",
+                  "description": "Sous-catégorie de Petit électroménager",
+                  "products": [
+                    {"$ref": "product", "$id": {"$binary": {"base64": "4Xy6VVgt37A9whsacnLikw==", "subType": "03"}}}
+                  ],
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "E0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "_class": "com.mobalpa.catalogue.model.Subcategory"
+                },
+                {
+                  "_id": {"$binary": {"base64": "eUBzEwv4EBu2gqn367EavA==", "subType": "03"}},
+                  "name": "Machine à café",
+                  "description": "Sous-catégorie de Petit électroménager",
+                  "products": [
+                    {"$ref": "product", "$id": {"$binary": {"base64": "5Zz8YYht47A9whsacnLikw==", "subType": "03"}}}
+                  ],
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "E0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "_class": "com.mobalpa.catalogue.model.Subcategory"
+                }
+              ]

@@ -1,0 +1,42 @@
+databaseChangeLog:
+  - changeSet:
+      id: 8
+      author: Saskoue
+      changes:
+        - insertMany:
+            collectionName: "subcategory"
+            documents: |
+              [
+                {
+                  "_id": {"$binary": {"base64": "fUBzEwv4EBu2gqn367EavA==", "subType": "03"}},
+                  "name": "Douche",
+                  "description": "Sous-catégorie de Salle de bain",
+                  "products": [],
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "A0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "_class": "com.mobalpa.catalogue.model.Subcategory"
+                },
+                {
+                  "_id": {"$binary": {"base64": "gUBzEwv4EBu2gqn367EavA==", "subType": "03"}},
+                  "name": "Rideau",
+                  "description": "Sous-catégorie de Salle de bain",
+                  "products": [],
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "A0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "_class": "com.mobalpa.catalogue.model.Subcategory"
+                },
+                {
+                  "_id": {"$binary": {"base64": "hUBzEwv4EBu2gqn367EavA==", "subType": "03"}},
+                  "name": "Lavabo",
+                  "description": "Sous-catégorie de Salle de bain",
+                  "products": [],
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "A0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "_class": "com.mobalpa.catalogue.model.Subcategory"
+                },
+                {
+                  "_id": {"$binary": {"base64": "iUBzEwv4EBu2gqn367EavA==", "subType": "03"}},
+                  "name": "Meuble de rangement",
+                  "description": "Sous-catégorie de Salle de bain",
+                  "products": [],
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "A0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "_class": "com.mobalpa.catalogue.model.Subcategory"
+                }
+              ]

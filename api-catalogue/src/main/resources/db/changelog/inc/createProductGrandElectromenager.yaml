@@ -1,0 +1,140 @@
+databaseChangeLog:
+  - changeSet:
+      id: 7
+      author: Saskoue
+      changes:
+        - insertMany:
+            collectionName: "product"
+            documents: |
+              [
+                {
+                  "_id": {"$binary": {"base64": "Z1a1ZZjt27A9whsacnLikw==", "subType": "03"}},
+                  "name": "Four électrique",
+                  "description": "Four électrique avec convection",
+                  "price": 199.99,
+                  "stock": 30,
+                  "estimatedDelivery": {"$date": "2024-09-01T08:00:00.000Z"},
+                  "weight": 15.0,
+                  "height": 60.0,
+                  "width": 60.0,
+                  "createdAt": {"$date": "2024-08-10T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "a1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "GE8esJRMho/wUZfnAf81pA==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "oE5GGTSY9QdpmgEZQt8snA==", "subType": "03"}},
+                      "uri": "/resources/db/changelog/inc/images/four_electrique_1.jpg",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "GE8esJRMho/wUZfnAf81pA==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "Y2b2ZZjt27A9whsacnLikw==", "subType": "03"}},
+                  "name": "Cuisinière à gaz",
+                  "description": "Cuisinière à gaz avec four intégré",
+                  "price": 299.99,
+                  "stock": 20,
+                  "estimatedDelivery": {"$date": "2024-09-05T08:00:00.000Z"},
+                  "weight": 25.0,
+                  "height": 85.0,
+                  "width": 60.0,
+                  "createdAt": {"$date": "2024-08-11T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "b1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "LUSI2mi0zpRNFJTZbEQOgg==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "rUVkFX29i1Wb/7CZ04pZuQ==", "subType": "03"}},
+                      "uri": "/resources/db/changelog/inc/images/cuisiniere_gaz_2.jpg",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "LUSI2mi0zpRNFJTZbEQOgg==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "X3d3ZZjt27A9whsacnLikw==", "subType": "03"}},
+                  "name": "Machine à laver",
+                  "description": "Machine à laver 7kg",
+                  "price": 399.99,
+                  "stock": 15,
+                  "estimatedDelivery": {"$date": "2024-09-10T08:00:00.000Z"},
+                  "weight": 60.0,
+                  "height": 85.0,
+                  "width": 60.0,
+                  "createdAt": {"$date": "2024-08-12T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "c1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "sE7GGTSY9QdpmgEZQt8snA==", "subType": "03"}},
+                      "uri": "/resources/db/changelog/inc/images/machine_laver_1.jpg",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "W4e4ZZjt27A9whsacnLikw==", "subType": "03"}},
+                  "name": "Réfrigérateur",
+                  "description": "Réfrigérateur combiné 300L",
+                  "price": 499.99,
+                  "stock": 10,
+                  "estimatedDelivery": {"$date": "2024-09-15T08:00:00.000Z"},
+                  "weight": 70.0,
+                  "height": 185.0,
+                  "width": 60.0,
+                  "createdAt": {"$date": "2024-08-13T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "d1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "vUVmFX29i1Wb/7CZ04pZuQ==", "subType": "03"}},
+                      "uri": "/resources/db/changelog/inc/images/refrigerateur_2.jpg",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "V5f5ZZjt27A9whsacnLikw==", "subType": "03"}},
+                  "name": "Lave-vaisselle",
+                  "description": "Lave-vaisselle 12 couverts",
+                  "price": 399.99,
+                  "stock": 25,
+                  "estimatedDelivery": {"$date": "2024-09-20T08:00:00.000Z"},
+                  "weight": 50.0,
+                  "height": 85.0,
+                  "width": 60.0,
+                  "createdAt": {"$date": "2024-08-14T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "e1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "LUSI2mi0zpRNFJTZbEQOgg==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "xUVnFX29i1Wb/7CZ04pZuQ==", "subType": "03"}},
+                      "uri": "/resources/db/changelog/inc/images/lave_vaisselle_2.jpg",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "LUSI2mi0zpRNFJTZbEQOgg==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                }
+              ]
