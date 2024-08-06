@@ -1,2 +1,46 @@
-<p>cart works!</p>
-<app-cart></app-cart>
+<div class="flex justify-center mx-20 flex-col">
+    <div class="flex justify-center">
+        <h1 class="font-gotham text-4xl bg-gray-100 px-40 py-6 m-24 rounded-3xl">Votre Panier</h1>
+    </div>
+    <div class="bg-gray-100  py-6 rounded-3xl flex justify-around m-2">
+        <p class="font-gotham   w-auto ">Article</p>
+        <p class="font-gotham   w-auto ">Quantité</p>
+        <p class="font-gotham   w-auto ">Prix</p>
+    </div>
+<!-- article -->
+    <div class="bg-gray-100  py-4 rounded-3xl flex justify-around m-2 items-center">
+        <div class="flex">
+            <img src="assets/grille-pain-avec-2-fentes-toasteo-de-kitchencook.jpg" alt="" class="h-40 mr-3">
+            <div>
+                <h2 class="text-lg font-gotham"><b>Grille Pain</b></h2>
+                <p class="font-gotham">🟢 en stock</p>
+            </div>
+        </div>
+        <select class="w-16 rounded-xl p-2 flex justify-center">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <!-- ajouter d'autre quantité si nécéssaire -->
+
+        </select>
+        <div class="flex items-center">
+            <p class="font-gotham text-red-500  w-auto text-3xl">$299</p> <!-- prix exemple -->
+            <button class="ml-10 text-2xl">x</button>
+        </div>
+    </div>
+<!-- input pour code promo -->
+ <div class="flex justify-end items-center gap-2 mb-20">
+    <p>Vous avez un code promo ?</p>
+    <input type="text" placeholder="Saisir code promo" class="rounded-xl p-1 bg-gray-300">
+    <button class="text-white bg-emerald-green px-5 py-1 rounded-2xl">OK</button>
+ </div>
+ <app-side></app-side>
+</div>
+
