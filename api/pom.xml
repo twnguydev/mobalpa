@@ -131,12 +131,36 @@
             <version>1.6.0.RC1</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-mail</artifactId>
-        </dependency>
-    </dependencies>
+     <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-mail</artifactId>
+    </dependency>
+    <dependency>
+    <groupId>jakarta.persistence</groupId>
+    <artifactId>jakarta.persistence-api</artifactId>
+    <version>3.1.0</version>
+</dependency>
+<dependency>
+    <groupId>jakarta.transaction</groupId>
+    <artifactId>jakarta.transaction-api</artifactId>
+    <version>2.0.0</version>
+</dependency>
 
+    <!-- Jakarta Mail API -->
+    <dependency>
+        <groupId>jakarta.mail</groupId>
+        <artifactId>jakarta.mail-api</artifactId>
+        <version>2.0.0</version> <!-- Utilisez la dernière version disponible -->
+    </dependency>
+
+    <!-- Implémentation de Jakarta Mail -->
+    <dependency>
+        <groupId>com.sun.mail</groupId>
+        <artifactId>jakarta.mail</artifactId>
+        <version>2.0.0</version> <!-- Utilisez la dernière version disponible -->
+    </dependency>
+    </dependencies>
+    
     <build>
         <!-- <testSourceDirectory>tests</testSourceDirectory> -->
         <plugins>

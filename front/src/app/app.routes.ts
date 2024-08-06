@@ -1,8 +1,14 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from './auth.guard';
+import { Routes } from '@angular/router';
+import { HomeComponent } from './components/home-components/home.component';
+import { LoginComponent } from './components/login-components/login.component';
+import { RegisterComponent } from './components/register-components/register.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+
 
 export const routes: Routes = [
-  // { path: 'login', component: LoginComponent },
-  // { path: '', component: YourHomeComponent, canActivate: [AuthGuard] }, // Ceci est une route protégée par le service AuthGuard
+  { path: '', component: HomeComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'reset-password', component: ResetPasswordComponent },
+
 ];

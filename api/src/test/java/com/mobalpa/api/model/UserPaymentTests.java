@@ -34,6 +34,7 @@ public class UserPaymentTests {
         payment1.setExpirationDate(LocalDateTime.now().plusYears(1));
         payment1.setCvv("123");
         payment1.setCardHolder("Test User");
+        payment1.setPaymentMethod(Payment.PaymentMethod.CREDIT_CARD);
         payment1.setUser(user);
 
         Payment payment2 = new Payment();
@@ -41,14 +42,21 @@ public class UserPaymentTests {
         payment2.setExpirationDate(LocalDateTime.now().plusYears(2));
         payment2.setCvv("456");
         payment2.setCardHolder("Test User");
+        payment2.setPaymentMethod(Payment.PaymentMethod.CREDIT_CARD);
         payment2.setUser(user);
 
-        user.setPayments(Set.of(payment1, payment2));
+        Payment paymentPaypal = new Payment();
+        paymentPaypal.setCardHolder("Test User");
+        paymentPaypal.setPaypalEmail("test@example.com");
+        paymentPaypal.setPaymentMethod(Payment.PaymentMethod.PAYPAL);
+        paymentPaypal.setUser(user);
+
+        user.setPayments(Set.of(payment1, payment2, paymentPaypal));
 
         userRepository.save(user);
 
         User savedUser = userRepository.findById(user.getUuid()).orElse(null);
         assertNotNull(savedUser);
-        assertEquals(2, savedUser.getPayments().size());
+        assertEquals(3, savedUser.getPayments().size());
     }
 }

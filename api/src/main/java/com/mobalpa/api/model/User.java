@@ -9,6 +9,12 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.List;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Column;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
@@ -63,7 +69,7 @@ public class User implements UserDetails {
     @Column(nullable = true)
     private boolean active = true;
 
-    @Column(nullable = false)
+    @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(nullable = true)
@@ -88,6 +94,10 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<Order> orders = new HashSet<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Set<UserCoupon> userCoupons = new HashSet<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -120,4 +130,6 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return active;
     }
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Newsletter> newsletters;
 }
