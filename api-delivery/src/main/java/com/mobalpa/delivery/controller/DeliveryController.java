@@ -3,14 +3,15 @@ package com.mobalpa.delivery.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
 
 import com.mobalpa.delivery.dto.DeliveryDTO;
+import com.mobalpa.delivery.dto.DeliveryPriceRequestDTO;
 import com.mobalpa.delivery.dto.TrackingDetailsDTO;
 import com.mobalpa.delivery.model.Delivery;
 import com.mobalpa.delivery.service.DeliveryService;
 
-import org.springframework.http.HttpStatus;
-
+import java.util.Map;
 import java.util.List;
 import java.util.UUID;
 
@@ -47,9 +48,15 @@ public class DeliveryController {
     return ResponseEntity.ok(trackingDetails);
   }
 
-  @GetMapping("/prices")
-  public ResponseEntity<List<DeliveryDTO>> getDeliveryPrices() {
-    List<DeliveryDTO> prices = deliveryService.getDeliveryPrices();
-    return ResponseEntity.ok(prices);
+  @PostMapping("/prices")
+  public ResponseEntity<?> getDeliveryPrices(@RequestBody DeliveryPriceRequestDTO requestDTO) {
+    try {
+      Map<String, Double> prices = deliveryService.getDeliveryPrices(requestDTO);
+      return ResponseEntity.ok(prices);
+    } catch (RuntimeException e) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    } catch (Exception e) {
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+    }
   }
 }

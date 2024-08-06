@@ -10,6 +10,7 @@ public class DeliveryDTO {
   private UUID orderId;
   private String address;
   private String deliveryMethod;
+  private Double deliveryCost;
   private String status;
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
