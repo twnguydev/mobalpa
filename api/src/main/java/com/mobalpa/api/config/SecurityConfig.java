@@ -26,7 +26,7 @@ public class SecurityConfig {
             "/api/users/login",
             "/api/users/forgot-password",
             "/api/users/reset-password",
-            "/api/users/me"
+            "/api/emails/send"
     };
 
     @Autowired

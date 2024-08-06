@@ -135,6 +135,16 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-mail</artifactId>
     </dependency>
+    <dependency>
+    <groupId>jakarta.persistence</groupId>
+    <artifactId>jakarta.persistence-api</artifactId>
+    <version>3.1.0</version>
+</dependency>
+<dependency>
+    <groupId>jakarta.transaction</groupId>
+    <artifactId>jakarta.transaction-api</artifactId>
+    <version>2.0.0</version>
+</dependency>
 
     <!-- Jakarta Mail API -->
     <dependency>
@@ -150,7 +160,7 @@
         <version>2.0.0</version> <!-- Utilisez la dernière version disponible -->
     </dependency>
     </dependencies>
-
+    
     <build>
         <!-- <testSourceDirectory>tests</testSourceDirectory> -->
         <plugins>
