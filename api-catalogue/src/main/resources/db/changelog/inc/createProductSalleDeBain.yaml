@@ -27,7 +27,7 @@ databaseChangeLog:
                   "images": [
                     {
                       "_id": {"$binary": {"base64": "zE1GGTSY9QdpmgEZQt8snA==", "subType": "03"}},
-                      "uri": "/resources/db/changelog/inc/images/douche_1.jpg",
+                      "uri": "/public/images/bathroom-ecommerce/trendy.png",
                       "color": {"$ref": "colors", "$id": {"$binary": {"base64": "Gx+KvG6zSbeY6kI5C1z5YA==", "subType": "03"}}}
                     }
                   ],
@@ -53,7 +53,7 @@ databaseChangeLog:
                   "images": [
                     {
                       "_id": {"$binary": {"base64": "bE2GGTSY9QdpmgEZQt8snA==", "subType": "03"}},
-                      "uri": "/resources/db/changelog/inc/images/rideau_1.jpg",
+                      "uri": "/public/images/bathroom-ecommerce/boudoir.png",
                       "color": {"$ref": "colors", "$id": {"$binary": {"base64": "Pv+kU6+xSsuN7kA0x3P4zQ==", "subType": "03"}}}
                     }
                   ],
@@ -79,7 +79,7 @@ databaseChangeLog:
                   "images": [
                     {
                       "_id": {"$binary": {"base64": "dE3GGTSY9QdpmgEZQt8snA==", "subType": "03"}},
-                      "uri": "/resources/db/changelog/inc/images/lavabo_1.jpg",
+                      "uri": "/public/images/bathroom-ecommerce/loft.png",
                       "color": {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
                     }
                   ],
@@ -105,7 +105,7 @@ databaseChangeLog:
                   "images": [
                     {
                       "_id": {"$binary": {"base64": "fE4GGTSY9QdpmgEZQt8snA==", "subType": "03"}},
-                      "uri": "/resources/db/changelog/inc/images/meuble_rangement_1.jpg",
+                      "uri": "/public/images/bathroom-ecommerce/evasion.png",
                       "color": {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
                     }
                   ],

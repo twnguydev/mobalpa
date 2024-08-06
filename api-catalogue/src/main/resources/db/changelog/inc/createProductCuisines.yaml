@@ -28,12 +28,12 @@ databaseChangeLog:
                     "images": [
                       {
                         "_id": {"$binary": {"base64": "jE4GGTSY9QdpmgEZQt8snA==", "subType": "03"}},
-                        "uri": "/image1.jpg",
+                        "uri": "/public/images/kitchen-ecommerce/escapade-saumon.png",
                         "color": {"$ref": "colors", "$id": {"$binary": {"base64": "GE8esJRMho/wUZfnAf81pA==", "subType": "03"}}}
                       },
                       {
                         "_id": {"$binary": {"base64": "wUVjFX29i1Wb/7CZ04pZuQ==", "subType": "03"}},
-                        "uri": "/image2.jpg",
+                        "uri": "/public/images/kitchen-ecommerce/escapade-turquoise.png",
                         "color": {"$ref": "colors", "$id": {"$binary": {"base64": "LUSI2mi0zpRNFJTZbEQOgg==", "subType": "03"}}}
                       }
                     ],
@@ -59,7 +59,7 @@ databaseChangeLog:
                     "images": [
                       {
                         "_id": {"$binary": {"base64": "i9d8Fz8h8Ux7DfFm90a5lA==", "subType": "03"}},
-                        "uri": "/images/table_de_cuisine1.jpg",
+                        "uri": "/public/images/kitchen-ecommerce/esthete-blue.png",
                         "color": {"$ref": "colors", "$id": {"$binary": {"base64": "LUSI2mi0zpRNFJTZbEQOgg==", "subType": "03"}}}
                       }
                     ],
@@ -85,7 +85,7 @@ databaseChangeLog:
                     "images": [
                       {
                         "_id": {"$binary": {"base64": "m4o7Pz9y2Wx1LfNh50b6lA==", "subType": "03"}},
-                        "uri": "/images/chaise_de_bureau1.jpg",
+                        "uri": "/public/images/kitchen-ecommerce/symb-turquoise.png",
                         "color": {"$ref": "colors", "$id": {"$binary": {"base64": "LUSI2mi0zpRNFJTZbEQOgg==", "subType": "03"}}}
                       }
                     ],
@@ -111,7 +111,7 @@ databaseChangeLog:
                     "images": [
                       {
                         "_id": {"$binary": {"base64": "k9e6Ez7u6Tx5DfLm40e7lA==", "subType": "03"}},
-                        "uri": "/images/meuble_tv1.jpg",
+                        "uri": "/public/images/kitchen-ecommerce/ressource-rose.png",
                         "color": {"$ref": "colors", "$id": {"$binary": {"base64": "GE8esJRMho/wUZfnAf81pA==", "subType": "03"}}}
                       }
                     ],
@@ -137,7 +137,7 @@ databaseChangeLog:
                     "images": [
                       {
                         "_id": {"$binary": {"base64": "u9o6Gz7v8Tx6GgMm20e8lA==", "subType": "03"}},
-                        "uri": "/images/canape1.jpg",
+                        "uri": "/public/images/kitchen-ecommerce/chill-saumon.png",
                         "color": {"$ref": "colors", "$id": {"$binary": {"base64": "GE8esJRMho/wUZfnAf81pA==", "subType": "03"}}}
                       }
                     ],

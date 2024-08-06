@@ -27,7 +27,7 @@ databaseChangeLog:
                   "images": [
                     {
                       "_id": {"$binary": {"base64": "oE5GGTSY9QdpmgEZQt8snA==", "subType": "03"}},
-                      "uri": "/resources/db/changelog/inc/images/four_electrique_1.jpg",
+                      "uri": "/public/images/kitchen-ecommerce/escapade-woodchair.png",
                       "color": {"$ref": "colors", "$id": {"$binary": {"base64": "GE8esJRMho/wUZfnAf81pA==", "subType": "03"}}}
                     }
                   ],
@@ -53,7 +53,7 @@ databaseChangeLog:
                   "images": [
                     {
                       "_id": {"$binary": {"base64": "rUVkFX29i1Wb/7CZ04pZuQ==", "subType": "03"}},
-                      "uri": "/resources/db/changelog/inc/images/cuisiniere_gaz_2.jpg",
+                      "uri": "/public/images/kitchen-ecommerce/escapade-blue.png",
                       "color": {"$ref": "colors", "$id": {"$binary": {"base64": "LUSI2mi0zpRNFJTZbEQOgg==", "subType": "03"}}}
                     }
                   ],
@@ -79,7 +79,7 @@ databaseChangeLog:
                   "images": [
                     {
                       "_id": {"$binary": {"base64": "sE7GGTSY9QdpmgEZQt8snA==", "subType": "03"}},
-                      "uri": "/resources/db/changelog/inc/images/machine_laver_1.jpg",
+                      "uri": "/public/images/pem/seche3.png",
                       "color": {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
                     }
                   ],
@@ -105,7 +105,7 @@ databaseChangeLog:
                   "images": [
                     {
                       "_id": {"$binary": {"base64": "vUVmFX29i1Wb/7CZ04pZuQ==", "subType": "03"}},
-                      "uri": "/resources/db/changelog/inc/images/refrigerateur_2.jpg",
+                      "uri": "/public/images/kitchen-ecommerce/retro-wood.png",
                       "color": {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
                     }
                   ],
@@ -131,7 +131,7 @@ databaseChangeLog:
                   "images": [
                     {
                       "_id": {"$binary": {"base64": "xUVnFX29i1Wb/7CZ04pZuQ==", "subType": "03"}},
-                      "uri": "/resources/db/changelog/inc/images/lave_vaisselle_2.jpg",
+                      "uri": "/public/images/kitchen-ecommerce/iconique-blue.png",
                       "color": {"$ref": "colors", "$id": {"$binary": {"base64": "LUSI2mi0zpRNFJTZbEQOgg==", "subType": "03"}}}
                     }
                   ],

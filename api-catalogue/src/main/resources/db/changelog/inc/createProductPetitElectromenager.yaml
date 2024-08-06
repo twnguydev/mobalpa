@@ -27,7 +27,7 @@ databaseChangeLog:
                     "images": [
                       {
                         "_id": {"$binary": {"base64": "jE4GGTSY9QdpmgEZQt8snA==", "subType": "03"}},
-                        "uri": "/image1.jpg",
+                        "uri": "/public/images/pem/grillepain.png",
                         "color": {"$ref": "colors", "$id": {"$binary": {"base64": "GE8esJRMho/wUZfnAf81pA==", "subType": "03"}}}
                       }
                     ],
@@ -48,13 +48,13 @@ databaseChangeLog:
                     "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "bUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
                     "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
                     "colors": [
-                      {"$ref": "colors", "$id": {"$binary": {"base64": "LUSI2mi0zpRNFJTZbEQOgg==", "subType": "03"}}}
+                      {"$ref": "colors", "$id": {"$binary": {"base64": "GE8esJRMho/wUZfnAf81pA==", "subType": "03"}}}
                     ],
                     "images": [
                       {
                         "_id": {"$binary": {"base64": "wUVjFX29i1Wb/7CZ04pZuQ==", "subType": "03"}},
-                        "uri": "/image2.jpg",
-                        "color": {"$ref": "colors", "$id": {"$binary": {"base64": "LUSI2mi0zpRNFJTZbEQOgg==", "subType": "03"}}}
+                        "uri": "/public/images/pem/microonde5.png",
+                        "color": {"$ref": "colors", "$id": {"$binary": {"base64": "GE8esJRMho/wUZfnAf81pA==", "subType": "03"}}}
                       }
                     ],
                     "_class": "com.mobalpa.catalogue.model.Product"
@@ -79,7 +79,7 @@ databaseChangeLog:
                     "images": [
                       {
                         "_id": {"$binary": {"base64": "kE3GGTSY9QdpmgEZQt8snA==", "subType": "03"}},
-                        "uri": "/image3.jpg",
+                        "uri": "/public/images/pem/mixeur1.png",
                         "color": {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
                       }
                     ],
@@ -105,7 +105,7 @@ databaseChangeLog:
                     "images": [
                       {
                         "_id": {"$binary": {"base64": "pF4GGTSY9QdpmgEZQt8snA==", "subType": "03"}},
-                        "uri": "/image4.jpg",
+                        "uri": "/public/images/pem/friteuse.jpeg",
                         "color": {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
                       }
                     ],
@@ -131,7 +131,7 @@ databaseChangeLog:
                     "images": [
                       {
                         "_id": {"$binary": {"base64": "nG5GGTSY9QdpmgEZQt8snA==", "subType": "03"}},
-                        "uri": "/image5.jpg",
+                        "uri": "/public/images/pem/cafe2.png",
                         "color": {"$ref": "colors", "$id": {"$binary": {"base64": "Gx+KvG6zSbeY6kI5C1z5YA==", "subType": "03"}}}
                       }
                     ],

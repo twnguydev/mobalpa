@@ -27,7 +27,7 @@ databaseChangeLog:
                   "images": [
                     {
                       "_id": {"$binary": {"base64": "oF5GGTSY9QdpmgEZQt8snA==", "subType": "03"}},
-                      "uri": "/resources/db/changelog/inc/images/spatule_en_bois.jpg",
+                      "uri": "/public/images/pem/spatulerouge.jpeg",
                       "color": {"$ref": "colors", "$id": {"$binary": {"base64": "GE8esJRMho/wUZfnAf81pA==", "subType": "03"}}}
                     }
                   ],
@@ -53,7 +53,7 @@ databaseChangeLog:
                   "images": [
                     {
                       "_id": {"$binary": {"base64": "pG6GGTSY9QdpmgEZQt8snA==", "subType": "03"}},
-                      "uri": "/resources/db/changelog/inc/images/vase_en_ceramique.jpg",
+                      "uri": "/public/images/pem/vasebleu.jpeg",
                       "color": {"$ref": "colors", "$id": {"$binary": {"base64": "LUSI2mi0zpRNFJTZbEQOgg==", "subType": "03"}}}
                     }
                   ],
@@ -79,7 +79,7 @@ databaseChangeLog:
                   "images": [
                     {
                       "_id": {"$binary": {"base64": "qH7GGTSY9QdpmgEZQt8snA==", "subType": "03"}},
-                      "uri": "/resources/db/changelog/inc/images/lanternes_exterieures.jpg",
+                      "uri": "/public/images/pem/lanterne.jpeg",
                       "color": {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
                     }
                   ],
