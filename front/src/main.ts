@@ -13,6 +13,6 @@ bootstrapApplication(AppComponent, {
     provideRouter(routes),
     importProvidersFrom(BrowserModule),
     importProvidersFrom(ReactiveFormsModule),
-    
+
   ]
 });
