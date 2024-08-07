@@ -4,7 +4,7 @@
 
         <p class="text-white text-4xl">En quoi pouvons nous vous aidez ?</p>
         <form>
-            <input class="w-120 p-3 rounded-2xl" type="text" placeholder="Posez votre question">
+            <input class="w-full p-3 rounded-2xl" type="text" placeholder="Posez votre question">
         </form>
 
 
@@ -12,8 +12,8 @@
     <div class="mx-20 flex justify-center ">
 
         <div class="container mx-auto mt-4">
-            <div class="tabs flex border-b flex gap-10">
-                <div *ngFor="let tab of tabs; let i = index" (click)="selectTab(i)" class="tab p-2 cursor-pointer "
+            <div class="tabs flex flex-wrap border-b gap-2 sm:gap-4 md:gap-6 lg:gap-8">
+                <div *ngFor="let tab of tabs; let i = index" (click)="selectTab(i)" class="tab p-2 cursor-pointer text-center flex-1 sm:flex-auto "
                     [class.active]="selectedTab === i" [class.border-blue-500]="selectedTab === i">
                     {{ tab.title }}
                 </div>
@@ -66,14 +66,13 @@
                                 <option value="4"> Autre </option>
                             </select>
                         </div>
-                        <div class="w-full md:w-1/2 lg:w-1/4">
-                            <input class="bg-gray-100 p-2 w-full mt-1" type="email" name="email" placeholder="Email">
-                        </div>
-                            <input class="bg-gray-100 p-2 w-full mt-1" type="text" name="object" placeholder="Objet">
 
-                        <textarea class="w-full h-96 bg-gray-100 p-5 resize-none" name="" id=""
+                        <input class="bg-gray-100 p-2 w-full mt-1" type="text" name="object" placeholder="Objet">
+
+                        <textarea class="w-full h-52 bg-gray-100 p-5 resize-none" name="" id=""
                             placeholder="Tapez votre demande"></textarea>
-                        <input class="bg-gray-100 p-2 md:w-full w-full mt-1 m lg:w-1/4 bg-emerald-500 text-white hover:bg-emerald-400"
+                        <input
+                            class="bg-gray-100 p-2 bg-emerald-green md:w-full w-full mt-1 m lg:w-1/4  text-white hover:bg-emerald-600"
                             type="submit" name="submit" value="Envoyer">
 
                     </form>
@@ -81,23 +80,33 @@
                 </div>
                 <div *ngIf="selectedTab === 2">
                     <h1>Votre avis sur le site</h1>
-                    <form action="" class="flex flex-wrap  gap-4 p-4">
-                        <input class="bg-gray-100 p-2 md:w-full lg:w-1/4 w-full mt-1 rounded-none" type="text"
-                            name="lastname" placeholder=" Nom ">
 
-                        <input class="bg-gray-100 p-2 md:w-full w-full mt-1 m lg:w-1/4" type="text" name="firsname"
-                            placeholder="Prénom">
-                        <input class="bg-gray-100 p-2 md:w-full w-full mt-1 m lg:w-1/4" type="email" name="email"
-                            placeholder="Email">
-                        <input class="bg-gray-100 p-2 md:w-full w-full mt-1 m lg:w-1/4" type="phone" name="phone"
-                            placeholder="Numéro de téléphone">
-
+                    <form (ngSubmit)="onSubmit()" class="space-y-4">
                         <div>
 
+                            <div class="grid grid-cols-10 gap-2">
+                                <label *ngFor="let rating of ratings"
+                                    class="inline-flex items-center justify-center border border-emerald-green  p-2 cursor-pointer"
+                                    [class.bg-emerald-green]="feedback.rating === rating"
+                                    [class.text-white]="feedback.rating === rating">
+                                    <input type="radio" name="rating" [value]="rating" [(ngModel)]="feedback.rating"
+                                        class="hidden">
+                                    <span>{{ rating }}</span>
+                                </label>
+                            </div>
                         </div>
-                        <textarea class="w-full h-96 bg-gray-100 p-5 resize-none" name="" placeholder="Votre avis"></textarea>
-                        <input class="bg-gray-100 p-2 md:w-full w-full mt-1 m lg:w-1/4 bg-emerald-500 text-white hover:bg-emerald-400"
-                            type="submit" name="submit" value="Envoyer">
+                        <div>
+
+                            <textarea [(ngModel)]="feedback.comment" name="comment" rows="4"
+                                class="w-full px-3 py-2 text-gray-700 bg-gray-100 h-52 focus:outline-none"
+                                placeholder="Rédiger votre avis"></textarea>
+                        </div>
+                        <div>
+                            <button type="submit"
+                                class="w-full bg-emerald-green hover:bg-emerald-600 text-white font-bold py-2 px-4  focus:outline-none">
+                                Submit
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>
