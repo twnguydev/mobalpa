@@ -1,5 +1,6 @@
 package com.mobalpa.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -19,6 +20,7 @@ public class Ticket {
 
     @ManyToOne
     @JoinColumn(name = "user_uuid", nullable = false)
+    @JsonIgnoreProperties({"tickets", "respondedTickets"})
     private User user;
 
     @Enumerated(EnumType.STRING)
@@ -42,9 +44,9 @@ public class Ticket {
 
     @ManyToOne
     @JoinColumn(name = "responder_uuid", nullable = true)
+    @JsonIgnoreProperties({"tickets", "respondedTickets"})
     private User responder;
 
     @Column(columnDefinition = "TEXT", nullable = true)
     private String resolution;
-
 }
