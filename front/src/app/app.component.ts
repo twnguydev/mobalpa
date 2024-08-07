@@ -7,6 +7,7 @@ import { MainHeaderComponent } from './pages/main-header/main-header.component';
 import { FooterComponent } from './pages/footer/footer.component';
 import { LandingPageComponent } from './pages/landing-page/landing-page.component';
 import { CartPageComponent } from './pages/cart_page/cart-page.component';
+import { ProductComponent } from '@components/product-components/product.component';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +23,8 @@ import { CartPageComponent } from './pages/cart_page/cart-page.component';
     MainHeaderComponent,
     LandingPageComponent,
     FooterComponent,
-    CartPageComponent
+    CartPageComponent,
+    ProductComponent,
   ]
 })
 export class AppComponent {

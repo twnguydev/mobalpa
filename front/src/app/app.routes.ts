@@ -5,6 +5,7 @@ import { RegisterComponent } from './components/register-components/register.com
 import { LandingPageComponent } from './pages/landing-page/landing-page.component';
 import { CartPageComponent } from './pages/cart_page/cart-page.component';
 import { CategoryComponent } from '@components/category-components/category.component';
+import { ProductComponent } from './components/product-components/product.component';
 
 export const routes: Routes = [
     { path: '', component: LandingPageComponent, },
@@ -13,4 +14,5 @@ export const routes: Routes = [
     { path: 'register', component: RegisterComponent },
     { path: 'panier', component: CartPageComponent},
     { path: 'category', component: CategoryComponent },
+    { path: 'product', component: ProductComponent },
 ];
