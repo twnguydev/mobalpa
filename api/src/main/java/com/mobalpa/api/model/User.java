@@ -132,4 +132,11 @@ public class User implements UserDetails {
     }
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Newsletter> newsletters;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Ticket> tickets = new HashSet<>();
+
+    @OneToMany(mappedBy = "responder", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Ticket> respondedTickets = new HashSet<>();
+
 }
