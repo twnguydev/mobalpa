@@ -1,4 +1,4 @@
-package com.mobalpa.api.delivery;
+package com.mobalpa.delivery;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
