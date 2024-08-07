@@ -13,24 +13,24 @@ public class ShipmentService {
     @Autowired
     private ShipmentRepository shipmentRepository;
 
-    public Shipment createShipmentFromParcel(ParcelDTO parcelDTO) {
-        Shipment shipment = new Shipment();
+    public Shipment createShipment(ParcelDTO parcelDTO) {
+        Shipment shipment = new Shipment(parcelDTO);
         shipment.setName(parcelDTO.getShippingMethodCheckoutName());
-        return shipment;
-    }
-
-    public Shipment getShipmentById(Long id) {
-        return shipmentRepository.findById(id).orElseThrow(() -> new RuntimeException("Shipment not found"));
-    }
-
-    public Shipment updateShipment(Long id, ShipmentDTO shipmentDTO) {
-        Shipment shipment = getShipmentById(id);
-        shipment.setName(shipmentDTO.getName());
-        // Update other fields if necessary
+        shipment.setOrderUuid(parcelDTO.getOrderUuid());
         return shipmentRepository.save(shipment);
     }
 
-    public void deleteShipment(Long id) {
-        shipmentRepository.deleteById(id);
+    public Shipment getShipmentByDeliveryNumber(String number) {
+        return shipmentRepository.findByDeliveryNumber(number).orElseThrow(() -> new RuntimeException("Shipment not found"));
+    }
+
+    public Shipment updateShipment(String number, ShipmentDTO shipmentDTO) {
+        Shipment shipment = getShipmentByDeliveryNumber(number);
+        shipment.setName(shipmentDTO.getName());
+        return shipmentRepository.save(shipment);
+    }
+
+    public void deleteShipment(String number) {
+        shipmentRepository.deleteByDeliveryNumber(number);
     }
 }

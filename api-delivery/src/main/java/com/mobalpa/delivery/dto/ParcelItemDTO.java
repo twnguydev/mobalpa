@@ -2,15 +2,16 @@ package com.mobalpa.delivery.dto;
 
 import lombok.Data;
 
+import java.util.Map;
+
 @Data
 public class ParcelItemDTO {
     private String description;
-    private String hsCode;
-    private String originCountry;
     private String productId;
-    private String properties;
+    private Map<String, String> properties;
     private Integer quantity;
-    private String sku;
     private Double value;
     private Double weight;
+    private Double width;
+    private Double height;
 }
