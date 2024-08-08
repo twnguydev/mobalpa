@@ -33,6 +33,10 @@ public class Parcel {
     private String totalOrderValueCurrency = "EUR";
     private String shippingMethodCheckoutName;
     private String senderAddress;
+    private String recipientAddress;
+    private String recipientPhoneNumber;
+    private String recipientEmail;
+    private String recipientName;
     private Integer quantity;
     private Double totalInsuredValue;
     private Boolean isReturn;

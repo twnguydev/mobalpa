@@ -24,6 +24,8 @@ public class Shipment {
 
     private String name;
 
+    private String address;
+
     public Shipment() {}
 
     public Shipment(ParcelDTO parcel) {

@@ -11,4 +11,8 @@ public class ParcelDTO {
     private List<ParcelItemDTO> parcelItems;
     private String shippingMethodCheckoutName;
     private String senderAddress;
+    private String recipientAddress;
+    private String recipientPhoneNumber;
+    private String recipientEmail;
+    private String recipientName;
 }

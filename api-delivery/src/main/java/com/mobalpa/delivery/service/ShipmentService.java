@@ -16,6 +16,7 @@ public class ShipmentService {
     public Shipment createShipment(ParcelDTO parcelDTO) {
         Shipment shipment = new Shipment(parcelDTO);
         shipment.setName(parcelDTO.getShippingMethodCheckoutName());
+        shipment.setAddress(parcelDTO.getSenderAddress());
         shipment.setOrderUuid(parcelDTO.getOrderUuid());
         return shipmentRepository.save(shipment);
     }
@@ -27,6 +28,7 @@ public class ShipmentService {
     public Shipment updateShipment(String number, ShipmentDTO shipmentDTO) {
         Shipment shipment = getShipmentByDeliveryNumber(number);
         shipment.setName(shipmentDTO.getName());
+        shipment.setAddress(shipmentDTO.getAddress());
         return shipmentRepository.save(shipment);
     }
 

@@ -50,6 +50,10 @@ public class ParcelService {
         parcel.setWidth(calculateTotalWidthParcel(parcelItems));
         parcel.setHeight(calculateTotalHeightParcel(parcelItems));
         parcel.setQuantity(calculateNumberOfParcelsNecessary(parcel));
+        parcel.setRecipientAddress(parcelDTO.getRecipientAddress().toString());
+        parcel.setRecipientName(parcelDTO.getRecipientName());
+        parcel.setRecipientPhoneNumber(parcelDTO.getRecipientPhoneNumber());
+        parcel.setRecipientEmail(parcelDTO.getRecipientEmail());
         parcel.setStatus("CREATED");
         parcel.setIsReturn(false);
 
