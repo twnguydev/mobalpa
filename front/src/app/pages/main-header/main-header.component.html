@@ -1,15 +1,15 @@
-<header class="bg-mobalpa-green w-full z-20">
-    <div class="bg-emerald-green h-8 hidden md:block  ">
-        <div class="flex p- justify-around overflow-hidden  ">
-            <div class="flex text_move mt-1">
+<header class="bg-mobalpa-green relative">
+    <div class="bg-emerald-green h-8 hidden md:block ">
+        <div class="flex p-1 justify-around overflow-hidden ">
+            <div class="flex text_move">
                 <img class='w-6' src="/assets/icon/truck.png" alt="">
                 <p class="px-4 md:text-base text-xs ">LIVRAISON RAPIDE !</p>
             </div>
-            <div class="flex text_move mt-1">
+            <div class="flex text_move">
                 <img class='w-6' src="/assets/icon/discount.png" alt="">
                 <p class="px-4 md:text-base text-xs">PROMO DU MOMENT !</p>
             </div>
-            <div class='flex text_move mt-1'>
+            <div class='flex text_move'>
                 <img class='w-6' src="/assets/icon/back-arrow.png" alt="">
                 <p class="px-4 md:text-base text-xs">RETOUR GRATUIT !</p>
             </div>
@@ -18,7 +18,7 @@
     <div class="container mx-auto px-6 py-4 flex items-center justify-between relative">
         <div class="flex items-center space-x-6 justify-between">
             <div class="w-40 flex-shrink-0">
-                <a href="/"><img src="/assets/logo-MA2.png" alt="Logo" class="h-12 w-auto"></a>
+            <a href="/"> <img src="/assets/logo-MA2.png" alt="Logo" class="h-12 w-auto"></a>
             </div>
 
 
@@ -29,6 +29,7 @@
                 <a href="#" class="text-white font-gotham">Nouveautés</a>
                 <a href="#" class="text-white font-gotham">Promo</a>
                 <a href="/support" class="text-white font-gotham">Support</a>
+
             </nav>
         </div>
 
@@ -40,9 +41,10 @@
             <button (click)="toggleSearchBar()" class="w-8 h-8 flex-shrink-0">
                 <img src="assets/icon/loupe (1).png" alt="Search" class="w-full h-full object-contain">
             </button>
-            <img src="assets/icon/user.png" alt="User" class="w-6 h-6 md:w-8 md:h-8">
-            <a href="/liste-de-souhaits"><img src="assets/icon/heart (2).png" alt="Favorites" class="w-6 h-6 md:w-8 md:h-8"></a>
-            <a href="/panier"><img src="assets/icon/shopping-bag (2).png" alt="Cart" class="w-6 h-6 md:w-8 md:h-8"></a>
+            <a href=""><img src="assets/icon/user.png" alt="User" class="w-6 h-6 md:w-8 md:h-8"></a>
+            <a href="liste-de-souhaits"> <img src="assets/icon/heart (2).png" alt="Favorites"
+                    class="w-6 h-6 md:w-8 md:h-8"></a>
+            <a href="/panier"> <img src="assets/icon/shopping-bag (2).png" alt="Cart" class="w-6 h-6 md:w-8 md:h-8"></a>
         </div>
 
 
@@ -73,16 +75,16 @@
         <a href="#" class="block px-4 py-2 hover:bg-mobalpa-green-alternate">Promo</a>
         <a href="#" class="block px-4 py-2 hover:bg-mobalpa-green-alternate">Se connecter</a>
         <a href="#" class="block px-4 py-2 hover:bg-mobalpa-green-alternate">Promo</a>
-        <a href="#" class="block px-4 py-2 hover:bg-mobalpa-green-alternate">Liste de souhaits</a>
+        <a href="/liste-de-souhaits" class="block px-4 py-2 hover:bg-mobalpa-green-alternate">Liste de souhaits</a>
         <a href="/support" class="block px-4 py-2 hover:bg-mobalpa-green-alternate">Support</a>
+
 
 
     </div>
 
 
 
-    <div id="sous-menu"
-        class=" bg-white flex text-black font-gotham divide-x justify-around absolute top-full left-0 right-0 z-50 hidden
+    <div id="sous-menu" class=" bg-white flex text-black font-gotham divide-x justify-around absolute top-full left-0 right-0 z-50 hidden
         md:text-xs md:pl-2 md:pr-2">
         <div class="container mx-auto py-8">
             <div class="grid grid-cols-5 gap-8">
