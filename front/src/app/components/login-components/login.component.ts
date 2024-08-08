@@ -75,7 +75,6 @@ export class LoginComponent implements OnInit {
   }
 
   private handleError(error: any) {
-    // Traitement des erreurs
     if (error.status === 400) {
       this.errorMessage = 'Mauvaise requête. Veuillez vérifier vos informations.';
     } else if (error.status === 401) {
