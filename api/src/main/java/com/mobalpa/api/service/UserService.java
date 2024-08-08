@@ -15,8 +15,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.context.annotation.Lazy;
 
-import jakarta.mail.MessagingException; // Pour Jakarta Mail
-import java.io.IOException; // Pour IOException
+import jakarta.mail.MessagingException; 
+import java.io.IOException; 
 
 import java.util.UUID;
 import java.util.ArrayList;
@@ -131,6 +131,7 @@ public class UserService implements UserDetailsService {
         String resetToken = UUID.randomUUID().toString();
         user.setToken(resetToken);
         userRepository.save(user);
+
     
         String resetUrlWithToken =  "http://localhost:4200/reset-password?token=" + resetToken;
         try {
@@ -146,6 +147,7 @@ public class UserService implements UserDetailsService {
     
     
     
+
 
     public User resetPassword(String token, String newPassword) {
         User user = userRepository.findByToken(token);

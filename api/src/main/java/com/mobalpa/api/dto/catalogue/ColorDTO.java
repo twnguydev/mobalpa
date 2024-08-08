@@ -1,13 +1,12 @@
-package com.mobalpa.api.dto;
+package com.mobalpa.api.dto.catalogue;
 
 import lombok.Data;
 
 import java.util.UUID;
 
 @Data
-public class CatalogueCategoryDTO {
+public class ColorDTO {
 
     private UUID uuid;
     private String name;
-    private String description;
 }

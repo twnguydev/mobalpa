@@ -98,4 +98,32 @@ public class UserController {
       return ResponseEntity.status(500).body("Error processing wishlist");
     }
   }
+
+  @GetMapping("/{id}/orders")
+  public ResponseEntity<?> getOrders(@PathVariable UUID id) {
+    User user = userService.getUserByUuid(id);
+    if (user == null) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+    }
+
+    if (user.getOrders().isEmpty()) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("This user has no orders");
+    }
+
+    return ResponseEntity.ok(user.getOrders());
+  }
+
+  @GetMapping("/{id}/payments")
+  public ResponseEntity<?> getPayments(@PathVariable UUID id) {
+    User user = userService.getUserByUuid(id);
+    if (user == null) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+    }
+
+    if (user.getPayments().isEmpty()) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("This user has no payments");
+    }
+
+    return ResponseEntity.ok(user.getPayments());
+  }
 }

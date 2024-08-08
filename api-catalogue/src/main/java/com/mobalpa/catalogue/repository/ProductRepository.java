@@ -17,4 +17,5 @@ public interface ProductRepository extends MongoRepository<Product, UUID> {
 
   List<Product> findBySubcategoryUuid(UUID subcategoryId);
   List<Product> findByCategoryUuid(UUID categoryId);
+  Optional<Product> findByUri(String uri);
 }

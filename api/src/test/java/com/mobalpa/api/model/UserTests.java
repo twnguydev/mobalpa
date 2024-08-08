@@ -7,6 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import com.mobalpa.api.repository.RoleRepository;
 import com.mobalpa.api.repository.UserRepository;
+
+import com.mobalpa.api.dto.delivery.DeliveryDTO;
 
 @DataJpaTest
 public class UserTests {
@@ -85,6 +89,7 @@ public class UserTests {
         payment.setExpirationDate(LocalDateTime.now().plusYears(1));
         payment.setCvv("123");
         payment.setCardHolder("Alice Smith");
+        payment.setPaymentMethod(Payment.PaymentMethod.CREDIT_CARD);
         payment.setUser(user);
 
         user.getPayments().add(payment);
@@ -106,17 +111,32 @@ public class UserTests {
         user.setPhoneNumber("2223334444");
         user.setCreatedAt(LocalDateTime.now());
 
+        List<OrderItem> items = new ArrayList<>();
+        items.add(new OrderItem("item1", 1));
+        items.add(new OrderItem("item2", 2));
+
         Order order = new Order();
-        order.setItems("{\"item1\": 1, \"item2\": 2}");
         order.setUser(user);
-        order.setDeliveryAddress("123 Main St");
-        order.setReduction(0L);
-        order.setDeliveryFees(500L);
-        order.setVat(100L);
-        order.setTotalHt(2000L);
-        order.setTotalTtc(2600L);
+        order.setDeliveryAddress("456 Elm St");
+        order.setReduction(0.0);
+        order.setTotalHt(100.0);
+        order.setDeliveryFees(10.0);
+        order.setDeliveryMethod("UPS");
+        order.setVat(20.0);
+        order.setTotalTtc(130.0);
         order.setStatus("PENDING");
         order.setCreatedAt(LocalDateTime.now());
+        order.setItems(items);
+
+        DeliveryDTO deliveryDTO = new DeliveryDTO();
+        deliveryDTO.setOrderUuid(order.getUuid());
+        deliveryDTO.setAddress("10 rue de la Paix, 75002 Paris, France");
+        deliveryDTO.setDeliveryMethod("Chronopost");
+        deliveryDTO.setStatus("Pending");
+
+        List<DeliveryDTO> deliveries = List.of(deliveryDTO);
+
+        order.setDeliveries(deliveries);
 
         user.getOrders().add(order);
         userRepository.save(user);
@@ -125,6 +145,9 @@ public class UserTests {
         assertNotNull(savedUser);
         assertEquals(1, savedUser.getOrders().size());
         assertEquals("PENDING", savedUser.getOrders().iterator().next().getStatus());
+        assertEquals(2, savedUser.getOrders().iterator().next().getItems().size());
+        assertEquals("item1", savedUser.getOrders().iterator().next().getItems().get(0).getProductId());
+        assertEquals(1, savedUser.getOrders().iterator().next().getItems().get(0).getQuantity());
     }
 
     @Test

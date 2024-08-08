@@ -133,110 +133,96 @@ public class ProductService {
     }
 
     public Product createProduct(Product product) {
-        if (product.getName() == null) {
-            throw new RuntimeException("Name is required");
+        if (product.getName() == null) throw new RuntimeException("Name is required");
+        if (product.getDescription() == null) throw new RuntimeException("Description is required");
+        if (product.getPrice() == null) throw new RuntimeException("Price is required");
+        if (product.getStock() == null) throw new RuntimeException("Stock is required");
+        if (product.getUri() == null) throw new RuntimeException("Uri is required");
+        if (product.getWeight() == null) throw new RuntimeException("Weight is required");
+        if (product.getHeight() == null) throw new RuntimeException("Height is required");
+        if (product.getWidth() == null) throw new RuntimeException("Width is required");
+        if (product.getCategory() == null) throw new RuntimeException("Category is required");
+        if (product.getSubcategory() == null) throw new RuntimeException("Subcategory is required");
+        if (product.getBrand() == null) throw new RuntimeException("Brand is required");
+        if (product.getColors() == null) throw new RuntimeException("Colors are required");
+        if (product.getImages() == null) throw new RuntimeException("Images are required");
+    
+        Optional<Product> existingProduct = productRepository.findByName(product.getName());
+        Optional<Product> existingUri = productRepository.findByUri(product.getUri());
+    
+        if (existingProduct.isPresent()) {
+            throw new RuntimeException("Product with name " + product.getName() + " already exists");
+        } else if (existingUri.isPresent()) {
+            throw new RuntimeException("Product with uri " + product.getUri() + " already exists");
         }
-        if (product.getDescription() == null) {
-            throw new RuntimeException("Description is required");
+    
+        Category category = product.getCategory();
+        Optional<Category> categoryOpt = categoryRepository.findByName(category.getName());
+        if (!categoryOpt.isPresent()) {
+            throw new RuntimeException("Category " + category.getName() + " doesn't exist");
         }
-        if (product.getPrice() == null) {
-            throw new RuntimeException("Price is required");
+        category = categoryOpt.get();
+        product.setCategory(category);
+    
+        Subcategory subcategory = product.getSubcategory();
+        Optional<Subcategory> subcategoryOpt = subcategoryRepository.findByName(subcategory.getName());
+        if (!subcategoryOpt.isPresent()) {
+            throw new RuntimeException("Subcategory " + subcategory.getName() + " doesn't exist in " + category.getName());
         }
-        if (product.getStock() == null) {
-            throw new RuntimeException("Stock is required");
+        subcategory = subcategoryOpt.get();
+        if (!subcategory.getCategory().getUuid().equals(category.getUuid())) {
+            throw new RuntimeException("This subcategory does not belong to the category: " + category.getName());
         }
-        if (product.getWeight() == null) {
-            throw new RuntimeException("Weight is required");
-        }
-        if (product.getHeight() == null) {
-            throw new RuntimeException("Height is required");
-        }
-        if (product.getWidth() == null) {
-            throw new RuntimeException("Width is required");
-        }
-
-        if (product.getCategory() != null) {
-            Optional<Category> categoryOpt = categoryRepository.findByName(product.getCategory().getName());
-            if (!categoryOpt.isPresent()) {
-                throw new RuntimeException("Category " + product.getCategory().getName() + " doesn't exist");
-            }
-            Category category = categoryOpt.get();
-            product.setCategory(category);
-
-            if (product.getSubcategory() != null) {
-                Optional<Subcategory> subcategoryOpt = subcategoryRepository.findByName(product.getSubcategory().getName());
-                if (!subcategoryOpt.isPresent()) {
-                    throw new RuntimeException("Subcategory " + product.getSubcategory().getName() + " doesn't exist in " + product.getCategory().getName());
-                }
-                Subcategory subcategory = subcategoryOpt.get();
-                if (!subcategory.getCategory().getUuid().equals(category.getUuid())) {
-                    throw new RuntimeException("This subcategory does not belong to the category: " + product.getCategory().getName());
-                }
-                product.setSubcategory(subcategory);
-
-                if (subcategory.getProducts() == null) {
-                    subcategory.setProducts(new ArrayList<>());
-                }
-                subcategory.getProducts().add(product);
-                subcategoryRepository.save(subcategory);
-            } else {
-                throw new RuntimeException("Subcategory is required");
-            }
+        product.setSubcategory(subcategory);
+    
+        if (subcategory.getProducts() == null) subcategory.setProducts(new ArrayList<>());
+        subcategory.getProducts().add(product);
+        subcategoryRepository.save(subcategory);
+    
+        Brand brand = product.getBrand();
+        Optional<Brand> brandOpt = brandRepository.findByName(brand.getName());
+        if (!brandOpt.isPresent()) {
+            brandRepository.save(brand);
         } else {
-            throw new RuntimeException("Category is required");
+            product.setBrand(brandOpt.get());
         }
-
-        if (product.getBrand() != null) {
-            Optional<Brand> brandOpt = brandRepository.findByName(product.getBrand().getName());
-            if (!brandOpt.isPresent()) {
-                brandRepository.save(product.getBrand());
+    
+        List<Color> colors = product.getColors();
+        for (int i = 0; i < colors.size(); i++) {
+            Color color = colors.get(i);
+            Optional<Color> existingColor = colorRepository.findByName(color.getName());
+            if (!existingColor.isPresent()) {
+                colorRepository.save(color);
             } else {
-                product.setBrand(brandOpt.get());
+                colors.set(i, existingColor.get());
             }
-        } else {
-            throw new RuntimeException("Brand is required");
         }
-
-        if (product.getColors() != null) {
-            List<Color> colors = product.getColors();
-            for (int i = 0; i < colors.size(); i++) {
-                Color color = colors.get(i);
-                Optional<Color> existingColor = colorRepository.findByName(color.getName());
-                if (!existingColor.isPresent()) {
-                    colorRepository.save(color);
+    
+        List<Image> images = product.getImages();
+        List<Color> availableColors = product.getColors();
+        for (Image image : images) {
+            if (image.getColor() != null) {
+                Optional<Color> imageColor = availableColors.stream()
+                        .filter(c -> c.getName().equals(image.getColor().getName()))
+                        .findFirst();
+    
+                if (imageColor.isPresent()) {
+                    image.setColor(imageColor.get());
                 } else {
-                    colors.set(i, existingColor.get());
+                    throw new RuntimeException("This color does not exist for the product: "
+                            + image.getColor().getName() + " for image " + image.getUri());
                 }
             }
-        } else {
-            throw new RuntimeException("Colors are required");
+            imageRepository.save(image);
         }
-
-        if (product.getImages() != null) {
-            List<Image> images = product.getImages();
-            List<Color> availableColors = product.getColors();
-            for (int i = 0; i < images.size(); i++) {
-                Image image = images.get(i);
-                if (image.getColor() != null) {
-                    Optional<Color> imageColor = availableColors.stream()
-                            .filter(c -> c.getName().equals(image.getColor().getName()))
-                            .findFirst();
-
-                    if (imageColor.isPresent()) {
-                        image.setColor(imageColor.get());
-                    } else {
-                        throw new RuntimeException("This color does not exist for the product: "
-                                + image.getColor().getName() + " for image " + image.getUri());
-                    }
-                }
-                imageRepository.save(image);
-            }
-        } else {
-            throw new RuntimeException("Images are required");
-        }
-
+    
+        String subcategoryUri = product.getSubcategory().getUri();
+        if (subcategoryUri.startsWith("/")) subcategoryUri = subcategoryUri.substring(1);
+        if (product.getUri().startsWith("/")) product.setUri(product.getUri().substring(1));
+        product.setUri(subcategoryUri + "/" + product.getUri());
+    
         return productRepository.save(product);
-    }
+    }    
 
     public List<Product> getProductsByStoreId(UUID id) {
         return storeRepository.findProductsByUuid(id);

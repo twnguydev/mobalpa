@@ -40,8 +40,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         String email = null;
         String jwt = null;
 
-        logger.info(authorizationHeader);
-
         if (requestApiKey != null && requestApiKey.equals(apiKey)) {
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                     "apiKeyUser", null, null);

@@ -41,7 +41,16 @@ public class CatalogueController {
   }
 
   @GetMapping("/best-sellers")
-  public ResponseEntity<List<Product>> getBestSellers() {
-    return ResponseEntity.ok(catalogueService.getBestSellers());
+  public ResponseEntity<?> getBestSellers() {
+    try {
+      List<Product> bestSellers = catalogueService.getBestSellers();
+      if (bestSellers.isEmpty()) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No best sellers found");
+      } else {
+        return ResponseEntity.ok(bestSellers);
+      }
+    } catch (RuntimeException e) {
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+    }
   }
 }

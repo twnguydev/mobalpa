@@ -22,23 +22,28 @@ public class Payment {
     @JsonIgnore
     private User user;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String cardNumber;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private LocalDateTime expirationDate;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String cvv;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String cardHolder;
 
     @Column(nullable = true)
     private String paypalEmail;
 
     @Column(nullable = false)
-    private String paymentMethod = "CREDIT_CARD";
+    private PaymentMethod paymentMethod;
+
+    public enum PaymentMethod {
+        CREDIT_CARD,
+        PAYPAL
+    }
 
     @Column(nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
