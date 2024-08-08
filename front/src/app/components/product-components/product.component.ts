@@ -17,13 +17,6 @@ export class ProductComponent {
     { title: 'Avis' },
     { title: 'Caractéristiques' }
   ];
-  ratings: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-  feedback = {
-    rating: 0,
-    comment: ''
-  };
-
-
 
   selectedTab: number = 0;
 
