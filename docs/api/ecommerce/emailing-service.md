@@ -18,18 +18,18 @@ Authorization: Bearer <token>
 Content-Type: application/json
 
 {
-  "to": "customer@example.com",
-  "subject": "Votre commande a été expédiée",
-  "body": "Votre commande #54321 a été expédiée."
+    "to": "nathanmatounga@gmail.com",
+    "subject": "Hello",
+    "body": "Coucou copain de moi!!",
+    "status": "SENT"
 }
 
 HTTP/1.1 200 OK
 Content-Type: application/json
 
-{
-  "emailId": "abc123",
-  "status": "Sent"
-}
+
+  Email sent
+
 ```
 
 ##### Abonnement à la newsletter
@@ -39,16 +39,13 @@ Authorization: Bearer <token>
 Content-Type: application/json
 
 {
-  "userUuid": "a4801d5a-cbac-417e-8d99-d690b3832f19"
+    "emailUser": "nathanmatounga@gmail.com"
 }
 
 HTTP/1.1 200 OK
 Content-Type: application/json
 
-{
-  "subscriptionId": "newsletter123",
-  "status": "Subscribed"
-}
+Newsletter saved
 ```
 
 ##### Suppression d'un abonnement à la newsletter
@@ -58,10 +55,12 @@ Authorization: Bearer <token>
 Content-Type: application/json
 
 {
-  "userUuid": "a4801d5a-cbac-417e-8d99-d690b3832f19"
+    "emailUser": "nathanmatounga@gmail.com"
 }
 
-HTTP/1.1 204 No Content
+HTTP/1.1 200 ok
+
+Newsletter supprimée
 ```
 
 ##### Suivi de l'état d'un e-mail envoyé
