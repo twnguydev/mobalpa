@@ -6,6 +6,8 @@
 /out-tsc
 /bazel-out
 
+*:Zone.Identifier
+
 # Node
 /node_modules
 npm-debug.log
