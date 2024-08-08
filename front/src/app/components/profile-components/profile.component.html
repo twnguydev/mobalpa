@@ -1,1 +1,85 @@
-<p>profile works!</p>
+<div class="container mx-auto py-8">
+    <h1 class="text-4xl font-bold mb-8">Espace personnel</h1>
+    <div class="tabs flex flex-wrap border-b mb-3 gap-2 sm:gap-4 md:gap-6 lg:gap-8">
+        <div *ngFor="let tab of tabs; let i = index" (click)="selectTab(i)"
+            class="tab p-2 cursor-pointer text-center flex-1 " [class.active]="selectedTab === i"
+            [class.border-blue-500]="selectedTab === i">
+            {{ tab.title }}
+        </div>
+    </div>
+    <div class="grid  grid-cols-1 gap-8">
+        <div *ngIf="selectedTab === 0" class="border md:mx-auto md:w-2/3 p-4 rounded">
+            <h2 class="text-2xl font-semibold mb-4">Données personnelles</h2>
+            <form class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Prenom</label>
+                    <input type="text" class="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                        placeholder="Votreе preonom">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Email</label>
+                    <input type="email" class="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                        placeholder="Votre email">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Votre numéro de téléphone</label>
+                    <input type="tel" class="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                        placeholder="Votre numéro de téléphone">
+                </div>
+                <button type="button" class="bg-blue-500 text-white p-2 rounded">Enregistrer les modifications</button>
+            </form>
+        </div>
+
+        <div *ngIf="selectedTab === 1" class="border md:mx-auto md:w-2/3 p-4 rounded">
+            <h2 class="text-2xl font-semibold mb-4">Modes de paiement</h2>
+            <div class="space-y-4">
+                <div class="border p-2 rounded flex justify-between items-center">
+                    <span>Visa **** 1234</span>
+                    <button class="text-red-500 hover:underline">Supprimer</button>
+                </div>
+                <div class="border p-2 rounded flex justify-between items-center">
+                    <span>Mastercard **** 5678</span>
+                    <button class="text-red-500 hover:underline">Supprimer</button>
+                </div>
+                <button class="bg-green-500 text-white p-2 rounded">Ajouter un mode de paiement</button>
+            </div>
+        </div>
+
+        <!-- Адреса доставки -->
+        <div *ngIf="selectedTab === 2" class="border md:mx-auto md:w-2/3 p-4 rounded">
+            <h2 class="text-2xl font-semibold mb-4">Adresses de livraison</h2>
+            <div class="space-y-4">
+                <div class="border p-2 rounded flex justify-between items-center">
+                    <span>Москва, ул. Пушкина, д. Колотушкина</span>
+                    <button class="text-red-500 hover:underline">Supprimer</button>
+                </div>
+                <div class="border p-2 rounded flex justify-between items-center">
+                    <span>Санкт-Петербург, Невский пр., д. 100</span>
+                    <button class="text-red-500 hover:underline">Supprimer</button>
+                </div>
+                <button class="bg-green-500 text-white p-2 rounded">Ajouter une adresse</button>
+            </div>
+        </div>
+
+        <!-- Заказы -->
+        <div *ngIf="selectedTab === 3" class="border md:mx-auto md:w-2/3 p-4 rounded">
+            <h2 class="text-2xl font-semibold mb-4">Commandes</h2>
+            <ul class="space-y-4">
+                <li class="border p-2 rounded">
+                    <span class="font-semibold">Commande №12345</span> - <span class="text-gray-600">20.07.2023</span>
+                    <div class="mt-2">
+                        <span class="text-green-500">Livré</span>
+                        <button class="ml-4 text-blue-500 hover:underline">Lire la suite</button>
+                    </div>
+                </li>
+                <li class="border p-2 rounded">
+                    <span class="font-semibold">Commande №67890</span> - <span class="text-gray-600">15.07.2023</span>
+                    <div class="mt-2">
+                        <span class="text-yellow-500">En cours de traitement</span>
+                        <button class="ml-4 text-blue-500 hover:underline">Lire la suite</button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

@@ -6,7 +6,7 @@
             <div class=" bg-white shadow-custom-dark h-98 rounded-3xl p-2 pl-12 pt-5">
                 <form class="w-64 mr-10" [formGroup]="form" (ngSubmit)="onSubmit()" method="post" action="#">
                     <p class="mb-4 text-xl font-bold text-mobalpa-green">E-mail</p>
-                    <input id="email"
+                    <input id="email" 
                         [ngClass]="{'bg-red-600': form.get('email')?.invalid && form.get('email')?.touched}"
                         formControlName="email" type="email1" name="email1"
                         class="bg-emerald-green text-xl pl-2 bg-opacity-30 rounded-xl h-12 w-64">
