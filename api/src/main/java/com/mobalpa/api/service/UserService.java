@@ -95,7 +95,6 @@ public class UserService implements UserDetailsService {
                 "${appName}", "Mobalpa"
             );
         } catch (MessagingException | IOException e) {
-            // Gérer l'exception, par exemple en la journalisant
             e.printStackTrace();
         }
     }
