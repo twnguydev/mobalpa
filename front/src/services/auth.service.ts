@@ -35,31 +35,34 @@ export class AuthService {
 
 
 
-  signup(data: IUser): Observable<any> {
-    if (!this.checkInputsSignup(data)) {
-      console.error('Invalid signup data');
-      return of(null);
-    }
 
-    return this.http.post<any>(`${this.apiUrl}/register`, {
+signup(data: IUser): Observable<string> {
+  if (!this.checkInputsSignup(data)) {
+      console.error('Invalid signup data');
+      return of('');
+  }
+
+  return this.http.post<string>(`${this.apiUrl}/register`, {
       ...data,
-      birthdate: new Date(data.birthdate).toISOString()
-    }, {
+      birthdate: new Date(data.birthdate).toISOString(),
+  }, {
       headers: {
-        'Content-Type': 'application/json',
-        'X-API-KEY': `${environment.apiKey}`
-      }
-    }).pipe(
+          'Content-Type': 'application/json',
+          'X-API-KEY': `${environment.apiKey}`
+      },
+      responseType: 'text' as 'json'
+  }).pipe(
       map(response => {
-        localStorage.setItem('token', response.token);
-        return response;
+          console.log('Signup response:', response);
+          return response;
       }),
       catchError(error => {
-        console.error('Signup error', error);
-        return of(null);
+          console.error('Signup error', error);
+          return of(''); 
       })
-    );
-  }
+  );
+}
+
 
 
   forgotPassword(email: string): Observable<string> {
@@ -133,4 +136,9 @@ export class AuthService {
   validResetPassword(token: string, newPassword: string): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/reset-password?token=${token}`, { newPassword });
   }
+
+
+
+
+
 }

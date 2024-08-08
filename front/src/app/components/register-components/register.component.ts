@@ -4,6 +4,7 @@ import { AuthService } from './../../../services/auth.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NewsletterService } from './../../../services/newsletter.service';
 
 @Component({
   selector: 'app-register',
@@ -18,7 +19,12 @@ export class RegisterComponent implements OnInit {
   errorMessage: string = '';
   formSubmitted: boolean = false;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private newsletterService: NewsletterService,
+    private router: Router
+  ) {
     this.form = this.fb.group({
       lastname: ['', Validators.required],
       firstname: ['', Validators.required],
@@ -28,7 +34,7 @@ export class RegisterComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
       terms: [false, Validators.requiredTrue],
-      communications: [false]
+      newsletter: [false]
     }, { validators: this.passwordMatchValidator });
   }
 
@@ -37,11 +43,9 @@ export class RegisterComponent implements OnInit {
   passwordMatchValidator(control: AbstractControl): { [key: string]: boolean } | null {
     const passwordControl = control.get('password');
     const confirmPasswordControl = control.get('confirmPassword');
-
     if (!passwordControl || !confirmPasswordControl) {
       return null;
     }
-
     return passwordControl.value === confirmPasswordControl.value ? null : { passwordMismatch: true };
   }
 
@@ -52,14 +56,30 @@ export class RegisterComponent implements OnInit {
         ...this.form.value,
         address: null,
         city: null,
-        zipcode: null
+        zipcode: null,
       };
 
       this.authService.signup(formData).subscribe({
-        next: (response) => {
+        next: (response: string) => {
           this.successMessage = 'Inscription réussie !';
           this.errorMessage = '';
-          setTimeout(() => this.router.navigate(['/login']), 6000);
+
+          if (formData.newsletter) {
+            const newsletterData = {
+              emailUser: formData.email
+            };
+
+            this.newsletterService.addNewsletter(newsletterData).subscribe({
+              next: (res) => {
+                console.log('Newsletter ajouté:', res);
+              },
+              error: (err) => {
+                console.error('Erreur lors de l\'ajout à la newsletter:', err);
+              }
+            });
+          }
+
+          setTimeout(() => this.router.navigate(['/login']), 4000);
         },
         error: (error) => {
           console.error('Signup error', error);
