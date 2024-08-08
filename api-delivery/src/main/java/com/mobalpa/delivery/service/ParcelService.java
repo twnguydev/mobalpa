@@ -32,7 +32,7 @@ public class ParcelService {
         List<ParcelItem> parcelItems = parcelDTO.getParcelItems().stream().map(itemDTO -> {
             ParcelItem item = new ParcelItem();
             item.setDescription(itemDTO.getDescription());
-            item.setProductId(itemDTO.getProductId());
+            item.setProductUuid(itemDTO.getProductUuid());
             item.setProperties(itemDTO.getProperties());
             item.setQuantity(itemDTO.getQuantity());
             item.setValue(itemDTO.getValue());

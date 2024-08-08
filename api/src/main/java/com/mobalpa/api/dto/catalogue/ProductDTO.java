@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
+import java.util.List;
 
 @Data
 public class ProductDTO {
@@ -20,5 +21,6 @@ public class ProductDTO {
     private double weight;
     private double height;
     private double width;
-    private ColorDTO color;
+    private List<ColorDTO> colors;
+    private List<CatalogueImageDTO> images;
 }

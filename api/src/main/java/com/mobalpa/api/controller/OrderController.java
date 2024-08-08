@@ -38,7 +38,7 @@ public class OrderController {
     @PostMapping
     public ResponseEntity<?> createOrder(@RequestBody OrderRequestDTO orderRequest) {
         try {
-            Order createdOrder = orderService.createOrder(orderRequest);
+            ParcelDTO createdOrder = orderService.createOrder(orderRequest);
             return ResponseEntity.status(HttpStatus.CREATED).body(createdOrder);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
@@ -70,7 +70,7 @@ public class OrderController {
     public ResponseEntity<?> completeOrder(@PathVariable UUID uuid) {
         try {
             Order order = orderService.getOrderByUuid(uuid);
-            order = orderService.completeOrder(order);
+            // order = orderService.completeOrder(order);
             return ResponseEntity.ok(order);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
@@ -93,20 +93,20 @@ public class OrderController {
         }
     }
 
-    @GetMapping("/{uuid}/track")
-    public ResponseEntity<?> trackOrder(@PathVariable UUID uuid) {
-        try {
-            TrackingDTO trackingDetails = orderService.trackOrder(uuid);
-            return ResponseEntity.ok(trackingDetails);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
-    }
+    // @GetMapping("/{uuid}/track")
+    // public ResponseEntity<?> trackOrder(@PathVariable UUID uuid) {
+    //     try {
+    //         // TrackingDTO trackingDetails = orderService.trackOrder(uuid);
+    //         return ResponseEntity.ok(trackingDetails);
+    //     } catch (RuntimeException e) {
+    //         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    //     }
+    // }
 
     @GetMapping("/delivery-prices")
     public ResponseEntity<?> getDeliveryPrices() {
         try {
-            List<PriceDTO> deliveryPrices = deliveryService.getDeliveryPrices();
+            List<DepotDTO> deliveryPrices = deliveryService.getDeliveryPrices();
             return ResponseEntity.ok(deliveryPrices);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());

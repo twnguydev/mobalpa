@@ -23,10 +23,10 @@ public class DeliveryController {
     private DepotService deliveryPriceService;
 
     @PostMapping
-    public ResponseEntity<String> createParcel(@RequestBody ParcelDTO parcelDTO) {
+    public ResponseEntity<?> createParcel(@RequestBody ParcelDTO parcelDTO) {
         try {
             Parcel createdParcel = parcelService.createParcel(parcelDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body(createdParcel.getShipment().getDeliveryNumber());
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdParcel);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
