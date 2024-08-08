@@ -3,6 +3,7 @@ package com.mobalpa.api.controller;
 import com.mobalpa.api.dto.LoginDTO;
 import com.mobalpa.api.dto.LoginResponse;
 import com.mobalpa.api.model.User;
+import com.mobalpa.api.model.Newsletter;
 import com.mobalpa.api.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ import java.nio.file.Paths;
 import java.io.IOException;
 
 import java.util.Map;
-
+import java.util.UUID;
 @RestController
 @RequestMapping("api/users")
 public class AuthController {
@@ -32,13 +33,14 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@RequestBody User user) {
         try {
-            userService.registerUser(user);
+            User registeredUser = userService.registerUser(user); 
             return ResponseEntity.ok("Registration successful. Please check your email for confirmation.");
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-
+    
+    
     @GetMapping("/confirm")
     public ResponseEntity<String> confirmUser(@RequestParam("token") String token) {
         User user = userService.confirmUser(token);

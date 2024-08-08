@@ -5,9 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
+import java.util.Optional;
 
 @Repository
 public interface EmailingRepository extends JpaRepository<Emailing, UUID> {
-    Emailing findByUuid(UUID uuid);
+    Optional<Emailing> findByUuid(UUID uuid);
 }
-

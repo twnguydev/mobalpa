@@ -2,7 +2,6 @@ package com.mobalpa.api.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-
 import java.util.UUID;
 
 @Entity
@@ -14,8 +13,7 @@ public class Newsletter {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID uuid;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_uuid", nullable = false)
-    private User user;
+    @Column(name = "email_user", nullable = false)
+    private String emailUser;
 
 }

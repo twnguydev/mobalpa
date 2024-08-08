@@ -126,6 +126,11 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return active;
     }
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Newsletter> newsletters;
+
+    public UUID getId(){
+        return uuid;
+    }
+    
+
+  
 }

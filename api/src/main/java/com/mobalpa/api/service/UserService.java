@@ -60,7 +60,7 @@ public class UserService implements UserDetailsService {
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
-
+    
     public User getUserByUuid(UUID uuid) {
         return userRepository.findById(uuid).orElseThrow(() -> new RuntimeException("User not found"));
     }
@@ -80,6 +80,7 @@ public class UserService implements UserDetailsService {
 
         userRepository.save(user);
         sendConfirmationEmail(user);
+
         return user;
     }
 

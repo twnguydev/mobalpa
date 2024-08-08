@@ -6,11 +6,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.mobalpa.api.model.Emailing;
-import com.mobalpa.api.model.Newsletter;
 import com.mobalpa.api.service.EmailService;
+import com.mobalpa.api.service.NewsletterService;
 
 import java.util.Optional;
 import java.util.UUID;
+import com.mobalpa.api.model.EmailingType;
 
 @RestController
 @RequestMapping("/api/emails")
@@ -18,6 +19,9 @@ public class EmailController {
 
     @Autowired
     private EmailService emailService;
+
+    @Autowired
+    private NewsletterService newsletterService;
 
     @PostMapping("/send")
     public ResponseEntity<String> sendEmail(@RequestBody Emailing emailing) {
@@ -28,29 +32,15 @@ public class EmailController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
-
-    @PostMapping("/newsletter")
-    public ResponseEntity<String> sendNewsletter(@RequestBody Newsletter newsletter) {
+   
+    @GetMapping("/{uuid}/status")
+    public ResponseEntity<EmailingType> getEmailStatus(@PathVariable UUID uuid) {
         try {
-            emailService.sendNewsletter(newsletter);
-            return ResponseEntity.status(HttpStatus.OK).body("Newsletter sent");
+            EmailingType status = emailService.getEmailStatus(uuid);
+            return ResponseEntity.ok(status);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            return ResponseEntity.notFound().build();
         }
     }
 
-    
-    @DeleteMapping("/newsletter")
-    public ResponseEntity<String> deleteNewsletter(@RequestParam UUID newsletterId) {
-        emailService.deleteNewsletter(newsletterId);
-        return ResponseEntity.status(HttpStatus.OK).body("Newsletter deleted");
-    }
-
-    @GetMapping("/{uuid}/status")
-    public ResponseEntity<String> getEmailStatus(@PathVariable UUID uuid) {
-        Optional<Emailing> emailing = emailService.getEmailByUuid(uuid);
-        return emailing
-                .map(value -> ResponseEntity.ok(value.getStatus().name()))
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("Email not found"));
-    }
 }

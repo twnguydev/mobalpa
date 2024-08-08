@@ -11,7 +11,7 @@ public class Emailing {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID uuid;
+    private UUID uuid; 
 
     @Column(name = "`to`", nullable = false) 
     private String to;
