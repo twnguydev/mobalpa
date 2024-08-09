@@ -1,17 +1,12 @@
 package com.mobalpa.api.controller;
 
-import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.*;
 
-import com.mobalpa.api.dto.catalogue.CategoryDTO;
-import com.mobalpa.api.dto.catalogue.ProductDTO;
-import com.mobalpa.api.dto.catalogue.SubcategoryDTO;
 import com.mobalpa.api.service.CatalogueService;
 import com.mobalpa.catalogue.filter.ProductFilter;
 
@@ -24,22 +19,12 @@ public class CatalogueController {
 
   @GetMapping("/categories")
   public ResponseEntity<?> getAllCategories() {
-    try {
-      List<CategoryDTO> categories = catalogueService.getAllCategories();
-      return ResponseEntity.ok(categories);
-    } catch (RuntimeException e) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-    }
+    return ResponseEntity.ok(catalogueService.getAllCategories());
   }
 
   @GetMapping("/best-sellers")
   public ResponseEntity<?> getBestSellers() {
-    try {
-      List<ProductDTO> bestSellers = catalogueService.getBestSellers();
-      return ResponseEntity.ok(bestSellers);
-    } catch (RuntimeException e) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-    }
+    return ResponseEntity.ok(catalogueService.getBestSellers());
   }
 
   @GetMapping("/products")
@@ -64,31 +49,16 @@ public class CatalogueController {
 
   @GetMapping("/products/{productId}")
   public ResponseEntity<?> getProductById(@PathVariable UUID productId) {
-    try {
-      ProductDTO product = catalogueService.getProductById(productId);
-      return ResponseEntity.ok(product);
-    } catch (RuntimeException e) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-    }
+    return ResponseEntity.ok(catalogueService.getProductById(productId));
   }
 
   @GetMapping("/categories/{categoryId}")
   public ResponseEntity<?> getCategoryById(@PathVariable UUID categoryId) {
-    try {
-      CategoryDTO category = catalogueService.getCategoryById(categoryId);
-      return ResponseEntity.ok(category);
-    } catch (RuntimeException e) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-    }
+    return ResponseEntity.ok(catalogueService.getCategoryById(categoryId));
   }
 
   @GetMapping("/subcategories/{subcategoryId}")
   public ResponseEntity<?> getSubcategoryById(@PathVariable UUID subcategoryId) {
-    try {
-      SubcategoryDTO subcategory = catalogueService.getSubcategoryById(subcategoryId);
-      return ResponseEntity.ok(subcategory);
-    } catch (RuntimeException e) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-    }
+    return ResponseEntity.ok(catalogueService.getSubcategoryById(subcategoryId));
   }
 }

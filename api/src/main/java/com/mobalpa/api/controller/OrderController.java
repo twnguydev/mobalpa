@@ -1,6 +1,7 @@
 package com.mobalpa.api.controller;
 
 import com.mobalpa.api.dto.delivery.*;
+import com.mobalpa.api.dto.CouponRequestDTO;
 import com.mobalpa.api.dto.OrderRequestDTO;
 import com.mobalpa.api.model.CouponCode;
 import com.mobalpa.api.model.User;
@@ -37,68 +38,43 @@ public class OrderController {
 
     @PostMapping
     public ResponseEntity<?> createOrder(@RequestBody OrderRequestDTO orderRequest) {
-        try {
-            ParcelDTO createdOrder = orderService.processOrder(orderRequest);
-            return ResponseEntity.status(HttpStatus.CREATED).body(createdOrder);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
+        ParcelDTO createdOrder = orderService.processOrder(orderRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdOrder);
     }
 
     @GetMapping
     public ResponseEntity<?> getAllOrders() {
-        try {
-            return ResponseEntity.ok(orderService.getAllOrders());
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+        return ResponseEntity.ok(orderService.getAllOrders());
     }
 
     @GetMapping("/{uuid}")
     public ResponseEntity<?> getOrder(@PathVariable UUID uuid) {
-        try {
-            return ResponseEntity.ok(orderService.getOrderByUuid(uuid));
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+        return ResponseEntity.ok(orderService.getOrderByUuid(uuid));
     }
 
     @PostMapping("/{uuid}/payment")
     public ResponseEntity<?> completeOrder(@PathVariable UUID uuid) {
-        try {
-            Order order = orderService.getOrderByUuid(uuid);
-            orderService.completeOrder(order);
-            return ResponseEntity.ok(order);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+        Order order = orderService.getOrderByUuid(uuid);
+        orderService.completeOrder(order);
+        return ResponseEntity.ok(order);
     }
 
     @PostMapping("/{userUuid}/apply-coupon")
-    public ResponseEntity<?> applyCoupon(@PathVariable UUID userUuid, @RequestBody String couponCode) {
-        try {
-            System.out.println("userUuid: " + userUuid);
-            User user = userService.getUserByUuid(userUuid);
-            Optional<CouponCode> coupon = promotionService.getCouponByName(couponCode);
-            if (!coupon.isPresent()) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Coupon not found");
-            }
-
-            Double discountRate = promotionService.claimCoupon(user, coupon.get());
-            return ResponseEntity.ok(Map.of("discountRate", discountRate));
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+    public ResponseEntity<?> applyCoupon(@PathVariable UUID userUuid, @RequestBody CouponRequestDTO couponRequest) {
+        User user = userService.getUserByUuid(userUuid);
+        CouponCode coupon = promotionService.getCouponByName(couponRequest.getCouponCode().trim());
+        Double discountRate = promotionService.claimCoupon(user, coupon);
+        return ResponseEntity.ok(Map.of("discountRate", discountRate));
     }
 
     // @GetMapping("/{uuid}/track")
     // public ResponseEntity<?> trackOrder(@PathVariable UUID uuid) {
-    //     try {
-    //         // TrackingDTO trackingDetails = orderService.trackOrder(uuid);
-    //         return ResponseEntity.ok(trackingDetails);
-    //     } catch (RuntimeException e) {
-    //         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-    //     }
+    // try {
+    // // TrackingDTO trackingDetails = orderService.trackOrder(uuid);
+    // return ResponseEntity.ok(trackingDetails);
+    // } catch (RuntimeException e) {
+    // return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    // }
     // }
 
     @GetMapping("/delivery-prices")

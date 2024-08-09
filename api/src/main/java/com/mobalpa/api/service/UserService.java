@@ -5,7 +5,6 @@ import com.mobalpa.api.repository.RoleRepository;
 import com.mobalpa.api.repository.UserRepository;
 import com.mobalpa.api.util.JwtUtil;
 import com.mobalpa.api.model.Role;
-import com.mobalpa.api.model.Payment;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
