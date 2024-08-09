@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jakarta.annotation.PostConstruct;
+
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RoleService {
@@ -29,7 +31,7 @@ public class RoleService {
   }
 
   public Role getRoleByName(String name) {
-    return roleRepository.findByName(name)
-        .orElseThrow(() -> new RuntimeException("Role not found"));
+    Optional<Role> role = Optional.ofNullable(roleRepository.findByName(name));
+    return role.orElse(null);
   }
 }

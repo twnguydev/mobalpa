@@ -50,10 +50,17 @@ public class OrderService {
   @Value("${delivery.base-url}")
   private String DELIVERY_SERVICE_URL;
 
-  public List<OrderSummaryDTO> getAllOrders() {
-    return orderRepository.findAll().stream()
-        .map(this::convertToOrderSummaryDTO)
-        .collect(Collectors.toList());
+  public List<Order> getAllOrders() {
+    List<Order> orders = orderRepository.findAll();
+    orders.forEach(order -> order.getItems().size());
+    return orders;
+  }
+
+  public Order getOrderByUuid(UUID uuid) {
+    Order order = orderRepository.findById(uuid)
+        .orElseThrow(() -> new RuntimeException("Order not found"));
+    order.getItems().forEach(item -> item.getProperties().size());
+    return order;
   }
 
   public Order convertToOrder(OrderSummaryDTO orderSummaryDTO) {
@@ -131,13 +138,6 @@ public class OrderService {
         .map(this::convertToOrderSummaryDTO)
         .orElseThrow(() -> new RuntimeException("Order not found"));
     return orderSummaryDTO;
-  }
-
-  public Order getOrderByUuid(UUID uuid) {
-    Order order = orderRepository.findById(uuid)
-        .orElseThrow(() -> new RuntimeException("Order not found"));
-    order.getItems().forEach(item -> item.getProperties().size());
-    return order;
   }
 
   @Transactional

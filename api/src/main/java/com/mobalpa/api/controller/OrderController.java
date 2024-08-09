@@ -77,6 +77,7 @@ public class OrderController {
     @PostMapping("/{userUuid}/apply-coupon")
     public ResponseEntity<?> applyCoupon(@PathVariable UUID userUuid, @RequestBody String couponCode) {
         try {
+            System.out.println("userUuid: " + userUuid);
             User user = userService.getUserByUuid(userUuid);
             Optional<CouponCode> coupon = promotionService.getCouponByName(couponCode);
             if (!coupon.isPresent()) {

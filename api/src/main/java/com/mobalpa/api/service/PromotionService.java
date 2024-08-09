@@ -128,6 +128,33 @@ public class PromotionService {
     }
 
     public CouponCode createCoupon(CouponCode coupon) {
+        if (coupon.getDateStart().isAfter(coupon.getDateEnd())) {
+            throw new IllegalArgumentException("The start date cannot be after the end date.");
+        }
+        if (coupon.getDateStart().isBefore(java.time.LocalDateTime.now())) {
+            throw new IllegalArgumentException("The start date cannot be in the past.");
+        }
+        if (coupon.getDateEnd().isBefore(java.time.LocalDateTime.now())) {
+            throw new IllegalArgumentException("The end date cannot be in the past.");
+        }
+        if (coupon.getName() == null || coupon.getName().length() < 3) {
+            throw new IllegalArgumentException("The coupon name must be at least 3 characters long.");
+        }
+        if (coupon.getDiscountType() == null) {
+            throw new IllegalArgumentException("The discount type must be specified.");
+        }
+        if (coupon.getDiscountType() == CouponCode.DiscountType.PERCENTAGE && (coupon.getDiscountRate() < 0 || coupon.getDiscountRate() > 100)) {
+            throw new IllegalArgumentException("The discount rate for a percentage must be between 0 and 100.");
+        }
+        if (coupon.getDiscountType() == CouponCode.DiscountType.AMOUNT && coupon.getDiscountRate() < 0) {
+            throw new IllegalArgumentException("The discount amount cannot be negative.");
+        }
+
+        CouponCode existingCoupon = couponCodeRepository.findByName(coupon.getName()).orElse(null);
+        if (existingCoupon != null) {
+            throw new IllegalArgumentException("A coupon with this name already exists.");
+        }
+    
         return couponCodeRepository.save(coupon);
     }
 

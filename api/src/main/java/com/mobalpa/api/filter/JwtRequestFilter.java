@@ -41,6 +41,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         String jwt = null;
 
         if (requestApiKey != null && requestApiKey.equals(apiKey)) {
+            // Authentification par API Key
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                     "apiKeyUser", null, null);
             authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
@@ -55,14 +56,13 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             }
 
             if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                Claims claims;
                 try {
-                    claims = jwtUtil.extractAllClaims(jwt);
+                    Claims claims = jwtUtil.extractAllClaims(jwt);
                     if (!jwtUtil.validateToken(jwt, email)) {
                         logger.warn("Invalid or expired JWT token");
                     } else {
-                        Object rolesObj = claims.get("role");
                         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+                        Object rolesObj = claims.get("role");
 
                         if (rolesObj instanceof List<?>) {
                             for (Object role : (List<?>) rolesObj) {

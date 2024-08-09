@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -27,15 +28,26 @@ public class CouponCode {
     private Double discountRate;
 
     @Column(nullable = false)
+    private DiscountType discountType;
+
+    @Column(nullable = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime dateStart;
 
     @Column(nullable = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime dateEnd;
 
     @Column(nullable = false, updatable = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @OneToMany(mappedBy = "coupon", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<UserCoupon> userCoupons = new HashSet<>();
+
+    public enum DiscountType {
+        PERCENTAGE,
+        AMOUNT
+    }
 }

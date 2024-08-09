@@ -3,11 +3,9 @@ package com.mobalpa.api.model;
 import lombok.Data;
 import jakarta.persistence.*;
 import java.util.UUID;
-import java.util.Date;
 import java.util.List;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
