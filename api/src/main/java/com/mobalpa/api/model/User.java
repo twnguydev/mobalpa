@@ -1,23 +1,24 @@
 package com.mobalpa.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.util.List;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.Set;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -25,7 +26,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @Table(name = "\"user\"")
 @Data
-@EqualsAndHashCode(exclude = {"payments", "orders", "roles", "wishlist"})
+@EqualsAndHashCode(exclude = {"payments", "orders", "roles", "wishlist", "tickets", "respondedTickets"})
 public class User implements UserDetails {
 
     @Id
@@ -131,5 +132,10 @@ public class User implements UserDetails {
     }
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Newsletter> newsletters;
+    @JsonIgnoreProperties("user")
+    private Set<Ticket> tickets = new HashSet<>();
+
+    @OneToMany(mappedBy = "responder", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("responder")
+    private Set<Ticket> respondedTickets = new HashSet<>();
 }
