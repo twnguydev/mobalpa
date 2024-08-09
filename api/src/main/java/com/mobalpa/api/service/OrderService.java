@@ -1,10 +1,12 @@
 package com.mobalpa.api.service;
 
 import com.mobalpa.api.dto.delivery.*;
+import com.mobalpa.api.dto.OrderItemDTO;
+import com.mobalpa.api.dto.OrderSummaryDTO;
 import com.mobalpa.api.dto.OrderRequestDTO;
+import com.mobalpa.api.dto.catalogue.ProductDTO;
 import com.mobalpa.api.dto.catalogue.CatalogueImageDTO;
 import com.mobalpa.api.dto.catalogue.ColorDTO;
-import com.mobalpa.api.dto.catalogue.ProductDTO;
 import com.mobalpa.api.model.Order;
 import com.mobalpa.api.model.User;
 import com.mobalpa.api.model.Payment;
@@ -47,16 +49,87 @@ public class OrderService {
   @Value("${delivery.base-url}")
   private String DELIVERY_SERVICE_URL;
 
-  public List<Order> getAllOrders() {
-    List<Order> orders = orderRepository.findAll();
-    if (orders.isEmpty()) {
-      throw new RuntimeException("No orders found");
-    }
-    return orders;
+  public List<OrderSummaryDTO> getAllOrders() {
+    return orderRepository.findAll().stream()
+        .map(this::convertToOrderSummaryDTO)
+        .collect(Collectors.toList());
   }
 
-  public Order getOrderByUuid(UUID uuid) {
-    return orderRepository.findById(uuid).orElseThrow(() -> new RuntimeException("Order not found"));
+  public Order convertToOrder(OrderSummaryDTO orderSummaryDTO) {
+    User user = userRepository.findById(orderSummaryDTO.getUserUuid())
+        .orElseThrow(() -> new RuntimeException("User not found"));
+
+    Payment payment = paymentRepository.findById(orderSummaryDTO.getPaymentUuid())
+        .orElseThrow(() -> new RuntimeException("Payment not found"));
+
+    Order order = orderRepository.findById(orderSummaryDTO.getUuid())
+        .orElseThrow(() -> new RuntimeException("Order not found"));
+
+    Order toOrder = new Order();
+    toOrder.setUser(user);
+    toOrder.setPayment(payment);
+    toOrder.setDeliveryAddress(orderSummaryDTO.getDeliveryAddress());
+    toOrder.setDeliveryMethod(order.getDeliveryMethod());
+    toOrder.setReduction(order.getReduction());
+    toOrder.setTotalHt(order.getTotalHt());
+    toOrder.setDeliveryFees(order.getDeliveryFees());
+    toOrder.setVat(order.getVat());
+    toOrder.setTotalTtc(order.getTotalTtc());
+    toOrder.setStatus(order.getStatus());
+    toOrder.setDeliveryNumbers(order.getDeliveryNumbers());
+    toOrder.setItems(order.getItems());
+    return toOrder;
+  }
+
+  public OrderSummaryDTO convertToOrderSummaryDTO(Order order) {
+    List<OrderItemDTO> itemDTOs = order.getItems().stream()
+        .map(this::convertToOrderItemDTO)
+        .collect(Collectors.toList());
+
+    OrderSummaryDTO dto = new OrderSummaryDTO();
+    dto.setUuid(order.getUuid());
+    dto.setUserUuid(order.getUser().getUuid());
+    dto.setPaymentUuid(order.getPayment().getUuid());
+    dto.setDeliveryAddress(order.getDeliveryAddress());
+    dto.setTotalTtc(order.getTotalTtc());
+    dto.setStatus(order.getStatus());
+    dto.setDeliveryNumbers(order.getDeliveryNumbers());
+    dto.setItems(itemDTOs);
+    return dto;
+  }
+
+  public OrderItem convertToOrderItem(OrderItemDTO itemDTO) {
+    OrderItem item = new OrderItem();
+    item.setUuid(itemDTO.getUuid());
+    item.setProductUuid(itemDTO.getProductUuid());
+    item.setQuantity(itemDTO.getQuantity());
+    return item;
+  }
+
+  public OrderItemDTO convertToOrderItemDTO(OrderItem item) {
+    ProductDTO product = catalogueService.getProductById(item.getProductUuid());
+    Map<String, String> properties = new HashMap<>();
+    properties.put("brand", product.getBrand().getName());
+    properties.put("colors", product.getColors().stream()
+            .map(ColorDTO::getName)
+            .collect(Collectors.joining(", ")));
+    properties.put("images", product.getImages().stream()
+            .map(CatalogueImageDTO::getUri)
+            .collect(Collectors.joining(", ")));
+
+    OrderItemDTO dto = new OrderItemDTO();
+    dto.setUuid(item.getUuid());
+    dto.setProductUuid(item.getProductUuid());
+    dto.setProperties(properties);
+    dto.setQuantity(item.getQuantity());
+    return dto;
+  }
+
+  public OrderSummaryDTO getOrderByUuid(UUID uuid) {
+    OrderSummaryDTO orderSummaryDTO = orderRepository.findById(uuid)
+        .map(this::convertToOrderSummaryDTO)
+        .orElseThrow(() -> new RuntimeException("Order not found"));
+    return orderSummaryDTO;
   }
 
   @Transactional
@@ -121,6 +194,7 @@ public class OrderService {
           item.setOrder(order);
           item.setProductUuid(itemDTO.getProductUuid());
           item.setQuantity(itemDTO.getQuantity());
+          item.setProperties(itemDTO.getProperties());
           return item;
         }).collect(Collectors.toList());
     order.setItems(items);
@@ -166,14 +240,13 @@ public class OrderService {
     return delivery;
   }
 
-  // public Order completeOrder(Order order) {
-  // order.setStatus("COMPLETED");
-  // Order completedOrder = orderRepository.save(order);
-
-  // deliveryService.updateDeliveryStatus(order.getDeliveries().get(0).getUuid(),
-  // "SHIPPED");
-  // return completedOrder;
-  // }
+  public Order completeOrder(Order order) {
+    order.setStatus("PROCESSED");
+    order.getDeliveryNumbers().forEach(deliveryNumber -> {
+      deliveryService.updateDeliveryStatus(deliveryNumber, "SHIPPED");
+    });
+    return orderRepository.save(order);
+  }
 
   public Order updateOrder(UUID uuid, OrderRequestDTO orderDetails) {
     Order order = orderRepository.findById(uuid).orElseThrow(() -> new RuntimeException("Order not found"));

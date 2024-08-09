@@ -2,6 +2,7 @@ package com.mobalpa.api.controller;
 
 import com.mobalpa.api.dto.delivery.*;
 import com.mobalpa.api.dto.OrderRequestDTO;
+import com.mobalpa.api.dto.OrderSummaryDTO;
 import com.mobalpa.api.model.CouponCode;
 import com.mobalpa.api.model.User;
 import com.mobalpa.api.model.Order;
@@ -59,8 +60,7 @@ public class OrderController {
     @GetMapping("/{uuid}")
     public ResponseEntity<?> getOrder(@PathVariable UUID uuid) {
         try {
-            Order order = orderService.getOrderByUuid(uuid);
-            return ResponseEntity.ok(order);
+            return ResponseEntity.ok(orderService.getOrderByUuid(uuid));
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
@@ -69,8 +69,9 @@ public class OrderController {
     @PostMapping("/{uuid}/payment")
     public ResponseEntity<?> completeOrder(@PathVariable UUID uuid) {
         try {
-            Order order = orderService.getOrderByUuid(uuid);
-            // order = orderService.completeOrder(order);
+            OrderSummaryDTO order = orderService.getOrderByUuid(uuid);
+            Order toOrder = orderService.convertToOrder(order);
+            orderService.completeOrder(toOrder);
             return ResponseEntity.ok(order);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());

@@ -48,7 +48,7 @@ public class DeliveryService {
     return response.getBody();
   }
 
-  public DeliveryDTO updateDeliveryStatus(UUID id, String status) {
+  public DeliveryDTO updateDeliveryStatus(String id, String status) {
     HttpHeaders headers = new HttpHeaders();
     headers.set("X-API-KEY", this.apiKey);
     headers.setContentType(MediaType.APPLICATION_JSON);
