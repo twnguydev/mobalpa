@@ -75,23 +75,18 @@ export class LoginComponent implements OnInit {
   }
 
   private handleError(error: any) {
-    if (error.status === 400) {
-      this.errorMessage = 'Mauvaise requête. Veuillez vérifier vos informations.';
-    } else if (error.status === 401) {
-      this.errorMessage = 'Authentification échouée. Veuillez vérifier vos identifiants.';
-    } else if (error.status === 403) {
-      this.errorMessage = 'Accès refusé. Votre email ou votre mot de passe est incorrecte.';
-    } else if (error.status === 404) {
-      this.errorMessage = 'Service non trouvé. Veuillez réessayer plus tard.';
-    } else if (error.status === 500) {
-      this.errorMessage = 'Erreur interne du serveur. Veuillez réessayer.';
+    console.log('Login error', error);
+
+    if (error && error.error && typeof error.error === 'string') {
+      this.errorMessage = error.error;
+    } else if (error && typeof error === 'string') {
+      this.errorMessage = error;
     } else {
-      this.errorMessage = 'Une erreur est survenue. Veuillez réessayer.';
+      this.errorMessage = 'Erreur lors de la connexion. Veuillez réessayer.';
     }
 
-      console.error('Erreur capturée:', error);
+    console.log('Complete error:', this.errorMessage);
   }
-
 
   private hashPassword(password: string): string {
     return btoa(password);
@@ -126,7 +121,7 @@ export class LoginComponent implements OnInit {
         },
         error: error => {
           console.error('Forgot password error', error);
-          this.handleForgotPasswordError(error); // Appeler la méthode de gestion des erreurs
+          this.handleForgotPasswordError(error);
         }
       });
     }

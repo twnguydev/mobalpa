@@ -14,6 +14,7 @@ import { AuthService } from '@services/auth.service';
 export class ResetPasswordComponent implements OnInit {
   token: string | null = null;
   newPassword: string = '';
+  confirmPassword: string = '';
   errorMessage: string | null = null;
   successMessage: string | null = null;
 
@@ -32,7 +33,7 @@ export class ResetPasswordComponent implements OnInit {
     this.successMessage = null;
 
     if (this.token) {
-      this.userService.resetPassword(this.token, this.newPassword).subscribe(
+      this.userService.resetPassword(this.token, this.newPassword, this.confirmPassword).subscribe(
         response => {
           this.successMessage = 'Mot de passe réinitialisé avec succès';
           setTimeout(() => {

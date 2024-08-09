@@ -12,6 +12,10 @@
           {{ errorMessage }}
         </div>
 
+        <div *ngIf="errorNewsletter" class="text-red-600 font-bold mb-4" [innerHTML]="errorNewsletter">
+        {{ errorNewsletter }}
+        </div>
+
         <form [formGroup]="form" (ngSubmit)="onSubmit()" method="post" action="#">
           <div class="flex mb-2">
             <div class="w-64 mr-12">

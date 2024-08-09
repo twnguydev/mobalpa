@@ -20,6 +20,8 @@ import java.io.IOException;
 
 import java.util.Map;
 import java.util.UUID;
+import java.util.HashMap;
+
 @RestController
 @RequestMapping("api/users")
 public class AuthController {
@@ -31,81 +33,106 @@ public class AuthController {
     private AuthenticationManager authenticationManager;
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@RequestBody User user) {
+    public ResponseEntity<Map<String, Object>> registerUser(@RequestBody User user) {
+        Map<String, Object> response = new HashMap<>();
         try {
-            User registeredUser = userService.registerUser(user); 
-            return ResponseEntity.ok("Registration successful. Please check your email for confirmation.");
+            User registeredUser = userService.registerUser(user);
+            response.put("message", "Registration successful. Please check your email for confirmation.");
+            return ResponseEntity.ok(response);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            response.put("error", e.getMessage());
+            return ResponseEntity.badRequest().body(response);
         }
     }
-    
-    
+
     @GetMapping("/confirm")
     public ResponseEntity<String> confirmUser(@RequestParam("token") String token) {
         User user = userService.confirmUser(token);
-        
+
         try {
             String templatePath;
             if (user != null) {
-                templatePath = "src/main/resources/templates/successTemplate.html"; 
+                templatePath = "src/main/resources/templates/successTemplate.html";
             } else {
-                templatePath = "src/main/resources/templates/errorTemplate.html"; 
+                templatePath = "src/main/resources/templates/errorTemplate.html";
             }
-    
+
             String htmlContent = Files.readString(Paths.get(templatePath));
             return ResponseEntity.ok(htmlContent);
-            
+
         } catch (IOException e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erreur lors de la génération du contenu HTML.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Erreur lors de la génération du contenu HTML.");
         }
     }
 
-
     @PostMapping("/login")
-    public ResponseEntity<?> loginUser(@RequestBody LoginDTO loginDTO) {
+    public ResponseEntity<Map<String, Object>> loginUser(@RequestBody LoginDTO loginDTO) {
+        Map<String, Object> response = new HashMap<>();
+
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword()));
             User user = userService.getUserByEmail(loginDTO.getEmail());
 
             if (user == null || !user.isActive()) {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Account is not active or does not exist");
+                response.put("error", "Account is not active or does not exist");
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
             }
 
             String token = userService.generateToken(user);
-            return ResponseEntity.ok(new LoginRequestDTO(user, token));
+            response.put("user", new LoginRequestDTO(user, token));
+            return ResponseEntity.ok(response);
         } catch (BadCredentialsException e) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid credentials");
+            response.put("error", "Invalid credentials");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
         } catch (AuthenticationException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authentication failed");
+            response.put("error", "Authentication failed");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            response.put("error", e.getMessage());
+            return ResponseEntity.badRequest().body(response);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while logging in");
+            response.put("error", "An error occurred while logging in");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
 
     @PostMapping("/forgot-password")
-    public ResponseEntity<String> forgotPassword(@RequestBody Map<String, String> body) {
+    public ResponseEntity<Map<String, Object>> forgotPassword(@RequestBody Map<String, String> body) {
+        Map<String, Object> response = new HashMap<>();
         String email = body.get("email");
         User user = userService.getUserByEmail(email);
+
         if (user == null || !user.isActive()) {
-            return ResponseEntity.badRequest().body("User not found or inactive");
+            response.put("error", "User not found or inactive");
+            return ResponseEntity.badRequest().body(response);
         }
+
         userService.sendPasswordResetEmail(user);
-        return ResponseEntity.ok("Password reset email sent.");
+        response.put("message", "Password reset email sent.");
+        return ResponseEntity.ok(response);
     }
-    
+
     @PostMapping("/reset-password")
-    public ResponseEntity<String> resetPassword(@RequestParam String token, @RequestBody Map<String, String> body) {
-        String newPassword = body.get("newPassword");
-        User user = userService.resetPassword(token, newPassword);
+public ResponseEntity<Map<String, Object>> resetPassword(@RequestParam String token, @RequestBody Map<String, String> body) {
+    Map<String, Object> response = new HashMap<>();
+    String newPassword = body.get("newPassword");
+    String confirmPassword = body.get("confirmPassword");
+    try {
+        User user = userService.resetPassword(token, newPassword, confirmPassword);
         if (user != null) {
-            return ResponseEntity.ok("Password reset successful.");
+            response.put("message", "Password reset successful.");
+            return ResponseEntity.ok(response);
         } else {
-            return ResponseEntity.badRequest().body("Invalid token or user not found.");
+            response.put("error", "Invalid token or user not found.");
+            return ResponseEntity.badRequest().body(response);
         }
+    } catch (IllegalArgumentException e) {
+        response.put("error", e.getMessage());
+        return ResponseEntity.badRequest().body(response);
     }
+}
+
 }

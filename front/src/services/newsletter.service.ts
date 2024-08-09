@@ -11,8 +11,8 @@ export class NewsletterService {
 
   constructor(private http: HttpClient) {}
 
-  addNewsletter(data: { emailUser: string }): Observable<string> {
-    return this.http.post<string>(this.apiUrl, data, {
+  addNewsletter(data: { emailUser: string }): Observable<{ message: string }> {
+    return this.http.post<{ message: string }>(this.apiUrl, data, {
       headers: {
         'Content-Type': 'application/json',
         'X-API-KEY': `${environment.apiKey}`

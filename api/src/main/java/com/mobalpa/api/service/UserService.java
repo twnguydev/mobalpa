@@ -149,17 +149,22 @@ public class UserService implements UserDetailsService {
     
 
 
-    public User resetPassword(String token, String newPassword) {
+    public User resetPassword(String token, String newPassword, String confirmPassword) {
         User user = userRepository.findByToken(token);
         if (user != null) {
-            user.setPassword(passwordEncoder.encode(newPassword));
-            user.setToken(null);
-            userRepository.save(user);
-            return user;
+            if (newPassword.equals(confirmPassword)) {
+                user.setPassword(passwordEncoder.encode(newPassword));
+                user.setToken(null);
+                userRepository.save(user);
+                return user;
+            } else {
+                throw new IllegalArgumentException("Passwords do not match");
+            }
         } else {
             return null;
         }
     }
+    
 
     public User createUser(User user) {
         return userRepository.save(user);

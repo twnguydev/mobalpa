@@ -47,18 +47,19 @@ public class AuthControllerTest {
     }
 
     @Test
-    public void testRegisterUser_Success() {
-        User user = new User();
-        user.setEmail("uniqueemailused_" + System.currentTimeMillis() + "@gmail.com");
-        user.setPassword("123456");
-        user.setActive(true);
+public void testRegisterUser_Success() {
+    User user = new User();
+    user.setEmail("uniqueemailused_" + System.currentTimeMillis() + "@gmail.com");
+    user.setPassword("123456");
+    user.setActive(true);
 
-        when(userService.registerUser(any(User.class))).thenReturn(user);
+    when(userService.registerUser(any(User.class))).thenReturn(user);
 
-        ResponseEntity<String> response = authController.registerUser(user);
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals("Registration successful. Please check your email for confirmation.", response.getBody());
-    }
+    ResponseEntity<Map<String, Object>> response = authController.registerUser(user);
+    assertEquals(HttpStatus.OK, response.getStatusCode());
+    assertEquals("Registration successful. Please check your email for confirmation.", response.getBody().get("message"));
+}
+
 
     @Test
     public void testRegisterUser_EmailAlreadyUsed() {
@@ -188,60 +189,68 @@ public class AuthControllerTest {
         User user = new User();
         user.setEmail(email);
         user.setActive(true);
-
+    
         Map<String, String> body = new HashMap<>();
         body.put("email", email);
-
+    
         when(userService.getUserByEmail(email)).thenReturn(user);
-
-        ResponseEntity<String> response = authController.forgotPassword(body);
+    
+        ResponseEntity<Map<String, Object>> response = authController.forgotPassword(body);
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals("Password reset email sent.", response.getBody());
+        assertEquals("Password reset email sent.", response.getBody().get("message"));
     }
+    
 
     @Test
     public void testForgotPassword_UserNotFound() {
         String email = "nonexistentuser@gmail.com";
-
+    
         Map<String, String> body = new HashMap<>();
         body.put("email", email);
-
+    
         when(userService.getUserByEmail(email)).thenReturn(null);
-
-        ResponseEntity<String> response = authController.forgotPassword(body);
+    
+        ResponseEntity<Map<String, Object>> response = authController.forgotPassword(body);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-        assertEquals("User not found or inactive", response.getBody());
+        assertEquals("User not found or inactive", response.getBody().get("message"));
     }
+    
 
     @Test
     public void testResetPassword_Success() {
         String token = "validToken";
         String newPassword = "newPassword123";
+        String confirmPassword = "newPassword123";
         User user = new User();
         user.setEmail("testuser@gmail.com");
-
+        
         Map<String, String> body = new HashMap<>();
         body.put("newPassword", newPassword);
-
-        when(userService.resetPassword(token, newPassword)).thenReturn(user);
-
-        ResponseEntity<String> response = authController.resetPassword(token, body);
+        body.put("confirmPassword", confirmPassword);
+        
+        when(userService.resetPassword(token, newPassword, confirmPassword)).thenReturn(user);
+        
+        ResponseEntity<Map<String, Object>> response = authController.resetPassword(token, body);
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals("Password reset successful.", response.getBody());
+        assertEquals("Password reset successful.", response.getBody().get("message"));
     }
+    
+    
+
 
     @Test
-    public void testResetPassword_InvalidToken() {
-        String token = "invalidToken";
-        String newPassword = "newPassword123";
+public void testResetPassword_InvalidToken() {
+    String token = "invalidToken";
+    String newPassword = "newPassword123";
 
-        Map<String, String> body = new HashMap<>();
-        body.put("newPassword", newPassword);
+    Map<String, String> body = new HashMap<>();
+    body.put("newPassword", newPassword);
+    body.put("confirmPassword", newPassword);  
 
-        when(userService.resetPassword(token, newPassword)).thenReturn(null);
+    when(userService.resetPassword(token, newPassword, newPassword)).thenReturn(null);
 
-        ResponseEntity<String> response = authController.resetPassword(token, body);
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-        assertEquals("Invalid token or user not found.", response.getBody());
-    }
+    ResponseEntity<Map<String, Object>> response = authController.resetPassword(token, body);
+    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+    assertEquals("Invalid token or user not found.", response.getBody().get("message"));
+}
 }

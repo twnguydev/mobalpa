@@ -11,6 +11,9 @@ import com.mobalpa.api.service.NewsletterService;
 import com.mobalpa.api.service.UserService; 
 
 import java.util.UUID;
+import java.util.Map;
+import java.util.HashMap;
+
 
 @RestController
 @RequestMapping("/api/emails")
@@ -23,16 +26,20 @@ public class NewsletterController {
     private UserService userService; 
 
     @PostMapping("/newsletter")
-    public ResponseEntity<String> addNewsletter(@RequestBody Newsletter newsletter) {
-        User user = userService.getUserByEmail(newsletter.getEmailUser());
-        if (user == null) {
-            return ResponseEntity.badRequest().body("User not found");
-        }
-
-        newsletterService.saveNewsletter(newsletter);
-
-        return ResponseEntity.status(HttpStatus.OK).body("Newsletter saved");
+public ResponseEntity<Map<String, String>> addNewsletter(@RequestBody Newsletter newsletter) {
+    User user = userService.getUserByEmail(newsletter.getEmailUser());
+    if (user == null) {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "User not found");
+        return ResponseEntity.badRequest().body(response);
     }
+
+    newsletterService.saveNewsletter(newsletter);
+
+    Map<String, String> response = new HashMap<>();
+    response.put("message", "Newsletter saved");
+    return ResponseEntity.status(HttpStatus.OK).body(response);
+}
 
 
     @DeleteMapping("/newsletter")

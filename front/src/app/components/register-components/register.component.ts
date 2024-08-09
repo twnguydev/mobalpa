@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NewsletterService } from './../../../services/newsletter.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-register',
@@ -18,14 +19,15 @@ export class RegisterComponent implements OnInit {
   successMessage: string = '';
   errorMessage: string = '';
   formSubmitted: boolean = false;
+  errorNewsletter: string = '';
 
   constructor(
-    private fb: FormBuilder,
+    private formBuilder: FormBuilder,
     private authService: AuthService,
     private newsletterService: NewsletterService,
     private router: Router
   ) {
-    this.form = this.fb.group({
+    this.form = this.formBuilder.group({
       lastname: ['', Validators.required],
       firstname: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -35,78 +37,78 @@ export class RegisterComponent implements OnInit {
       confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
       terms: [false, Validators.requiredTrue],
       newsletter: [false]
-    }, { validators: this.passwordMatchValidator });
+    }, { validators: this.passwordValidator });
   }
 
   ngOnInit() {}
 
-  passwordMatchValidator(control: AbstractControl): { [key: string]: boolean } | null {
-    const passwordControl = control.get('password');
-    const confirmPasswordControl = control.get('confirmPassword');
-    if (!passwordControl || !confirmPasswordControl) {
+  passwordValidator(control: AbstractControl): { [key: string]: boolean } | null {
+    const password = control.get('password');
+    const confirmPassword = control.get('confirmPassword');
+    if (!password || !confirmPassword) {
       return null;
     }
-    return passwordControl.value === confirmPasswordControl.value ? null : { passwordMismatch: true };
+    return password.value === confirmPassword.value ? null : { passwordNotMatching: true };
   }
 
   onSubmit() {
     this.formSubmitted = true;
     if (this.form.valid) {
+      console.log('Form data:', this.form.value);
+
       const formData = {
         ...this.form.value,
         address: null,
         city: null,
-        zipcode: null,
+        zipCode: null,
       };
 
       this.authService.signup(formData).subscribe({
         next: (response: string) => {
-          this.successMessage = 'Inscription réussie !';
           this.errorMessage = '';
+          this.successMessage = 'Inscription réussie ! un email de confirmation vous a été envoyé.';
 
           if (formData.newsletter) {
-            const newsletterData = {
-              emailUser: formData.email
-            };
-
-            this.newsletterService.addNewsletter(newsletterData).subscribe({
-              next: (res) => {
-                console.log('Newsletter ajouté:', res);
-              },
-              error: (err) => {
-                console.error('Erreur lors de l\'ajout à la newsletter:', err);
-              }
-            });
+            this.addToNewsletter(formData.email);
           }
-
-          setTimeout(() => this.router.navigate(['/login']), 4000);
         },
-        error: (error) => {
-          console.error('Signup error', error);
+        error: (error: HttpErrorResponse) => {
+          console.error('Registration error', error);
           this.handleErrorResponse(error);
         }
       });
     } else {
-      this.logFormErrors();
+      this.displayFormErrors();
     }
   }
 
-  logFormErrors() {
+  addToNewsletter(email: string) {
+    this.newsletterService.addNewsletter({ emailUser: email }).subscribe({
+      next: (res) => {
+        console.log('Added to newsletter:', res);
+      },
+      error: (error) => {
+        console.error('Error adding to newsletter:', error);
+        this.errorNewsletter = 'Une erreur est survenue lors de l\'inscription à la newsletter.<br>Veuillez réessayer depuis votre compte.';
+      }
+    });
+  }
+
+  displayFormErrors() {
     Object.keys(this.form.controls).forEach(controlName => {
       const control = this.form.get(controlName);
       if (control?.invalid) {
-        console.log(`Control ${controlName} has errors:`, control.errors);
+        console.log(`The ${controlName} control has errors:`, control.errors);
       }
     });
   }
 
   handleErrorResponse(error: any) {
-    if (error.status === 400) {
-      this.errorMessage = 'Les données fournies sont invalides. Veuillez vérifier les champs et réessayer.';
-    } else if (error.status === 409) {
-      this.errorMessage = 'Cet e-mail est déjà utilisé. Veuillez en utiliser un autre.';
+    if (typeof error === 'string') {
+      this.errorMessage = error;
     } else {
-      this.errorMessage = 'Erreur lors de l\'inscription. Veuillez réessayer.';
+      console.log('Réponse d\'erreur :', error);
+      this.errorMessage = 'Une erreur est survenue pendant l\'inscription. Veuillez réessayer.';
     }
     this.successMessage = '';
   }
