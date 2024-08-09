@@ -16,6 +16,7 @@ public class Parcel {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID uuid;
 
+    private UUID orderUuid;
     private String name = "John Doe";
     private String companyName = "Mobalpa";
     private String email = "john.doe@example.com";

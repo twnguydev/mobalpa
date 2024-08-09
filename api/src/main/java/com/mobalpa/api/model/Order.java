@@ -5,26 +5,33 @@ import jakarta.persistence.*;
 import java.util.UUID;
 import java.util.Date;
 import java.util.List;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "`order`")
 @Data
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Order {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private UUID uuid = UUID.randomUUID();
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "user_uuid", nullable = false)
+  @JsonIgnore
   private User user;
 
   @Column(nullable = true)
-  private Date warranty;
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+  private LocalDate warranty;
 
   @Column(nullable = false)
   private String deliveryAddress;
@@ -67,8 +74,8 @@ public class Order {
 
   public void setStatus(String status) {
     this.status = status;
-    if ("COMPLETED".equals(status) && this.warranty == null) {
-      this.warranty = Date.from(LocalDateTime.now().plusYears(7).atZone(ZoneId.systemDefault()).toInstant());
+    if ("PROCESSED".equals(status) && this.warranty == null) {
+      this.warranty = LocalDate.now().plusYears(7);
     }
   }
 }

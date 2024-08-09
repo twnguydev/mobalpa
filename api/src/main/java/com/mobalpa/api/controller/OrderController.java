@@ -2,7 +2,6 @@ package com.mobalpa.api.controller;
 
 import com.mobalpa.api.dto.delivery.*;
 import com.mobalpa.api.dto.OrderRequestDTO;
-import com.mobalpa.api.dto.OrderSummaryDTO;
 import com.mobalpa.api.model.CouponCode;
 import com.mobalpa.api.model.User;
 import com.mobalpa.api.model.Order;
@@ -39,12 +38,10 @@ public class OrderController {
     @PostMapping
     public ResponseEntity<?> createOrder(@RequestBody OrderRequestDTO orderRequest) {
         try {
-            ParcelDTO createdOrder = orderService.createOrder(orderRequest);
+            ParcelDTO createdOrder = orderService.processOrder(orderRequest);
             return ResponseEntity.status(HttpStatus.CREATED).body(createdOrder);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 
@@ -69,9 +66,8 @@ public class OrderController {
     @PostMapping("/{uuid}/payment")
     public ResponseEntity<?> completeOrder(@PathVariable UUID uuid) {
         try {
-            OrderSummaryDTO order = orderService.getOrderByUuid(uuid);
-            Order toOrder = orderService.convertToOrder(order);
-            orderService.completeOrder(toOrder);
+            Order order = orderService.getOrderByUuid(uuid);
+            orderService.completeOrder(order);
             return ResponseEntity.ok(order);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());

@@ -3,6 +3,9 @@ package com.mobalpa.api.model;
 import lombok.Data;
 import jakarta.persistence.*;
 import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Map;
 
 @Entity
@@ -16,6 +19,7 @@ public class OrderItem {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "order_uuid", nullable = false)
+  @JsonIgnore
   private Order order;
 
   @Column(nullable = false)

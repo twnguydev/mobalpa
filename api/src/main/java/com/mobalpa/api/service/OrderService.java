@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 import java.util.stream.Collectors;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -111,11 +112,11 @@ public class OrderService {
     Map<String, String> properties = new HashMap<>();
     properties.put("brand", product.getBrand().getName());
     properties.put("colors", product.getColors().stream()
-            .map(ColorDTO::getName)
-            .collect(Collectors.joining(", ")));
+        .map(ColorDTO::getName)
+        .collect(Collectors.joining(", ")));
     properties.put("images", product.getImages().stream()
-            .map(CatalogueImageDTO::getUri)
-            .collect(Collectors.joining(", ")));
+        .map(CatalogueImageDTO::getUri)
+        .collect(Collectors.joining(", ")));
 
     OrderItemDTO dto = new OrderItemDTO();
     dto.setUuid(item.getUuid());
@@ -125,15 +126,53 @@ public class OrderService {
     return dto;
   }
 
-  public OrderSummaryDTO getOrderByUuid(UUID uuid) {
+  public OrderSummaryDTO getOrderByUuidtoDTO(UUID uuid) {
     OrderSummaryDTO orderSummaryDTO = orderRepository.findById(uuid)
         .map(this::convertToOrderSummaryDTO)
         .orElseThrow(() -> new RuntimeException("Order not found"));
     return orderSummaryDTO;
   }
 
+  public Order getOrderByUuid(UUID uuid) {
+    Order order = orderRepository.findById(uuid)
+        .orElseThrow(() -> new RuntimeException("Order not found"));
+    order.getItems().forEach(item -> item.getProperties().size());
+    return order;
+  }
+
   @Transactional
-  public ParcelDTO createOrder(OrderRequestDTO orderRequestDTO) {
+  public ParcelDTO processOrder(OrderRequestDTO orderRequestDTO) {
+    User user = userRepository.findById(orderRequestDTO.getUserUuid())
+            .orElseThrow(() -> new RuntimeException("User not found"));
+
+    Payment payment = paymentRepository.findById(orderRequestDTO.getPaymentUuid())
+            .orElseThrow(() -> new RuntimeException("Payment not found"));
+
+    orderRequestDTO.getItems().forEach(itemDTO -> {
+        ProductDTO product = catalogueService.getProductById(itemDTO.getProductUuid());
+        if (product == null) {
+            throw new RuntimeException("Product with UUID " + itemDTO.getProductUuid() + " not found");
+        }
+    });
+
+    DepotDTO depot = deliveryService.getDeliveryPrice(orderRequestDTO.getDeliveryMethod())
+            .orElseThrow(() -> new RuntimeException("Delivery method not found"));
+
+    Order order = createOrder(orderRequestDTO);
+
+    ParcelDTO delivery = deliveryService.processDelivery(orderRequestDTO, order, depot, user);
+
+    order.setDeliveryNumbers(new ArrayList<>(List.of(delivery.getShipment().getDeliveryNumber())));
+    Order createdOrder = orderRepository.save(order);
+
+    if (createdOrder == null) {
+        throw new RuntimeException("Order creation failed");
+    }
+
+    return delivery;
+  }
+
+  public Order createOrder(OrderRequestDTO orderRequestDTO) {
     if (orderRequestDTO.getUserUuid() == null) {
       throw new RuntimeException("User UUID is required");
     }
@@ -170,8 +209,8 @@ public class OrderService {
       }
     });
 
-    Optional<DepotDTO> price = deliveryService.getDeliveryPrice(orderRequestDTO.getDeliveryMethod());
-    if (price.isEmpty()) {
+    Optional<DepotDTO> depot = deliveryService.getDeliveryPrice(orderRequestDTO.getDeliveryMethod());
+    if (depot.isEmpty()) {
       throw new RuntimeException("Delivery method not found");
     }
 
@@ -182,7 +221,7 @@ public class OrderService {
     order.setReduction(orderRequestDTO.getReduction());
     order.setStatus("PENDING");
     order.setTotalHt(orderRequestDTO.getTotalHt());
-    order.setDeliveryFees(price.get().getPrice());
+    order.setDeliveryFees(depot.get().getPrice());
     order.setDeliveryAddress(user.get().getAddress() + " " + user.get().getZipcode() + " " + user.get().getCity());
     order.setDeliveryMethod(orderRequestDTO.getDeliveryMethod());
     order.setVat(orderRequestDTO.getTotalHt() * VAT);
@@ -199,51 +238,27 @@ public class OrderService {
         }).collect(Collectors.toList());
     order.setItems(items);
 
-    DeliveryRequestDTO deliveryRequest = new DeliveryRequestDTO();
-    deliveryRequest.setOrderUuid(order.getUuid());
-    deliveryRequest.setParcelItems(orderRequestDTO.getItems().stream().map(itemDTO -> {
-      ParcelItemDTO parcelItemDTO = new ParcelItemDTO();
-      ProductDTO product = catalogueService.getProductById(itemDTO.getProductUuid());
-      parcelItemDTO.setDescription(product.getDescription());
-      parcelItemDTO.setProductUuid(product.getUuid());
-      Map<String, String> properties = new HashMap<>();
-      properties.put("brand", product.getBrand().getName());
-      properties.put("colors", product.getColors().stream().map(ColorDTO::getName).collect(Collectors.joining(", ")));
-      properties.put("images",
-          product.getImages().stream().map(CatalogueImageDTO::getUri).collect(Collectors.joining(", ")));
-      parcelItemDTO.setProperties(properties);
-      parcelItemDTO.setQuantity(itemDTO.getQuantity());
-      parcelItemDTO.setValue(product.getPrice());
-      parcelItemDTO.setWeight(product.getWeight());
-      parcelItemDTO.setWidth(product.getWidth());
-      parcelItemDTO.setHeight(product.getHeight());
-      return parcelItemDTO;
-    }).collect(Collectors.toList()));
-    deliveryRequest.setShippingMethodCheckoutName(orderRequestDTO.getDeliveryMethod());
-    deliveryRequest.setSenderAddress(price.get().getAddress());
-    deliveryRequest.setRecipientAddress(user.get().getAddress());
-    deliveryRequest.setRecipientPhoneNumber(user.get().getPhoneNumber());
-    deliveryRequest.setRecipientEmail(user.get().getEmail());
-    deliveryRequest.setRecipientName(user.get().getFirstname() + " " + user.get().getLastname());
-
-    ParcelDTO delivery = deliveryService.createDelivery(deliveryRequest);
-    if (delivery == null) {
-      throw new RuntimeException("Delivery creation failed");
-    }
-
-    order.setDeliveryNumbers(List.of(delivery.getShipment().getDeliveryNumber()));
     Order createdOrder = orderRepository.save(order);
     if (createdOrder == null) {
       throw new RuntimeException("Order creation failed");
     }
 
-    return delivery;
+    return createdOrder;
   }
 
   public Order completeOrder(Order order) {
+    if (!"PENDING".equals(order.getStatus())) {
+      throw new RuntimeException("Order is not in a PENDING state.");
+    }
+
     order.setStatus("PROCESSED");
+
     order.getDeliveryNumbers().forEach(deliveryNumber -> {
-      deliveryService.updateDeliveryStatus(deliveryNumber, "SHIPPED");
+      try {
+        deliveryService.updateDeliveryStatus(deliveryNumber, "SHIPPED");
+      } catch (Exception e) {
+        throw new RuntimeException("Failed to update delivery status for delivery number: " + deliveryNumber);
+      }
     });
     return orderRepository.save(order);
   }

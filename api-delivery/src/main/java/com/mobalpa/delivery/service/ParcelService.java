@@ -26,6 +26,7 @@ public class ParcelService {
 
     public Parcel createParcel(ParcelDTO parcelDTO) {
         Parcel parcel = new Parcel();
+        parcel.setOrderUuid(parcelDTO.getOrderUuid());
         parcel.setShippingMethodCheckoutName(parcelDTO.getShippingMethodCheckoutName());
         parcel.setSenderAddress(parcelDTO.getSenderAddress().toString());
 
