@@ -4,6 +4,9 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.List;
 
 @Data
@@ -14,8 +17,13 @@ public class ProductDTO {
     private String description;
     private double price;
     private int stock;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime estimatedDelivery;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime createdAt;
+    
     private CategoryDTO category;
     private BrandDTO brand;
     private double weight;
