@@ -8,11 +8,13 @@ import com.mobalpa.catalogue.filter.ProductFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 import org.springframework.http.ResponseEntity;
@@ -40,7 +42,7 @@ public class CatalogueService {
         HttpEntity<String> request = new HttpEntity<>(headers);
 
         ResponseEntity<CategoryDTO[]> response = restTemplate.exchange(
-            this.baseUrl + "/categories", HttpMethod.GET, request, CategoryDTO[].class);
+                this.baseUrl + "/categories", HttpMethod.GET, request, CategoryDTO[].class);
         return Arrays.asList(response.getBody());
     }
 
@@ -50,7 +52,7 @@ public class CatalogueService {
         HttpEntity<String> request = new HttpEntity<>(headers);
 
         ResponseEntity<ProductDTO[]> response = restTemplate.exchange(
-            this.baseUrl + "/best-sellers", HttpMethod.GET, request, ProductDTO[].class);
+                this.baseUrl + "/best-sellers", HttpMethod.GET, request, ProductDTO[].class);
         return Arrays.asList(response.getBody());
     }
 
@@ -60,7 +62,7 @@ public class CatalogueService {
         HttpEntity<String> request = new HttpEntity<>(headers);
 
         ResponseEntity<String> response = restTemplate.exchange(
-            this.baseUrl + "/store/" + id, HttpMethod.GET, request, String.class);
+                this.baseUrl + "/store/" + id, HttpMethod.GET, request, String.class);
         return response.getBody();
     }
 
@@ -74,7 +76,6 @@ public class CatalogueService {
         
         List<ProductDTO> products = Arrays.asList(response.getBody());
 
-        // Apply filters
         return products.stream().filter(product -> {
             boolean matches = true;
             if (productFilter.getMaxPrice() != null) {
@@ -99,9 +100,18 @@ public class CatalogueService {
         headers.set("X-API-KEY", this.apiKey);
         HttpEntity<String> request = new HttpEntity<>(headers);
 
-        ResponseEntity<ProductDTO> response = restTemplate.exchange(
-            this.baseUrl + "/products/" + id, HttpMethod.GET, request, ProductDTO.class);
-        return response.getBody();
+        try {
+            ResponseEntity<ProductDTO> response = restTemplate.exchange(
+                this.baseUrl + "/products/" + id.toString(), HttpMethod.GET, request, ProductDTO.class);
+
+            return response.getBody();
+        } catch (HttpClientErrorException e) {
+            if (e.getStatusCode() == HttpStatus.NOT_FOUND) {
+                throw new RuntimeException("Product with UUID " + id + " not found");
+            } else {
+                throw new RuntimeException("Error fetching product: " + e.getMessage());
+            }
+        }
     }
 
     public CategoryDTO getCategoryById(UUID id) {
@@ -110,7 +120,7 @@ public class CatalogueService {
         HttpEntity<String> request = new HttpEntity<>(headers);
 
         ResponseEntity<CategoryDTO> response = restTemplate.exchange(
-            this.baseUrl + "/categories/" + id, HttpMethod.GET, request, CategoryDTO.class);
+                this.baseUrl + "/categories/" + id, HttpMethod.GET, request, CategoryDTO.class);
         return response.getBody();
     }
 
@@ -120,7 +130,7 @@ public class CatalogueService {
         HttpEntity<String> request = new HttpEntity<>(headers);
 
         ResponseEntity<SubcategoryDTO> response = restTemplate.exchange(
-            this.baseUrl + "/subcategories/" + id, HttpMethod.GET, request, SubcategoryDTO.class);
+                this.baseUrl + "/subcategories/" + id, HttpMethod.GET, request, SubcategoryDTO.class);
         return response.getBody();
     }
 
@@ -130,7 +140,7 @@ public class CatalogueService {
         HttpEntity<String> request = new HttpEntity<>(headers);
 
         ResponseEntity<ProductDTO[]> response = restTemplate.exchange(
-            this.baseUrl + "/categories/" + categoryId + "/products", HttpMethod.GET, request, ProductDTO[].class);
+                this.baseUrl + "/categories/" + categoryId + "/products", HttpMethod.GET, request, ProductDTO[].class);
         return Arrays.asList(response.getBody());
     }
 
@@ -141,7 +151,7 @@ public class CatalogueService {
         HttpEntity<ProductDTO> request = new HttpEntity<>(productDTO, headers);
 
         ResponseEntity<ProductDTO> response = restTemplate.exchange(
-            this.baseUrl + "/products", HttpMethod.POST, request, ProductDTO.class);
+                this.baseUrl + "/products", HttpMethod.POST, request, ProductDTO.class);
         return response.getBody();
     }
 
@@ -168,7 +178,7 @@ public class CatalogueService {
         HttpEntity<String> request = new HttpEntity<>(headers);
 
         ResponseEntity<SubcategoryDTO[]> response = restTemplate.exchange(
-            this.baseUrl + "/products/categories", HttpMethod.GET, request, SubcategoryDTO[].class);
+                this.baseUrl + "/products/categories", HttpMethod.GET, request, SubcategoryDTO[].class);
         return Arrays.asList(response.getBody());
     }
 
@@ -179,7 +189,7 @@ public class CatalogueService {
         HttpEntity<SubcategoryDTO> request = new HttpEntity<>(categoryDTO, headers);
 
         ResponseEntity<SubcategoryDTO> response = restTemplate.exchange(
-            this.baseUrl + "/products/categories", HttpMethod.POST, request, SubcategoryDTO.class);
+                this.baseUrl + "/products/categories", HttpMethod.POST, request, SubcategoryDTO.class);
         return response.getBody();
     }
 

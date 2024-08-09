@@ -3,7 +3,8 @@ package com.mobalpa.delivery.controller;
 import com.mobalpa.delivery.dto.ParcelDTO;
 import com.mobalpa.delivery.model.Parcel;
 import com.mobalpa.delivery.service.ParcelService;
-import com.mobalpa.delivery.service.DeliveryPriceService;
+import com.mobalpa.delivery.service.DepotService;
+import com.mobalpa.delivery.service.DepotService.DeliveryInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,13 +20,13 @@ public class DeliveryController {
     private ParcelService parcelService;
 
     @Autowired
-    private DeliveryPriceService deliveryPriceService;
+    private DepotService deliveryPriceService;
 
     @PostMapping
-    public ResponseEntity<String> createParcel(@RequestBody ParcelDTO parcelDTO) {
+    public ResponseEntity<?> createParcel(@RequestBody ParcelDTO parcelDTO) {
         try {
             Parcel createdParcel = parcelService.createParcel(parcelDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body(createdParcel.getShipment().getDeliveryNumber());
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdParcel);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
@@ -49,9 +50,15 @@ public class DeliveryController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/prices")
-    public ResponseEntity<Map<String, Double>> getDeliveryPrices() {
-        Map<String, Double> prices = deliveryPriceService.getDeliveryPrices();
-        return ResponseEntity.ok(prices);
+    @GetMapping("/depot")
+    public ResponseEntity<?> getDeliveryPrices() {
+        Map<String, DeliveryInfo> depot = deliveryPriceService.getDeliveryPrices();
+        return ResponseEntity.ok(depot);
+    }
+
+    @GetMapping("/depot/{method}")
+    public ResponseEntity<DeliveryInfo> getDeliveryPrice(@PathVariable String method) {
+        DeliveryInfo depot = deliveryPriceService.getDeliveryPrice(method);
+        return ResponseEntity.ok(depot);
     }
 }

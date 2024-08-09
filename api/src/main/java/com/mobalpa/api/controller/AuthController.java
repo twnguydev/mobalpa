@@ -53,7 +53,6 @@ public class AuthController {
     
             String htmlContent = Files.readString(Paths.get(templatePath));
             return ResponseEntity.ok(htmlContent);
-            
         } catch (IOException e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erreur lors de la génération du contenu HTML.");

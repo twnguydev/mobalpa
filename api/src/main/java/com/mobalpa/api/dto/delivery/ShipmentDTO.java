@@ -1,4 +1,4 @@
-package com.mobalpa.delivery.dto;
+package com.mobalpa.api.dto.delivery;
 
 import lombok.Data;
 

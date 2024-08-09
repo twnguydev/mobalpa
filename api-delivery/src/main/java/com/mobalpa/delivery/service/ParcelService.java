@@ -32,7 +32,7 @@ public class ParcelService {
         List<ParcelItem> parcelItems = parcelDTO.getParcelItems().stream().map(itemDTO -> {
             ParcelItem item = new ParcelItem();
             item.setDescription(itemDTO.getDescription());
-            item.setProductId(itemDTO.getProductId());
+            item.setProductUuid(itemDTO.getProductUuid());
             item.setProperties(itemDTO.getProperties());
             item.setQuantity(itemDTO.getQuantity());
             item.setValue(itemDTO.getValue());
@@ -50,6 +50,10 @@ public class ParcelService {
         parcel.setWidth(calculateTotalWidthParcel(parcelItems));
         parcel.setHeight(calculateTotalHeightParcel(parcelItems));
         parcel.setQuantity(calculateNumberOfParcelsNecessary(parcel));
+        parcel.setRecipientAddress(parcelDTO.getRecipientAddress().toString());
+        parcel.setRecipientName(parcelDTO.getRecipientName());
+        parcel.setRecipientPhoneNumber(parcelDTO.getRecipientPhoneNumber());
+        parcel.setRecipientEmail(parcelDTO.getRecipientEmail());
         parcel.setStatus("CREATED");
         parcel.setIsReturn(false);
 

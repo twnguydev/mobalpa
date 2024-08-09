@@ -10,9 +10,10 @@ import java.util.UUID;
 @Data
 public class OrderRequestDTO {
     private UUID userUuid;
+    private UUID paymentUuid;
     private List<OrderItem> items;
     private String deliveryMethod;
     private String deliveryAddress;
-    private double reduction;
-    private double totalHt;
+    private Double reduction;
+    private Double totalHt;
 }

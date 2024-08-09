@@ -1,4 +1,4 @@
-package com.mobalpa.delivery.dto;
+package com.mobalpa.api.dto.delivery;
 
 import lombok.Data;
 
@@ -15,4 +15,5 @@ public class ParcelDTO {
     private String recipientPhoneNumber;
     private String recipientEmail;
     private String recipientName;
+    private ShipmentDTO shipment;
 }
