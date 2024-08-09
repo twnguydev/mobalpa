@@ -4,12 +4,11 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+
+import org.springframework.web.bind.annotation.*;
 
 import com.mobalpa.api.service.CatalogueService;
+import com.mobalpa.catalogue.filter.ProductFilter;
 
 @RestController
 @RequestMapping("/api/catalogue")
@@ -17,7 +16,6 @@ public class CatalogueController {
 
   @Autowired
   private CatalogueService catalogueService;
-
 
   @GetMapping("/categories")
   public ResponseEntity<?> getAllCategories() {
@@ -30,8 +28,23 @@ public class CatalogueController {
   }
 
   @GetMapping("/products")
-  public ResponseEntity<?> getAllProducts() {
-    return ResponseEntity.ok(catalogueService.getAllProducts());
+  public ResponseEntity<?> getAllProducts(
+      @RequestParam(required = false) String color,
+      @RequestParam(required = false) Double minPrice,
+      @RequestParam(required = false) Double maxPrice,
+      @RequestParam(required = false) String brand) {
+    try {
+      ProductFilter productFilter = new ProductFilter();
+      productFilter.setColorName(color);
+      productFilter.setMinPrice(minPrice);
+      productFilter.setMaxPrice(maxPrice);
+      productFilter.setBrandName(brand);
+
+      List<ProductDTO> products = catalogueService.getAllProducts(productFilter);
+      return ResponseEntity.ok(products);
+    } catch (RuntimeException e) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    }
   }
 
   @GetMapping("/products/{productId}")

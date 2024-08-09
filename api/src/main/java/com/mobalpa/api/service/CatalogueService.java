@@ -3,6 +3,7 @@ package com.mobalpa.api.service;
 import com.mobalpa.api.dto.catalogue.CategoryDTO;
 import com.mobalpa.api.dto.catalogue.ProductDTO;
 import com.mobalpa.api.dto.catalogue.SubcategoryDTO;
+import com.mobalpa.catalogue.filter.ProductFilter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.UUID;
 
 @Service
@@ -64,14 +66,33 @@ public class CatalogueService {
         return response.getBody();
     }
 
-    public List<ProductDTO> getAllProducts() {
+    public List<ProductDTO> getAllProducts(ProductFilter productFilter) {
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-API-KEY", this.apiKey);
         HttpEntity<String> request = new HttpEntity<>(headers);
 
         ResponseEntity<ProductDTO[]> response = restTemplate.exchange(
-                this.baseUrl + "/products", HttpMethod.GET, request, ProductDTO[].class);
-        return Arrays.asList(response.getBody());
+            this.baseUrl + "/products", HttpMethod.GET, request, ProductDTO[].class);
+        
+        List<ProductDTO> products = Arrays.asList(response.getBody());
+
+        return products.stream().filter(product -> {
+            boolean matches = true;
+            if (productFilter.getMaxPrice() != null) {
+                matches = matches && product.getPrice() <= productFilter.getMaxPrice();
+            }
+            if (productFilter.getMinPrice() != null) {
+                matches = matches && product.getPrice() >= productFilter.getMinPrice();
+            }
+            if (productFilter.getBrandName() != null) {
+                matches = matches && product.getBrand().getName().equalsIgnoreCase(productFilter.getBrandName());
+            }
+            if (productFilter.getColorName() != null) {
+                matches = matches && product.getColors().stream()
+                        .anyMatch(color -> color.getName().equalsIgnoreCase(productFilter.getColorName()));
+            }
+            return matches;
+        }).collect(Collectors.toList());
     }
 
     public ProductDTO getProductById(UUID id) {

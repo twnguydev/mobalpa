@@ -1,0 +1,11 @@
+.tab {
+    @apply px-4 py-2;
+}
+
+.active {
+    @apply border-b-2 border-emerald-green text-emerald-green;
+}
+
+.tab-content {
+    @apply mt-4;
+}
