@@ -1,0 +1,39 @@
+<div class="relative overflow-hidden w-full h-120 ">
+    <div class="flex transition-transform duration-500 ease-in-out " id="carouselSlides">
+        <div class="carousel-slide relative min-w-full h-120">
+            <img src="assets/forcarrousel/microonde.jpg" alt="Slide 1"
+                class="w-full h-full object-cover">
+            <div class="absolute inset-0 flex items-center justify-center">
+                <div class="text-center">
+                    <p class="text-white  text-3xl font-gotham">A petit prix</p><br>
+                    <p class="text-white text-8xl p-8 font-gotham">TOUT POUR VOTRE MAISON</p><br>
+                    <p class="text-white text-2xl underline font-gotham">voir plus</p><br>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-slide relative min-w-full h-120">
+            <img src="assets/forcarrousel/petit-electromenager-indispensables.jpg" alt="Slide 2"
+                class="w-full h-full object-cover">
+            <div class="absolute inset-0 flex items-center justify-center">
+                <div class="text-center">
+                    <p class="text-white  text-3xl font-gotham">Edition limité</p><br>
+                    <p class="text-white text-8xl p-8 font-gotham">TOUT POUR VOTRE CUISINE</p><br>
+                    <p class="text-white text-2xl underline font-aquawax">voir plus</p><br>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-slide relative min-w-full h-120">
+            <img src="assets/forcarrousel/sdb_idao_vert_0.jpg" alt="Slide 3" class="w-full h-full object-cover">
+            <div class="absolute inset-0 flex items-center justify-center">
+                <div class="text-center">
+                    <p class="text-white  text-3xl font-gotham">Grosse promo</p><br>
+                    <p class="text-white text-8xl p-8 font-gotham">TOUT LES JOURS</p><br>
+                    <p class="text-white text-2xl underline font-aquawax">voir plus</p><br>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="absolute top-1/2 left-0 transform -translate-y-1/2 p-2 " (click)="prevSlide()">&#10094;</button>
+    <button class="absolute top-1/2 right-0 transform -translate-y-1/2  p-2 " (click)="nextSlide()">&#10095;</button>
+</div>

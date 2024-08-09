@@ -6,8 +6,8 @@ import java.util.UUID;
 
 @Data
 public class CatalogueImageDTO {
-  
+
       private UUID uuid;
-      private ColorDTO color;
       private String uri;
+      private ColorDTO color;
 }
