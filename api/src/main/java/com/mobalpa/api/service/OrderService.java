@@ -1,10 +1,12 @@
 package com.mobalpa.api.service;
 
 import com.mobalpa.api.dto.delivery.*;
+import com.mobalpa.api.dto.OrderItemDTO;
+import com.mobalpa.api.dto.OrderSummaryDTO;
 import com.mobalpa.api.dto.OrderRequestDTO;
+import com.mobalpa.api.dto.catalogue.ProductDTO;
 import com.mobalpa.api.dto.catalogue.CatalogueImageDTO;
 import com.mobalpa.api.dto.catalogue.ColorDTO;
-import com.mobalpa.api.dto.catalogue.ProductDTO;
 import com.mobalpa.api.model.Order;
 import com.mobalpa.api.model.User;
 import com.mobalpa.api.model.Payment;
@@ -19,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 import java.util.stream.Collectors;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -49,18 +52,127 @@ public class OrderService {
 
   public List<Order> getAllOrders() {
     List<Order> orders = orderRepository.findAll();
-    if (orders.isEmpty()) {
-      throw new RuntimeException("No orders found");
-    }
+    orders.forEach(order -> order.getItems().size());
     return orders;
   }
 
   public Order getOrderByUuid(UUID uuid) {
-    return orderRepository.findById(uuid).orElseThrow(() -> new RuntimeException("Order not found"));
+    Order order = orderRepository.findById(uuid)
+        .orElseThrow(() -> new RuntimeException("Order not found"));
+    order.getItems().forEach(item -> item.getProperties().size());
+    return order;
+  }
+
+  public Order convertToOrder(OrderSummaryDTO orderSummaryDTO) {
+    User user = userRepository.findById(orderSummaryDTO.getUserUuid())
+        .orElseThrow(() -> new RuntimeException("User not found"));
+
+    Payment payment = paymentRepository.findById(orderSummaryDTO.getPaymentUuid())
+        .orElseThrow(() -> new RuntimeException("Payment not found"));
+
+    Order order = orderRepository.findById(orderSummaryDTO.getUuid())
+        .orElseThrow(() -> new RuntimeException("Order not found"));
+
+    Order toOrder = new Order();
+    toOrder.setUser(user);
+    toOrder.setPayment(payment);
+    toOrder.setDeliveryAddress(orderSummaryDTO.getDeliveryAddress());
+    toOrder.setDeliveryMethod(order.getDeliveryMethod());
+    toOrder.setReduction(order.getReduction());
+    toOrder.setTotalHt(order.getTotalHt());
+    toOrder.setDeliveryFees(order.getDeliveryFees());
+    toOrder.setVat(order.getVat());
+    toOrder.setTotalTtc(order.getTotalTtc());
+    toOrder.setStatus(order.getStatus());
+    toOrder.setDeliveryNumbers(order.getDeliveryNumbers());
+    toOrder.setItems(order.getItems());
+    return toOrder;
+  }
+
+  public OrderSummaryDTO convertToOrderSummaryDTO(Order order) {
+    List<OrderItemDTO> itemDTOs = order.getItems().stream()
+        .map(this::convertToOrderItemDTO)
+        .collect(Collectors.toList());
+
+    OrderSummaryDTO dto = new OrderSummaryDTO();
+    dto.setUuid(order.getUuid());
+    dto.setUserUuid(order.getUser().getUuid());
+    dto.setPaymentUuid(order.getPayment().getUuid());
+    dto.setDeliveryAddress(order.getDeliveryAddress());
+    dto.setTotalTtc(order.getTotalTtc());
+    dto.setStatus(order.getStatus());
+    dto.setDeliveryNumbers(order.getDeliveryNumbers());
+    dto.setItems(itemDTOs);
+    return dto;
+  }
+
+  public OrderItem convertToOrderItem(OrderItemDTO itemDTO) {
+    OrderItem item = new OrderItem();
+    item.setUuid(itemDTO.getUuid());
+    item.setProductUuid(itemDTO.getProductUuid());
+    item.setQuantity(itemDTO.getQuantity());
+    return item;
+  }
+
+  public OrderItemDTO convertToOrderItemDTO(OrderItem item) {
+    ProductDTO product = catalogueService.getProductById(item.getProductUuid());
+    Map<String, String> properties = new HashMap<>();
+    properties.put("brand", product.getBrand().getName());
+    properties.put("colors", product.getColors().stream()
+        .map(ColorDTO::getName)
+        .collect(Collectors.joining(", ")));
+    properties.put("images", product.getImages().stream()
+        .map(CatalogueImageDTO::getUri)
+        .collect(Collectors.joining(", ")));
+
+    OrderItemDTO dto = new OrderItemDTO();
+    dto.setUuid(item.getUuid());
+    dto.setProductUuid(item.getProductUuid());
+    dto.setProperties(properties);
+    dto.setQuantity(item.getQuantity());
+    return dto;
+  }
+
+  public OrderSummaryDTO getOrderByUuidtoDTO(UUID uuid) {
+    OrderSummaryDTO orderSummaryDTO = orderRepository.findById(uuid)
+        .map(this::convertToOrderSummaryDTO)
+        .orElseThrow(() -> new RuntimeException("Order not found"));
+    return orderSummaryDTO;
   }
 
   @Transactional
-  public ParcelDTO createOrder(OrderRequestDTO orderRequestDTO) {
+  public ParcelDTO processOrder(OrderRequestDTO orderRequestDTO) {
+    User user = userRepository.findById(orderRequestDTO.getUserUuid())
+            .orElseThrow(() -> new RuntimeException("User not found"));
+
+    Payment payment = paymentRepository.findById(orderRequestDTO.getPaymentUuid())
+            .orElseThrow(() -> new RuntimeException("Payment not found"));
+
+    orderRequestDTO.getItems().forEach(itemDTO -> {
+        ProductDTO product = catalogueService.getProductById(itemDTO.getProductUuid());
+        if (product == null) {
+            throw new RuntimeException("Product with UUID " + itemDTO.getProductUuid() + " not found");
+        }
+    });
+
+    DepotDTO depot = deliveryService.getDeliveryPrice(orderRequestDTO.getDeliveryMethod())
+            .orElseThrow(() -> new RuntimeException("Delivery method not found"));
+
+    Order order = createOrder(orderRequestDTO);
+
+    ParcelDTO delivery = deliveryService.processDelivery(orderRequestDTO, order, depot, user);
+
+    order.setDeliveryNumbers(new ArrayList<>(List.of(delivery.getShipment().getDeliveryNumber())));
+    Order createdOrder = orderRepository.save(order);
+
+    if (createdOrder == null) {
+        throw new RuntimeException("Order creation failed");
+    }
+
+    return delivery;
+  }
+
+  public Order createOrder(OrderRequestDTO orderRequestDTO) {
     if (orderRequestDTO.getUserUuid() == null) {
       throw new RuntimeException("User UUID is required");
     }
@@ -97,8 +209,8 @@ public class OrderService {
       }
     });
 
-    Optional<DepotDTO> price = deliveryService.getDeliveryPrice(orderRequestDTO.getDeliveryMethod());
-    if (price.isEmpty()) {
+    Optional<DepotDTO> depot = deliveryService.getDeliveryPrice(orderRequestDTO.getDeliveryMethod());
+    if (depot.isEmpty()) {
       throw new RuntimeException("Delivery method not found");
     }
 
@@ -109,7 +221,7 @@ public class OrderService {
     order.setReduction(orderRequestDTO.getReduction());
     order.setStatus("PENDING");
     order.setTotalHt(orderRequestDTO.getTotalHt());
-    order.setDeliveryFees(price.get().getPrice());
+    order.setDeliveryFees(depot.get().getPrice());
     order.setDeliveryAddress(user.get().getAddress() + " " + user.get().getZipcode() + " " + user.get().getCity());
     order.setDeliveryMethod(orderRequestDTO.getDeliveryMethod());
     order.setVat(orderRequestDTO.getTotalHt() * VAT);
@@ -121,59 +233,35 @@ public class OrderService {
           item.setOrder(order);
           item.setProductUuid(itemDTO.getProductUuid());
           item.setQuantity(itemDTO.getQuantity());
+          item.setProperties(itemDTO.getProperties());
           return item;
         }).collect(Collectors.toList());
     order.setItems(items);
 
-    DeliveryRequestDTO deliveryRequest = new DeliveryRequestDTO();
-    deliveryRequest.setOrderUuid(order.getUuid());
-    deliveryRequest.setParcelItems(orderRequestDTO.getItems().stream().map(itemDTO -> {
-      ParcelItemDTO parcelItemDTO = new ParcelItemDTO();
-      ProductDTO product = catalogueService.getProductById(itemDTO.getProductUuid());
-      parcelItemDTO.setDescription(product.getDescription());
-      parcelItemDTO.setProductUuid(product.getUuid());
-      Map<String, String> properties = new HashMap<>();
-      properties.put("brand", product.getBrand().getName());
-      properties.put("colors", product.getColors().stream().map(ColorDTO::getName).collect(Collectors.joining(", ")));
-      properties.put("images",
-          product.getImages().stream().map(CatalogueImageDTO::getUri).collect(Collectors.joining(", ")));
-      parcelItemDTO.setProperties(properties);
-      parcelItemDTO.setQuantity(itemDTO.getQuantity());
-      parcelItemDTO.setValue(product.getPrice());
-      parcelItemDTO.setWeight(product.getWeight());
-      parcelItemDTO.setWidth(product.getWidth());
-      parcelItemDTO.setHeight(product.getHeight());
-      return parcelItemDTO;
-    }).collect(Collectors.toList()));
-    deliveryRequest.setShippingMethodCheckoutName(orderRequestDTO.getDeliveryMethod());
-    deliveryRequest.setSenderAddress(price.get().getAddress());
-    deliveryRequest.setRecipientAddress(user.get().getAddress());
-    deliveryRequest.setRecipientPhoneNumber(user.get().getPhoneNumber());
-    deliveryRequest.setRecipientEmail(user.get().getEmail());
-    deliveryRequest.setRecipientName(user.get().getFirstname() + " " + user.get().getLastname());
-
-    ParcelDTO delivery = deliveryService.createDelivery(deliveryRequest);
-    if (delivery == null) {
-      throw new RuntimeException("Delivery creation failed");
-    }
-
-    order.setDeliveryNumbers(List.of(delivery.getShipment().getDeliveryNumber()));
     Order createdOrder = orderRepository.save(order);
     if (createdOrder == null) {
       throw new RuntimeException("Order creation failed");
     }
 
-    return delivery;
+    return createdOrder;
   }
 
-  // public Order completeOrder(Order order) {
-  // order.setStatus("COMPLETED");
-  // Order completedOrder = orderRepository.save(order);
+  public Order completeOrder(Order order) {
+    if (!"PENDING".equals(order.getStatus())) {
+      throw new RuntimeException("Order is not in a PENDING state.");
+    }
 
-  // deliveryService.updateDeliveryStatus(order.getDeliveries().get(0).getUuid(),
-  // "SHIPPED");
-  // return completedOrder;
-  // }
+    order.setStatus("PROCESSED");
+
+    order.getDeliveryNumbers().forEach(deliveryNumber -> {
+      try {
+        deliveryService.updateDeliveryStatus(deliveryNumber, "SHIPPED");
+      } catch (Exception e) {
+        throw new RuntimeException("Failed to update delivery status for delivery number: " + deliveryNumber);
+      }
+    });
+    return orderRepository.save(order);
+  }
 
   public Order updateOrder(UUID uuid, OrderRequestDTO orderDetails) {
     Order order = orderRepository.findById(uuid).orElseThrow(() -> new RuntimeException("Order not found"));

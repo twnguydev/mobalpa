@@ -38,12 +38,10 @@ public class OrderController {
     @PostMapping
     public ResponseEntity<?> createOrder(@RequestBody OrderRequestDTO orderRequest) {
         try {
-            ParcelDTO createdOrder = orderService.createOrder(orderRequest);
+            ParcelDTO createdOrder = orderService.processOrder(orderRequest);
             return ResponseEntity.status(HttpStatus.CREATED).body(createdOrder);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 
@@ -59,8 +57,7 @@ public class OrderController {
     @GetMapping("/{uuid}")
     public ResponseEntity<?> getOrder(@PathVariable UUID uuid) {
         try {
-            Order order = orderService.getOrderByUuid(uuid);
-            return ResponseEntity.ok(order);
+            return ResponseEntity.ok(orderService.getOrderByUuid(uuid));
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
@@ -70,7 +67,7 @@ public class OrderController {
     public ResponseEntity<?> completeOrder(@PathVariable UUID uuid) {
         try {
             Order order = orderService.getOrderByUuid(uuid);
-            // order = orderService.completeOrder(order);
+            orderService.completeOrder(order);
             return ResponseEntity.ok(order);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
@@ -80,6 +77,7 @@ public class OrderController {
     @PostMapping("/{userUuid}/apply-coupon")
     public ResponseEntity<?> applyCoupon(@PathVariable UUID userUuid, @RequestBody String couponCode) {
         try {
+            System.out.println("userUuid: " + userUuid);
             User user = userService.getUserByUuid(userUuid);
             Optional<CouponCode> coupon = promotionService.getCouponByName(couponCode);
             if (!coupon.isPresent()) {

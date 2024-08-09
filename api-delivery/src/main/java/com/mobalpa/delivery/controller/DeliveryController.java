@@ -38,7 +38,7 @@ public class DeliveryController {
         return ResponseEntity.ok(parcel);
     }
 
-    @PatchMapping("/{deliveryNumber}")
+    @PutMapping("/{deliveryNumber}")
     public ResponseEntity<Parcel> updateParcelStatus(@PathVariable String deliveryNumber, @RequestBody String status) {
         Parcel updatedParcel = parcelService.updateParcelStatus(deliveryNumber, status);
         return ResponseEntity.ok(updatedParcel);

@@ -5,6 +5,8 @@ import lombok.EqualsAndHashCode;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -13,6 +15,7 @@ import java.util.UUID;
 @Table(name = "payment")
 @Data
 @EqualsAndHashCode(exclude = "user")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Payment {
 
     @Id
@@ -21,6 +24,7 @@ public class Payment {
 
     @ManyToOne
     @JoinColumn(name = "user_uuid", nullable = false)
+    @JsonIgnore
     private User user;
 
     @Column(nullable = true)

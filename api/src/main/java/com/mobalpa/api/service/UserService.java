@@ -1,6 +1,7 @@
 package com.mobalpa.api.service;
 
 import com.mobalpa.api.model.User;
+import com.mobalpa.api.repository.RoleRepository;
 import com.mobalpa.api.repository.UserRepository;
 import com.mobalpa.api.util.JwtUtil;
 import com.mobalpa.api.model.Role;
@@ -16,12 +17,14 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.context.annotation.Lazy;
 
-import jakarta.mail.MessagingException; 
+import jakarta.mail.MessagingException;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -38,6 +41,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private RoleService roleService;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -88,13 +94,12 @@ public class UserService implements UserDetailsService {
         String confirmationUrl = appBaseUrl + "api/users/confirm?token=" + user.getToken();
         try {
             emailService.sendHtmlEmail(
-                user.getEmail(),
-                "Confirmation de l'email",
-                "confirmationEmailTemplate.html",
-                "${user.firstName}", user.getFirstname(),
-                "${confirmationUrl}", confirmationUrl,
-                "${appName}", "Mobalpa"
-            );
+                    user.getEmail(),
+                    "Confirmation de l'email",
+                    "confirmationEmailTemplate.html",
+                    "${user.firstName}", user.getFirstname(),
+                    "${confirmationUrl}", confirmationUrl,
+                    "${appName}", "Mobalpa");
         } catch (MessagingException | IOException e) {
             e.printStackTrace();
         }
@@ -109,7 +114,6 @@ public class UserService implements UserDetailsService {
         }
         return user;
     }
-
 
     @Transactional
     public String generateToken(User user) {
@@ -131,14 +135,13 @@ public class UserService implements UserDetailsService {
         user.setToken(resetToken);
         userRepository.save(user);
 
-    
-        String resetUrlWithToken =  "http://localhost:4200/reset-password?token=" + resetToken;
+        String resetUrlWithToken = "http://localhost:4200/reset-password?token=" + resetToken;
         try {
             emailService.sendHtmlEmail(user.getEmail(),
-                "Réinitialisation du mot de passe",
-                "passwordResetTemplate.html",
-                "${resetUrlWithToken}", resetUrlWithToken,
-                "${appName}", "Mobalpa");
+                    "Réinitialisation du mot de passe",
+                    "passwordResetTemplate.html",
+                    "${resetUrlWithToken}", resetUrlWithToken,
+                    "${appName}", "Mobalpa");
         } catch (MessagingException | IOException e) {
             e.printStackTrace();
         }
@@ -169,7 +172,7 @@ public class UserService implements UserDetailsService {
             if (user.getEmail() != null)
                 existingUser.setEmail(user.getEmail());
             if (user.getPassword() != null)
-                existingUser.setPassword(user.getPassword());
+                existingUser.setPassword(passwordEncoder.encode(user.getPassword()));
             if (user.getPhoneNumber() != null)
                 existingUser.setPhoneNumber(user.getPhoneNumber());
             if (user.getBirthdate() != null)
@@ -180,10 +183,17 @@ public class UserService implements UserDetailsService {
                 existingUser.setCity(user.getCity());
             if (user.getAddress() != null)
                 existingUser.setAddress(user.getAddress());
+
+            if (user.getRoles() != null && !user.getRoles().isEmpty()) {
+                Set<Role> roles = user.getRoles().stream().map(role -> roleRepository.findByName(role.getName()))
+                        .collect(Collectors.toSet());
+                existingUser.setRoles(roles);
+            }
+    
             existingUser.setUpdatedAt(LocalDateTime.now());
             return userRepository.save(existingUser);
         }).orElseThrow(() -> new IllegalArgumentException("User with id " + uuid + " not found"));
-    }
+    }         
 
     public void deleteUser(UUID uuid) {
         userRepository.deleteById(uuid);
