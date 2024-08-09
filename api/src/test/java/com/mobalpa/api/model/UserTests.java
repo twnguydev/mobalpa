@@ -112,11 +112,13 @@ public class UserTests {
         user.setCreatedAt(LocalDateTime.now());
 
         OrderItem item1 = new OrderItem();
-        item1.setProductUuid(UUID.fromString("item1"));
+        UUID item1Uuid = UUID.randomUUID();
+        item1.setProductUuid(item1Uuid);
         item1.setQuantity(1);
 
         OrderItem item2 = new OrderItem();
-        item2.setProductUuid(UUID.fromString("item2"));
+        UUID item2Uuid = UUID.randomUUID();
+        item2.setProductUuid(item2Uuid);
         item2.setQuantity(2);
 
         List<OrderItem> items = List.of(item1, item2);
@@ -155,7 +157,7 @@ public class UserTests {
         assertEquals(1, savedUser.getOrders().size());
         assertEquals("PENDING", savedUser.getOrders().iterator().next().getStatus());
         assertEquals(2, savedUser.getOrders().iterator().next().getItems().size());
-        assertEquals("item1", savedUser.getOrders().iterator().next().getItems().get(0).getProductUuid());
+        assertEquals(item1Uuid, savedUser.getOrders().iterator().next().getItems().get(0).getProductUuid());
         assertEquals(1, savedUser.getOrders().iterator().next().getItems().get(0).getQuantity());
     }
 
