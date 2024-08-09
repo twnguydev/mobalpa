@@ -1,7 +1,6 @@
 package com.mobalpa.api.service;
 
 import com.mobalpa.api.model.Emailing;
-import com.mobalpa.api.model.EmailingType;
 import com.mobalpa.api.model.Newsletter;
 import com.mobalpa.api.repository.EmailingRepository;
 import com.mobalpa.api.repository.NewsletterRepository;

@@ -123,8 +123,8 @@ public class PromotionService {
         return couponCodeRepository.findById(id);
     }
 
-    public Optional<CouponCode> getCouponByName(String name) {
-        return couponCodeRepository.findByName(name);
+    public CouponCode getCouponByName(String name) {
+        return couponCodeRepository.findByName(name).orElseThrow(() -> new RuntimeException("Coupon not found"));
     }
 
     public CouponCode createCoupon(CouponCode coupon) {

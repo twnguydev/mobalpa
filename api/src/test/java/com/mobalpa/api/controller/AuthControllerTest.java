@@ -55,7 +55,7 @@ public class AuthControllerTest {
 
         when(userService.registerUser(any(User.class))).thenReturn(user);
 
-        ResponseEntity<String> response = authController.registerUser(user);
+        ResponseEntity<?> response = authController.registerUser(user);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals("Registration successful. Please check your email for confirmation.", response.getBody());
     }
