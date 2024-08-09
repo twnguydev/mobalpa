@@ -24,7 +24,18 @@ export class ProductComponent {
     this.selectedTab = index;
   }
 
+  
+  quantity: number = 1;
 
+  increaseQuantity() {
+    this.quantity++;
+  }
+
+  decreaseQuantity() {
+    if (this.quantity > 1) {
+      this.quantity--;
+    }
+  }
   onSubmit() {
   }
 }

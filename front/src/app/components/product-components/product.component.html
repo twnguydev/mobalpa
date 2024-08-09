@@ -26,13 +26,13 @@
             <h1 class="text-4xl font-bold mb-4">Micro-ondes monofonction Samsung MS23K3515AK</h1>
             <div class="flex items-center mb-4">
                 <span class="text-yellow-500">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
-                <span class="ml-2 text-xl font-semibold">$299</span>
+                <span class="ml-2 text-xl font-semibold">299€</span>
             </div>
-            <p class="text-gray-500 mb-4">cod: 52</p>
+            <p class="text-gray-500 mb-4">ref: 50973272</p>
             <div class="flex shadow p-2 rounded-xl md:w-4/5 items-center mb-4">
-                <button class="border p-2">-</button>
-                <input type="text" value="1" class="w-12 text-center border-t border-b p-2">
-                <button class="border p-2">+</button>
+                <button class="border p-2" (click)="decreaseQuantity()">-</button>
+                <input type="text" [value]="quantity" class="w-12 text-center border-t border-b p-2" readonly>
+                <button class="border p-2" (click)="increaseQuantity()">+</button>
                 <button class="bg-red-500 text-white p-2 rounded ml-4 flex hover:border border-black items-center">
                     <span>Ajouter au panier</span>
                     <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -59,16 +59,15 @@
                     <li>Revêtement en velours blanc pour un confort optimal</li>
                     <li>Pietement en métal pour une meilleure stabilité et durabilité</li>
                     <li>Fabrication française</li>
-                    <li>Idéal pour les bosseurs comme Tanguy</li>
                 </ul>
             </div>
-            <p class="text-gray-500 border rounded-xl p-2">Garantie. <span class="font-semibold">7 ans Échange/retour
+            <p class="text-gray-500 border rounded-xl p-2"><span class="font-semibold"> Garantie 7 ans Échange/retour
                     des marchandises dans un
                     délai de 14 jours</span></p>
         </div>
     </div>
     <div *ngIf="selectedTab === 1" class="flex flex-col md:flex-row">
-        1
+        
     </div>
     <div *ngIf="selectedTab === 2" class="flex flex-col md:flex-row">
         2
