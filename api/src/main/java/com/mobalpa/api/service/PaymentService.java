@@ -55,4 +55,8 @@ public class PaymentService {
 
     return paymentRepository.save(payment);
   }
+
+  public Payment savePayment(Payment payment) {
+    return paymentRepository.save(payment);
+  }
 }

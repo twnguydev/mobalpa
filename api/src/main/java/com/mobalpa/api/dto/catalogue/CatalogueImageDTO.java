@@ -8,7 +8,6 @@ import java.util.UUID;
 public class CatalogueImageDTO {
   
       private UUID uuid;
-      private UUID productUuid;
-      private UUID colorUuid;
-      private String url;
+      private ColorDTO color;
+      private String uri;
 }

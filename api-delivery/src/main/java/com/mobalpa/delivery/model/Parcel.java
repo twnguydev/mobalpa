@@ -1,7 +1,7 @@
 package com.mobalpa.delivery.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
-
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +33,10 @@ public class Parcel {
     private String totalOrderValueCurrency = "EUR";
     private String shippingMethodCheckoutName;
     private String senderAddress;
+    private String recipientAddress;
+    private String recipientPhoneNumber;
+    private String recipientEmail;
+    private String recipientName;
     private Integer quantity;
     private Double totalInsuredValue;
     private Boolean isReturn;
@@ -43,5 +47,6 @@ public class Parcel {
     private Shipment shipment;
 
     @OneToMany(mappedBy = "parcel", cascade = CascadeType.ALL)
-    private List<ParcelItem> parcelItems  = new ArrayList<>();
+    @JsonManagedReference
+    private List<ParcelItem> parcelItems = new ArrayList<>();
 }

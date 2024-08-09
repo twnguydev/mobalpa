@@ -7,11 +7,9 @@ import java.util.Date;
 import java.util.List;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mobalpa.api.dto.delivery.DeliveryDTO;
-
-import java.io.IOException;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "`order`")
@@ -20,7 +18,7 @@ public class Order {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private UUID uuid;
+  private UUID uuid = UUID.randomUUID();
 
   @ManyToOne
   private User user;
@@ -52,41 +50,19 @@ public class Order {
   @Column(nullable = false)
   private String status = "PENDING";
 
-  @Transient
-  private List<OrderItem> items;
+  @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  private List<OrderItem> items = new ArrayList<>();
 
-  @Column(name = "items", columnDefinition = "json")
-  private String itemsJson;
-
-  @Transient
-  private List<DeliveryDTO> deliveries;
-
-  @Column(name = "deliveries", columnDefinition = "json")
-  private String deliveriesJson;
-
-  @PrePersist
-  @PreUpdate
-  public void serializeFields() throws IOException {
-    ObjectMapper objectMapper = new ObjectMapper();
-    this.itemsJson = objectMapper.writeValueAsString(this.items);
-    this.deliveriesJson = objectMapper.writeValueAsString(this.deliveries);
-  }
-
-  @PostLoad
-  @PostPersist
-  @PostUpdate
-  public void deserializeFields() throws IOException {
-    ObjectMapper objectMapper = new ObjectMapper();
-    this.items = objectMapper.readValue(this.itemsJson,
-        objectMapper.getTypeFactory().constructCollectionType(List.class, OrderItem.class));
-    this.deliveries = objectMapper.readValue(this.deliveriesJson,
-        objectMapper.getTypeFactory().constructCollectionType(List.class, DeliveryDTO.class));
-  }
+  @ElementCollection
+  @CollectionTable(name = "order_deliveries", joinColumns = @JoinColumn(name = "order_uuid"))
+  @Column(name = "delivery_number")
+  private List<String> deliveryNumbers = new ArrayList<>();
 
   @ManyToOne(fetch = FetchType.LAZY)
   private Payment payment;
 
   @Column(nullable = false)
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
   private LocalDateTime createdAt = LocalDateTime.now();
 
   public void setStatus(String status) {

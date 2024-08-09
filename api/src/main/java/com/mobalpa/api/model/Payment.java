@@ -2,6 +2,8 @@ package com.mobalpa.api.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
@@ -19,13 +21,13 @@ public class Payment {
 
     @ManyToOne
     @JoinColumn(name = "user_uuid", nullable = false)
-    @JsonIgnore
     private User user;
 
     @Column(nullable = true)
     private String cardNumber;
 
     @Column(nullable = true)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime expirationDate;
 
     @Column(nullable = true)
@@ -46,5 +48,6 @@ public class Payment {
     }
 
     @Column(nullable = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime createdAt = LocalDateTime.now();
 }

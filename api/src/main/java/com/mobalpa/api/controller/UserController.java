@@ -2,11 +2,14 @@ package com.mobalpa.api.controller;
 
 import com.mobalpa.api.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
-
+import com.mobalpa.api.model.Payment;
 import com.mobalpa.api.model.User;
 import com.mobalpa.api.model.Wishlist;
+import com.mobalpa.api.repository.UserRepository;
 import com.mobalpa.api.dto.WishlistDTO;
 import com.mobalpa.api.service.WishlistService;
+import com.mobalpa.api.dto.PaymentRequestDTO;
+import com.mobalpa.api.repository.PaymentRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -27,13 +30,19 @@ public class UserController {
   @Autowired
   private WishlistService wishlistService;
 
+  @Autowired
+  private UserRepository userRepository;
+
+  @Autowired
+  private PaymentRepository paymentRepository;
+
   @GetMapping("/{uuid}")
   public ResponseEntity<?> getUserByUuid(@PathVariable UUID uuid) {
-    Optional<User> user = Optional.of(userService.getUserByUuid(uuid));
-    if (user.isPresent() && user.get() != null) {
-      return ResponseEntity.ok(user.get());
-    } else {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+    try {
+      User user = userService.getUserByUuid(uuid);
+      return ResponseEntity.ok(user);
+    } catch (RuntimeException e) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
   }
 
@@ -54,6 +63,8 @@ public class UserController {
       return ResponseEntity.ok(updatedUser);
     } catch (IllegalArgumentException e) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    } catch (RuntimeException e) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
   }
 
@@ -125,5 +136,28 @@ public class UserController {
     }
 
     return ResponseEntity.ok(user.getPayments());
+  }
+
+  @PostMapping("/{id}/payments")
+  public ResponseEntity<?> addPaymentToUser(@PathVariable UUID id, @RequestBody PaymentRequestDTO paymentDTO) {
+    Optional<User> userOptional = userRepository.findById(id);
+    if (userOptional.isEmpty()) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+    }
+
+    User user = userOptional.get();
+
+    Payment payment = new Payment();
+    payment.setUser(user);
+    payment.setCardNumber(paymentDTO.getCardNumber());
+    payment.setExpirationDate(paymentDTO.getExpirationDate());
+    payment.setCvv(paymentDTO.getCvv());
+    payment.setCardHolder(paymentDTO.getCardHolder());
+    payment.setPaypalEmail(paymentDTO.getPaypalEmail());
+    payment.setPaymentMethod(paymentDTO.getPaymentMethod());
+
+    Payment savedPayment = paymentRepository.save(payment);
+
+    return ResponseEntity.status(HttpStatus.CREATED).body(savedPayment);
   }
 }

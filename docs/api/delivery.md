@@ -15,7 +15,8 @@ Le microservice de livraison est une composante essentielle de l'architecture mi
 - `POST /api/delivery`: Création d'une nouvelle livraison.
 - `GET /api/delivery/{id}`: Récupération des détails d’une livraison.
 - `PATCH /api/delivery/{id}`: Mise à jour du statut d'une livraison.
-- `GET /api/delivery/prices`: Récupération des tarifs de livraison.
+- `GET /api/delivery/depot`: Récupération des dépôts de livraison.
+- `GET /api/delivery/depot/{depotName}`: Récupération des informations d'un dépôt de livraison.
 - `DELETE /api/delivery/{deliveryNumber}`: Suppression d'une livraison.
 
 ## Exemple d'utilisation
@@ -170,9 +171,9 @@ Content-Type: application/json
 HTTP/1.1 204 No Content
 ```
 
-### Récupération des tarifs de livraison
+### Récupération des dépôts de livraison
 ```http
-GET /api/delivery/prices
+GET /api/delivery/depot
 X-API-KEY: <token>
 Content-Type: application/json
 
@@ -180,19 +181,32 @@ HTTP/1.1 200 OK
 Content-Type: application/json
 
 {
-  "methods": [
-    {
-      "name": "Chronopost",
-      "price": 5.60
-    },
-    {
-      "name": "La Poste",
-      "price": 4.20
-    },
-    {
-      "name": "Mobalpa Centrale",
-      "price": 0.0
-    }
-  ]
+  "Chronopost": {
+    "price": 5.6,
+    "address": "Chronopost Depot, 15 Rue de l'Industrie, 75012 Paris"
+  },
+  "La Poste": {
+    "price": 4.2,
+    "address": "La Poste Depot, 25 Avenue de la République, 75011 Paris"
+  },
+  "Mobalpa Centrale": {
+    "price": 0.0,
+    "address": "Mobalpa Centrale, 10 Rue du Commerce, 69002 Lyon"
+  }
+}
+```
+
+### Récupération des informations d'un dépôt de livraison
+```http
+GET /api/delivery/depot/Chronopost
+X-API-KEY: <token>
+Content-Type: application/json
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "price": 5.6,
+  "address": "Chronopost Depot, 15 Rue de l'Industrie, 75012 Paris"
 }
 ```

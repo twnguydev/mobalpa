@@ -1,4 +1,4 @@
-package com.mobalpa.delivery.dto;
+package com.mobalpa.api.dto.delivery;
 
 import lombok.Data;
 
@@ -7,12 +7,12 @@ import java.util.UUID;
 
 @Data
 public class ParcelItemDTO {
-    private String description;
     private UUID productUuid;
-    private Map<String, String> properties;
+    private String description;
     private Integer quantity;
     private Double value;
     private Double weight;
     private Double width;
     private Double height;
+    private Map<String, String> properties;
 }

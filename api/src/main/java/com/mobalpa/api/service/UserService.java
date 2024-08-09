@@ -4,6 +4,7 @@ import com.mobalpa.api.model.User;
 import com.mobalpa.api.repository.UserRepository;
 import com.mobalpa.api.util.JwtUtil;
 import com.mobalpa.api.model.Role;
+import com.mobalpa.api.model.Payment;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,8 +17,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.context.annotation.Lazy;
 
 import jakarta.mail.MessagingException; 
-import java.io.IOException; 
-
+import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.UUID;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -142,10 +143,6 @@ public class UserService implements UserDetailsService {
             e.printStackTrace();
         }
     }
-    
-    
-    
-
 
     public User resetPassword(String token, String newPassword) {
         User user = userRepository.findByToken(token);
@@ -177,18 +174,13 @@ public class UserService implements UserDetailsService {
                 existingUser.setPhoneNumber(user.getPhoneNumber());
             if (user.getBirthdate() != null)
                 existingUser.setBirthdate(user.getBirthdate());
-            if (user.getToken() != null)
-                existingUser.setToken(user.getToken());
             if (user.getZipcode() != null)
                 existingUser.setZipcode(user.getZipcode());
             if (user.getCity() != null)
                 existingUser.setCity(user.getCity());
             if (user.getAddress() != null)
                 existingUser.setAddress(user.getAddress());
-            if (user.getUpdatedAt() != null)
-                existingUser.setUpdatedAt(user.getUpdatedAt());
-            if (user.getRoles() != null)
-                existingUser.setRoles(user.getRoles());
+            existingUser.setUpdatedAt(LocalDateTime.now());
             return userRepository.save(existingUser);
         }).orElseThrow(() -> new IllegalArgumentException("User with id " + uuid + " not found"));
     }

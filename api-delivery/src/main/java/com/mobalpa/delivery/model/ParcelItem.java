@@ -1,5 +1,6 @@
 package com.mobalpa.delivery.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import jakarta.persistence.*;
@@ -16,7 +17,7 @@ public class ParcelItem {
     private UUID uuid;
 
     private String description;
-    private String productId;
+    private UUID productUuid;
     private Integer quantity;
     private Double value;
     private Double weight;
@@ -31,5 +32,6 @@ public class ParcelItem {
 
     @ManyToOne
     @JoinColumn(name = "parcel_uuid")
+    @JsonBackReference
     private Parcel parcel;
 }

@@ -111,9 +111,15 @@ public class UserTests {
         user.setPhoneNumber("2223334444");
         user.setCreatedAt(LocalDateTime.now());
 
-        List<OrderItem> items = new ArrayList<>();
-        items.add(new OrderItem("item1", 1));
-        items.add(new OrderItem("item2", 2));
+        OrderItem item1 = new OrderItem();
+        item1.setProductUuid(UUID.fromString("item1"));
+        item1.setQuantity(1);
+
+        OrderItem item2 = new OrderItem();
+        item2.setProductUuid(UUID.fromString("item2"));
+        item2.setQuantity(2);
+
+        List<OrderItem> items = List.of(item1, item2);
 
         Order order = new Order();
         order.setUser(user);
@@ -130,13 +136,16 @@ public class UserTests {
 
         DeliveryDTO deliveryDTO = new DeliveryDTO();
         deliveryDTO.setOrderUuid(order.getUuid());
-        deliveryDTO.setAddress("10 rue de la Paix, 75002 Paris, France");
-        deliveryDTO.setDeliveryMethod("Chronopost");
-        deliveryDTO.setStatus("Pending");
+        deliveryDTO.setRecipientAddress("10 rue de la Paix, 75002 Paris, France");
+        deliveryDTO.setShippingMethodCheckoutName("Chronopost");
 
         List<DeliveryDTO> deliveries = List.of(deliveryDTO);
+        List<String> deliveryNumbers = new ArrayList<>();
+        deliveries.forEach(delivery -> {
+            deliveryNumbers.add(delivery.getDeliveryNumber());
+        });
 
-        order.setDeliveries(deliveries);
+        order.setDeliveryNumbers(deliveryNumbers);
 
         user.getOrders().add(order);
         userRepository.save(user);
@@ -146,7 +155,7 @@ public class UserTests {
         assertEquals(1, savedUser.getOrders().size());
         assertEquals("PENDING", savedUser.getOrders().iterator().next().getStatus());
         assertEquals(2, savedUser.getOrders().iterator().next().getItems().size());
-        assertEquals("item1", savedUser.getOrders().iterator().next().getItems().get(0).getProductId());
+        assertEquals("item1", savedUser.getOrders().iterator().next().getItems().get(0).getProductUuid());
         assertEquals(1, savedUser.getOrders().iterator().next().getItems().get(0).getQuantity());
     }
 
