@@ -25,4 +25,10 @@ public class Emailing {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private EmailingType status;
+
+    public enum EmailingType {
+        SENT,
+        FAILED,
+        OPENED
+    }
 }

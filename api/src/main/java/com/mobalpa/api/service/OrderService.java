@@ -7,6 +7,7 @@ import com.mobalpa.api.dto.OrderRequestDTO;
 import com.mobalpa.api.dto.catalogue.ProductDTO;
 import com.mobalpa.api.dto.catalogue.CatalogueImageDTO;
 import com.mobalpa.api.dto.catalogue.ColorDTO;
+import com.mobalpa.api.model.Invoice;
 import com.mobalpa.api.model.Order;
 import com.mobalpa.api.model.User;
 import com.mobalpa.api.model.Payment;
@@ -14,6 +15,14 @@ import com.mobalpa.api.model.OrderItem;
 import com.mobalpa.api.repository.OrderRepository;
 import com.mobalpa.api.repository.PaymentRepository;
 import com.mobalpa.api.repository.UserRepository;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import jakarta.mail.MessagingException;
+import java.io.IOException;
+import java.time.format.DateTimeFormatter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,6 +39,8 @@ import java.util.Map;
 @Service
 public class OrderService {
 
+  Logger logger = LoggerFactory.getLogger(OrderService.class);
+
   @Autowired
   private OrderRepository orderRepository;
 
@@ -38,6 +49,12 @@ public class OrderService {
 
   @Autowired
   private CatalogueService catalogueService;
+
+  @Autowired
+  private EmailService emailService;
+
+  @Autowired
+  private InvoiceService invoiceService;
 
   @Autowired
   private UserRepository userRepository;
@@ -143,20 +160,20 @@ public class OrderService {
   @Transactional
   public ParcelDTO processOrder(OrderRequestDTO orderRequestDTO) {
     User user = userRepository.findById(orderRequestDTO.getUserUuid())
-            .orElseThrow(() -> new RuntimeException("User not found"));
+        .orElseThrow(() -> new RuntimeException("User not found"));
 
     Payment payment = paymentRepository.findById(orderRequestDTO.getPaymentUuid())
-            .orElseThrow(() -> new RuntimeException("Payment not found"));
+        .orElseThrow(() -> new RuntimeException("Payment not found"));
 
     orderRequestDTO.getItems().forEach(itemDTO -> {
-        ProductDTO product = catalogueService.getProductById(itemDTO.getProductUuid());
-        if (product == null) {
-            throw new RuntimeException("Product with UUID " + itemDTO.getProductUuid() + " not found");
-        }
+      ProductDTO product = catalogueService.getProductById(itemDTO.getProductUuid());
+      if (product == null) {
+        throw new RuntimeException("Product with UUID " + itemDTO.getProductUuid() + " not found");
+      }
     });
 
     DepotDTO depot = deliveryService.getDeliveryPrice(orderRequestDTO.getDeliveryMethod())
-            .orElseThrow(() -> new RuntimeException("Delivery method not found"));
+        .orElseThrow(() -> new RuntimeException("Delivery method not found"));
 
     Order order = createOrder(orderRequestDTO);
 
@@ -166,8 +183,10 @@ public class OrderService {
     Order createdOrder = orderRepository.save(order);
 
     if (createdOrder == null) {
-        throw new RuntimeException("Order creation failed");
+      throw new RuntimeException("Order creation failed");
     }
+
+    sendOrderConfirmationEmail(user, createdOrder);
 
     return delivery;
   }
@@ -273,6 +292,35 @@ public class OrderService {
       order.setDeliveryMethod(orderDetails.getDeliveryMethod());
     }
     return orderRepository.save(order);
+  }
+
+  public void sendOrderConfirmationEmail(User user, Order order) {
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+    String formattedIssueDate = order.getCreatedAt().format(formatter);
+    
+    try {
+      Invoice invoice = invoiceService.createInvoice(order, user);
+      byte[] invoicePdf = invoiceService.generateInvoicePdf(invoice);
+      invoiceService.saveInvoicePdfToFile(invoice, invoicePdf);
+
+      emailService.sendHtmlEmail(
+          user.getEmail(),
+          "Confirmation de votre commande - Mobalpa",
+          "orderConfirmationTemplate.html",
+          invoicePdf,
+          "invoice_" + invoice.getInvoiceNumber() + ".pdf",
+          "${user.firstName}", user.getFirstname(),
+          "${orderNumber}", order.getUuid().toString(),
+          "${orderDate}", formattedIssueDate,
+          "${deliveryAddress}", order.getDeliveryAddress(),
+          "${totalAmount}", String.format("%.2f €", order.getTotalTtc()));
+    } catch (MessagingException | IOException e) {
+      logger.error("Failed to send email: ", e);
+      throw new RuntimeException("There was an issue sending the confirmation email. Please try again later.");
+    } catch (Exception e) {
+      logger.error("Unexpected error occurred: ", e);
+      throw new RuntimeException("An unexpected error occurred while processing your request.");
+    }
   }
 
   // public TrackingDTO trackOrder(UUID uuid) {

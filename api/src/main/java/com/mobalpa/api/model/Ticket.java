@@ -49,4 +49,11 @@ public class Ticket {
 
     @Column(columnDefinition = "TEXT", nullable = true)
     private String resolution;
+
+    public enum TicketType {
+        RETURN,
+        PRODUCT,
+        ORDER,
+        HELP
+    }
 }
