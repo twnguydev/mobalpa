@@ -5,6 +5,7 @@ import com.mobalpa.api.model.Newsletter;
 import com.mobalpa.api.repository.EmailingRepository;
 import com.mobalpa.api.repository.NewsletterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -31,12 +32,11 @@ public class EmailService {
     private NewsletterRepository newsletterRepository;
 
     public void sendEmail(Emailing emailing) {
-       
+
     }
 
     public void sendNewsletter(Newsletter newsletter) {
 
-     
     }
 
     public void deleteNewsletter(UUID newsletterId) {
@@ -47,7 +47,8 @@ public class EmailService {
         return emailingRepository.findById(uuid);
     }
 
-    public void sendHtmlEmail(String to, String subject, String templateName, String... replacements) throws MessagingException, IOException {
+    public void sendHtmlEmail(String to, String subject, String templateName, byte[] attachment, String attachmentName,
+            String... replacements) throws MessagingException, IOException {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
@@ -55,6 +56,10 @@ public class EmailService {
         helper.setSubject(subject);
         helper.setText(getEmailContent(templateName, replacements), true);
         helper.setFrom("mobalpa-new-client@outlook.com");
+
+        if (attachment != null && attachmentName != null && !attachmentName.isEmpty()) {
+            helper.addAttachment(attachmentName, new ByteArrayResource(attachment));
+        }
 
         mailSender.send(message);
     }

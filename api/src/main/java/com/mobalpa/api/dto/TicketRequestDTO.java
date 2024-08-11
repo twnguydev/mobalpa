@@ -1,6 +1,6 @@
 package com.mobalpa.api.dto;
 
-import com.mobalpa.api.model.TicketType;
+import com.mobalpa.api.model.Ticket.TicketType;
 
 import lombok.Data;
 

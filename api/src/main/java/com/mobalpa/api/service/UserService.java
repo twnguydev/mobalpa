@@ -96,6 +96,8 @@ public class UserService implements UserDetailsService {
                     user.getEmail(),
                     "Confirmation de l'email",
                     "confirmationEmailTemplate.html",
+                    null,
+                    null,
                     "${user.firstName}", user.getFirstname(),
                     "${confirmationUrl}", confirmationUrl,
                     "${appName}", "Mobalpa");
@@ -139,6 +141,8 @@ public class UserService implements UserDetailsService {
             emailService.sendHtmlEmail(user.getEmail(),
                     "Réinitialisation du mot de passe",
                     "passwordResetTemplate.html",
+                    null,
+                    null,
                     "${resetUrlWithToken}", resetUrlWithToken,
                     "${appName}", "Mobalpa");
         } catch (MessagingException | IOException e) {
