@@ -4,7 +4,12 @@ import { LandingPageComponent } from './pages/landing-page/landing-page.componen
 import { CartPageComponent } from './pages/cart_page/cart-page.component';
 import { Wishlist_PageComponent } from './pages/wishlist-page/wishlist-page.component';
 import { SupportPageComponent } from './pages/support-page/support-page.component';
-
+import { HomeComponent } from './components/home-components/home.component';
+import { LoginComponent } from './components/login-components/login.component';
+import { RegisterComponent } from './components/register-components/register.component';
+import { CategoryComponent } from '@components/category-components/category.component';
+import { ProductComponent } from './components/product-components/product.component';
+import { ProfileComponent } from '@components/profile-components/profile.component';
 export const routes: Routes = [
     {
         path: '',
@@ -15,18 +20,24 @@ export const routes: Routes = [
         component: CartPageComponent,
     },
 
-     {
+    {
         path: 'liste-de-souhaits',
-         component: Wishlist_PageComponent,
-     },
+        component: Wishlist_PageComponent,
+    },
 
     {
         path: 'support',
         component: SupportPageComponent,
-    }
+    },
+    { path: 'info', component: HomeComponent },
+    { path: 'login', component: LoginComponent },
+    { path: 'register', component: RegisterComponent },
+    { path: 'category', component: CategoryComponent },
+    { path: 'product', component: ProductComponent },
+    { path: 'profile', component: ProfileComponent },
 ];
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule]
 })
 export class AppRoutingModule { }

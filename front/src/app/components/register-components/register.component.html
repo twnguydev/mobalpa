@@ -1,0 +1,104 @@
+<div class="h-screen flex justify-center">
+  <div class="h-screen -ml-80 w-96 z-10 bg-emerald-green"></div>
+  <div class="absolute z-20 mt-11">
+    <div class="ml-12">
+      <p class="mb-6 text-5xl font-bold text-white">Inscription</p>
+      <div class="w-98 bg-white shadow-custom-dark h-98 rounded-3xl p-2 pl-12 pt-5">
+        <div *ngIf="successMessage" class="text-green-600 font-bold mb-4">
+          {{ successMessage }}
+        </div>
+
+        <div *ngIf="errorMessage" class="text-red-600 font-bold mb-4">
+          {{ errorMessage }}
+        </div>
+
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" method="post" action="#">
+          <div class="flex mb-2">
+            <div class="w-64 mr-12">
+              <p class="mb-2 text-xl font-bold text-mobalpa-green">Nom</p>
+              <input type="text" id="lastname" formControlName="lastname"
+                [ngClass]="{'bg-red-600': form.get('lastname')?.invalid && form.get('lastname')?.touched}"
+                class="bg-emerald-green pl-2 bg-opacity-30 rounded-xl h-12 w-64 mb-1" />
+              <span *ngIf="form.get('lastname')?.invalid && form.get('lastname')?.touched">
+                <span class="text-red-600" *ngIf="form.get('lastname')?.errors?.['required']">Veuillez entrer votre nom</span>
+              </span>
+
+              <p class="mb-2 text-xl font-bold text-mobalpa-green">Prénom</p>
+              <input type="text" id="firstname" formControlName="firstname"
+                [ngClass]="{'bg-red-600': form.get('firstname')?.invalid && form.get('firstname')?.touched}"
+                class="bg-emerald-green pl-2 bg-opacity-30 rounded-xl h-12 w-64 mb-1" />
+              <span *ngIf="form.get('firstname')?.invalid && form.get('firstname')?.touched">
+                <span class="text-red-600" *ngIf="form.get('firstname')?.errors?.['required']">Veuillez entrer votre prénom</span>
+              </span>
+
+              <p class="mb-2 text-xl font-bold text-mobalpa-green">E-mail</p>
+              <input type="email" id="email" formControlName="email"
+                [ngClass]="{'bg-red-600': form.get('email')?.invalid && form.get('email')?.touched}"
+                class="bg-emerald-green pl-2 bg-opacity-30 rounded-xl h-12 w-64 mb-1" />
+              <span *ngIf="form.get('email')?.invalid && form.get('email')?.touched">
+                <span class="text-red-600" *ngIf="form.get('email')?.errors?.['required']">Veuillez entrer un email</span>
+                <span class="text-red-600" *ngIf="form.get('email')?.errors?.['email']">Format d'email incorrect</span>
+              </span>
+
+              <p class="mb-2 text-xl font-bold text-mobalpa-green">Numéro de téléphone</p>
+              <input type="tel" id="tel" formControlName="phoneNumber"
+                [ngClass]="{'bg-red-600': form.get('phoneNumber')?.invalid && form.get('phoneNumber')?.touched}"
+                class="bg-emerald-green pl-2 bg-opacity-30 rounded-xl h-12 w-64 mb-1" />
+              <span *ngIf="form.get('phoneNumber')?.invalid && form.get('phoneNumber')?.touched">
+                <span class="text-red-600" *ngIf="form.get('phoneNumber')?.errors?.['required']">Veuillez entrer votre numéro</span>
+                <span class="text-red-600" *ngIf="form.get('phoneNumber')?.errors?.['pattern']">Le format du numéro est incorrect</span>
+              </span>
+            </div>
+
+            <div class="w-64 mr-12">
+              <p class="mb-2 text-xl font-bold text-mobalpa-green">Date de naissance</p>
+              <input type="date" id="date" formControlName="birthdate"
+                [ngClass]="{'bg-red-600': form.get('birthdate')?.invalid && form.get('birthdate')?.touched}"
+                class="bg-emerald-green p-4 bg-opacity-30 rounded-xl h-12 w-64 mb-1" />
+              <span class="text-red-600" *ngIf="form.get('birthdate')?.invalid && form.get('birthdate')?.touched">
+                <span *ngIf="form.get('birthdate')?.errors?.['required']">Veuillez entrer votre date de naissance</span>
+              </span>
+
+              <p class="mb-2 text-xl font-bold text-mobalpa-green">Mot de passe</p>
+              <input type="password" id="password" formControlName="password"
+                [ngClass]="{'bg-red-600': form.get('password')?.invalid && form.get('password')?.touched}"
+                class="bg-emerald-green pl-2 bg-opacity-30 rounded-xl h-12 w-64 mb-1" />
+              <span *ngIf="form.get('password')?.invalid && form.get('password')?.touched">
+                <span class="text-red-600" *ngIf="form.get('password')?.errors?.['required']">Veuillez entrer un mot de passe</span>
+                <span class="text-red-600" *ngIf="form.get('password')?.errors?.['minlength']">Minimum 6 caractères</span>
+              </span>
+
+              <p class="mb-2 text-xl font-bold text-mobalpa-green">Confirmer mot de passe</p>
+              <input type="password" id="confirmPassword" formControlName="confirmPassword"
+                [ngClass]="{'bg-red-600': form.get('confirmPassword')?.invalid && form.get('confirmPassword')?.touched}"
+                class="bg-emerald-green pl-2 bg-opacity-30 rounded-xl h-12 w-64 mb-1" />
+              <span *ngIf="form.get('confirmPassword')?.invalid && form.get('confirmPassword')?.touched">
+                <span class="text-red-600" *ngIf="form.get('confirmPassword')?.errors?.['required']">Veuillez confirmer le mot de passe</span>
+                <span class="text-red-600" *ngIf="form.get('confirmPassword')?.errors?.['minlength']">Minimum 6 caractères</span>
+                <span class="text-red-600" *ngIf="form.get('confirmPassword')?.errors?.['passwordMismatch']">Les mots de passe ne correspondent pas</span>
+              </span>
+
+              <p class="mb-2 text-l underline font-bold text-mobalpa-green">Conditions et politiques du site</p>
+              <input type="checkbox" id="site" formControlName="terms" />
+              <label for="site" class="text-xs"> * J'accepte les Conditions Générales de Vente et d'Utilisation</label>
+              <br>
+              <span class="text-red-600 text-xs" *ngIf="form.get('terms')?.invalid && (form.get('terms')?.touched || formSubmitted)">
+                Veuillez accepter les conditions générales.
+                <br>
+              </span>
+
+              <input type="checkbox" id="communications" formControlName="communications" />
+              <label for="communications" class="text-xs">J'accepte de recevoir les communications de Mobalpa par e-mail</label>
+            </div>
+          </div>
+          <button type="submit" class="bg-emerald-green ml-full px-7 py-2 rounded-xl font-bold text-white text-xl mb-12 hover:bg-mobalpa-green">
+            S'inscrire
+          </button>
+        </form>
+      </div>
+      <a href="/login" class="text-l hover:underline font-normal text-white">
+        <p class="mt-3">Vous avez déjà un compte? Connectez-vous!</p>
+      </a>
+    </div>
+  </div>
+</div>

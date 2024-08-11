@@ -57,7 +57,7 @@ L'utilisation de MongoDB nous permet de répondre aux exigences de flexibilité,
 #### Aiguillage en magasin
 ```http
 GET /api/catalogue/store/12345
-Authorization: Bearer <token>
+X-API-KEY: <token>
 Content-Type: application/json
 
 HTTP/1.1 200 OK
@@ -92,7 +92,7 @@ Content-Type: application/json
 #### Récupération des meilleures ventes
 ```http
 GET /api/catalogue/best-sellers
-Authorization: Bearer <token>
+X-API-KEY: <token>
 Content-Type: application/json
 
 HTTP/1.1 200 OK
@@ -138,7 +138,7 @@ Content-Type: application/json
 #### Ajout d'un nouveau produit
 ```http
 POST /api/catalogue/products
-Authorization: Bearer <token>
+X-API-KEY: <token>
 Content-Type: application/json
 
 {
@@ -193,7 +193,7 @@ Content-Type: application/json
 #### Mise à jour d'un produit
 ```http
 PATCH /api/catalogue/products/a2b3c4d5-e6f7-8901-2345-67890abcdef
-Authorization: Bearer <token>
+X-API-KEY: <token>
 Content-Type: application/json
 
 {
@@ -240,7 +240,7 @@ Content-Type: application/json
 #### Suppression d'un produit
 ```http
 DELETE /api/catalogue/products/a2b3c4d5-e6f7-8901-2345-67890abcdef
-Authorization: Bearer <token>
+X-API-KEY: <token>
 Content-Type: application/json
 
 HTTP/1.1 204 No Content
@@ -249,7 +249,7 @@ HTTP/1.1 204 No Content
 #### Récupération des produits
 ```http
 GET /api/catalogue/products
-Authorization: Bearer <token>
+X-API-KEY: <token>
 Content-Type: application/json
 
 HTTP/1.1 200 OK
@@ -293,7 +293,7 @@ Content-Type: application/json
 #### Récupération des produits d'une sous-catégorie
 ```http
 GET /api/catalogue/products/sub/d4e6f8a6-8e2b-4d1e-b55c-1f8e9d5c8b16
-Authorization: Bearer <token>
+X-API-KEY: <token>
 Content-Type: application/json
 
 HTTP/1.1 200 OK
@@ -339,7 +339,7 @@ Content-Type: application/json
 #### Récupération des catégories
 ```http
 GET /api/catalogue/categories
-Authorization: Bearer <token>
+X-API-KEY: <token>
 Content-Type: application/json
 
 HTTP/1.1 200 OK
@@ -357,7 +357,7 @@ Content-Type: application/json
 #### Ajout d'une catégorie
 ```http
 POST /api/catalogue/categories
-Authorization: Bearer <token>
+X-API-KEY: <token>
 Content-Type: application/json
 
 {
@@ -378,7 +378,7 @@ Content-Type: application/json
 #### Récupération d'une catégorie
 ```http
 GET /api/catalogue/categories/d4e6f8a6-8e2b-4d1e-b55c-1f8e9d5c8b16
-Authorization: Bearer <token>
+X-API-KEY: <token>
 Content-Type: application/json
 
 HTTP/1.1 200 OK
@@ -394,7 +394,7 @@ Content-Type: application/json
 #### Récupération des sous-catégories d'une catégorie
 ```http
 GET /api/catalogue/categories/sub
-Authorization: Bearer <token>
+X-API-KEY: <token>
 Content-Type: application/json
 
 HTTP/1.1 200 OK
@@ -416,7 +416,7 @@ Content-Type: application/json
 #### Mise à jour d'une catégorie
 ```http
 PATCH /api/catalogue/categories/d4e6f8a6-8e2b-4d1e-b55c-1f8e9d5c8b16
-Authorization: Bearer <token>
+X-API-KEY: <token>
 Content-Type: application/json
 
 {
@@ -437,7 +437,7 @@ Content-Type: application/json
 #### Suppression d'une catégorie
 ```http
 DELETE /api/catalogue/categories/d4e6f8a6-8e2b-4d1e-b55c-1f8e9d5c8b16
-Authorization: Bearer <token>
+X-API-KEY: <token>
 Content-Type: application/json
 
 HTTP/1.1 204 No Content
@@ -448,7 +448,7 @@ HTTP/1.1 204 No Content
 #### Ajout d'une sous-catégorie
 ```http
 POST /api/catalogue/subcategories
-Authorization: Bearer <token>
+X-API-KEY: <token>
 Content-Type: application/json
 
 {
@@ -474,7 +474,7 @@ Content-Type: application/json
 #### Récupération d'une sous-catégorie
 ```http
 GET /api/catalogue/subcategories/e6b7c8d9-01f2-3456-7890-a1b2c3d4e5f6
-Authorization: Bearer <token>
+X-API-KEY: <token>
 Content-Type: application/json
 
 HTTP/1.1 200 OK
@@ -494,7 +494,7 @@ Content-Type: application/json
 #### Mise à jour d'une sous-catégorie
 ```http
 PATCH /api/catalogue/subcategories/e6b7c8d9-01f2-3456-7890-a1b2c3d4e5f6
-Authorization: Bearer <token>
+X-API-KEY: <token>
 Content-Type: application/json
 
 {
@@ -519,7 +519,7 @@ Content-Type: application/json
 #### Suppression d'une sous-catégorie
 ```http
 DELETE /api/catalogue/subcategories/e6b7c8d9-01f2-3456-7890-a1b2c3d4e5f6
-Authorization: Bearer <token>
+X-API-KEY: <token>
 Content-Type: application/json
 
 HTTP/1.1 204 No Content

@@ -2,16 +2,16 @@ package com.mobalpa.api.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import com.mobalpa.api.repository.OrderRepository;
-import com.mobalpa.api.repository.PaymentRepository;
 import com.mobalpa.api.repository.RoleRepository;
 import com.mobalpa.api.repository.UserRepository;
 
@@ -23,12 +23,6 @@ public class UserTests {
 
     @Autowired
     private RoleRepository roleRepository;
-
-    @Autowired
-    private PaymentRepository paymentRepository;
-
-    @Autowired
-    private OrderRepository orderRepository;
 
     @Test
     public void testCreateUser() {
@@ -131,5 +125,44 @@ public class UserTests {
         assertNotNull(savedUser);
         assertEquals(1, savedUser.getOrders().size());
         assertEquals("PENDING", savedUser.getOrders().iterator().next().getStatus());
+    }
+
+    @Test
+    public void testUpdateUser() {
+        User user = new User();
+        user.setFirstname("Charlie");
+        user.setLastname("Davis");
+        user.setEmail("charlie.davis@example.com");
+        user.setPassword("password");
+        user.setPhoneNumber("3334445555");
+        user.setCreatedAt(LocalDateTime.now());
+        userRepository.save(user);
+
+        user.setPassword("newpassword");
+        user.setPhoneNumber("4445556666");
+        userRepository.save(user);
+
+        User savedUser = userRepository.findById(user.getUuid()).orElse(null);
+        assertNotNull(savedUser);
+        assertEquals("newpassword", savedUser.getPassword());
+        assertEquals("4445556666", savedUser.getPhoneNumber());
+    }
+
+    @Test
+    public void testDeleteUser() {
+        User user = new User();
+        user.setFirstname("David");
+        user.setLastname("Evans");
+        user.setEmail("david.evans@example.com");
+        user.setPassword("password");
+        user.setPhoneNumber("5556667777");
+        user.setCreatedAt(LocalDateTime.now());
+        userRepository.save(user);
+
+        UUID userId = user.getUuid();
+        userRepository.deleteById(userId);
+
+        User savedUser = userRepository.findById(userId).orElse(null);
+        assertNull(savedUser);
     }
 }

@@ -10,6 +10,6 @@ import java.util.UUID;
 public class Color {
 
     @Id
-    private UUID uuid;
+    private UUID uuid = UUID.randomUUID();
     private String name;
 }

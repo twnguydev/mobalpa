@@ -23,6 +23,7 @@ Le microservice de livraison est une composante essentielle de l'architecture mi
 ### Création d'une nouvelle livraison
 ```http
 POST /api/deliveries
+X-API-KEY: <token>
 Content-Type: application/json
 
 {
@@ -48,6 +49,7 @@ Content-Type: application/json
 ### Récupération des détails d'une livraison
 ```http
 GET /api/deliveries/67890
+X-API-KEY: <token>
 Content-Type: application/json
 
 HTTP/1.1 200 OK
@@ -67,6 +69,7 @@ Content-Type: application/json
 ### Mise à jour du statut d'une livraison
 ```http
 PATCH /api/deliveries/67890
+X-API-KEY: <token>
 Content-Type: application/json
 
 {
@@ -90,6 +93,7 @@ Content-Type: application/json
 ### Suivi d'une livraison
 ```http
 GET /api/deliveries/67890/track
+X-API-KEY: <token>
 Content-Type: application/json
 
 HTTP/1.1 200 OK
@@ -122,7 +126,7 @@ Content-Type: application/json
 ### Récupération des tarifs de livraison
 ```http
 GET /api/deliveries/prices
-Authorization: Bearer <token>
+X-API-KEY: <token>
 Content-Type: application/json
 
 HTTP/1.1 200 OK

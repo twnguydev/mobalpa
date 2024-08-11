@@ -1,6 +1,5 @@
 package com.mobalpa.api.model;
 
-import com.mobalpa.api.repository.PaymentRepository;
 import com.mobalpa.api.repository.UserRepository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

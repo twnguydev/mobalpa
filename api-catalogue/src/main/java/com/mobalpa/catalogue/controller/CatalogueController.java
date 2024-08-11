@@ -1,5 +1,6 @@
 package com.mobalpa.catalogue.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,8 +21,23 @@ public class CatalogueController {
   private CatalogueService catalogueService;
 
   @GetMapping("/store/{storeId}")
-  public ResponseEntity<Optional<Store>> getProductsByStoreId(@PathVariable UUID storeId) {
-    return ResponseEntity.ok(catalogueService.getStoreById(storeId));
+  public ResponseEntity<?> getProductsByStoreId(@PathVariable UUID storeId) {
+    Optional<Store> store = catalogueService.getStoreById(storeId);
+    if (store.isPresent() && store.get() != null) {
+      return ResponseEntity.ok(store.get().getProducts());
+    } else {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Store not found");
+    }
+  }
+
+  @PostMapping("/store")
+  public ResponseEntity<?> createStore(@RequestBody Store store) {
+    try {
+      Store createdStore = catalogueService.createStore(store);
+      return ResponseEntity.status(HttpStatus.CREATED).body(createdStore);
+    } catch (IllegalArgumentException e) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
   }
 
   @GetMapping("/best-sellers")
