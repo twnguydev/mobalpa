@@ -7,19 +7,23 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.mobalpa.api.dto.OrderRequestDTO;
+import com.mobalpa.api.repository.PaymentRepository;
 import com.mobalpa.api.repository.RoleRepository;
 import com.mobalpa.api.repository.UserRepository;
-
-import com.mobalpa.api.dto.delivery.DeliveryDTO;
+import com.mobalpa.api.service.OrderService;
 
 @DataJpaTest
+@ExtendWith(MockitoExtension.class)
 public class UserTests {
 
     @Autowired
@@ -27,6 +31,12 @@ public class UserTests {
 
     @Autowired
     private RoleRepository roleRepository;
+
+    @Mock
+    private OrderService orderService;
+
+    @Autowired
+    private PaymentRepository paymentRepository;
 
     @Test
     public void testCreateUser() {
@@ -103,6 +113,7 @@ public class UserTests {
 
     @Test
     public void testUserOrders() {
+        // Création du User
         User user = new User();
         user.setFirstname("Bob");
         user.setLastname("Brown");
@@ -110,55 +121,49 @@ public class UserTests {
         user.setPassword("password");
         user.setPhoneNumber("2223334444");
         user.setCreatedAt(LocalDateTime.now());
+        userRepository.save(user);
 
+        // Création du Payment
+        Payment payment = new Payment();
+        payment.setCardNumber("1234567890123456");
+        payment.setExpirationDate(LocalDateTime.now().plusYears(1));
+        payment.setCvv("123");
+        payment.setCardHolder("Bob Brown");
+        payment.setPaymentMethod(Payment.PaymentMethod.CREDIT_CARD);
+        payment.setUser(user);
+        paymentRepository.save(payment);
+
+        // Création des OrderItems
         OrderItem item1 = new OrderItem();
-        UUID item1Uuid = UUID.randomUUID();
-        item1.setProductUuid(item1Uuid);
+        item1.setProductUuid(UUID.randomUUID());
         item1.setQuantity(1);
 
         OrderItem item2 = new OrderItem();
-        UUID item2Uuid = UUID.randomUUID();
-        item2.setProductUuid(item2Uuid);
+        item2.setProductUuid(UUID.randomUUID());
         item2.setQuantity(2);
 
         List<OrderItem> items = List.of(item1, item2);
 
-        Order order = new Order();
-        order.setUser(user);
-        order.setDeliveryAddress("456 Elm St");
-        order.setReduction(0.0);
-        order.setTotalHt(100.0);
-        order.setDeliveryFees(10.0);
-        order.setDeliveryMethod("UPS");
-        order.setVat(20.0);
-        order.setTotalTtc(130.0);
-        order.setStatus("PENDING");
-        order.setCreatedAt(LocalDateTime.now());
-        order.setItems(items);
+        // Création de l'OrderRequestDTO
+        OrderRequestDTO orderRequestDTO = new OrderRequestDTO();
+        orderRequestDTO.setUserUuid(user.getUuid());
+        orderRequestDTO.setPaymentUuid(payment.getUuid());
+        orderRequestDTO.setItems(items);
+        orderRequestDTO.setTotalHt(100.0);
+        orderRequestDTO.setDeliveryMethod("UPS");
+        orderRequestDTO.setDeliveryAddress("456 Elm St");
 
-        DeliveryDTO deliveryDTO = new DeliveryDTO();
-        deliveryDTO.setOrderUuid(order.getUuid());
-        deliveryDTO.setRecipientAddress("10 rue de la Paix, 75002 Paris, France");
-        deliveryDTO.setShippingMethodCheckoutName("Chronopost");
+        // Appel de la méthode createOrder pour créer la commande
+        Order order = orderService.createOrder(orderRequestDTO);
 
-        List<DeliveryDTO> deliveries = List.of(deliveryDTO);
-        List<String> deliveryNumbers = new ArrayList<>();
-        deliveries.forEach(delivery -> {
-            deliveryNumbers.add(delivery.getDeliveryNumber());
-        });
-
-        order.setDeliveryNumbers(deliveryNumbers);
-
-        user.getOrders().add(order);
-        userRepository.save(user);
-
-        User savedUser = userRepository.findById(user.getUuid()).orElse(null);
-        assertNotNull(savedUser);
-        assertEquals(1, savedUser.getOrders().size());
-        assertEquals("PENDING", savedUser.getOrders().iterator().next().getStatus());
-        assertEquals(2, savedUser.getOrders().iterator().next().getItems().size());
-        assertEquals(item1Uuid, savedUser.getOrders().iterator().next().getItems().get(0).getProductUuid());
-        assertEquals(1, savedUser.getOrders().iterator().next().getItems().get(0).getQuantity());
+        // Vérification des résultats
+        assertNotNull(order);
+        assertEquals(user, order.getUser());
+        assertEquals("PENDING", order.getStatus());
+        assertEquals(2, order.getItems().size());
+        assertEquals(100.0, order.getTotalHt());
+        assertEquals(1, order.getItems().get(0).getQuantity());
+        assertEquals(2, order.getItems().get(1).getQuantity());
     }
 
     @Test
