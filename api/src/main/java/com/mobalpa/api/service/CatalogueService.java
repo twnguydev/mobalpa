@@ -3,7 +3,7 @@ package com.mobalpa.api.service;
 import com.mobalpa.api.dto.catalogue.CategoryDTO;
 import com.mobalpa.api.dto.catalogue.ProductDTO;
 import com.mobalpa.api.dto.catalogue.SubcategoryDTO;
-import com.mobalpa.catalogue.filter.ProductFilter;
+import com.mobalpa.api.filter.ProductFilter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

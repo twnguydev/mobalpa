@@ -1,14 +1,16 @@
 package com.mobalpa.api.controller;
 
-import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import com.mobalpa.api.service.CatalogueService;
-import com.mobalpa.catalogue.filter.ProductFilter;
+import com.mobalpa.api.filter.ProductFilter;
+import com.mobalpa.api.dto.catalogue.ProductDTO;
+
+import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/catalogue")

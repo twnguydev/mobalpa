@@ -1,4 +1,4 @@
-package com.mobalpa.catalogue.filter;
+package com.mobalpa.api.filter;
 
 public class ProductFilter {
     private Double maxPrice;
