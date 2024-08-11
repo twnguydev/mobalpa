@@ -20,6 +20,7 @@ import com.mobalpa.api.dto.OrderRequestDTO;
 import com.mobalpa.api.repository.PaymentRepository;
 import com.mobalpa.api.repository.RoleRepository;
 import com.mobalpa.api.repository.UserRepository;
+import com.mobalpa.api.repository.OrderRepository;
 import com.mobalpa.api.service.OrderService;
 
 @DataJpaTest
@@ -37,6 +38,9 @@ public class UserTests {
 
     @Autowired
     private PaymentRepository paymentRepository;
+
+    @Autowired
+    private OrderRepository orderRepository;
 
     @Test
     public void testCreateUser() {
@@ -113,7 +117,6 @@ public class UserTests {
 
     @Test
     public void testUserOrders() {
-        // Création du User
         User user = new User();
         user.setFirstname("Bob");
         user.setLastname("Brown");
@@ -121,51 +124,57 @@ public class UserTests {
         user.setPassword("password");
         user.setPhoneNumber("2223334444");
         user.setCreatedAt(LocalDateTime.now());
-        userRepository.save(user);
-
-        // Création du Payment
+        userRepository.saveAndFlush(user);
+    
         Payment payment = new Payment();
-        payment.setCardNumber("1234567890123456");
+        payment.setCardNumber("2345678901234567");
         payment.setExpirationDate(LocalDateTime.now().plusYears(1));
-        payment.setCvv("123");
+        payment.setCvv("234");
         payment.setCardHolder("Bob Brown");
         payment.setPaymentMethod(Payment.PaymentMethod.CREDIT_CARD);
         payment.setUser(user);
-        paymentRepository.save(payment);
+        paymentRepository.saveAndFlush(payment);
+    
+        Order order = new Order();
+        order.setUser(user);
+        order.setPayment(payment);
+        order.setDeliveryAddress("456 Elm St");
+        order.setReduction(0.0);
+        order.setTotalHt(100.0);
+        order.setDeliveryFees(10.0);
+        order.setDeliveryMethod("UPS");
+        order.setVat(20.0);
+        order.setTotalTtc(130.0);
+        order.setStatus("PENDING");
+        order.setCreatedAt(LocalDateTime.now());
 
-        // Création des OrderItems
         OrderItem item1 = new OrderItem();
         item1.setProductUuid(UUID.randomUUID());
         item1.setQuantity(1);
-
+        item1.setOrder(order);
+    
         OrderItem item2 = new OrderItem();
         item2.setProductUuid(UUID.randomUUID());
         item2.setQuantity(2);
-
+        item2.setOrder(order);
+    
         List<OrderItem> items = List.of(item1, item2);
+        order.setItems(items);
 
-        // Création de l'OrderRequestDTO
-        OrderRequestDTO orderRequestDTO = new OrderRequestDTO();
-        orderRequestDTO.setUserUuid(user.getUuid());
-        orderRequestDTO.setPaymentUuid(payment.getUuid());
-        orderRequestDTO.setItems(items);
-        orderRequestDTO.setTotalHt(100.0);
-        orderRequestDTO.setDeliveryMethod("UPS");
-        orderRequestDTO.setDeliveryAddress("456 Elm St");
+        user.getOrders().add(order);
+        userRepository.saveAndFlush(user);
 
-        // Appel de la méthode createOrder pour créer la commande
-        Order order = orderService.createOrder(orderRequestDTO);
-
-        // Vérification des résultats
-        assertNotNull(order);
-        assertEquals(user, order.getUser());
-        assertEquals("PENDING", order.getStatus());
-        assertEquals(2, order.getItems().size());
-        assertEquals(100.0, order.getTotalHt());
-        assertEquals(1, order.getItems().get(0).getQuantity());
-        assertEquals(2, order.getItems().get(1).getQuantity());
-    }
-
+        User savedUser = userRepository.findById(user.getUuid()).orElse(null);
+        assertNotNull(savedUser, "User should not be null after saving");
+    
+        assertNotNull(savedUser.getOrders(), "Orders should not be null");
+        assertEquals(1, savedUser.getOrders().size(), "User should have one order");
+        assertEquals("PENDING", savedUser.getOrders().iterator().next().getStatus(), "Order status should be PENDING");
+        assertEquals(2, savedUser.getOrders().iterator().next().getItems().size(), "Order should have two items");
+        assertEquals(item1.getProductUuid(), savedUser.getOrders().iterator().next().getItems().get(0).getProductUuid(), "First item UUID should match");
+        assertEquals(1, savedUser.getOrders().iterator().next().getItems().get(0).getQuantity(), "First item quantity should be 1");
+    }       
+      
     @Test
     public void testUpdateUser() {
         User user = new User();

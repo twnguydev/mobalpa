@@ -22,10 +22,12 @@ public class Order {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private UUID uuid = UUID.randomUUID();
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne
   @JoinColumn(name = "user_uuid", nullable = false)
-  @JsonIgnore
   private User user;
+
+  @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<OrderItem> items = new ArrayList<>();
 
   @Column(nullable = true)
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
@@ -54,9 +56,6 @@ public class Order {
 
   @Column(nullable = false)
   private String status = "PENDING";
-
-  @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-  private List<OrderItem> items = new ArrayList<>();
 
   @ElementCollection
   @CollectionTable(name = "order_deliveries", joinColumns = @JoinColumn(name = "order_uuid"))

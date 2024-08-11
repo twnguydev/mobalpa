@@ -14,11 +14,13 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -89,9 +91,9 @@ public class User implements UserDetails {
     @JsonIgnore
     private Set<Payment> payments = new HashSet<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    private Set<Order> orders = new HashSet<>();
+    private List<Order> orders = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnore
