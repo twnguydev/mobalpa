@@ -1,0 +1,504 @@
+[33mcommit a1a0db57ff8122ea2b22fb707710093e34dbee76[m[33m ([m[1;36mHEAD -> [m[1;32mcategory_page[m[33m, [m[1;31morigin/category_page[m[33m)[m
+Author: jyhgyh <rinat.hirfanov@epitech.eu>
+Date:   Tue Aug 6 11:11:34 2024 +0300
+
+    fix: rout for category
+
+[33mcommit 35a682d5adcf113f8b46a2ed4e604b6a4fc81f53[m
+Author: jyhgyh <rinat.hirfanov@epitech.eu>
+Date:   Mon Aug 5 18:12:00 2024 +0300
+
+    feat: category page start
+
+[33mcommit d978ad95efb802808b3e79f04d4ccefcfe3a476e[m[33m ([m[1;31morigin/Auth[m[33m, [m[1;32mgcategory[m[33m, [m[1;32mcategory[m[33m, [m[1;32mAuth[m[33m)[m
+Author: jyhgyh <rinat.hirfanov@epitech.eu>
+Date:   Mon Aug 5 01:32:14 2024 +0300
+
+    fead: login page connected to back
+
+[33mcommit cac6d1db984cb42e340574e713741caff45ded6e[m
+Author: NathanMatounga <nathan.matounga@epitech.eu>
+Date:   Fri Aug 2 16:00:41 2024 +0200
+
+    fix: register liason back/front
+
+[33mcommit a8f7646566707d272f7079d39bc27ae7374f5f76[m
+Author: Tanguy Gibrat <gibratanguy@icloud.com>
+Date:   Thu Aug 1 16:59:47 2024 +0200
+
+    test(api): fix email link & user roles
+    Co-authored-by: RomainEpitech <romain.farinacci@hotmail.com>
+
+[33mcommit dd7ad9d415409979be0eeeb3e9abf530275e85db[m
+Author: Tanguy Gibrat <gibratanguy@icloud.com>
+Date:   Thu Aug 1 16:50:03 2024 +0200
+
+    test(api): fix email link & user roles
+    Co-authored-by: RomainEpitech <romain.farinacci@hotmail.com>
+
+[33mcommit ea84faf2173db6bc6e69522e7488d24b1159dfb7[m
+Author: Tanguy Gibrat <gibratanguy@icloud.com>
+Date:   Thu Aug 1 16:06:30 2024 +0200
+
+    test(api): fix authentication manager
+    Co-authored-by: RomainEpitech <romain.farinacci@hotmail.com>
+
+[33mcommit 31988e27573efdb13dd08556f3e35d35b2ea7c9a[m
+Author: Tanguy Gibrat <gibratanguy@icloud.com>
+Date:   Thu Aug 1 15:34:52 2024 +0200
+
+    test(api): fix Auth & Email tests
+
+[33mcommit 32aef01df35c1037e88a47dc428108787c7e56a7[m
+Author: Tanguy Gibrat <gibratanguy@icloud.com>
+Date:   Thu Aug 1 15:12:03 2024 +0200
+
+    test(api): fix controllers & services for user & wishlist
+
+[33mcommit 5236ca82a36b0ff10c251db71dcca971d64d61bc[m
+Author: Tanguy Gibrat <gibratanguy@icloud.com>
+Date:   Thu Aug 1 11:25:30 2024 +0200
+
+    fix(api): folder controller
+
+[33mcommit 3921c6f128ede647c053122f1a898333af02fb31[m
+Merge: f2d2633 81a7b0e
+Author: twnguydev <154362306+twnguydev@users.noreply.github.com>
+Date:   Thu Aug 1 10:09:18 2024 +0200
+
+    Merge pull request #48 from twnguydev/Auth
+    
+    Auth
+
+[33mcommit 81a7b0eec70d0e76b2316e84d287c100c3f07e4f[m
+Merge: 6445300 f2d2633
+Author: twnguydev <154362306+twnguydev@users.noreply.github.com>
+Date:   Thu Aug 1 10:09:07 2024 +0200
+
+    Merge branch 'test' into Auth
+
+[33mcommit f2d26339a5e86fe94a0648b33ca50ba2ed59c6e1[m
+Merge: 98f57b4 8788a87
+Author: twnguydev <154362306+twnguydev@users.noreply.github.com>
+Date:   Thu Aug 1 10:02:09 2024 +0200
+
+    Merge pull request #47 from twnguydev/back_user
+    
+    test: test
+
+[33mcommit 8788a871070928e9c2fe8a054ffbf2916c48b1c7[m[33m ([m[1;31morigin/back_user[m[33m)[m
+Author: Tanguy Gibrat <gibratanguy@icloud.com>
+Date:   Thu Aug 1 10:01:00 2024 +0200
+
+    test: test
+    Co-authored-by: RomainEpitech <romain.farinacci@hotmail.com>
+
+[33mcommit 98f57b42c0a96e3dc90db9bbe909ae2f47f6bed4[m
+Merge: b870d06 3bb495d
+Author: twnguydev <154362306+twnguydev@users.noreply.github.com>
+Date:   Thu Aug 1 10:00:39 2024 +0200
+
+    Merge pull request #46 from twnguydev/back_user
+    
+    Back user
+
+[33mcommit 3bb495df9180c75e532ac6e0e62fb2fdc4465527[m
+Author: Tanguy Gibrat <gibratanguy@icloud.com>
+Date:   Thu Aug 1 09:59:00 2024 +0200
+
+    test: test
+    Co-authored-by: RomainEpitech <romain.farinacci@hotmail.com>
+
+[33mcommit 96d0ae67b937086847c7471a79fa67a3d7bd2f85[m
+Merge: df18512 98324f8
+Author: Tanguy Gibrat <gibratanguy@icloud.com>
+Date:   Thu Aug 1 09:54:20 2024 +0200
+
+    Merge branch 'back_user' of github.com-twnguydev:twnguydev/mobalpa into back_user
+
+[33mcommit df18512dd05a6d12b2410547830e09aa1c84a2fc[m
+Author: Tanguy Gibrat <gibratanguy@icloud.com>
+Date:   Thu Aug 1 09:53:21 2024 +0200
+
+    test: test
+    Co-authored-by: RomainEpitech <romain.farinacci@hotmail.com>
+
+[33mcommit b870d0647753dcc7b9a83e69e4868a9d848f1d83[m
+Merge: 13be146 98324f8
+Author: twnguydev <154362306+twnguydev@users.noreply.github.com>
+Date:   Thu Aug 1 09:52:41 2024 +0200
+
+    Merge pull request #45 from twnguydev/back_user
+    
+    fix(catalogue): error gesture in product update
+
+[33mcommit 98324f84374f244e422c363dcbb47eda3de0bd94[m
+Merge: c73a10a 13be146
+Author: twnguydev <154362306+twnguydev@users.noreply.github.com>
+Date:   Thu Aug 1 09:52:26 2024 +0200
+
+    Merge branch 'test' into back_user
+
+[33mcommit c73a10a57487a0d63041201595478f1ac01bfbe5[m
+Author: Tanguy Gibrat <gibratanguy@icloud.com>
+Date:   Thu Aug 1 09:50:59 2024 +0200
+
+    fix(catalogue): error gesture in product update
+    Co-authored-by: RomainEpitech <romain.farinacci@hotmail.com>
+
+[33mcommit 6445300eed059cf7b8881d21e4b1041560aefc4e[m
+Author: NathanMatounga <nathan.matounga@epitech.eu>
+Date:   Wed Jul 31 20:55:06 2024 +0200
+
+    fix: reset password/test unitaire #8
+
+[33mcommit c3f2d86484520905200da87e007a4476701d7471[m
+Author: NathanMatounga <nathan.matounga@epitech.eu>
+Date:   Wed Jul 31 14:04:20 2024 +0200
+
+    fix: Test unitaire login/register #8
+
+[33mcommit 13be146b71ef1f57b5966a3000184f4a404b3052[m
+Merge: 0b959b2 822a4f2
+Author: twnguydev <154362306+twnguydev@users.noreply.github.com>
+Date:   Wed Jul 31 13:55:16 2024 +0200
+
+    Merge pull request #43 from twnguydev/back_user
+    
+    Back user
+
+[33mcommit 822a4f22bd056f4b922234f85867714c41c70044[m
+Author: Tanguy Gibrat <gibratanguy@icloud.com>
+Date:   Wed Jul 31 13:54:08 2024 +0200
+
+    fix(tests): import in unit test #9
+    
+    Co-authored-by: RomainEpitech <romain.farinacci@hotmail.com>
+
+[33mcommit 6a2ac773ec8ec8fed9b10e1fccc03c24338e6c5b[m
+Author: Tanguy Gibrat <gibratanguy@icloud.com>
+Date:   Wed Jul 31 13:52:50 2024 +0200
+
+    fix(tests): import in unit test #9
+    
+    Co-authored-by: RomainEpitech <romain.farinacci-berodias@epitech.eu>
+
+[33mcommit ec2d0fa232c6dba78ce3040b75fc4147d5cd8d68[m
+Author: Tanguy Gibrat <gibratanguy@icloud.com>
+Date:   Wed Jul 31 13:49:37 2024 +0200
+
+    feat(wishlist): add wishlist to user #9
+
+[33mcommit e9022259ec0e9a84bce120ce465d3059598e7d84[m
+Author: Tanguy Gibrat <gibratanguy@icloud.com>
+Date:   Wed Jul 31 13:49:07 2024 +0200
+
+    fix(tests): wishlist unit test #9
+
+[33mcommit 0b959b2e16603496152842241929917536924d79[m
+Merge: 5d6da34 5ac3827
+Author: twnguydev <154362306+twnguydev@users.noreply.github.com>
+Date:   Wed Jul 31 13:45:29 2024 +0200
+
+    Merge pull request #42 from twnguydev/back_product
+    
+    Product Creation: verify subCategory existence.
+
+[33mcommit ed184f9b292dc6762974dd86913d679de933aea7[m
+Author: NathanMatounga <nathan.matounga@epitech.eu>
+Date:   Wed Jul 31 13:44:08 2024 +0200
+
+    fix: Test unitaire #8
+
+[33mcommit 5ac3827674630939e793dcc4d92982b40e05a00d[m[33m ([m[1;31morigin/back_product[m[33m)[m
+Author: Saskoue <romain.farinacci@hotmail.com>
+Date:   Wed Jul 31 10:44:52 2024 +0200
+
+    fix: verify subcategory on product creation #16
+
+[33mcommit d63bc6a539b349a4e20277430cd52eaf0e61a156[m
+Author: Saskoue <romain.farinacci@hotmail.com>
+Date:   Wed Jul 31 10:11:44 2024 +0200
+
+    fix: duplicated category creation #16
+
+[33mcommit 5d6da3476bacb641961b0015c332a028f3c288cd[m
+Merge: d15e46e 59d6321
+Author: twnguydev <154362306+twnguydev@users.noreply.github.com>
+Date:   Wed Jul 31 09:30:08 2024 +0200
+
+    Merge pull request #40 from twnguydev/back_product
+    
+    Added product filtering on search
+
+[33mcommit 59d63219a67d1fb8c70d75c5cb65326c949e9bf2[m
+Merge: e78ef62 d15e46e
+Author: Saskoue <romain.farinacci@hotmail.com>
+Date:   Wed Jul 31 08:56:45 2024 +0200
+
+    feat: product filtering class
+
+[33mcommit 458fcd5452954af1c17fe76ba55c597b99f92c12[m
+Author: NathanMatounga <nathan.matounga@epitech.eu>
+Date:   Tue Jul 30 22:56:46 2024 +0200
+
+    feat: Register/login/email #8
+
+[33mcommit 677245d335593b4d83763cca1971a3b9b1b9f607[m
+Author: Tanguy Gibrat <gibratanguy@icloud.com>
+Date:   Tue Jul 30 16:58:23 2024 +0200
+
+    feat(api): add user & unit test
+
+[33mcommit d15e46e833713b6b9ea02abb8b1ffa46ae645b78[m
+Merge: 297f4c7 0ee5ae6
+Author: twnguydev <154362306+twnguydev@users.noreply.github.com>
+Date:   Tue Jul 30 16:18:01 2024 +0200
+
+    Merge pull request #39 from twnguydev/front_providers
+    
+    Front providers
+
+[33mcommit 0ee5ae6718982ce7fda695beac55d8190d613068[m[33m ([m[1;31morigin/front_providers[m[33m)[m
+Author: Tanguy Gibrat <gibratanguy@icloud.com>
+Date:   Tue Jul 30 16:17:18 2024 +0200
+
+    fix(front): auth/order services and interfaces
+
+[33mcommit 24b0fae04fae675cd62ade1bec23d1f04fe09fd4[m
+Author: Tanguy Gibrat <gibratanguy@icloud.com>
+Date:   Tue Jul 30 16:16:29 2024 +0200
+
+    fix(catalogue): HTTP request responses + product objects
+
+[33mcommit 3680c657c34f0fe4beff5c4f99d5c2d0cb4a6575[m
+Author: Tanguy Gibrat <gibratanguy@icloud.com>
+Date:   Tue Jul 30 13:30:21 2024 +0200
+
+    fix(catalogue): mapping products into subcategory objects
+
+[33mcommit 297f4c7aa9ca0d519c8c5886419ba11458ad44bd[m
+Merge: 2802d24 8b650c6
+Author: twnguydev <154362306+twnguydev@users.noreply.github.com>
+Date:   Tue Jul 30 12:12:11 2024 +0200
+
+    Merge pull request #38 from twnguydev/front_providers
+    
+    fix(catalogue): update product & mapping objects in categories
+
+[33mcommit 8b650c6204ed680438c4ebd433179a7c46b485b6[m
+Author: Tanguy Gibrat <gibratanguy@icloud.com>
+Date:   Tue Jul 30 12:10:45 2024 +0200
+
+    fix(catalogue): update product & mapping objects in categories
+
+[33mcommit e78ef62da503492dc07dfff18cf5736c68001822[m
+Merge: f80f0bb 2802d24
+Author: Saskoue <romain.farinacci@hotmail.com>
+Date:   Tue Jul 30 11:46:30 2024 +0200
+
+    Merge branch 'test' of github.com:twnguydev/mobalpa into back_product
+
+[33mcommit 2802d240f88c7f593ad1eeb4903a1a824351e96c[m
+Merge: f1b9b2d b3ab5a9
+Author: twnguydev <154362306+twnguydev@users.noreply.github.com>
+Date:   Tue Jul 30 11:45:04 2024 +0200
+
+    Merge pull request #37 from twnguydev/front_providers
+    
+    Front providers
+
+[33mcommit b3ab5a94bc80b156dd887ce4808de88d45d93615[m
+Author: Tanguy Gibrat <gibratanguy@icloud.com>
+Date:   Tue Jul 30 11:44:08 2024 +0200
+
+    fix(catalogue): mapping references in product object
+
+[33mcommit f80f0bb6b279a08f397b8830230541bc79b775ba[m
+Author: Saskoue <romain.farinacci@hotmail.com>
+Date:   Tue Jul 30 11:04:51 2024 +0200
+
+    fix: update product #16
+
+[33mcommit 5e83f1d8e26405a985909cdb51cc5fadf2a75f9f[m
+Author: Tanguy Gibrat <gibratanguy@icloud.com>
+Date:   Tue Jul 30 09:55:58 2024 +0200
+
+    fix: routes within angular project
+
+[33mcommit 8af0ee329cf8ce6e0e6df1ce6515c6014c5b99e9[m
+Author: Tanguy Gibrat <gibratanguy@icloud.com>
+Date:   Tue Jul 30 09:55:36 2024 +0200
+
+    feat(front): add user service
+
+[33mcommit 6a12b9fc03243c6349fb736aaae7f845a7faa943[m
+Author: Tanguy Gibrat <gibratanguy@icloud.com>
+Date:   Tue Jul 30 09:55:06 2024 +0200
+
+    feat(front): add interface types for models data
+
+[33mcommit d6ef18357cadbfed2587536cfcbadea6eb31dbf4[m
+Author: Tanguy Gibrat <gibratanguy@icloud.com>
+Date:   Tue Jul 30 09:54:18 2024 +0200
+
+    feat(front): add environment variables & order service
+
+[33mcommit f1b9b2d14008f14c71fbdc50c628329769ce2f1a[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/landing_page[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Merge: 40a56c9 c9dc89e
+Author: twnguydev <154362306+twnguydev@users.noreply.github.com>
+Date:   Tue Jul 30 09:53:16 2024 +0200
+
+    Merge pull request #36 from twnguydev/front_providers
+    
+    fix(catalogue): image/color error gesture
+
+[33mcommit c9dc89e53d6286b8fde641f841d98bfaa59407ed[m
+Author: Tanguy Gibrat <gibratanguy@icloud.com>
+Date:   Tue Jul 30 09:52:09 2024 +0200
+
+    fix(catalogue): image/color error gesture
+
+[33mcommit 40a56c9709b18c602707c2abc74cf650d955adf2[m
+Merge: 7d1b863 bb6224a
+Author: twnguydev <154362306+twnguydev@users.noreply.github.com>
+Date:   Mon Jul 29 17:51:26 2024 +0200
+
+    Merge pull request #35 from twnguydev/front_providers
+    
+    fix: product create api catalogue
+
+[33mcommit bb6224a1983633dce79da1761060221166ec79a9[m
+Author: Tanguy Gibrat <gibratanguy@icloud.com>
+Date:   Mon Jul 29 17:28:04 2024 +0200
+
+    fix: product create api catalogue
+
+[33mcommit 7d1b863c5652f9e5806f94e40465903560c8461e[m
+Merge: 3624691 5cf3174
+Author: twnguydev <154362306+twnguydev@users.noreply.github.com>
+Date:   Mon Jul 29 16:23:31 2024 +0200
+
+    Merge pull request #34 from twnguydev/front_providers
+    
+    fix: create product in API catalogue
+
+[33mcommit 5cf317495858e841be19eb6424fb5f200e4c4b93[m
+Author: Tanguy Gibrat <gibratanguy@icloud.com>
+Date:   Mon Jul 29 16:22:39 2024 +0200
+
+    fix: create product in API catalogue
+
+[33mcommit 362469157617be6fbd642c8f86f6367205a9ed9f[m[33m ([m[1;32mmain[m[33m)[m
+Merge: 8957c02 185bde8
+Author: twnguydev <154362306+twnguydev@users.noreply.github.com>
+Date:   Mon Jul 29 14:19:48 2024 +0200
+
+    Merge pull request #33 from twnguydev/front_providers
+    
+    feat(front): auth provider #27
+
+[33mcommit 185bde888087a80588e927720b337c5542915f09[m
+Author: Tanguy Gibrat <gibratanguy@icloud.com>
+Date:   Mon Jul 29 14:16:59 2024 +0200
+
+    feat(front): auth provider #27
+
+[33mcommit 8957c02fbccd6e9a3ca7b4d28b4ead0a2ac2a89d[m
+Author: Tanguy Gibrat <gibratanguy@icloud.com>
+Date:   Mon Jul 29 12:13:07 2024 +0200
+
+    fix(docs): api keys in header requests
+
+[33mcommit c02c6f21e2dc7274fbbaa6fd0af3f284f928f7b2[m
+Author: Tanguy Gibrat <gibratanguy@icloud.com>
+Date:   Mon Jul 29 12:10:54 2024 +0200
+
+    fix: security token in API Catalogue
+
+[33mcommit cb76a63ad97c0dc43595bc8c3f4f2726449601bb[m
+Author: Tanguy Gibrat <gibratanguy@icloud.com>
+Date:   Mon Jul 29 09:54:31 2024 +0200
+
+    fix: unit tests on user/payment models
+
+[33mcommit 5435a668e04c214b90d2ae9be59ba5b7695e6d25[m
+Author: Tanguy Gibrat <gibratanguy@icloud.com>
+Date:   Sat Jul 27 13:06:49 2024 +0200
+
+    init(front): graphic chart & tailwind config
+
+[33mcommit ff060b1419de030c785af2396f6feb5801d0c753[m
+Author: Tanguy Gibrat <gibratanguy@icloud.com>
+Date:   Sat Jul 27 12:29:34 2024 +0200
+
+    fix(data): add api_key & update mysql conn
+
+[33mcommit 3c2636e158859327cd87899e2e31ec49933bee0f[m
+Author: Tanguy Gibrat <gibratanguy@icloud.com>
+Date:   Sat Jul 27 12:10:46 2024 +0200
+
+    fix(e-commerce): role repository & unit tests
+
+[33mcommit 1cb0fea7d1e02db1dd64fcd06b5323ac00290f40[m
+Author: Tanguy Gibrat <gibratanguy@icloud.com>
+Date:   Sat Jul 27 12:02:03 2024 +0200
+
+    feat(docs): add CLI commands to init data folder
+
+[33mcommit a5e9e4b03ab5ea2e7cea58ebc9bb216249fe6651[m
+Author: Tanguy Gibrat <gibratanguy@icloud.com>
+Date:   Sat Jul 27 12:01:29 2024 +0200
+
+    fix(data): unit tests & lib requirements
+
+[33mcommit dfb31a0ebd1ca3dd4db8d67e986784317678ed91[m
+Author: Tanguy Gibrat <gibratanguy@icloud.com>
+Date:   Sat Jul 27 12:00:54 2024 +0200
+
+    feat(e-commerce): add order & payment
+
+[33mcommit 57f33946da7a79706123d5e81ac4d4b7eb575a74[m
+Author: Tanguy Gibrat <gibratanguy@icloud.com>
+Date:   Sat Jul 27 10:46:54 2024 +0200
+
+    refactor: API Catalogue
+
+[33mcommit ff3bad189298a2adfe4a106cc0c960c31ece49e2[m
+Author: Tanguy Gibrat <gibratanguy@icloud.com>
+Date:   Fri Jul 26 17:15:15 2024 +0200
+
+    feat: endpoints & security on catalogue api
+
+[33mcommit 1970e5e66d47ec47fb28b9181649b6bcb65a0dac[m
+Merge: 59a7065 cb233f0
+Author: twnguydev <154362306+twnguydev@users.noreply.github.com>
+Date:   Fri Jul 26 17:08:27 2024 +0200
+
+    Merge pull request #7 from twnguydev/test
+    
+    docs: fix catalogue_db
+
+[33mcommit cb233f07fdd18ecf73a4382d1f71030ee798abdc[m
+Author: Saskoue <romain.farinacci@hotmail.com>
+Date:   Fri Jul 26 16:52:30 2024 +0200
+
+    docs: fix catalogue_db
+
+[33mcommit 59a706534d25a4ac5eee3dc124bfaf0e54579869[m
+Author: Tanguy Gibrat <gibratanguy@icloud.com>
+Date:   Fri Jul 26 14:49:05 2024 +0200
+
+    refactor: data treatment in e-commerce api
+
+[33mcommit ba57b58f33929a1597b82046e6f5661a787136c5[m
+Author: Tanguy Gibrat <gibratanguy@icloud.com>
+Date:   Thu Jul 25 17:52:28 2024 +0200
+
+    fix: user mapper
+
+[33mcommit ff71db3f4ceecee907d5988dbb98dceb2b19bfdf[m
+Author: Tanguy Gibrat <gibratanguy@icloud.com>
+Date:   Thu Jul 25 15:31:13 2024 +0200
+
+    fix: restore unit tests for data 
