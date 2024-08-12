@@ -89,10 +89,12 @@
         <div class="container mx-auto py-8">
             <div class="grid grid-cols-5 gap-8">
                 <div *ngFor="let category of categories">
-                    <h2 class="text-xl font-bold">{{ category.name }}</h2>
+                    <h2 class="text-xl font-bold">
+                        <a href="/categories/{{ category.uri }}">{{ category.name }}</a>
+                    </h2>
                     <ul class="mt-4 space-y-2 mb-7 h-36">
                         <li *ngFor="let subcategory of category.subcategories">
-                            {{ subcategory.name }}
+                            <a href="/categories/{{ subcategory.uri }}">{{ subcategory.name }}</a>
                         </li>
                     </ul>
                     <img src="https://st.hzcdn.com/simgs/5c61c342010aabb5_14-6012/home-design.jpg" alt="img">
