@@ -122,11 +122,18 @@ export class AuthService {
     return !!localStorage.getItem('token');
   }
 
-  getAuthHeaders(): HttpHeaders {
+  getAuthHeaders(): HttpHeaders | null {
     const token: string | null = localStorage.getItem('token');
+    if (!token || token == null) return null;
     return new HttpHeaders({
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
+    });
+  }
+
+  getXApiKeyHeaders(): HttpHeaders {
+    return new HttpHeaders({
+      'X-API-KEY': `${environment.apiKey}`
     });
   }
 
