@@ -1,7 +1,7 @@
 package com.mobalpa.api.service;
 
 import com.mobalpa.api.dto.OrderRequestDTO;
-import com.mobalpa.api.dto.catalogue.CatalogueImageDTO;
+import com.mobalpa.api.dto.catalogue.ImageDTO;
 import com.mobalpa.api.dto.catalogue.ColorDTO;
 import com.mobalpa.api.dto.catalogue.ProductDTO;
 import com.mobalpa.api.dto.delivery.*;
@@ -113,7 +113,7 @@ public class DeliveryService {
       properties.put("brand", product.getBrand().getName());
       properties.put("colors", product.getColors().stream().map(ColorDTO::getName).collect(Collectors.joining(", ")));
       properties.put("images",
-          product.getImages().stream().map(CatalogueImageDTO::getUri).collect(Collectors.joining(", ")));
+          product.getImages().stream().map(ImageDTO::getUri).collect(Collectors.joining(", ")));
       parcelItemDTO.setProperties(properties);
       parcelItemDTO.setQuantity(itemDTO.getQuantity());
       parcelItemDTO.setValue(product.getPrice());

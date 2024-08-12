@@ -26,56 +26,13 @@ public class CategoryController {
   private CategoryService categoryService;
 
   @GetMapping
-  public ResponseEntity<?> getAllCategories(
-      @RequestParam(required = false) String only,
-      @RequestParam(required = false, defaultValue = "0") int limit) {
-
-    List<Category> allCategories = categoryService.getAllCategories().orElse(new ArrayList<>());
-
-    if (allCategories.isEmpty()) {
+  public ResponseEntity<?> getAllCategories() {
+    List<Category> categories = categoryService.getAllCategories().orElseThrow(() -> new RuntimeException("No categories found"));
+    if (categories != null && !categories.isEmpty()) {
+      return ResponseEntity.ok(categories);
+    } else {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No categories found");
     }
-
-    List<?> result;
-
-    if (only == null) {
-      result = allCategories.stream().map(Mapper::toCategoryDTO).collect(Collectors.toList());
-    } else {
-      switch (only) {
-        case "categories":
-          result = allCategories.stream()
-              .map(category -> {
-                SimpleDTO dto = new SimpleDTO();
-                dto.setUuid(category.getUuid());
-                dto.setName(category.getName());
-                return dto;
-              })
-              .collect(Collectors.toList());
-          break;
-        case "subcategories":
-          result = allCategories.stream()
-              .flatMap(category -> category.getSubcategories().stream())
-              .map(Mapper::toSubcategoryDTO)
-              .collect(Collectors.toList());
-          break;
-        case "products":
-          result = allCategories.stream()
-              .flatMap(category -> category.getSubcategories().stream())
-              .flatMap(subcategory -> subcategory.getProducts().stream())
-              .map(Mapper::toProductDTO)
-              .collect(Collectors.toList());
-          break;
-        default:
-          result = allCategories.stream().map(Mapper::toCategoryDTO).collect(Collectors.toList());
-          break;
-      }
-    }
-
-    if (limit > 0 && limit < result.size()) {
-      result = result.subList(0, limit);
-    }
-
-    return ResponseEntity.ok(result);
   }
 
   @GetMapping("/{id}")

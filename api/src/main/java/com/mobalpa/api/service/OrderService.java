@@ -5,7 +5,7 @@ import com.mobalpa.api.dto.OrderItemDTO;
 import com.mobalpa.api.dto.OrderSummaryDTO;
 import com.mobalpa.api.dto.OrderRequestDTO;
 import com.mobalpa.api.dto.catalogue.ProductDTO;
-import com.mobalpa.api.dto.catalogue.CatalogueImageDTO;
+import com.mobalpa.api.dto.catalogue.ImageDTO;
 import com.mobalpa.api.dto.catalogue.ColorDTO;
 import com.mobalpa.api.model.Invoice;
 import com.mobalpa.api.model.Order;
@@ -139,7 +139,7 @@ public class OrderService {
         .map(ColorDTO::getName)
         .collect(Collectors.joining(", ")));
     properties.put("images", product.getImages().stream()
-        .map(CatalogueImageDTO::getUri)
+        .map(ImageDTO::getUri)
         .collect(Collectors.joining(", ")));
 
     OrderItemDTO dto = new OrderItemDTO();
