@@ -52,4 +52,14 @@ export class MainHeaderComponent implements OnInit {
   toggleSearchBar(): void {
     this.showSearchBar = !this.showSearchBar;
   }
+
+
+  toggleSubcategories(uuid: string): void {
+    this.categories = this.categories.map(category => {
+      if (category.uuid === uuid) {
+        return { ...category, isOpen: !category.isOpen };
+      }
+      return category;
+    });
+  }
 }
