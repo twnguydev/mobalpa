@@ -30,6 +30,7 @@ export class CategoryComponent implements OnInit {
   loadProductsByCategory(categoryUri: string): void {
     this.productService.getProductsByCategory(categoryUri).subscribe({
       next: (products) => {
+        console.log("products", products);
         this.products = products;
       },
       error: (error) => {

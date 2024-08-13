@@ -1,4 +1,4 @@
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, ExtraOptions } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { LandingPageComponent } from './pages/landing-page/landing-page.component';
 import { CartPageComponent } from './pages/cart_page/cart-page.component';
@@ -19,13 +19,16 @@ export const routes: Routes = [
     { path: 'info', component: HomeComponent },
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
-    { path: 'category/:categoryUri', component: CategoryComponent },
-    { path: 'product/:productUri', component: ProductComponent },
+    { path: 'categories/:categoryUri/:subcategoryUri', component: CategoryComponent },
     { path: 'profile', component: ProfileComponent },
 ];
 
+const routerOptions: ExtraOptions = {
+    useHash: true,
+};
+
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
+    imports: [RouterModule.forRoot(routes, routerOptions)],
     exports: [RouterModule]
 })
 export class AppRoutingModule {}
