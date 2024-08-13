@@ -34,4 +34,9 @@ export class ProductService {
     console.log('Headers', headers);
     return this.http.get<ICategory[]>(this.apiUrl + '/categories', { headers });
   }
+
+  getProductsByCategory(categoryUri: string): Observable<IProduct[]> {
+    const headers: HttpHeaders = this.authService.getAuthHeaders() ?? this.authService.getXApiKeyHeaders();
+    return this.http.get<IProduct[]>(`${this.apiUrl}/categories/${categoryUri}/products`, { headers });
+  }
 }

@@ -7,6 +7,7 @@ import com.mobalpa.catalogue.repository.SubcategoryRepository;
 import com.mobalpa.catalogue.model.Category;
 import com.mobalpa.catalogue.model.Subcategory;
 import com.mobalpa.catalogue.repository.CategoryRepository;
+import com.mobalpa.catalogue.model.Product;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -99,6 +100,10 @@ public class SubcategoryService {
       }
       return subcategoryRepository.save(existingSubcategory);
     }).orElseThrow(() -> new RuntimeException("Product not found with id " + id));
+  }
+
+  public List<Product> getProductsBySubcategoryId(UUID id) {
+    return subcategoryRepository.findById(id).map(Subcategory::getProducts).orElseThrow(() -> new RuntimeException("Subcategory not found"));
   }
 
   public void deleteSubcategory(UUID id) {

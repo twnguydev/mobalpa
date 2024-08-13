@@ -59,6 +59,16 @@ public class CatalogueController {
     return ResponseEntity.ok(catalogueService.getCategoryById(categoryId));
   }
 
+  @GetMapping("/categories/{categoryId}/products")
+  public ResponseEntity<?> getProductsByCategory(@PathVariable UUID categoryId) {
+    return ResponseEntity.ok(catalogueService.getProductsByCategoryId(categoryId));
+  }
+
+  @GetMapping("/subcategories/{subcategoryId}/products")
+  public ResponseEntity<?> getProductsBySubcategory(@PathVariable UUID subcategoryId) {
+    return ResponseEntity.ok(catalogueService.getProductsBySubcategoryId(subcategoryId));
+  }
+
   @GetMapping("/subcategories/{subcategoryId}")
   public ResponseEntity<?> getSubcategoryById(@PathVariable UUID subcategoryId) {
     return ResponseEntity.ok(catalogueService.getSubcategoryById(subcategoryId));

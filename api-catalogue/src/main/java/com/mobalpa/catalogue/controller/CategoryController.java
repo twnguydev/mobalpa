@@ -55,6 +55,17 @@ public class CategoryController {
     }
   }
 
+  @GetMapping("/{id}/products")
+  public ResponseEntity<?> getProductsByCategoryId(@PathVariable UUID id) {
+    Optional<List<Subcategory>> subcategories = Optional.of(categoryService.getSubcategoriesByCategoryId(id));
+    if (subcategories.isPresent() && !subcategories.get().isEmpty()) {
+      List<UUID> subcategoryIds = subcategories.get().stream().map(Subcategory::getUuid).collect(Collectors.toList());
+      return ResponseEntity.ok(categoryService.getProductsBySubcategoryIds(subcategoryIds));
+    } else {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No products found for this category");
+    }
+  }
+
   @PostMapping
   public ResponseEntity<?> createCategory(@RequestBody Category category) {
     try {

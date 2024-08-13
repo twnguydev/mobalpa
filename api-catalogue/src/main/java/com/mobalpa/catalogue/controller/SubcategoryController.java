@@ -63,6 +63,16 @@ public class SubcategoryController {
     }
   }
 
+  @GetMapping("/{id}/products")
+  public ResponseEntity<?> getProductsBySubcategoryId(@PathVariable UUID id) {
+    Optional<Optional<Subcategory>> subcategories = Optional.of(subcategoryService.getSubcategoryById(id));
+    if (subcategories.isPresent() && !subcategories.get().isEmpty()) {
+      return ResponseEntity.ok(subcategoryService.getProductsBySubcategoryId(id));
+    } else {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No products found for this subcategory");
+    }
+  }
+
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> deleteSubcategory(@PathVariable UUID id) {
     subcategoryService.deleteSubcategory(id);

@@ -144,6 +144,16 @@ public class CatalogueService {
         return Arrays.asList(response.getBody());
     }
 
+    public List<?> getProductsBySubcategoryId(UUID subcategoryId) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("X-API-KEY", this.apiKey);
+        HttpEntity<String> request = new HttpEntity<>(headers);
+
+        ResponseEntity<?> response = restTemplate.exchange(
+                this.baseUrl + "/subcategories/" + subcategoryId + "/products", HttpMethod.GET, request, List.class);
+        return Arrays.asList(response.getBody());
+    }
+
     public ProductDTO createProduct(ProductDTO productDTO) {
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-API-KEY", this.apiKey);

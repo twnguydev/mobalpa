@@ -10,20 +10,22 @@ import { RegisterComponent } from './components/register-components/register.com
 import { CategoryComponent } from '@components/category-components/category.component';
 import { ProductComponent } from './components/product-components/product.component';
 import { ProfileComponent } from '@components/profile-components/profile.component';
+
 export const routes: Routes = [
-    { path: '', component: LandingPageComponent, },
-    { path: 'panier', component: CartPageComponent, },
-    { path: 'liste-de-souhaits', component: Wishlist_PageComponent, },
-    { path: 'support', component: SupportPageComponent, },
+    { path: '', component: LandingPageComponent },
+    { path: 'panier', component: CartPageComponent },
+    { path: 'liste-de-souhaits', component: Wishlist_PageComponent },
+    { path: 'support', component: SupportPageComponent },
     { path: 'info', component: HomeComponent },
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
-    { path: 'category', component: CategoryComponent },
-    { path: 'product', component: ProductComponent },
+    { path: 'category/:categoryUri', component: CategoryComponent },
+    { path: 'product/:productUri', component: ProductComponent },
     { path: 'profile', component: ProfileComponent },
 ];
+
 @NgModule({
     imports: [RouterModule.forRoot(routes)],
     exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

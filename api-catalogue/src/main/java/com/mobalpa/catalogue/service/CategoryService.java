@@ -6,11 +6,13 @@ import org.springframework.stereotype.Service;
 import com.mobalpa.catalogue.repository.CategoryRepository;
 import com.mobalpa.catalogue.model.Category;
 import com.mobalpa.catalogue.model.Subcategory;
+import com.mobalpa.catalogue.model.Product;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.Collections;
+import java.util.stream.Collectors;
 
 @Service
 public class CategoryService {
@@ -24,6 +26,15 @@ public class CategoryService {
 
     public Optional<Category> getCategoryById(UUID id) {
         return categoryRepository.findById(id);
+    }
+
+    public List<Product> getProductsBySubcategoryIds(List<UUID> subcategoryIds) {
+        return categoryRepository.findBySubcategoriesUuidIn(subcategoryIds).stream()
+                .map(Category::getSubcategories)
+                .flatMap(List::stream)
+                .map(Subcategory::getProducts)
+                .flatMap(List::stream)
+                .collect(Collectors.toList());
     }
 
     public Category createCategory(Category category) {
