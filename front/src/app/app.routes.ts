@@ -4,6 +4,8 @@ import { LandingPageComponent } from './pages/landing-page/landing-page.componen
 import { CartPageComponent } from './pages/cart_page/cart-page.component';
 import { Wishlist_PageComponent } from './pages/wishlist-page/wishlist-page.component';
 import { SupportPageComponent } from './pages/support-page/support-page.component';
+import { SubcategoriePageComponent } from './pages/subcategorie-page/subcategorie-page.component';
+
 import { HomeComponent } from './components/home-components/home.component';
 import { LoginComponent } from './components/login-components/login.component';
 import { RegisterComponent } from './components/register-components/register.component';
@@ -35,6 +37,9 @@ export const routes: Routes = [
     { path: 'category', component: CategoryComponent },
     { path: 'product', component: ProductComponent },
     { path: 'profile', component: ProfileComponent },
+    {
+        path: 'sub', component: SubcategoriePageComponent
+    },
 ];
 @NgModule({
     imports: [RouterModule.forRoot(routes)],
