@@ -10,6 +10,7 @@ import { environment } from '../environments/environment';
 })
 export class AuthService {
   private apiUrl: string = `${environment.apiUrl}/users`;
+  public user: IUser | null = null;
 
   constructor(private http: HttpClient) {}
 
@@ -21,8 +22,10 @@ export class AuthService {
       }
     }).pipe(
       map(response => {
-        if (response && response.token) {
-          localStorage.setItem('token', response.token);
+        if (response && response.accessToken && response.user) {
+          localStorage.setItem('token', response.accessToken);
+          localStorage.setItem('currentUser', JSON.stringify(response.user));
+          this.user = response.user;
         }
         return response;
       }),
@@ -32,8 +35,6 @@ export class AuthService {
       })
     );
   }
-
-
 
   signup(data: IUser): Observable<any> {
     if (!this.checkInputsSignup(data)) {
@@ -60,7 +61,6 @@ export class AuthService {
       })
     );
   }
-
 
   forgotPassword(email: string): Observable<string> {
     return this.http.post(`${this.apiUrl}/forgot-password`, { email }, {

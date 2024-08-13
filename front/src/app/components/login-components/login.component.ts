@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit {
             localStorage.removeItem('rememberedEmail');
             localStorage.removeItem('rememberedPassword');
           }
-          // this.router.navigate(['/Profile']);
+          this.router.navigate(['/profile']);
         },
         error: error => {
           console.error('Login error', error);
