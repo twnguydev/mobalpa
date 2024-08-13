@@ -10,7 +10,6 @@ import java.util.List;
 public class CategoryDTO extends SimpleDTO {
   private String description;
   private String uri;
-  private SimpleDTO image;
   private List<SimpleDTO> subcategories;
   private List<ImageDTO> images;
 }
