@@ -10,7 +10,6 @@ import com.mobalpa.catalogue.dto.ProductDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.*;
 
 import com.mobalpa.catalogue.filter.ProductFilter;
@@ -54,14 +53,10 @@ public class ProductController {
 
     @GetMapping("/store/{id}")
     public ResponseEntity<?> getProductsByStoreId(@PathVariable UUID id) {
-        Optional<Store> store = catalogueService.getStoreById(id);
-        if (store.isPresent() && store.get() != null) {
-            Optional<List<Product>> products = Optional.of(store.get().getProducts());
-            if (products.isPresent() && !products.get().isEmpty()) {
-                return ResponseEntity.ok(products.get());
-            } else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No products found for this store");
-            }
+        List<Product> products = productService.getProductsByCategoryId(id).orElseThrow(() -> new RuntimeException("No products found for this subcategory"));
+        if (products != null && !products.isEmpty()) {
+            List<ProductDTO> productsDTO = products.stream().map(Mapper::toProductDTO).collect(Collectors.toList());
+            return ResponseEntity.ok(productsDTO);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Store not found");
         }
