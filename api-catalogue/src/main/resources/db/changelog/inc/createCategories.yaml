@@ -24,6 +24,13 @@ databaseChangeLog:
                     {"$ref": "subcategory", "$id": {"$binary": {"base64": "mUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
                     {"$ref": "subcategory", "$id": {"$binary": {"base64": "nUBzEwv4EBu2gqn367EavA==", "subType": "03"}}}
                   ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "bkQwUIC3k4R8r3ZrTsocow==", "subType": "03"}},
+                      "uri": "https://api.mobalpa.fr/sites/default/files/styles/landscape_2560x1440_2x/public/images/2024/07/01/02-visuelhomepagedesktop5300x2880.webp",
+                      "color": null
+                    }
+                  ],
                   "_class": "com.mobalpa.catalogue.model.Category"
                 },
                 {
@@ -42,6 +49,13 @@ databaseChangeLog:
                     {"$ref": "subcategory", "$id": {"$binary": {"base64": "cUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
                     {"$ref": "subcategory", "$id": {"$binary": {"base64": "dUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
                     {"$ref": "subcategory", "$id": {"$binary": {"base64": "eUBzEwv4EBu2gqn367EavA==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "E0oZQEgbc/27DcERW8OFmA==", "subType": "03"}},
+                      "uri": "https://api.mobalpa.fr/sites/default/files/styles/square568_2x/public/Plan-de-cuisson-esthete-1242x1242.webp",
+                      "color": null
+                    }
                   ],
                   "_class": "com.mobalpa.catalogue.model.Category"
                 },
@@ -62,6 +76,13 @@ databaseChangeLog:
                     {"$ref": "subcategory", "$id": {"$binary": {"base64": "d1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
                     {"$ref": "subcategory", "$id": {"$binary": {"base64": "e1BzEwv4EBu2gqn367EavA==", "subType": "03"}}}
                   ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}},
+                      "uri": "https://api.mobalpa.fr/sites/default/files/styles/landscape_372x248_2x/public/images/2023/11/21/equipements-electro-1326x884.webp",
+                      "color": null
+                    }
+                  ],
                   "_class": "com.mobalpa.catalogue.model.Category"
                 },
                 {
@@ -80,6 +101,13 @@ databaseChangeLog:
                     {"$ref": "subcategory", "$id": {"$binary": {"base64": "hUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
                     {"$ref": "subcategory", "$id": {"$binary": {"base64": "iUBzEwv4EBu2gqn367EavA==", "subType": "03"}}}
                   ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "A0oZQEgbc/27DcERW8OFmA==", "subType": "03"}},
+                      "uri": "https://api.mobalpa.fr/sites/default/files/styles/landscape_372x248_2x/public/images/2023/04/04/cropped/dossier_taille_limite_1850x1152-salle-de-bain-bois-ambiance-scandinave-mobalpa.webp",
+                      "color": null
+                    }
+                  ],
                   "_class": "com.mobalpa.catalogue.model.Category"
                 },
                 {
@@ -96,6 +124,13 @@ databaseChangeLog:
                     {"$ref": "subcategory", "$id": {"$binary": {"base64": "j0BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
                     {"$ref": "subcategory", "$id": {"$binary": {"base64": "k0BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
                     {"$ref": "subcategory", "$id": {"$binary": {"base64": "l0BzEwv4EBu2gqn367EavA==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "C0oZQEgbc/27DcERW8OFmA==", "subType": "03"}},
+                      "uri": "https://api.mobalpa.fr/sites/default/files/styles/square372_2x/public/images/2023/12/30/cellier-chill-dekstopmobile.webp",
+                      "color": null
+                    }
                   ],
                   "_class": "com.mobalpa.catalogue.model.Category"
                 }

@@ -29,4 +29,6 @@ public class Category {
 
     @DBRef
     private List<Subcategory> subcategories = new ArrayList<>();
+
+    private List<Image> images;
 }
