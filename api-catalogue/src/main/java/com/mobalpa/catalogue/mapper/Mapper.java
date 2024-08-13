@@ -61,6 +61,7 @@ public class Mapper {
         dto.setName(category.getName());
         dto.setDescription(category.getDescription());
         dto.setUri(category.getUri());
+        dto.setImages(category.getImages().stream().map(Mapper::toImageDTO).collect(Collectors.toList()));
         dto.setSubcategories(category.getSubcategories().stream().map(Mapper::toSimpleDTO).collect(Collectors.toList()));
         return dto;
     }

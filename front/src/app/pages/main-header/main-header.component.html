@@ -103,10 +103,9 @@
                     </ul>
 
                     <div class="mt-10">
-                        <div *ngIf="category.image">
-                            <img src="{{ category.image.uri }}" alt="{{ category.name }}" class="w-full h-36 object-cover">
+                        <div *ngIf="category.images && category.images.length > 0">
+                            <img src="{{ category.images[0].uri }}" alt="{{ category.name }}" class="w-full h-36 object-cover">
                         </div>
-                        <img src="https://via.placeholder.com/300x150" alt="Placeholder" class="w-full h-36 object-cover">
                     </div>
                 </div>
             </div>

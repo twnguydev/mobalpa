@@ -6,7 +6,7 @@ export interface ICategory {
   name: string;
   uri: string;
   description: string;
-  image: IImage;
+  images: IImage[];
   subcategories: ISubcategory[];
   isOpen?: boolean;
 }

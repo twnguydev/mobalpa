@@ -1,7 +1,7 @@
 export interface IImage {
   uuid: string;
   uri: string;
-  color: IColor | null;
+  color?: IColor | null;
 }
 
 export interface IColor {
