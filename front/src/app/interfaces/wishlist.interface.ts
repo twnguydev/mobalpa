@@ -8,7 +8,7 @@ export interface IWishlist {
 export interface IWishlistItem {
   uuid: string;
   productUuid: string;
-  product: IProduct;
+  product?: IProduct | null;
   quantity: number;
   selectedColor: string;
   properties: {
