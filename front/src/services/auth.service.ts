@@ -12,7 +12,16 @@ export class AuthService {
   private apiUrl: string = `${environment.apiUrl}/users`;
   public user: IUser | null = null;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.loadUserFromLocalStorage();
+  }
+
+  private loadUserFromLocalStorage(): void {
+    const storedUser: string | null = localStorage.getItem('currentUser');
+    if (storedUser) {
+      this.user = JSON.parse(storedUser);
+    }
+  }
 
   login(email: string, password: string): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/login`, { email, password }, {
@@ -26,6 +35,7 @@ export class AuthService {
           localStorage.setItem('token', response.accessToken);
           localStorage.setItem('currentUser', JSON.stringify(response.user));
           this.user = response.user;
+          console.log(this.user);
         }
         return response;
       }),
@@ -116,6 +126,7 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('currentUser');
+    this.user = null;
   }
 
   isAuthenticated(): boolean {

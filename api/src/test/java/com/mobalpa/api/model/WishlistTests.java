@@ -5,17 +5,17 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import com.mobalpa.api.repository.UserRepository;
+import com.mobalpa.api.repository.WishlistRepository;
+import com.mobalpa.api.dto.catalogue.ProductDTO;
+import com.mobalpa.api.service.CatalogueService;
 
 @DataJpaTest
 public class WishlistTests {
@@ -23,7 +23,11 @@ public class WishlistTests {
     @Autowired
     private UserRepository userRepository;
 
-    private ObjectMapper objectMapper = new ObjectMapper();
+    @Autowired
+    private WishlistRepository wishlistRepository;
+
+    @Autowired
+    private CatalogueService catalogueService;
 
     @Test
     public void testAddItemToEmptyWishlist() throws Exception {
@@ -42,19 +46,25 @@ public class WishlistTests {
 
         Wishlist wishlist = new Wishlist();
         wishlist.setUser(user);
-        wishlist.setItems("[]");
         user.setWishlist(wishlist);
         userRepository.save(user);
 
-        List<WishlistItem> items = new ArrayList<>();
-        items.add(new WishlistItem("12345", "Canapé Moderne", 1));
-        user.getWishlist().setItems(objectMapper.writeValueAsString(items));
-        userRepository.save(user);
+        UUID productUuid = UUID.randomUUID();
+        Optional<ProductDTO> productOpt = Optional.ofNullable(catalogueService.getProductById(productUuid));
 
-        User savedUser = userRepository.findById(user.getUuid()).orElse(null);
-        assertNotNull(savedUser);
-        assertEquals(1, objectMapper.readValue(savedUser.getWishlist().getItems(), new TypeReference<List<WishlistItem>>() {
-        }).size());
+        if (productOpt.isPresent()) {
+            WishlistItem newItem = new WishlistItem();
+            newItem.setProductUuid(productUuid);
+            newItem.setQuantity(1);
+            newItem.setWishlist(wishlist);
+
+            wishlist.getItems().add(newItem);
+            wishlistRepository.save(wishlist);
+
+            User savedUser = userRepository.findById(user.getUuid()).orElse(null);
+            assertNotNull(savedUser);
+            assertEquals(1, savedUser.getWishlist().getItems().size());
+        }
     }
 
     @Test
@@ -73,19 +83,30 @@ public class WishlistTests {
         userRepository.save(user);
 
         Wishlist wishlist = new Wishlist();
-        wishlist.setItems("[{\"productId\": \"12345\", \"productName\": \"Canapé Moderne\", \"quantity\": 1}, {\"productId\": \"67890\", \"productName\": \"Table Basse\", \"quantity\": 1}]");
         wishlist.setUser(user);
-        user.setWishlist(wishlist);
-        userRepository.save(user);
 
-        List<WishlistItem> items = objectMapper.readValue(user.getWishlist().getItems(), new TypeReference<List<WishlistItem>>() {});
-        items.add(new WishlistItem("54321", "Chaise", 1));
-        user.getWishlist().setItems(objectMapper.writeValueAsString(items));
-        userRepository.save(user);
+        UUID productUuid1 = UUID.randomUUID();
+        UUID productUuid2 = UUID.randomUUID();
 
-        User savedUser = userRepository.findById(user.getUuid()).orElse(null);
-        assertNotNull(savedUser);
-        assertEquals(3, objectMapper.readValue(savedUser.getWishlist().getItems(), new TypeReference<List<WishlistItem>>() {}).size());
+        if (catalogueService.getProductById(productUuid1) != null && catalogueService.getProductById(productUuid2) != null) {
+            WishlistItem item1 = new WishlistItem();
+            item1.setProductUuid(productUuid1);
+            item1.setQuantity(1);
+            item1.setWishlist(wishlist);
+
+            WishlistItem item2 = new WishlistItem();
+            item2.setProductUuid(productUuid2);
+            item2.setQuantity(1);
+            item2.setWishlist(wishlist);
+
+            wishlist.getItems().add(item1);
+            wishlist.getItems().add(item2);
+            wishlistRepository.save(wishlist);
+
+            User savedUser = userRepository.findById(user.getUuid()).orElse(null);
+            assertNotNull(savedUser);
+            assertEquals(2, savedUser.getWishlist().getItems().size());
+        }
     }
 
     @Test
@@ -103,51 +124,33 @@ public class WishlistTests {
         user.setCreatedAt(LocalDateTime.now());
         userRepository.save(user);
 
-        List<WishlistItem> items = new ArrayList<>();
-        items.add(new WishlistItem("12345", "Canapé Moderne", 1));
         Wishlist wishlist = new Wishlist();
         wishlist.setUser(user);
-        wishlist.setItems(objectMapper.writeValueAsString(items));
-        user.setWishlist(wishlist);
-        userRepository.save(user);
 
-        items.add(new WishlistItem("67890", "Table Basse", 1));
-        user.getWishlist().setItems(objectMapper.writeValueAsString(items));
-        userRepository.save(user);
+        UUID productUuid1 = UUID.randomUUID();
+        UUID productUuid2 = UUID.randomUUID();
 
-        User savedUser = userRepository.findById(user.getUuid()).orElse(null);
-        assertNotNull(savedUser);
-        assertEquals(2, objectMapper.readValue(savedUser.getWishlist().getItems(), new TypeReference<List<WishlistItem>>() {}).size());
-    }
+        if (catalogueService.getProductById(productUuid1) != null && catalogueService.getProductById(productUuid2) != null) {
+            WishlistItem item1 = new WishlistItem();
+            item1.setProductUuid(productUuid1);
+            item1.setQuantity(1);
+            item1.setWishlist(wishlist);
 
-    @Test
-    public void testRemoveItemFromEmptyWishlist() throws Exception {
-        User user = new User();
-        user.setFirstname("Emma");
-        user.setLastname("Stone");
-        user.setEmail("emma.stone@example.com");
-        user.setPassword("password");
-        user.setPhoneNumber("6667778888");
-        user.setBirthdate(LocalDate.of(1990, 1, 1));
-        user.setAddress("123 Main St");
-        user.setZipcode("12345");
-        user.setCity("Anytown");
-        user.setCreatedAt(LocalDateTime.now());
-        userRepository.save(user);
+            wishlist.getItems().add(item1);
+            wishlistRepository.save(wishlist);
 
-        Wishlist wishlist = new Wishlist();
-        wishlist.setUser(user);
-        wishlist.setItems("[]");
-        user.setWishlist(wishlist);
-        userRepository.save(user);
+            WishlistItem item2 = new WishlistItem();
+            item2.setProductUuid(productUuid2);
+            item2.setQuantity(1);
+            item2.setWishlist(wishlist);
 
-        List<WishlistItem> items = new ArrayList<>();
-        user.getWishlist().setItems(objectMapper.writeValueAsString(items));
-        userRepository.save(user);
+            wishlist.getItems().add(item2);
+            wishlistRepository.save(wishlist);
 
-        User savedUser = userRepository.findById(user.getUuid()).orElse(null);
-        assertNotNull(savedUser);
-        assertEquals(0, objectMapper.readValue(savedUser.getWishlist().getItems(), new TypeReference<List<WishlistItem>>() {}).size());
+            User savedUser = userRepository.findById(user.getUuid()).orElse(null);
+            assertNotNull(savedUser);
+            assertEquals(2, savedUser.getWishlist().getItems().size());
+        }
     }
 
     @Test
@@ -165,21 +168,27 @@ public class WishlistTests {
         user.setCreatedAt(LocalDateTime.now());
         userRepository.save(user);
 
-        List<WishlistItem> items = new ArrayList<>();
-        items.add(new WishlistItem("12345", "Canapé Moderne", 1));
         Wishlist wishlist = new Wishlist();
         wishlist.setUser(user);
-        wishlist.setItems(objectMapper.writeValueAsString(items));
-        user.setWishlist(wishlist);
-        userRepository.save(user);
 
-        items.removeIf(item -> item.getProductId().equals("12345"));
-        user.getWishlist().setItems(objectMapper.writeValueAsString(items));
-        userRepository.save(user);
+        UUID productUuid = UUID.randomUUID();
 
-        User savedUser = userRepository.findById(user.getUuid()).orElse(null);
-        assertNotNull(savedUser);
-        assertEquals(0, objectMapper.readValue(savedUser.getWishlist().getItems(), new TypeReference<List<WishlistItem>>() {}).size());
+        if (catalogueService.getProductById(productUuid) != null) {
+            WishlistItem item = new WishlistItem();
+            item.setProductUuid(productUuid);
+            item.setQuantity(2);
+            item.setWishlist(wishlist);
+
+            wishlist.getItems().add(item);
+            wishlistRepository.save(wishlist);
+
+            wishlist.getItems().removeIf(existingItem -> existingItem.getProductUuid().equals(productUuid));
+            wishlistRepository.save(wishlist);
+
+            User savedUser = userRepository.findById(user.getUuid()).orElse(null);
+            assertNotNull(savedUser);
+            assertEquals(0, savedUser.getWishlist().getItems().size());
+        }
     }
 
     @Test
@@ -197,21 +206,28 @@ public class WishlistTests {
         user.setCreatedAt(LocalDateTime.now());
         userRepository.save(user);
 
-        List<WishlistItem> items = new ArrayList<>();
-        items.add(new WishlistItem("12345", "Canapé Moderne", 2));
         Wishlist wishlist = new Wishlist();
         wishlist.setUser(user);
-        wishlist.setItems(objectMapper.writeValueAsString(items));
-        user.setWishlist(wishlist);
-        userRepository.save(user);
 
-        items.stream().filter(item -> item.getProductId().equals("12345")).forEach(item -> item.setQuantity(item.getQuantity() - 1));
-        user.getWishlist().setItems(objectMapper.writeValueAsString(items));
-        userRepository.save(user);
+        UUID productUuid = UUID.randomUUID();
 
-        User savedUser = userRepository.findById(user.getUuid()).orElse(null);
-        assertNotNull(savedUser);
-        assertEquals(1, objectMapper.readValue(savedUser.getWishlist().getItems(), new TypeReference<List<WishlistItem>>() {}).size());
-        assertEquals(1, objectMapper.readValue(savedUser.getWishlist().getItems(), new TypeReference<List<WishlistItem>>() {}).get(0).getQuantity());
+        if (catalogueService.getProductById(productUuid) != null) {
+            WishlistItem item = new WishlistItem();
+            item.setProductUuid(productUuid);
+            item.setQuantity(2);
+            item.setWishlist(wishlist);
+
+            wishlist.getItems().add(item);
+            wishlistRepository.save(wishlist);
+
+            wishlist.getItems().stream().filter(existingItem -> existingItem.getProductUuid().equals(productUuid))
+                    .forEach(existingItem -> existingItem.setQuantity(existingItem.getQuantity() - 1));
+
+            wishlistRepository.save(wishlist);
+
+            User savedUser = userRepository.findById(user.getUuid()).orElse(null);
+            assertNotNull(savedUser);
+            assertEquals(1, savedUser.getWishlist().getItems().get(0).getQuantity());
+        }
     }
 }

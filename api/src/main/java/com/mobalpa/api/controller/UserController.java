@@ -1,5 +1,6 @@
 package com.mobalpa.api.controller;
 
+import com.mobalpa.api.service.CatalogueService;
 import com.mobalpa.api.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.mobalpa.api.model.Payment;
@@ -7,6 +8,7 @@ import com.mobalpa.api.model.User;
 import com.mobalpa.api.model.Wishlist;
 import com.mobalpa.api.repository.UserRepository;
 import com.mobalpa.api.dto.WishlistDTO;
+import com.mobalpa.api.dto.catalogue.ProductDTO;
 import com.mobalpa.api.service.WishlistService;
 import com.mobalpa.api.dto.PaymentRequestDTO;
 import com.mobalpa.api.repository.PaymentRepository;
@@ -35,6 +37,9 @@ public class UserController {
 
   @Autowired
   private PaymentRepository paymentRepository;
+
+  @Autowired
+  private CatalogueService catalogueService;
 
   @GetMapping("/{uuid}")
   public ResponseEntity<?> getUserByUuid(@PathVariable UUID uuid) {
@@ -86,28 +91,31 @@ public class UserController {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("This user has no items in his wishlist");
     }
 
+    wishlist.getItems().forEach(item -> {
+      ProductDTO product = catalogueService.getProductById(item.getProductUuid());
+      if (product != null) {
+        item.setProduct(product);
+      }
+    });
+
     return ResponseEntity.ok(wishlist);
   }
 
   @PatchMapping("/{id}/wishlist")
   public ResponseEntity<?> modifyWishlist(@PathVariable UUID id, @RequestBody WishlistDTO request) {
-    try {
-      Wishlist wishlist;
-      switch (request.getAction().toLowerCase()) {
-        case "add":
-          wishlist = wishlistService.addToWishlist(id, request.getItem());
-          break;
-        case "remove":
-          wishlist = wishlistService.removeFromWishlist(id, request.getItem().getProductId(),
-              request.getItem().getQuantity());
-          break;
-        default:
-          return ResponseEntity.badRequest().body("Invalid action for wishlist");
-      }
-      return ResponseEntity.ok(wishlist);
-    } catch (JsonProcessingException e) {
-      return ResponseEntity.status(500).body("Error processing wishlist");
+    Wishlist wishlist;
+    switch (request.getAction().toLowerCase()) {
+      case "add":
+        wishlist = wishlistService.addToWishlist(id, request.getItem());
+        break;
+      case "remove":
+        wishlist = wishlistService.removeFromWishlist(id, request.getItem().getProductUuid(),
+            request.getItem().getQuantity());
+        break;
+      default:
+        return ResponseEntity.badRequest().body("Invalid action for wishlist");
     }
+    return ResponseEntity.ok(wishlist);
   }
 
   @GetMapping("/{id}/orders")
@@ -142,7 +150,7 @@ public class UserController {
   public ResponseEntity<?> addPaymentToUser(@PathVariable UUID id, @RequestBody PaymentRequestDTO paymentDTO) {
     Optional<User> userOptional = userRepository.findById(id);
     if (userOptional.isEmpty()) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
     }
 
     User user = userOptional.get();
