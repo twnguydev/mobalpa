@@ -12,4 +12,5 @@ public class CategoryDTO {
     private String description;
     private String uri;
     private List<SubcategoryDTO> subcategories;
+    private List<ImageDTO> images;
 }

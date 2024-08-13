@@ -28,8 +28,7 @@ public class CategoryController {
   public ResponseEntity<?> getAllCategories() {
     List<Category> categories = categoryService.getAllCategories().orElseThrow(() -> new RuntimeException("No categories found"));
     if (categories != null && !categories.isEmpty()) {
-      List<CategoryDTO> categoriesDTO = categories.stream().map(Mapper::toCategoryDTO).collect(Collectors.toList());
-      return ResponseEntity.ok(categoriesDTO);
+      return ResponseEntity.ok(categories);
     } else {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No categories found");
     }
