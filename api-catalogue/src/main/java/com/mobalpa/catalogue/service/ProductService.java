@@ -228,12 +228,12 @@ public class ProductService {
         return storeRepository.findProductsByUuid(id);
     }
 
-    public List<Product> getProductsByCategoryId(UUID id) {
-        return productRepository.findByCategoryUuid(id);
+    public Optional<List<Product>> getProductsByCategoryId(UUID id) {
+        return Optional.of(productRepository.findByCategoryUuid(id));
     }
 
-    public List<Product> getProductsBySubcategoryId(UUID id) {
-        return productRepository.findBySubcategoryUuid(id);
+    public Optional<List<Product>> getProductsBySubcategoryId(UUID id) {
+        return Optional.of(productRepository.findBySubcategoryUuid(id));
     }
 
     public void deleteProduct(UUID id) {

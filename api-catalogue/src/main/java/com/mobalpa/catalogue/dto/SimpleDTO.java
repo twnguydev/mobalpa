@@ -8,4 +8,5 @@ import lombok.Data;
 public class SimpleDTO {
   private UUID uuid;
   private String name;
+  private String uri;
 }

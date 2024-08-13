@@ -17,6 +17,7 @@ databaseChangeLog:
                     "weight": 1.0,
                     "height": 15.0,
                     "width": 25.0,
+                    "uri": "petit-electromenager/grille-pain/grille-pain-deluxe",
                     "createdAt": {"$date": "2024-08-05T14:24:23.967Z"},
                     "category": {"$ref": "category", "$id": {"$binary": {"base64": "E0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
                     "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "aUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
@@ -27,7 +28,7 @@ databaseChangeLog:
                     "images": [
                       {
                         "_id": {"$binary": {"base64": "jE4GGTSY9QdpmgEZQt8snA==", "subType": "03"}},
-                        "uri": "/public/images/pem/grillepain.png",
+                        "uri": "/images/pem/grillepain.png",
                         "color": {"$ref": "colors", "$id": {"$binary": {"base64": "GE8esJRMho/wUZfnAf81pA==", "subType": "03"}}}
                       }
                     ],
@@ -43,6 +44,7 @@ databaseChangeLog:
                     "weight": 2.0,
                     "height": 20.0,
                     "width": 30.0,
+                    "uri": "petit-electromenager/micro-onde/micro-onde-pro",
                     "createdAt": {"$date": "2024-08-05T14:24:23.967Z"},
                     "category": {"$ref": "category", "$id": {"$binary": {"base64": "E0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
                     "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "bUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
@@ -53,7 +55,7 @@ databaseChangeLog:
                     "images": [
                       {
                         "_id": {"$binary": {"base64": "wUVjFX29i1Wb/7CZ04pZuQ==", "subType": "03"}},
-                        "uri": "/public/images/pem/microonde5.png",
+                        "uri": "/images/pem/microonde5.png",
                         "color": {"$ref": "colors", "$id": {"$binary": {"base64": "GE8esJRMho/wUZfnAf81pA==", "subType": "03"}}}
                       }
                     ],
@@ -69,6 +71,7 @@ databaseChangeLog:
                     "weight": 1.2,
                     "height": 25.0,
                     "width": 15.0,
+                    "uri": "petit-electromenager/mixeur/mixeur-turbo",
                     "createdAt": {"$date": "2024-08-05T14:24:23.967Z"},
                     "category": {"$ref": "category", "$id": {"$binary": {"base64": "E0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
                     "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "cUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
@@ -79,7 +82,7 @@ databaseChangeLog:
                     "images": [
                       {
                         "_id": {"$binary": {"base64": "kE3GGTSY9QdpmgEZQt8snA==", "subType": "03"}},
-                        "uri": "/public/images/pem/mixeur1.png",
+                        "uri": "/images/pem/mixeur1.png",
                         "color": {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
                       }
                     ],
@@ -95,6 +98,7 @@ databaseChangeLog:
                     "weight": 2.5,
                     "height": 20.0,
                     "width": 20.0,
+                    "uri": "petit-electromenager/friteuse/friteuse-pro",
                     "createdAt": {"$date": "2024-08-05T14:24:23.967Z"},
                     "category": {"$ref": "category", "$id": {"$binary": {"base64": "E0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
                     "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "dUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
@@ -105,7 +109,7 @@ databaseChangeLog:
                     "images": [
                       {
                         "_id": {"$binary": {"base64": "pF4GGTSY9QdpmgEZQt8snA==", "subType": "03"}},
-                        "uri": "/public/images/pem/friteuse.jpeg",
+                        "uri": "/images/pem/friteuse.jpeg",
                         "color": {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
                       }
                     ],
@@ -121,6 +125,7 @@ databaseChangeLog:
                     "weight": 3.0,
                     "height": 35.0,
                     "width": 20.0,
+                    "uri": "petit-electromenager/machine-a-cafe/machine-a-cafe-deluxe",
                     "createdAt": {"$date": "2024-08-05T14:24:23.967Z"},
                     "category": {"$ref": "category", "$id": {"$binary": {"base64": "E0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
                     "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "eUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
@@ -131,7 +136,7 @@ databaseChangeLog:
                     "images": [
                       {
                         "_id": {"$binary": {"base64": "nG5GGTSY9QdpmgEZQt8snA==", "subType": "03"}},
-                        "uri": "/public/images/pem/cafe2.png",
+                        "uri": "/images/pem/cafe2.png",
                         "color": {"$ref": "colors", "$id": {"$binary": {"base64": "Gx+KvG6zSbeY6kI5C1z5YA==", "subType": "03"}}}
                       }
                     ],

@@ -3,7 +3,7 @@ package com.mobalpa.catalogue.controller;
 import com.mobalpa.catalogue.model.Category;
 import com.mobalpa.catalogue.service.CategoryService;
 import com.mobalpa.catalogue.model.Subcategory;
-import com.mobalpa.catalogue.dto.SimpleDTO;
+import com.mobalpa.catalogue.dto.CategoryDTO;
 import com.mobalpa.catalogue.mapper.Mapper;
 
 import org.springframework.http.ResponseEntity;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 
 import java.util.Optional;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -29,7 +28,8 @@ public class CategoryController {
   public ResponseEntity<?> getAllCategories() {
     List<Category> categories = categoryService.getAllCategories().orElseThrow(() -> new RuntimeException("No categories found"));
     if (categories != null && !categories.isEmpty()) {
-      return ResponseEntity.ok(categories);
+      List<CategoryDTO> categoriesDTO = categories.stream().map(Mapper::toCategoryDTO).collect(Collectors.toList());
+      return ResponseEntity.ok(categoriesDTO);
     } else {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No categories found");
     }

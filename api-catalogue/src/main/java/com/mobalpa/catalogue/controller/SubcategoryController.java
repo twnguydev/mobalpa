@@ -2,6 +2,8 @@ package com.mobalpa.catalogue.controller;
 
 import com.mobalpa.catalogue.model.Subcategory;
 import com.mobalpa.catalogue.service.SubcategoryService;
+import com.mobalpa.catalogue.dto.SubcategoryDTO;
+import com.mobalpa.catalogue.mapper.Mapper;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/catalogue/subcategories")
@@ -21,9 +24,10 @@ public class SubcategoryController {
 
   @GetMapping
   public ResponseEntity<?> getAllSubcategories() {
-    Optional<List<Subcategory>> subcategories = subcategoryService.getAllSubcategories();
-    if (subcategories.isPresent() && !subcategories.get().isEmpty()) {
-      return ResponseEntity.ok(subcategories.get());
+    List<Subcategory> subcategories = subcategoryService.getAllSubcategories().orElseThrow(() -> new RuntimeException("No subcategories found"));
+    if (subcategories != null && !subcategories.isEmpty()) {
+      List<SubcategoryDTO> subcategoriesDTO = subcategories.stream().map(Mapper::toSubcategoryDTO).collect(Collectors.toList());
+      return ResponseEntity.ok(subcategoriesDTO);
     } else {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No subcategories found");
     }

@@ -25,5 +25,8 @@ public class Category {
     private String uri;
 
     @DBRef
+    private Image image;
+
+    @DBRef
     private List<Subcategory> subcategories = new ArrayList<>();
 }

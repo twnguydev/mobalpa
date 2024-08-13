@@ -9,32 +9,32 @@ databaseChangeLog:
               [
                 {
                   "_id": {"$binary": {"base64": "GE8esJRMho/wUZfnAf81pA==", "subType": "03"}},
-                  "name": "Red",
+                  "name": "Rouge",
                   "_class": "com.mobalpa.catalogue.model.Color"
                 },
                 {
                   "_id": {"$binary": {"base64": "LUSI2mi0zpRNFJTZbEQOgg==", "subType": "03"}},
-                  "name": "Blue",
+                  "name": "Bleu",
                   "_class": "com.mobalpa.catalogue.model.Color"
                 },
                 {
                   "_id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}},
-                  "name": "Black",
+                  "name": "Noir",
                   "_class": "com.mobalpa.catalogue.model.Color"
                 },
                 {
                   "_id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}},
-                  "name": "White",
+                  "name": "Blanc",
                   "_class": "com.mobalpa.catalogue.model.Color"
                 },
                 {
                   "_id": {"$binary": {"base64": "Gx+KvG6zSbeY6kI5C1z5YA==", "subType": "03"}},
-                  "name": "Gray",
+                  "name": "Gris anthracite",
                   "_class": "com.mobalpa.catalogue.model.Color"
                 },
                 {
                   "_id": {"$binary": {"base64": "Pv+kU6+xSsuN7kA0x3P4zQ==", "subType": "03"}},
-                  "name": "Purple",
+                  "name": "Violet",
                   "_class": "com.mobalpa.catalogue.model.Color"
                 }
               ]

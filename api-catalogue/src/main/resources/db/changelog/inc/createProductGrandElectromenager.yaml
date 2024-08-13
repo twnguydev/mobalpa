@@ -17,6 +17,7 @@ databaseChangeLog:
                   "weight": 15.0,
                   "height": 60.0,
                   "width": 60.0,
+                  "uri": "grand-electromenager/four/four-electrique",
                   "createdAt": {"$date": "2024-08-10T14:24:23.967Z"},
                   "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
                   "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "a1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
@@ -27,7 +28,7 @@ databaseChangeLog:
                   "images": [
                     {
                       "_id": {"$binary": {"base64": "oE5GGTSY9QdpmgEZQt8snA==", "subType": "03"}},
-                      "uri": "/public/images/kitchen-ecommerce/escapade-woodchair.png",
+                      "uri": "/images/kitchen-ecommerce/escapade-woodchair.png",
                       "color": {"$ref": "colors", "$id": {"$binary": {"base64": "GE8esJRMho/wUZfnAf81pA==", "subType": "03"}}}
                     }
                   ],
@@ -43,6 +44,7 @@ databaseChangeLog:
                   "weight": 25.0,
                   "height": 85.0,
                   "width": 60.0,
+                  "uri": "grand-electromenager/cuisiniere/cuisiniere-a-gaz",
                   "createdAt": {"$date": "2024-08-11T14:24:23.967Z"},
                   "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
                   "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "b1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
@@ -53,7 +55,7 @@ databaseChangeLog:
                   "images": [
                     {
                       "_id": {"$binary": {"base64": "rUVkFX29i1Wb/7CZ04pZuQ==", "subType": "03"}},
-                      "uri": "/public/images/kitchen-ecommerce/escapade-blue.png",
+                      "uri": "/images/kitchen-ecommerce/escapade-blue.png",
                       "color": {"$ref": "colors", "$id": {"$binary": {"base64": "LUSI2mi0zpRNFJTZbEQOgg==", "subType": "03"}}}
                     }
                   ],
@@ -69,6 +71,7 @@ databaseChangeLog:
                   "weight": 60.0,
                   "height": 85.0,
                   "width": 60.0,
+                  "uri": "grand-electromenager/machine-a-laver/machine-a-laver-7kg",
                   "createdAt": {"$date": "2024-08-12T14:24:23.967Z"},
                   "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
                   "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "c1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
@@ -79,7 +82,7 @@ databaseChangeLog:
                   "images": [
                     {
                       "_id": {"$binary": {"base64": "sE7GGTSY9QdpmgEZQt8snA==", "subType": "03"}},
-                      "uri": "/public/images/pem/seche3.png",
+                      "uri": "/images/pem/seche3.png",
                       "color": {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
                     }
                   ],
@@ -95,6 +98,7 @@ databaseChangeLog:
                   "weight": 70.0,
                   "height": 185.0,
                   "width": 60.0,
+                  "uri": "grand-electromenager/refrigerateur/refrigerateur-combine-300l",
                   "createdAt": {"$date": "2024-08-13T14:24:23.967Z"},
                   "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
                   "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "d1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
@@ -105,7 +109,7 @@ databaseChangeLog:
                   "images": [
                     {
                       "_id": {"$binary": {"base64": "vUVmFX29i1Wb/7CZ04pZuQ==", "subType": "03"}},
-                      "uri": "/public/images/kitchen-ecommerce/retro-wood.png",
+                      "uri": "/images/kitchen-ecommerce/retro-wood.png",
                       "color": {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
                     }
                   ],
@@ -121,6 +125,7 @@ databaseChangeLog:
                   "weight": 50.0,
                   "height": 85.0,
                   "width": 60.0,
+                  "uri": "grand-electromenager/lave-vaisselle/lave-vaisselle-12-couverts",
                   "createdAt": {"$date": "2024-08-14T14:24:23.967Z"},
                   "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
                   "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "e1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
@@ -131,7 +136,7 @@ databaseChangeLog:
                   "images": [
                     {
                       "_id": {"$binary": {"base64": "xUVnFX29i1Wb/7CZ04pZuQ==", "subType": "03"}},
-                      "uri": "/public/images/kitchen-ecommerce/iconique-blue.png",
+                      "uri": "/images/kitchen-ecommerce/iconique-blue.png",
                       "color": {"$ref": "colors", "$id": {"$binary": {"base64": "LUSI2mi0zpRNFJTZbEQOgg==", "subType": "03"}}}
                     }
                   ],

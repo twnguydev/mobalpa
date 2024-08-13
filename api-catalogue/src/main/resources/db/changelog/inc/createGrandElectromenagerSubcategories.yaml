@@ -10,7 +10,8 @@ databaseChangeLog:
                 {
                   "_id": {"$binary": {"base64": "a1BzEwv4EBu2gqn367EavA==", "subType": "03"}},
                   "name": "Four",
-                  "description": "Sous-catégorie de Grand électroménager",
+                  "description": "Découvrez notre gamme de fours",
+                  "uri": "grand-electromenager/four",
                   "products": [
                     {"$ref": "product", "$id": {"$binary": {"base64": "Z1a1ZZjt27A9whsacnLikw==", "subType": "03"}}}
                   ],
@@ -20,7 +21,8 @@ databaseChangeLog:
                 {
                   "_id": {"$binary": {"base64": "b1BzEwv4EBu2gqn367EavA==", "subType": "03"}},
                   "name": "Cuisinière",
-                  "description": "Sous-catégorie de Grand électroménager",
+                  "description": "Améliorez votre potentiel culinaire",
+                  "uri": "grand-electromenager/cuisiniere",
                   "products": [
                     {"$ref": "product", "$id": {"$binary": {"base64": "Y2b2ZZjt27A9whsacnLikw==", "subType": "03"}}}
                   ],
@@ -30,7 +32,8 @@ databaseChangeLog:
                 {
                   "_id": {"$binary": {"base64": "c1BzEwv4EBu2gqn367EavA==", "subType": "03"}},
                   "name": "Machine à laver",
-                  "description": "Sous-catégorie de Grand électroménager",
+                  "description": "Optimisez votre laverie avec nos machines à laver",
+                  "uri": "grand-electromenager/machine-a-laver",
                   "products": [
                     {"$ref": "product", "$id": {"$binary": {"base64": "X3d3ZZjt27A9whsacnLikw==", "subType": "03"}}}
                   ],
@@ -39,8 +42,9 @@ databaseChangeLog:
                 },
                 {
                   "_id": {"$binary": {"base64": "d1BzEwv4EBu2gqn367EavA==", "subType": "03"}},
-                  "name": "Frigo",
-                  "description": "Sous-catégorie de Grand électroménager",
+                  "name": "Réfrigérateur",
+                  "description": "Conservez vos aliments dans un environnement optimal",
+                  "uri": "grand-electromenager/refrigerateur",
                   "products": [
                     {"$ref": "product", "$id": {"$binary": {"base64": "W4e4ZZjt27A9whsacnLikw==", "subType": "03"}}}
                   ],
@@ -49,8 +53,9 @@ databaseChangeLog:
                 },
                 {
                   "_id": {"$binary": {"base64": "e1BzEwv4EBu2gqn367EavA==", "subType": "03"}},
-                  "name": "Lave-vaiselle",
-                  "description": "Sous-catégorie de Grand électroménager",
+                  "name": "Lave vaiselle",
+                  "description": "Choisissez la qualité pour votre vaisselle",
+                  "uri": "grand-electromenager/lave-vaisselle",
                   "products": [
                     {"$ref": "product", "$id": {"$binary": {"base64": "V5f5ZZjt27A9whsacnLikw==", "subType": "03"}}}
                   ],

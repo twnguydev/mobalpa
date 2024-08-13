@@ -10,7 +10,13 @@ databaseChangeLog:
                 {
                   "_id": {"$binary": {"base64": "bkQwUIC3k4R8r3ZrTsocow==", "subType": "03"}},
                   "name": "Cuisines",
-                  "description": "Catégorie de meubles",
+                  "description": "Ajoutez une touche de modernité à votre intérieur",
+                  "uri": "cuisines",
+                  "image": {
+                    "_id": {"$binary": {"base64": "bkQwUIC3k4R8r3ZrTsocow==", "subType": "03"}},
+                    "uri": "https://api.mobalpa.fr/sites/default/files/styles/landscape_2560x1440_2x/public/images/2024/07/01/02-visuelhomepagedesktop5300x2880.webp",
+                    "color": null
+                  },
                   "subcategories": [
                     {"$ref": "subcategory", "$id": {"$binary": {"base64": "jUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
                     {"$ref": "subcategory", "$id": {"$binary": {"base64": "kUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
@@ -23,7 +29,13 @@ databaseChangeLog:
                 {
                   "_id": {"$binary": {"base64": "E0oZQEgbc/27DcERW8OFmA==", "subType": "03"}},
                   "name": "Petit électroménager",
-                  "description": "Catégorie de meubles",
+                  "description": "Découvrez notre gamme de petit électroménager",
+                  "uri": "petit-electromenager",
+                  "image": {
+                    "_id": {"$binary": {"base64": "bkQwUIC3k4R8r3ZrTsocow==", "subType": "03"}},
+                    "uri": "https://api.mobalpa.fr/sites/default/files/styles/square568_2x/public/Plan-de-cuisson-esthete-1242x1242.webp",
+                    "color": null
+                  },
                   "subcategories": [
                     {"$ref": "subcategory", "$id": {"$binary": {"base64": "aUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
                     {"$ref": "subcategory", "$id": {"$binary": {"base64": "bUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
@@ -36,7 +48,13 @@ databaseChangeLog:
                 {
                   "_id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}},
                   "name": "Grand électroménager",
-                  "description": "Catégorie de meubles",
+                  "description": "Profitez d'une large gamme de produits",
+                  "uri": "grand-electromenager",
+                  "image": {
+                    "_id": {"$binary": {"base64": "bkQwUIC3k4R8r3ZrTsocow==", "subType": "03"}},
+                    "uri": "https://api.mobalpa.fr/sites/default/files/styles/landscape_372x248_2x/public/images/2023/11/21/equipements-electro-1326x884.webp",
+                    "color": null
+                  },
                   "subcategories": [
                     {"$ref": "subcategory", "$id": {"$binary": {"base64": "a1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
                     {"$ref": "subcategory", "$id": {"$binary": {"base64": "b1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
@@ -49,7 +67,13 @@ databaseChangeLog:
                 {
                   "_id": {"$binary": {"base64": "A0oZQEgbc/27DcERW8OFmA==", "subType": "03"}},
                   "name": "Salle de bain",
-                  "description": "Catégorie de meubles",
+                  "description": "Découvrez notre gamme de meubles de salle de bain",
+                  "uri": "salle-de-bain",
+                  "image": {
+                    "_id": {"$binary": {"base64": "bkQwUIC3k4R8r3ZrTsocow==", "subType": "03"}},
+                    "uri": "https://api.mobalpa.fr/sites/default/files/styles/landscape_372x248_2x/public/images/2023/04/04/cropped/dossier_taille_limite_1850x1152-salle-de-bain-bois-ambiance-scandinave-mobalpa.webp",
+                    "color": null
+                  },
                   "subcategories": [
                     {"$ref": "subcategory", "$id": {"$binary": {"base64": "fUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
                     {"$ref": "subcategory", "$id": {"$binary": {"base64": "gUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
@@ -61,7 +85,13 @@ databaseChangeLog:
                 {
                   "_id": {"$binary": {"base64": "C0oZQEgbc/27DcERW8OFmA==", "subType": "03"}},
                   "name": "Accessoires",
-                  "description": "Catégorie de meubles",
+                  "description": "Personnalisez votre cuisine avec nos accessoires",
+                  "uri": "accessoires",
+                  "image": {
+                    "_id": {"$binary": {"base64": "bkQwUIC3k4R8r3ZrTsocow==", "subType": "03"}},
+                    "uri": "https://api.mobalpa.fr/sites/default/files/styles/square372_2x/public/images/2023/12/30/cellier-chill-dekstopmobile.webp",
+                    "color": null
+                  },
                   "subcategories": [
                     {"$ref": "subcategory", "$id": {"$binary": {"base64": "j0BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
                     {"$ref": "subcategory", "$id": {"$binary": {"base64": "k0BzEwv4EBu2gqn367EavA==", "subType": "03"}}},

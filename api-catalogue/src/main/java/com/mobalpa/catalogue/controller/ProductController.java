@@ -4,6 +4,8 @@ import com.mobalpa.catalogue.model.Product;
 import com.mobalpa.catalogue.service.ProductService;
 import com.mobalpa.catalogue.model.Store;
 import com.mobalpa.catalogue.service.CatalogueService;
+import com.mobalpa.catalogue.mapper.Mapper;
+import com.mobalpa.catalogue.dto.ProductDTO;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,7 @@ import com.mobalpa.catalogue.filter.ProductFilter;
 import java.util.List;
 import java.util.UUID;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/catalogue/products")
@@ -42,7 +45,8 @@ public class ProductController {
 
         List<Product> products = productService.getAllProducts(productFilter);
         if (!products.isEmpty()) {
-            return ResponseEntity.ok(products);
+            List<ProductDTO> productsDTO = products.stream().map(Mapper::toProductDTO).collect(Collectors.toList());
+            return ResponseEntity.ok(productsDTO);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No products found");
         }
@@ -65,9 +69,10 @@ public class ProductController {
 
     @GetMapping("/category/{id}")
     public ResponseEntity<?> getProductsByCategoryId(@PathVariable UUID id) {
-        Optional<List<Product>> products = Optional.of(productService.getProductsByCategoryId(id));
-        if (products.isPresent() && !products.get().isEmpty()) {
-            return ResponseEntity.ok(products.get());
+        List<Product> products = productService.getProductsByCategoryId(id).orElseThrow(() -> new RuntimeException("No products found for this subcategory"));
+        if (products != null && !products.isEmpty()) {
+            List<ProductDTO> productsDTO = products.stream().map(Mapper::toProductDTO).collect(Collectors.toList());
+            return ResponseEntity.ok(productsDTO);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No products found for this category");
         }
@@ -75,9 +80,10 @@ public class ProductController {
 
     @GetMapping("/sub/{id}")
     public ResponseEntity<?> getProductsBySubcategoryId(@PathVariable UUID id) {
-        Optional<List<Product>> products = Optional.of(productService.getProductsBySubcategoryId(id));
-        if (products.isPresent() && !products.get().isEmpty()) {
-            return ResponseEntity.ok(products.get());
+        List<Product> products = productService.getProductsBySubcategoryId(id).orElseThrow(() -> new RuntimeException("No products found for this subcategory"));
+        if (products != null && !products.isEmpty()) {
+            List<ProductDTO> productsDTO = products.stream().map(Mapper::toProductDTO).collect(Collectors.toList());
+            return ResponseEntity.ok(productsDTO);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No products found for this subcategory");
         }

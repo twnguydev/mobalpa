@@ -13,30 +13,35 @@ public class Mapper {
             SimpleDTO dto = new SimpleDTO();
             dto.setUuid(category.getUuid());
             dto.setName(category.getName());
+            dto.setUri(category.getUri());
             return dto;
         } else if (entity instanceof Subcategory) {
             Subcategory subcategory = (Subcategory) entity;
             SimpleDTO dto = new SimpleDTO();
             dto.setUuid(subcategory.getUuid());
             dto.setName(subcategory.getName());
+            dto.setUri(subcategory.getUri());
             return dto;
         } else if (entity instanceof Product) {
             Product product = (Product) entity;
             SimpleDTO dto = new SimpleDTO();
             dto.setUuid(product.getUuid());
             dto.setName(product.getName());
+            dto.setUri(product.getUri());
             return dto;
         } else if (entity instanceof Brand) {
             Brand brand = (Brand) entity;
             SimpleDTO dto = new SimpleDTO();
             dto.setUuid(brand.getUuid());
             dto.setName(brand.getName());
+            dto.setUri(null);
             return dto;
         } else if (entity instanceof Color) {
             Color color = (Color) entity;
             SimpleDTO dto = new SimpleDTO();
             dto.setUuid(color.getUuid());
             dto.setName(color.getName());
+            dto.setUri(null);
             return dto;
         }
         return null;
