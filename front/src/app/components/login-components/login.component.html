@@ -8,7 +8,7 @@
     <form [formGroup]="form" (ngSubmit)="onSubmit()" method="post" action="#">
 
       <div class="mb-4">
-        <label for="email" class="block text-xl font-bold text-emerald-green mb-2">Nom</label>
+        <label for="email" class="block text-xl font-bold text-emerald-green mb-2">Adresse e-mail</label>
         <input id="email" [ngClass]="{'bg-red-600': form.get('email')?.invalid && form.get('email')?.touched}"
           formControlName="email" type="email" name="email"
           class="bg-emerald-green pl-2 bg-opacity-30 rounded-xl h-12 w-full mb-1">
@@ -44,9 +44,16 @@
       </div>
 
       <div class="flex items-center mb-4">
-        <input type="checkbox" [(ngModel)]="rememberMe" name="rememberMe" id="remember" class="mr-2">
+        <input type="checkbox" formControlName="remember" id="remember" class="mr-2">
         <label for="remember" class="text-mobalpa-green text-sm font-normal">Se souvenir de moi</label>
       </div>
+
+      <div *ngIf="errors.length > 0" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
+        <strong class="font-semibold">Erreur :</strong>
+        <ul class="list-disc pl-5 mt-2">
+          <li *ngFor="let error of errors" class="mb-1">{{ error }}</li>
+        </ul>
+      </div>      
 
       <button type="submit" [disabled]="form.invalid"
         class="bg-emerald-green w-full cursor-pointer px-7 py-3 rounded-xl font-bold text-white text-xl mt-6 hover:bg-mobalpa-green">

@@ -62,9 +62,8 @@
           <input type="password" id="password" formControlName="password"
             [ngClass]="{'bg-red-600': form.get('password')?.invalid && form.get('password')?.touched}"
             class="bg-emerald-green pl-2 bg-opacity-30 rounded-xl h-12 w-full mb-1" />
-          <span *ngIf="form.get('password')?.invalid && form.get('password')?.touched" class="text-red-600">
-            Minimum 6 caractères
-          </span>
+            <span *ngIf="form.get('password')?.errors?.['required'] && form.get('password')?.touched" class="text-red-600">Mot de passe requis</span>
+            <span *ngIf="form.get('password')?.errors?.['minlength'] && form.get('password')?.touched" class="text-red-600">Le mot de passe doit contenir au moins 6 caractères</span>
         </div>
 
         <div>
@@ -73,10 +72,8 @@
           <input type="password" id="confirmPassword" formControlName="confirmPassword"
             [ngClass]="{'bg-red-600': form.get('confirmPassword')?.invalid && form.get('confirmPassword')?.touched}"
             class="bg-emerald-green pl-2 bg-opacity-30 rounded-xl h-12 w-full mb-1" />
-          <span *ngIf="form.get('confirmPassword')?.invalid && form.get('confirmPassword')?.touched"
-            class="text-red-600">
-            Les mots de passe ne correspondent pas
-          </span>
+            <span *ngIf="form.get('confirmPassword')?.errors?.['required'] && form.get('confirmPassword')?.touched" class="text-red-600">La confirmation du mot de passe est requise</span>
+            <span *ngIf="form.errors?.['passwordMismatch'] && form.get('confirmPassword')?.touched" class="text-red-600">Les mots de passe ne correspondent pas</span>
         </div>
       </div>
 
@@ -106,6 +103,13 @@
       </div>
       <div *ngIf="errorMessage" class="text-red-600 font-bold my-4">
         {{ errorMessage }}
+      </div>
+
+      <div *ngIf="errors.length > 0" class="bg-red-100 mt-5 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+        <strong class="font-semibold">Erreur :</strong>
+        <ul class="list-disc ml-5 mt-2">
+          <li *ngFor="let error of errors">{{ error }}</li>
+        </ul>
       </div>
 
       <button type="submit"

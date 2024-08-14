@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
 import { AuthService } from './../../../services/auth.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -16,12 +16,17 @@ export class RegisterComponent implements OnInit {
   form: FormGroup;
   successMessage: string = '';
   errorMessage: string = '';
+  errors: string[] = [];
   formSubmitted: boolean = false;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {
     this.form = this.fb.group({
-      lastname: ['', Validators.required],
-      firstname: ['', Validators.required],
+      lastname: ['', [Validators.required, Validators.minLength(3)]],
+      firstname: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
       phoneNumber: ['', [Validators.required, Validators.pattern("[0-9]{10}")]],
       birthdate: ['', Validators.required],
@@ -34,36 +39,29 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {}
 
-  passwordMatchValidator(control: AbstractControl): { [key: string]: boolean } | null {
-    const passwordControl = control.get('password');
-    const confirmPasswordControl = control.get('confirmPassword');
-
-    if (!passwordControl || !confirmPasswordControl) {
-      return null;
-    }
-
-    return passwordControl.value === confirmPasswordControl.value ? null : { passwordMismatch: true };
+  passwordMatchValidator: ValidatorFn = (group: AbstractControl): { [key: string]: boolean } | null => {
+    const password = group.get('password')?.value;
+    const confirmPassword = group.get('confirmPassword')?.value;
+    return password === confirmPassword ? null : { passwordMismatch: true };
   }
 
   onSubmit() {
-    this.formSubmitted = true;
     if (this.form.valid) {
-      const formData = {
-        ...this.form.value,
-        address: null,
-        city: null,
-        zipcode: null
-      };
-
-      this.authService.signup(formData).subscribe({
+      this.authService.signup(this.form.value).subscribe({
         next: (response) => {
-          this.successMessage = 'Inscription réussie !';
-          this.errorMessage = '';
-          setTimeout(() => this.router.navigate(['/auth/connexion']), 6000);
+          if (response.errors) {
+            this.errors = response.errors;
+          } else {
+            this.errors = [];
+            this.successMessage = 'Inscription réussie ! Vous allez être redirigé vers la page de connexion';
+            setTimeout(() => {
+              this.router.navigate(['/auth/connexion']);
+            }, 5000);
+          }
         },
-        error: (error) => {
-          console.error('Signup error', error);
-          this.handleErrorResponse(error);
+        error: (err) => {
+          console.error(err);
+          this.errors = ['Erreur lors de l\'inscription'];
         }
       });
     } else {
@@ -78,16 +76,5 @@ export class RegisterComponent implements OnInit {
         console.log(`Control ${controlName} has errors:`, control.errors);
       }
     });
-  }
-
-  handleErrorResponse(error: any) {
-    if (error.status === 400) {
-      this.errorMessage = 'Les données fournies sont invalides. Veuillez vérifier les champs et réessayer.';
-    } else if (error.status === 409) {
-      this.errorMessage = 'Cet e-mail est déjà utilisé. Veuillez en utiliser un autre.';
-    } else {
-      this.errorMessage = 'Erreur lors de l\'inscription. Veuillez réessayer.';
-    }
-    this.successMessage = '';
   }
 }

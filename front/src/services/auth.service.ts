@@ -46,30 +46,33 @@ export class AuthService {
   }
 
   signup(data: IUser): Observable<any> {
-    if (!this.checkInputsSignup(data)) {
-      console.error('Invalid signup data');
-      return of(null);
-    }
-
+    const formatDate = (date: string | Date): string => {
+      const d = new Date(date);
+      const year = d.getFullYear();
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    };
+  
     return this.http.post<any>(`${this.apiUrl}/register`, {
       ...data,
-      birthdate: new Date(data.birthdate).toISOString()
+      birthdate: formatDate(data.birthdate)
     }, {
-      headers: {
+      headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'X-API-KEY': `${environment.apiKey}`
-      }
+      })
     }).pipe(
-      map(response => {
-        localStorage.setItem('token', response.token);
-        return response;
-      }),
+      map(response => response),
       catchError(error => {
-        console.error('Signup error', error);
-        return of(null);
+        console.error('Detailed error response:', error);
+        if (error.status === 400 && error.error.message) {
+          return of({ errors: [error.error.message] });
+        }
+        return of({ errors: ['Erreur inconnue. Veuillez réessayer.'] });
       })
     );
-  }
+  }  
 
   forgotPassword(email: string): Observable<string> {
     return this.http.post(`${this.apiUrl}/forgot-password`, { email }, {
@@ -105,20 +108,6 @@ export class AuthService {
         console.error('Reset password error', error);
         return of('An error occurred');
       })
-    );
-  }
-
-  checkInputsSignup(data: IUser): boolean | '' | null | undefined {
-    const birthdateRegex = new RegExp(/^\d{4}-\d{2}-\d{2}$/);
-    const emailRegex = new RegExp(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/);
-    const phoneRegex = new RegExp(/^\d{10}$/);
-    return (
-      data.firstname.length > 3 &&
-      data.lastname.length > 3 &&
-      emailRegex.test(data.email) &&
-      (data.password.length > 5 && data.password === data.confirmPassword) &&
-      birthdateRegex.test(data.birthdate) &&
-      data.phoneNumber && phoneRegex.test(data.phoneNumber)
     );
   }
 
