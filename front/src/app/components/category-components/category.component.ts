@@ -19,6 +19,7 @@ export class CategoryComponent implements OnInit {
   categoryUri: string | null = null;
   subcategoryUri: string | null = null;
   subcategory: ISubcategory | null = null;
+  productAdded: boolean = false;
 
   colorMap: { [key: string]: string } = {
     Rouge: '#FF0000',
@@ -92,6 +93,7 @@ export class CategoryComponent implements OnInit {
       quantity: 1
     }).subscribe({
       next: () => {
+        this.productAdded = true;
         console.log('Product added to wishlist');
       },
       error: (error) => {
