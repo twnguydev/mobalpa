@@ -1,39 +1,76 @@
-<div class="relative overflow-hidden w-full h-120 ">
-    <div class="flex transition-transform duration-500 ease-in-out " id="carouselSlides">
+<div class="relative overflow-hidden w-full h-120">
+    <div class="flex transition-transform duration-500 ease-in-out" id="carouselSlides">
+        <!-- Slide 1 -->
         <div class="carousel-slide relative min-w-full h-120">
-            <img src="assets/forcarrousel/microonde.jpg" alt="Slide 1"
-                class="w-full h-full object-cover">
-            <div class="absolute inset-0 flex items-center justify-center">
-                <div class="text-center">
-                    <p class="text-white  text-3xl font-gotham">A petit prix</p><br>
-                    <p class="text-white text-8xl p-8 font-gotham">TOUT POUR VOTRE MAISON</p><br>
-                    <p class="text-white text-2xl underline font-gotham">voir plus</p><br>
+            <img src="assets/forcarrousel/microonde.jpg" alt="Slide 1" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+                <div class="text-center p-4">
+                    <p class="text-white text-xl md:text-3xl font-gotham uppercase">À petit prix</p><br>
+                    <p class="text-white text-4xl md:text-8xl p-4 md:p-8 font-gotham">Optimisez votre intérieur</p><br>
+                    <a href="/categories/petit-electromenager" class="mt-4 bg-white text-black px-6 py-2 rounded-lg font-gotham text-lg md:text-2xl">
+                        Je découvre
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline-block ml-2" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </a>
                 </div>
             </div>
         </div>
+        <!-- Slide 2 -->
         <div class="carousel-slide relative min-w-full h-120">
             <img src="assets/forcarrousel/petit-electromenager-indispensables.jpg" alt="Slide 2"
                 class="w-full h-full object-cover">
-            <div class="absolute inset-0 flex items-center justify-center">
-                <div class="text-center">
-                    <p class="text-white  text-3xl font-gotham">Edition limité</p><br>
-                    <p class="text-white text-8xl p-8 font-gotham">TOUT POUR VOTRE CUISINE</p><br>
-                    <p class="text-white text-2xl underline font-aquawax">voir plus</p><br>
+            <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+                <div class="text-center p-4">
+                    <p class="text-white text-xl md:text-3xl font-gotham uppercase">Éditions limitées</p><br>
+                    <p class="text-white text-4xl md:text-8xl p-4 md:p-8 font-gotham">Prenez du plaisir à cuisiner</p>
+                    <br>
+                    <a href="/categories/cuisines/decoration" class="mt-4 bg-white text-black px-6 py-2 rounded-lg font-gotham text-lg md:text-2xl">
+                        Je stylise ma cuisine
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline-block ml-2" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </a>
                 </div>
             </div>
         </div>
+        <!-- Slide 3 -->
         <div class="carousel-slide relative min-w-full h-120">
             <img src="assets/forcarrousel/sdb_idao_vert_0.jpg" alt="Slide 3" class="w-full h-full object-cover">
-            <div class="absolute inset-0 flex items-center justify-center">
-                <div class="text-center">
-                    <p class="text-white  text-3xl font-gotham">Grosse promo</p><br>
-                    <p class="text-white text-8xl p-8 font-gotham">TOUT LES JOURS</p><br>
-                    <p class="text-white text-2xl underline font-aquawax">voir plus</p><br>
+            <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+                <div class="text-center p-4">
+                    <p class="text-white text-xl md:text-3xl font-gotham uppercase">Tous les jours</p><br>
+                    <p class="text-white text-4xl md:text-8xl p-4 md:p-8 font-gotham">Profitez de votre salle de bain
+                    </p><br>
+                    <a href="/categories/salle-de-bain" class="mt-4 bg-white text-black px-6 py-2 rounded-lg font-gotham text-lg md:text-2xl">
+                        Découvrir les promotions
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline-block ml-2" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </a>
                 </div>
             </div>
         </div>
     </div>
 
-    <button class="absolute top-1/2 left-0 transform -translate-y-1/2 p-2 " (click)="prevSlide()">&#10094;</button>
-    <button class="absolute top-1/2 right-0 transform -translate-y-1/2  p-2 " (click)="nextSlide()">&#10095;</button>
+    <!-- Navigation Buttons -->
+    <button
+        class="absolute top-1/2 left-4 transform -translate-y-1/2 p-2 bg-black bg-opacity-50 text-white rounded-full"
+        (click)="prevSlide()">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline-block" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+    </button>
+    <button
+        class="absolute top-1/2 right-4 transform -translate-y-1/2 p-2 bg-black bg-opacity-50 text-white rounded-full"
+        (click)="nextSlide()">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline-block" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+        </svg>
+    </button>
 </div>
