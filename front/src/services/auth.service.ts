@@ -127,7 +127,7 @@ export class AuthService {
     localStorage.removeItem('currentUser');
     this.user = null;
     clearTimeout(this.tokenExpirationTimeout);
-    this.router.navigate(['/login']);
+    this.router.navigate(['/auth/connexion']);
   }
 
   isAuthenticated(): boolean {
@@ -135,7 +135,7 @@ export class AuthService {
   }
 
   redirectToLogin(): void {
-    this.router.navigate(['/login']);
+    this.router.navigate(['/auth/connexion']);
   }
 
   private setTokenExpiration(token: string): void {

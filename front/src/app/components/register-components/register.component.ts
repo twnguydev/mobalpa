@@ -59,7 +59,7 @@ export class RegisterComponent implements OnInit {
         next: (response) => {
           this.successMessage = 'Inscription réussie !';
           this.errorMessage = '';
-          setTimeout(() => this.router.navigate(['/login']), 6000);
+          setTimeout(() => this.router.navigate(['/auth/connexion']), 6000);
         },
         error: (error) => {
           console.error('Signup error', error);

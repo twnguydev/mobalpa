@@ -36,7 +36,7 @@ export class ResetPasswordComponent implements OnInit {
         response => {
           this.successMessage = 'Mot de passe réinitialisé avec succès';
           setTimeout(() => {
-            this.router.navigate(['/login']);
+            this.router.navigate(['/auth/connexion']);
           }, 2000);
         },
         error => {
