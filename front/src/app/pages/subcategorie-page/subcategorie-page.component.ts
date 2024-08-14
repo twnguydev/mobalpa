@@ -29,7 +29,7 @@ export class SubcategoriePageComponent implements OnInit {
   }
 
   loadSubcategoriesByCategory(categoryUri: string): void {
-    this.productService.getSubcategoriesByCategory(categoryUri).subscribe({
+    this.productService.getSubcategoriesByCategoryUri(categoryUri).subscribe({
       next: (response) => {
         console.log("Subcategories loaded", response);
         this.parentCategoryName = response.parentCategoryName;

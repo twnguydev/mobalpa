@@ -64,6 +64,11 @@ public class CatalogueController {
     return ResponseEntity.ok(catalogueService.getProductsByCategoryId(categoryId));
   }
 
+  @GetMapping("/subcategories")
+  public ResponseEntity<?> getAllSubcategories() {
+    return ResponseEntity.ok(catalogueService.getAllSubcategories());
+  }
+
   @GetMapping("/subcategories/{subcategoryId}/products")
   public ResponseEntity<?> getProductsBySubcategory(@PathVariable UUID subcategoryId) {
     return ResponseEntity.ok(catalogueService.getProductsBySubcategoryId(subcategoryId));

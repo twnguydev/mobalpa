@@ -1,100 +1,69 @@
-<div class="container mx-auto py-8">
-    <h1 class="text-6xl font-bold mb-8">Grille pain</h1>
+<div class="container mx-auto py-8 px-4">
+    <h1 class="text-3xl md:text-6xl font-bold mb-8 text-left">{{ subcategory?.name }}</h1>
+
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        <select class="border border-current p-2">
+        <select class="border border-gray-300 p-2 rounded-lg">
             <option>Marque</option>
             <option value="test">test</option>
             <option value="test2">test2</option>
             <option value="test3">test3</option>
             <option value="test4">test4</option>
         </select>
-        <select class="border border-current p-2">
+        <select class="border border-gray-300 p-2 rounded-lg">
             <option>Couleur</option>
-
         </select>
-        <select class="border border-current p-2">
+        <select class="border border-gray-300 p-2 rounded-lg">
             <option>Prix</option>
-
         </select>
-        <select class="border border-current p-2">
+        <select class="border border-gray-300 p-2 rounded-lg">
             <option>Taille</option>
-
         </select>
-        <select class="border border-current p-2">
+        <select class="border border-gray-300 p-2 rounded-lg">
             <option>Matériaux</option>
-
         </select>
     </div>
+
     <div class="flex justify-between items-center mb-4">
-        <span>534 articles</span>
+        <span class="text-gray-700">{{ products.length }} article<span *ngIf="products.length > 1">s</span>
+            trouvé</span>
         <div class="flex items-center space-x-2">
             <span class="text-gray-500">Trier par:</span>
-            <select class="border border-current p-2">
+            <select class="border border-gray-300 p-2 rounded-lg">
                 <option>Pertinence</option>
-
             </select>
         </div>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
-        <div class="border p-4 rounded">
-            <img src="https://via.placeholder.com/200" alt="Product Image" class="w-full h-auto mb-4">
-            <h2 class="text-lg font-bold mb-2">Lorem ipsum dolor sit amet, consectetur</h2>
-            <p class="text-xl font-semibold mb-2">$299</p>
-            <div class="flex items-center mb-2">
-                <span class="text-yellow-500">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
-                <span class="ml-2">(21)</span>
-            </div>
-            <p class="text-sm text-green-600">En stock</p>
-            <p class="text-sm text-green-600">Disponible à la livraison</p>
-            <button class="mt-4 w-full bg-red-500 text-white p-2 rounded">Ajouter au panier</button>
-        </div>
-        <div class="border p-4 rounded">
-            <img src="https://via.placeholder.com/200" alt="Product Image" class="w-full h-auto mb-4">
-            <h2 class="text-lg font-bold mb-2">Lorem ipsum dolor sit amet, consectetur</h2>
-            <p class="text-xl font-semibold mb-2">$299</p>
-            <div class="flex items-center mb-2">
-                <span class="text-yellow-500">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
-                <span class="ml-2">(21)</span>
-            </div>
-            <p class="text-sm text-green-600">En stock</p>
-            <p class="text-sm text-green-600">Disponible à la livraison</p>
-            <button class="mt-4 w-full bg-red-500 text-white p-2 rounded">Ajouter au panier</button>
-        </div>
-        <div class="border p-4 rounded">
-            <img src="https://via.placeholder.com/200" alt="Product Image" class="w-full h-auto mb-4">
-            <h2 class="text-lg font-bold mb-2">Lorem ipsum dolor sit amet, consectetur</h2>
-            <p class="text-xl font-semibold mb-2">$299</p>
-            <div class="flex items-center mb-2">
-                <span class="text-yellow-500">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
-                <span class="ml-2">(21)</span>
-            </div>
-            <p class="text-sm text-green-600">En stock</p>
-            <p class="text-sm text-green-600">Disponible à la livraison</p>
-            <button class="mt-4 w-full bg-red-500 text-white p-2 rounded">Ajouter au panier</button>
-        </div>
-        <div class="border p-4 rounded">
-            <img src="https://via.placeholder.com/200" alt="Product Image" class="w-full h-auto mb-4">
-            <h2 class="text-lg font-bold mb-2">Lorem ipsum dolor sit amet, consectetur</h2>
-            <p class="text-xl font-semibold mb-2">$299</p>
-            <div class="flex items-center mb-2">
-                <span class="text-yellow-500">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
-                <span class="ml-2">(21)</span>
-            </div>
-            <p class="text-sm text-green-600">En stock</p>
-            <p class="text-sm text-green-600">Disponible à la livraison</p>
-            <button class="mt-4 w-full bg-red-500 text-white p-2 rounded">Ajouter au panier</button>
-        </div>
-        <div class="border p-4 rounded">
-            <img src="https://via.placeholder.com/200" alt="Product Image" class="w-full h-auto mb-4">
-            <h2 class="text-lg font-bold mb-2">Lorem ipsum dolor sit amet, consectetur</h2>
-            <p class="text-xl font-semibold mb-2">$299</p>
-            <div class="flex items-center mb-2">
-                <span class="text-yellow-500">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
-                <span class="ml-2">(21)</span>
-            </div>
-            <p class="text-sm text-green-600">En stock</p>
-            <p class="text-sm text-green-600">Disponible à la livraison</p>
-            <button class="mt-4 w-full bg-red-500 text-white p-2 rounded">Ajouter au panier</button>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 mb-8">
+        <div *ngFor="let product of products" class="border p-4 rounded-lg">
+            <a href="/categories/{{ product.category.uri }}" class="flex items-center mb-4">
+                <span class="text-sm text-custom-blue ml-1">{{ product.category.name }}</span>
+            </a>
+            <a href="/categories/{{ product.uri }}">
+                <div class="flex items-center justify-center">
+                    <img [src]="product.images[0].uri" alt="{{ product.name }}" class="w-40 h-auto object-cover mb-4">
+                </div>
+                <h2 class="text-lg font-bold mb-2">{{ product.name }}</h2>
+                <p class="text-sm text-gray-500">{{ product.description }}</p>
+                <div class="flex items-center justify-between mt-4">
+                    <div class="flex items-center space-x-2">
+                        <span class="text-gray-500">{{ product.brand.name }}</span>
+                    </div>
+                </div>
+                <div class="flex items-center justify-between my-2">
+                    <div class="flex items-center space-x-2">
+                        <span *ngFor="let color of product.colors" 
+                              class="w-5 h-5 rounded-full border border-gray-300" 
+                              [style.background-color]="getColorHex(color.name)">
+                        </span>
+                    </div>
+                </div>
+                <p class="text-xl font-semibold mb-2">{{ product.price }} €</p>
+                <p class="text-sm text-green-600" *ngIf="product.stock > 0">En stock</p>
+                <p class="text-sm text-red-600" *ngIf="product.stock === 0">Rupture de stock</p>
+            </a>
+            <button class="mt-4 w-full bg-mobalpa-green-alternate text-white p-2 rounded-lg">Ajouter au panier</button>
+            <button (click)="addToWishlist(product)" class="mt-2 w-full bg-gray-200 text-gray-700 p-2 rounded-lg">Ajouter à la liste de souhaits</button>
         </div>
     </div>
 

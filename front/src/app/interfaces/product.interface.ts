@@ -4,6 +4,7 @@ export interface IProduct {
   uuid: string;
   name: string;
   description: string;
+  uri: string;
   price: number;
   stock: number;
   estimatedDelivery: string;

@@ -21,9 +21,9 @@ export const routes: Routes = [
     { path: 'info', component: HomeComponent },
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
+    { path: 'categories/:categoryUri', component: SubcategoriePageComponent },
     { path: 'categories/:categoryUri/:subcategoryUri', component: CategoryComponent },
     { path: 'profile', component: ProfileComponent },
-    { path: 'categories/:categoryUri', component: SubcategoriePageComponent },
 ];
 
 const routerOptions: ExtraOptions = {

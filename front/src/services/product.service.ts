@@ -32,42 +32,35 @@ export class ProductService {
 
   getCategories(): Observable<ICategory[]> {
     const headers: HttpHeaders = this.authService.getAuthHeaders() ?? this.authService.getXApiKeyHeaders();
-    console.log('Headers', headers);
     return this.http.get<ICategory[]>(this.apiUrl + '/categories', { headers });
   }
-  
-  getProductsByCategory(categoryUri: string): Observable<IProduct[]> {
+
+  getProductsBySubcategoryUri(categoryUri: string, subcategoryUri: string): Observable<IProduct[]> {
+    const fullUri = `${categoryUri}/${subcategoryUri}`;
     const headers: HttpHeaders = this.authService.getAuthHeaders() ?? this.authService.getXApiKeyHeaders();
-  
-    return this.getCategories().pipe(
-      map(categories => categories.find(category => category.uri === categoryUri)),
-      switchMap(category => {
-        if (!category) {
-          return new Observable<IProduct[]>((observer) => {
-            observer.next([]);
-            observer.complete();
-          });
+    return this.getSubcategories().pipe(
+      map(subcategories => subcategories.find(subcategory => subcategory.uri === fullUri)),
+      switchMap(subcategory => {
+        if (!subcategory) {
+          return of([]);
         }
-        return this.http.get<IProduct[]>(`${this.apiUrl}/categories/${category.uuid}/products`, { headers });
+        return this.http.get<IProduct[]>(`${this.apiUrl}/subcategories/${subcategory.uuid}/products`, { headers });
       }),
       catchError(error => {
-        console.error('Error fetching products by category', error);
+        console.error('Error fetching products by subcategory', error);
         return of([]);
       })
     );
   }
 
-  getSubcategoriesByCategory(categoryUri: string): Observable<{ parentCategoryName: string, subcategories: ISubcategory[] }> {
+  getSubcategoriesByCategoryUri(categoryUri: string): Observable<{ parentCategoryName: string, subcategories: ISubcategory[] }> {
     const headers: HttpHeaders = this.authService.getAuthHeaders() ?? this.authService.getXApiKeyHeaders();
 
     return this.getCategories().pipe(
       map(categories => categories.find(category => category.uri === categoryUri)),
       switchMap(category => {
         if (!category) {
-          return new Observable<{ parentCategoryName: string, subcategories: ISubcategory[] }>((observer) => {
-            observer.next({ parentCategoryName: '', subcategories: [] });
-            observer.complete();
-          });
+          return of({ parentCategoryName: '', subcategories: [] });
         }
         return this.http.get<ICategory>(`${this.apiUrl}/categories/${category.uuid}`, { headers }).pipe(
           map(categoryResponse => ({
@@ -79,6 +72,27 @@ export class ProductService {
       catchError(error => {
         console.error('Error fetching subcategories by category', error);
         return of({ parentCategoryName: '', subcategories: [] });
+      })
+    );
+  }
+
+  getSubcategories(): Observable<ISubcategory[]> {
+    const headers: HttpHeaders = this.authService.getAuthHeaders() ?? this.authService.getXApiKeyHeaders();
+    return this.http.get<ISubcategory[]>(`${this.apiUrl}/subcategories`, { headers }).pipe(
+      catchError(error => {
+        console.error('Error fetching subcategories', error);
+        return of([]);
+      })
+    );
+  }
+
+  getSubcategoryByUri(categoryUri: string, subcategoryUri: string): Observable<ISubcategory | null> {
+    const fullUri = `${categoryUri}/${subcategoryUri}`;
+    return this.getSubcategories().pipe(
+      map(subcategories => subcategories.find(subcategory => subcategory.uri === fullUri) || null),
+      catchError(error => {
+        console.error('Error fetching subcategory by URI', error);
+        return of(null);
       })
     );
   }

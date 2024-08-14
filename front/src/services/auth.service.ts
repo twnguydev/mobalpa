@@ -134,6 +134,10 @@ export class AuthService {
     return !!localStorage.getItem('token');
   }
 
+  redirectToLogin(): void {
+    this.router.navigate(['/login']);
+  }
+
   private setTokenExpiration(token: string): void {
     const expirationDate = this.getTokenExpirationDate(token);
     if (expirationDate) {

@@ -219,4 +219,14 @@ public class CatalogueService {
 
         restTemplate.exchange(this.baseUrl + "/products/categories/" + id, HttpMethod.DELETE, request, Void.class);
     }
+
+    public List<SubcategoryDTO> getAllSubcategories() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("X-API-KEY", this.apiKey);
+        HttpEntity<String> request = new HttpEntity<>(headers);
+
+        ResponseEntity<SubcategoryDTO[]> response = restTemplate.exchange(
+                this.baseUrl + "/subcategories", HttpMethod.GET, request, SubcategoryDTO[].class);
+        return Arrays.asList(response.getBody());
+    }
 }
