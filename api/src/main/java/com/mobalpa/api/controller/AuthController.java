@@ -1,7 +1,7 @@
 package com.mobalpa.api.controller;
 
 import com.mobalpa.api.dto.LoginDTO;
-import com.mobalpa.api.dto.LoginResponse;
+import com.mobalpa.api.dto.LoginRequestDTO;
 import com.mobalpa.api.model.User;
 import com.mobalpa.api.service.UserService;
 
@@ -11,9 +11,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.authentication.BadCredentialsException;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.io.IOException;
 import java.util.Map;
 
 @RestController
@@ -27,45 +28,37 @@ public class AuthController {
     private AuthenticationManager authenticationManager;
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@RequestBody User user) {
-        try {
-            userService.registerUser(user);
-            return ResponseEntity.ok("Registration successful. Please check your email for confirmation.");
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+    public ResponseEntity<?> registerUser(@RequestBody User user) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.registerUser(user));
     }
 
     @GetMapping("/confirm")
     public ResponseEntity<String> confirmUser(@RequestParam("token") String token) {
         User user = userService.confirmUser(token);
-        if (user != null) {
-            return ResponseEntity.ok("Account confirmed successfully.");
-        } else {
-            return ResponseEntity.badRequest().body("Invalid token.");
+        
+        try {
+            String templatePath;
+            if (user != null) {
+                templatePath = "src/main/resources/templates/successTemplate.html"; 
+            } else {
+                templatePath = "src/main/resources/templates/errorTemplate.html"; 
+            }
+    
+            String htmlContent = Files.readString(Paths.get(templatePath));
+            return ResponseEntity.ok(htmlContent);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erreur lors de la génération du contenu HTML.");
         }
     }
 
+
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody LoginDTO loginDTO) {
-        try {
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword()));
-            User user = userService.getUserByEmail(loginDTO.getEmail());
-
-            if (user == null || !user.isActive()) {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Account is not active or does not exist");
-            }
-
-            String token = userService.generateToken(user);
-            return ResponseEntity.ok(new LoginResponse(user, token));
-        } catch (BadCredentialsException e) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid credentials");
-        } catch (AuthenticationException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authentication failed");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred");
-        }
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword()));
+        User user = userService.getUserByEmail(loginDTO.getEmail());
+        String token = userService.generateToken(user);
+        return ResponseEntity.ok(new LoginRequestDTO(user, token));
     }
 
     @PostMapping("/forgot-password")

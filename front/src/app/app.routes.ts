@@ -1,4 +1,4 @@
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, ExtraOptions } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { LandingPageComponent } from './pages/landing-page/landing-page.component';
 import { CartPageComponent } from './pages/cart_page/cart-page.component';
@@ -12,37 +12,28 @@ import { RegisterComponent } from './components/register-components/register.com
 import { CategoryComponent } from '@components/category-components/category.component';
 import { ProductComponent } from './components/product-components/product.component';
 import { ProfileComponent } from '@components/profile-components/profile.component';
+
 export const routes: Routes = [
-    {
-        path: '',
-        component: LandingPageComponent,
-    },
-    {
-        path: 'panier',
-        component: CartPageComponent,
-    },
-
-    {
-        path: 'liste-de-souhaits',
-        component: Wishlist_PageComponent,
-    },
-
-    {
-        path: 'support',
-        component: SupportPageComponent,
-    },
+    { path: '', component: LandingPageComponent },
+    { path: 'panier', component: CartPageComponent },
+    { path: 'liste-de-souhaits', component: Wishlist_PageComponent },
+    { path: 'support', component: SupportPageComponent },
     { path: 'info', component: HomeComponent },
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
-    { path: 'category', component: CategoryComponent },
-    { path: 'product', component: ProductComponent },
+    { path: 'categories/:categoryUri/:subcategoryUri', component: CategoryComponent },
     { path: 'profile', component: ProfileComponent },
     {
         path: 'sub', component: SubcategoriePageComponent
     },
 ];
+
+const routerOptions: ExtraOptions = {
+    useHash: true,
+};
+
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
+    imports: [RouterModule.forRoot(routes, routerOptions)],
     exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

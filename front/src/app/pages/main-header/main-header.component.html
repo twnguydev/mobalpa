@@ -1,6 +1,6 @@
 <header class="bg-mobalpa-green relative">
-    <div class="bg-emerald-green h-8 hidden md:block ">
-        <div class="flex p-1 justify-around overflow-hidden ">
+    <div class="bg-emerald-green h-10 hidden md:block">
+        <div class="flex p-1 pt-2 justify-around items-center overflow-hidden">
             <div class="flex text_move">
                 <img class='w-6' src="/assets/icon/truck.png" alt="">
                 <p class="px-4 md:text-base text-xs ">LIVRAISON RAPIDE !</p>
@@ -18,7 +18,7 @@
     <div class="container mx-auto px-6 py-4 flex items-center justify-between relative">
         <div class="flex items-center space-x-6 justify-between">
             <div class="w-40 flex-shrink-0">
-            <a href="/"> <img src="/assets/logo-MA2.png" alt="Logo" class="h-12 w-auto"></a>
+                <a href="/"> <img src="/assets/logo-MA2.png" alt="Logo" class="h-12 w-auto"></a>
             </div>
 
 
@@ -84,65 +84,54 @@
 
 
 
-    <div id="sous-menu" class=" bg-white flex text-black font-gotham divide-x justify-around absolute top-full left-0 right-0 z-50 hidden
-        md:text-xs md:pl-2 md:pr-2">
-        <div class="container mx-auto py-8">
-            <div class="grid grid-cols-5 gap-8">
-                <div>
-                    <h2 class="text-xl md:text-sm font-bold">Cuisines</h2>
-                    <ul class="mt-4 space-y-2  mb-7 h-36">
-                        <li>Plan de travail</li>
-                        <li>Table</li>
-                        <li>Chaise</li>
-                        <li>Decoration</li>
-                        <li>Meuble de rangement</li>
-                    </ul>
-                    <img src="https://st.hzcdn.com/simgs/5c61c342010aabb5_14-6012/home-design.jpg" alt="img">
-                </div>
-                <div>
-                    <h2 class="text-xl md:text-sm font-bold">Petit électro.</h2>
-                    <ul class="mt-4 space-y-2  mb-7 h-36">
-                        <li>Grille pain</li>
-                        <li>Four à micro-onde</li>
-                        <li>Mixeur</li>
-                        <li>Friteuse</li>
-                        <li>Machine à café</li>
-                    </ul>
-                    <img src="https://st.hzcdn.com/simgs/5c61c342010aabb5_14-6012/home-design.jpg" alt="img">
-                </div>
-                <div>
-                    <h2 class="text-xl md:text-sm font-bold">Grand électro.</h2>
-                    <ul class="mt-4 space-y-2  mb-7 h-36">
-                        <li>Four</li>
-                        <li>Cuisinière</li>
-                        <li>Machine à laver</li>
-                        <li>Frigo</li>
-                        <li>Lave-vaisselle</li>
-                    </ul>
-                    <img src="https://st.hzcdn.com/simgs/5c61c342010aabb5_14-6012/home-design.jpg" alt="img">
-                </div>
-                <div>
-                    <h2 class="text-xl md:text-sm font-bold">Salle de bain</h2>
-                    <ul class="mt-4 space-y-2  mb-7 h-36">
-                        <li>Douche</li>
-                        <li>Rideau</li>
-                        <li>Lavabo</li>
-                        <li>Meuble de rangement</li>
-                    </ul>
-                    <img src="https://st.hzcdn.com/simgs/5c61c342010aabb5_14-6012/home-design.jpg" alt="img">
-                </div>
-                <div>
-                    <h2 class="text-xl md:text-sm font-bold">Accessoire</h2>
-                    <ul class="mt-4 space-y-2  mb-7 h-36">
-                        <li>Ustensile de cuisine</li>
-                        <li>Décoration intérieur</li>
-                        <li>Décoration Exterieur</li>
-                    </ul>
-                    <img src="https://st.hzcdn.com/simgs/5c61c342010aabb5_14-6012/home-design.jpg" alt="img">
+    <div id="sous-menu"
+        class="bg-white text-black font-gotham divide-y divide-gray-200 absolute top-full left-0 right-0 z-50 hidden">
+        <div class="mx-5 py-8">
+            <div class="hidden md:grid md:grid-cols-5 md:gap-8 md:mb-4">
+                <div *ngFor="let category of categories" class="flex items-center">
+                    <h2 class="text-xl font-bold">
+                        <a href="/categories/{{ category.uri }}">{{ category.name }}</a>
+                    </h2>
                 </div>
             </div>
-        </div>
+            <div class="hidden md:grid md:grid-cols-5 md:gap-8">
+                <div *ngFor="let category of categories" class="relative flex flex-col justify-between">
+                    <ul class="space-y-2 h-36">
+                        <li *ngFor="let subcategory of category.subcategories">
+                            <a href="/categories/{{ subcategory.uri }}">{{ subcategory.name }}</a>
+                        </li>
+                    </ul>
 
-        <!-- Ajoutez plus de lignes ici si nécessaire -->
+                    <div class="mt-10">
+                        <div *ngIf="category.images && category.images.length > 0">
+                            <img src="{{ category.images[0].uri }}" alt="{{ category.name }}" class="w-full h-36 object-cover">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="md:hidden">
+                <ul class="divide-y divide-gray-200 mx-5">
+                    <li *ngFor="let category of categories" class="py-4">
+                        <div class="flex justify-between items-center" (click)="toggleSubcategories(category.uuid)">
+                            <h2 class="text-lg font-bold">{{ category.name }}</h2>
+                            <button>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transform transition-transform"
+                                    [ngClass]="{'rotate-180': category.isOpen, 'rotate-0': !category.isOpen}"
+                                    viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd"
+                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 011.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                        </div>
+                        <ul *ngIf="category.isOpen" class="mt-2 pl-4 space-y-4">
+                            <li *ngFor="let subcategory of category.subcategories">
+                                <a href="/categories/{{ subcategory.uri }}">{{ subcategory.name }}</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
 </header>

@@ -1,29 +1,32 @@
 package com.mobalpa.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Set;
 import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
 @Table(name = "\"user\"")
 @Data
-@EqualsAndHashCode(exclude = {"payments", "orders", "roles", "wishlist"})
+@EqualsAndHashCode(exclude = {"payments", "orders", "roles", "wishlist", "tickets", "respondedTickets"})
 public class User implements UserDetails {
 
     @Id
@@ -46,6 +49,7 @@ public class User implements UserDetails {
     private String phoneNumber;
 
     @Column(nullable = true)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate birthdate;
 
     @Column(nullable = true)
@@ -63,10 +67,12 @@ public class User implements UserDetails {
     @Column(nullable = true)
     private boolean active = true;
 
-    @Column(nullable = false)
+    @Column(nullable = false, updatable = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(nullable = true)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime updatedAt;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -85,9 +91,13 @@ public class User implements UserDetails {
     @JsonIgnore
     private Set<Payment> payments = new HashSet<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Order> orders = new ArrayList<>();
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnore
-    private Set<Order> orders = new HashSet<>();
+    private Set<UserCoupon> userCoupons = new HashSet<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -120,4 +130,12 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return active;
     }
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("user")
+    private Set<Ticket> tickets = new HashSet<>();
+
+    @OneToMany(mappedBy = "responder", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("responder")
+    private Set<Ticket> respondedTickets = new HashSet<>();
 }

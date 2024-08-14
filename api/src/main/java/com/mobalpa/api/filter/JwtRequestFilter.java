@@ -1,11 +1,11 @@
 package com.mobalpa.api.filter;
 
-import com.mobalpa.api.model.User;
 import com.mobalpa.api.util.JwtUtil;
 
 import io.jsonwebtoken.Claims;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
@@ -17,11 +17,9 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.io.IOException;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.UUID;
 
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
@@ -43,6 +41,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         String jwt = null;
 
         if (requestApiKey != null && requestApiKey.equals(apiKey)) {
+            // Authentification par API Key
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                     "apiKeyUser", null, null);
             authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
@@ -51,32 +50,32 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             jwt = authorizationHeader.substring(7);
             try {
                 email = jwtUtil.extractEmail(jwt);
+                logger.info("Extracted email from JWT: " + email);
             } catch (Exception e) {
                 logger.error("Error extracting email from JWT", e);
             }
 
             if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                Claims claims;
-                User user = new User();
-
                 try {
-                    claims = jwtUtil.extractAllClaims(jwt);
-                    if (!jwtUtil.validateToken(jwt, claims.get("email", String.class))) {
+                    Claims claims = jwtUtil.extractAllClaims(jwt);
+                    if (!jwtUtil.validateToken(jwt, email)) {
                         logger.warn("Invalid or expired JWT token");
                     } else {
-                        user.setEmail(claims.get("email", String.class));
-                        user.setFirstname(claims.get("firstname", String.class));
-                        user.setLastname(claims.get("lastname", String.class));
-                        user.setUuid(UUID.fromString(claims.get("id", String.class)));
+                        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+                        Object rolesObj = claims.get("role");
 
-                        Instant createdTimeInstant = Instant.ofEpochMilli(Long.parseLong(claims.get("createdTime", String.class)));
-                        LocalDateTime createdAt = LocalDateTime.ofInstant(createdTimeInstant, ZoneId.systemDefault());
-                        user.setCreatedAt(createdAt);
+                        if (rolesObj instanceof List<?>) {
+                            for (Object role : (List<?>) rolesObj) {
+                                if (role instanceof String) {
+                                    authorities.add(new SimpleGrantedAuthority((String) role));
+                                }
+                            }
+                        }
 
                         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                                user,
+                                email,
                                 null,
-                                user.getAuthorities());
+                                authorities);
                         authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                         SecurityContextHolder.getContext().setAuthentication(authentication);
                     }

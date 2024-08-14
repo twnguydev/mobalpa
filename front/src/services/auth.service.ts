@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import type { IUser } from '@interfaces/user.interface';
 import { environment } from '../environments/environment';
 
@@ -10,8 +10,18 @@ import { environment } from '../environments/environment';
 })
 export class AuthService {
   private apiUrl: string = `${environment.apiUrl}/users`;
+  public user: IUser | null = null;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.loadUserFromLocalStorage();
+  }
+
+  private loadUserFromLocalStorage(): void {
+    const storedUser: string | null = localStorage.getItem('currentUser');
+    if (storedUser) {
+      this.user = JSON.parse(storedUser);
+    }
+  }
 
   login(email: string, password: string): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/login`, { email, password }, {
@@ -21,28 +31,17 @@ export class AuthService {
       }
     }).pipe(
       map(response => {
-        localStorage.setItem('token', response.token);
-        this.fetchUserData(response.token);
+        if (response && response.accessToken && response.user) {
+          localStorage.setItem('token', response.accessToken);
+          localStorage.setItem('currentUser', JSON.stringify(response.user));
+          this.user = response.user;
+          console.log(this.user);
+        }
         return response;
       }),
       catchError(error => {
         console.error('Login error', error);
-        return of(null);
-      })
-    );
-  }
-
-  fetchUserData(token: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/me`, {
-      headers: this.getAuthHeaders()
-    }).pipe(
-      map(user => {
-        localStorage.setItem('currentUser', JSON.stringify(user));
-        return user;
-      }),
-      catchError(error => {
-        console.error('Fetch user data error', error);
-        return of(null);
+        return throwError(error);
       })
     );
   }
@@ -73,6 +72,42 @@ export class AuthService {
     );
   }
 
+  forgotPassword(email: string): Observable<string> {
+    return this.http.post(`${this.apiUrl}/forgot-password`, { email }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'X-API-KEY': `${environment.apiKey}`
+      },
+      responseType: 'text' as 'json'
+    }).pipe(
+      map(response => {
+        return response as string;
+      }),
+      catchError(error => {
+        console.error('Forgot password error', error);
+        return of('An error occurred');
+      })
+    );
+  }
+
+  resetPassword(token: string, newPassword: string): Observable<string> {
+    return this.http.post(`${this.apiUrl}/reset-password`, { newPassword }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'X-API-KEY': `${environment.apiKey}`
+      },
+      params: { token },
+      responseType: 'text' as 'json'
+    }).pipe(
+      map(response => {
+        return response as string;
+      }),
+      catchError(error => {
+        console.error('Reset password error', error);
+        return of('An error occurred');
+      })
+    );
+  }
 
   checkInputsSignup(data: IUser): boolean | '' | null | undefined {
     const birthdateRegex = new RegExp(/^\d{4}-\d{2}-\d{2}$/);
@@ -91,17 +126,29 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('currentUser');
+    this.user = null;
   }
 
   isAuthenticated(): boolean {
     return !!localStorage.getItem('token');
   }
 
-  getAuthHeaders(): HttpHeaders {
+  getAuthHeaders(): HttpHeaders | null {
     const token: string | null = localStorage.getItem('token');
+    if (!token || token == null) return null;
     return new HttpHeaders({
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
     });
+  }
+
+  getXApiKeyHeaders(): HttpHeaders {
+    return new HttpHeaders({
+      'X-API-KEY': `${environment.apiKey}`
+    });
+  }
+
+  validResetPassword(token: string, newPassword: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/reset-password?token=${token}`, { newPassword });
   }
 }

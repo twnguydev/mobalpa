@@ -1,0 +1,65 @@
+databaseChangeLog:
+  - changeSet:
+      id: 3
+      author: Saskoue
+      changes:
+        - insertMany:
+            collectionName: "subcategory"
+            documents: |
+              [
+                {
+                  "_id": {"$binary": {"base64": "jUBzEwv4EBu2gqn367EavA==", "subType": "03"}},
+                  "name": "Plan de travail",
+                  "description": "Ajoutez une touche de modernité à votre intérieur",
+                  "uri": "cuisines/plan-de-travail",
+                  "products": [
+                    {"$ref": "product", "$id": {"$binary": {"base64": "DEIS5Wjt27A9whsacnLikw==", "subType": "03"}}}
+                  ],
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "bkQwUIC3k4R8r3ZrTsocow==", "subType": "03"}}},
+                  "_class": "com.mobalpa.catalogue.model.Subcategory"
+                },
+                {
+                  "_id": {"$binary": {"base64": "kUBzEwv4EBu2gqn367EavA==", "subType": "03"}},
+                  "name": "Table",
+                  "description": "Personnalisez votre cuisine avec nos tables",
+                  "uri": "cuisines/table",
+                  "products": [
+                    {"$ref": "product", "$id": {"$binary": {"base64": "H2r7V4RFHJz67zXcOud31A==", "subType": "03"}}}
+                  ],
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "bkQwUIC3k4R8r3ZrTsocow==", "subType": "03"}}},
+                  "_class": "com.mobalpa.catalogue.model.Subcategory"
+                },
+                {
+                  "_id": {"$binary": {"base64": "lUBzEwv4EBu2gqn367EavA==", "subType": "03"}},
+                  "name": "Chaise",
+                  "description": "Découvrez notre gamme de chaises",
+                  "uri": "cuisines/chaise",
+                  "products": [
+                    {"$ref": "product", "$id": {"$binary": {"base64": "Q1z9zY4vXt8hQvJfG2s1oA==", "subType": "03"}}}
+                  ],
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "bkQwUIC3k4R8r3ZrTsocow==", "subType": "03"}}},
+                  "_class": "com.mobalpa.catalogue.model.Subcategory"
+                },
+                {
+                  "_id": {"$binary": {"base64": "mUBzEwv4EBu2gqn367EavA==", "subType": "03"}},
+                  "name": "Décoration",
+                  "description": "Stylisez votre cuisine avec nos accessoires de décoration",
+                  "uri": "cuisines/decoration",
+                  "products": [
+                    {"$ref": "product", "$id": {"$binary": {"base64": "W3y6vR1lIv6tTfPqF3w2jA==", "subType": "03"}}}
+                  ],
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "bkQwUIC3k4R8r3ZrTsocow==", "subType": "03"}}},
+                  "_class": "com.mobalpa.catalogue.model.Subcategory"
+                },
+                {
+                  "_id": {"$binary": {"base64": "nUBzEwv4EBu2gqn367EavA==", "subType": "03"}},
+                  "name": "Meuble de rangement",
+                  "description": "Optimisez votre cuisine avec nos meubles de rangement",
+                  "uri": "cuisines/meuble-de-rangement",
+                  "products": [
+                    {"$ref": "product", "$id": {"$binary": {"base64": "T2f8tW2nOv5rLfOnG3v5kA==", "subType": "03"}}}
+                  ],
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "bkQwUIC3k4R8r3ZrTsocow==", "subType": "03"}}},
+                  "_class": "com.mobalpa.catalogue.model.Subcategory"
+                }
+              ]

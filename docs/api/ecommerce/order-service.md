@@ -21,36 +21,53 @@ Authorization: Bearer <token>
 Content-Type: application/json
 
 {
-  "userId": "a4801d5a-cbac-417e-8d99-d690b3832f19",
+  "userUuid": "73408376-18f4-45df-9bff-f386d637bcb2",
+  "paymentUuid": "1ff0bb5d-fee3-4398-9da8-36c4ff521e23",
   "items": [
     {
-      "productId": "101",
+      "productUuid": "06d59b82-b63b-4dcf-ac84-fb2d8c06931d",
       "quantity": 2
     }
   ],
+  "reduction": 10.0,
   "deliveryMethod": "Chronopost",
-  "reduction": 10,
-  "totalHt": 599.99,
+  "deliveryAddress": "123 St. John 13001 Marseille",
+  "totalHt": 599.99
 }
 
 HTTP/1.1 201 Created
 Content-Type: application/json
 
 {
-  "orderId": "54321",
-  "userId": "a4801d5a-cbac-417e-8d99-d690b3832f19",
-  "items": [
-    {
-      "productId": "101",
-      "quantity": 2
+    "orderUuid": "062c0c0e-a5c0-4560-9860-abe1e273f92d",
+    "parcelItems": [
+        {
+            "productUuid": "06d59b82-b63b-4dcf-ac84-fb2d8c06931d",
+            "description": "This is an example product description.",
+            "quantity": 2,
+            "value": 99.99,
+            "weight": 1.5,
+            "width": 20.0,
+            "height": 10.0,
+            "properties": {
+                "images": "/image1.jpg, /image2.jpg",
+                "brand": "BrandName",
+                "colors": "Red, Blue"
+            }
+        }
+    ],
+    "shippingMethodCheckoutName": "Chronopost",
+    "senderAddress": "Chronopost Depot, 15 Rue de l'Industrie, 75012 Paris",
+    "recipientAddress": "123 St. John 13001 Marseille",
+    "recipientPhoneNumber": "0123456789",
+    "recipientEmail": "tanguy.gibrat@epitech.eu",
+    "recipientName": "Tanguy Gibrat",
+    "shipment": {
+        "deliveryNumber": "CHR_CkMWH2SD1hkm",
+        "orderUuid": "062c0c0e-a5c0-4560-9860-abe1e273f92d",
+        "name": "Chronopost",
+        "address": "Chronopost Depot, 15 Rue de l'Industrie, 75012 Paris"
     }
-  ],
-  "vat": 59.90,
-  "reduction": 10,
-  "taxDelivery": 5.60,
-  "warranty": "2030-07-22T10:00:00Z",
-  "totalHt": 524.49,
-  "totalTtc": 599.99
 }
 ```
 
@@ -64,22 +81,40 @@ HTTP/1.1 200 OK
 Content-Type: application/json
 
 [
-  {
-    "orderId": "54321",
-    "userId": "a4801d5a-cbac-417e-8d99-d690b3832f19",
-    "items": [
-      {
-        "productId": "101",
-        "quantity": 2
-      }
-    ],
-    "vat": 59.90,
-    "reduction": 10,
-    "taxDelivery": 5.60,
-    "warranty": "2030-07-22T10:00:00Z",
-    "totalHt": 524.49,
-    "totalTtc": 599.99
-  }
+    {
+        "uuid": "062c0c0e-a5c0-4560-9860-abe1e273f92d",
+        "warranty": "2031-08-09",
+        "deliveryAddress": "1 Place Jean Jaurès 13001 Marseille",
+        "reduction": 10.0,
+        "deliveryFees": 5.6,
+        "deliveryMethod": "Chronopost",
+        "vat": 119.998,
+        "totalHt": 599.99,
+        "totalTtc": 715.5880000000001,
+        "status": "PROCESSED",
+        "items": [
+            {
+                "uuid": "fc1d7599-39cc-46ac-aaee-211e366a210e",
+                "productUuid": "06d59b82-b63b-4dcf-ac84-fb2d8c06931d",
+                "properties": {},
+                "quantity": 2
+            }
+        ],
+        "deliveryNumbers": [
+            "CHR_CkMWH2SD1hkm"
+        ],
+        "payment": {
+            "uuid": "1ff0bb5d-fee3-4398-9da8-36c4ff521e23",
+            "cardNumber": null,
+            "expirationDate": null,
+            "cvv": null,
+            "cardHolder": "John Doe",
+            "paypalEmail": "john.doe@example.com",
+            "paymentMethod": "PAYPAL",
+            "createdAt": "2024-08-08T17:30:30"
+        },
+        "createdAt": "2024-08-09T15:39:26"
+    }
 ]
 ```
 
@@ -93,20 +128,38 @@ HTTP/1.1 200 OK
 Content-Type: application/json
 
 {
-  "orderId": "54321",
-  "userId": "a4801d5a-cbac-417e-8d99-d690b3832f19",
-  "items": [
-    {
-      "productId": "101",
-      "quantity": 2
-    }
-  ],
-  "vat": 59.90,
-  "reduction": 10,
-  "taxDelivery": 5.60,
-  "warranty": "2030-07-22T10:00:00Z",
-  "totalHt": 524.49,
-  "totalTtc": 599.99
+    "uuid": "062c0c0e-a5c0-4560-9860-abe1e273f92d",
+    "warranty": "2031-08-09",
+    "deliveryAddress": "1 Place Jean Jaurès 13001 Marseille",
+    "reduction": 10.0,
+    "deliveryFees": 5.6,
+    "deliveryMethod": "Chronopost",
+    "vat": 119.998,
+    "totalHt": 599.99,
+    "totalTtc": 715.5880000000001,
+    "status": "PROCESSED",
+    "items": [
+        {
+            "uuid": "fc1d7599-39cc-46ac-aaee-211e366a210e",
+            "productUuid": "06d59b82-b63b-4dcf-ac84-fb2d8c06931d",
+            "properties": {},
+            "quantity": 2
+        }
+    ],
+    "deliveryNumbers": [
+        "CHR_CkMWH2SD1hkm"
+    ],
+    "payment": {
+        "uuid": "1ff0bb5d-fee3-4398-9da8-36c4ff521e23",
+        "cardNumber": null,
+        "expirationDate": null,
+        "cvv": null,
+        "cardHolder": "John Doe",
+        "paypalEmail": "john.doe@example.com",
+        "paymentMethod": "PAYPAL",
+        "createdAt": "2024-08-08T17:30:30"
+    },
+    "createdAt": "2024-08-09T15:39:26"
 }
 
 ```
@@ -117,26 +170,48 @@ POST /api/orders/{id}/payment
 Authorization: Bearer <token>
 Content-Type: application/json
 
-{
-  "paymentMethod": "stripe",
-  "paymentDetails": {
-    "cardNumber": "4242424242424242",
-    "expirationDate": "12/25",
-    "cvv": "123"
-  }
-}
-
 HTTP/1.1 200 OK
 Content-Type: application/json
 
 {
-  "status": "Accepted"
+    "uuid": "062c0c0e-a5c0-4560-9860-abe1e273f92d",
+    "warranty": "2031-08-09",
+    "deliveryAddress": "1 Place Jean Jaurès 13001 Marseille",
+    "reduction": 10.0,
+    "deliveryFees": 5.6,
+    "deliveryMethod": "Chronopost",
+    "vat": 119.998,
+    "totalHt": 599.99,
+    "totalTtc": 715.5880000000001,
+    "status": "PROCESSED",
+    "items": [
+        {
+            "uuid": "fc1d7599-39cc-46ac-aaee-211e366a210e",
+            "productUuid": "06d59b82-b63b-4dcf-ac84-fb2d8c06931d",
+            "properties": {},
+            "quantity": 2
+        }
+    ],
+    "deliveryNumbers": [
+        "CHR_CkMWH2SD1hkm"
+    ],
+    "payment": {
+        "uuid": "1ff0bb5d-fee3-4398-9da8-36c4ff521e23",
+        "cardNumber": null,
+        "expirationDate": null,
+        "cvv": null,
+        "cardHolder": "John Doe",
+        "paypalEmail": "john.doe@example.com",
+        "paymentMethod": "PAYPAL",
+        "createdAt": "2024-08-08T17:30:30"
+    },
+    "createdAt": "2024-08-09T15:39:26"
 }
 ```
 
 ##### Application d'un coupon de réduction
 ```http
-POST /api/orders/{id}/apply-coupon
+POST /api/orders/{userUuid}/apply-coupon
 Authorization: Bearer <token>
 Content-Type: application/json
 

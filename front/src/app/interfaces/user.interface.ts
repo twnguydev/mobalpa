@@ -1,4 +1,6 @@
 import { IOrder } from '@interfaces/order.interface';
+import { IWishlist } from '@interfaces/wishlist.interface';
+import { IPayment } from '@interfaces/payment.interface';
 
 export interface IUser {
   uuid: string;
@@ -25,21 +27,4 @@ export interface IUser {
 export interface IRole {
   id: string;
   name: string;
-}
-
-export interface IWishlist {
-  id: string;
-  items: IItem[];
-}
-
-export interface IItem {
-  id: string;
-  name: string;
-  price: number;
-}
-
-export interface IPayment {
-  id: string;
-  amount: number;
-  date: string;
 }

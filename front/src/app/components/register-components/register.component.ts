@@ -16,7 +16,7 @@ export class RegisterComponent implements OnInit {
   form: FormGroup;
   successMessage: string = '';
   errorMessage: string = '';
-  formSubmitted: boolean = false; 
+  formSubmitted: boolean = false;
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.form = this.fb.group({
@@ -27,9 +27,6 @@ export class RegisterComponent implements OnInit {
       birthdate: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
-      address: [null],
-      city: [null],
-      zipcode: [null],
       terms: [false, Validators.requiredTrue],
       communications: [false]
     }, { validators: this.passwordMatchValidator });
@@ -49,9 +46,7 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('Form submitted', this.form.value);
     this.formSubmitted = true;
-
     if (this.form.valid) {
       const formData = {
         ...this.form.value,
@@ -60,19 +55,15 @@ export class RegisterComponent implements OnInit {
         zipcode: null
       };
 
-      console.log('Data to submit:', formData);
-
       this.authService.signup(formData).subscribe({
         next: (response) => {
-          console.log('Signup successful', response);
           this.successMessage = 'Inscription réussie !';
           this.errorMessage = '';
           setTimeout(() => this.router.navigate(['/login']), 6000);
         },
         error: (error) => {
           console.error('Signup error', error);
-          this.errorMessage = 'Erreur lors de l\'inscription. Veuillez réessayer.';
-          this.successMessage = '';
+          this.handleErrorResponse(error);
         }
       });
     } else {
@@ -87,5 +78,16 @@ export class RegisterComponent implements OnInit {
         console.log(`Control ${controlName} has errors:`, control.errors);
       }
     });
+  }
+
+  handleErrorResponse(error: any) {
+    if (error.status === 400) {
+      this.errorMessage = 'Les données fournies sont invalides. Veuillez vérifier les champs et réessayer.';
+    } else if (error.status === 409) {
+      this.errorMessage = 'Cet e-mail est déjà utilisé. Veuillez en utiliser un autre.';
+    } else {
+      this.errorMessage = 'Erreur lors de l\'inscription. Veuillez réessayer.';
+    }
+    this.successMessage = '';
   }
 }

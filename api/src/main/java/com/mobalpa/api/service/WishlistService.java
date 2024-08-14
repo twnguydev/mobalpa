@@ -3,19 +3,20 @@ package com.mobalpa.api.service;
 import com.mobalpa.api.model.Wishlist;
 import com.mobalpa.api.model.WishlistItem;
 import com.mobalpa.api.repository.UserRepository;
+import com.mobalpa.api.dto.catalogue.ProductDTO;
 import com.mobalpa.api.model.User;
 import com.mobalpa.api.repository.WishlistRepository;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mobalpa.api.dto.catalogue.ColorDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.Map;
 
 @Service
 public class WishlistService {
@@ -30,7 +31,7 @@ public class WishlistService {
     private UserService userService;
 
     @Autowired
-    private ObjectMapper objectMapper;
+    private CatalogueService catalogueService;
 
     public Wishlist getWishlistByUserUuid(UUID userUuid) {
         Wishlist wishlist = wishlistRepository.findByUserUuid(userUuid);
@@ -39,17 +40,9 @@ public class WishlistService {
             User user = userService.getUserByUuid(userUuid);
 
             if (user != null) {
-                Optional<Wishlist> wishlistOptional = Optional.ofNullable(user.getWishlist());
-
-                if (wishlistOptional.isPresent()) {
-                    return wishlistOptional.get();
-                } else {
-                    wishlist = new Wishlist();
-                    wishlist.setUser(user);
-                    wishlist.setItems("[]");
-                    user.setWishlist(wishlist);
-                    wishlist = wishlistRepository.save(wishlist);
-                }
+                wishlist = new Wishlist();
+                wishlist.setUser(user);
+                wishlist = wishlistRepository.save(wishlist);
             } else {
                 throw new RuntimeException("User not found");
             }
@@ -57,40 +50,55 @@ public class WishlistService {
         return wishlist;
     }
 
-    public Wishlist addToWishlist(UUID userId, WishlistItem newItem) throws JsonProcessingException {
+    public Wishlist addToWishlist(UUID userId, WishlistItem newItem) {
         User user = userService.getUserByUuid(userId);
-        Wishlist wishlist = user.getWishlist();
-
-        List<WishlistItem> items = objectMapper.readValue(wishlist.getItems(), new TypeReference<List<WishlistItem>>() {
-        });
-        boolean itemExists = false;
-
-        for (WishlistItem item : items) {
-            if (item.getProductId().equals(newItem.getProductId())) {
-                item.setQuantity(item.getQuantity() + 1);
-                itemExists = true;
-                break;
-            }
+        Wishlist wishlist = getWishlistByUserUuid(userId);
+    
+        ProductDTO product = catalogueService.getProductById(newItem.getProductUuid());
+        if (product == null) {
+            throw new RuntimeException("Product with UUID " + newItem.getProductUuid() + " not found");
         }
 
-        if (!itemExists) {
+        if (newItem.getSelectedColor() != null && !product.getColors().stream().map(ColorDTO::getName).collect(Collectors.toList()).contains(newItem.getSelectedColor())) {
+            throw new RuntimeException("Color " + newItem.getSelectedColor() + " not available for product with UUID " + newItem.getProductUuid());
+        }
+    
+        List<WishlistItem> items = wishlist.getItems();
+
+        Optional<WishlistItem> existingItemOpt = items.stream()
+            .filter(item -> item.getProductUuid().equals(newItem.getProductUuid()) && item.getSelectedColor().equals(newItem.getSelectedColor()))
+            .findFirst();
+    
+        Map<String, String> properties = new HashMap<>();
+        properties.put("brand", product.getBrand() != null ? product.getBrand().getName() : "Unknown");
+        properties.put("images", product.getImages() != null && !product.getImages().isEmpty() ? product.getImages().get(0).getUri() : "No image");
+    
+        if (existingItemOpt.isPresent()) {
+            WishlistItem existingItem = existingItemOpt.get();
+            existingItem.setProduct(product);
+            existingItem.setQuantity(existingItem.getQuantity() + newItem.getQuantity());
+        } else {
+            newItem.setWishlist(wishlist);
+            newItem.setProduct(product);
+            newItem.setProperties(properties);
             items.add(newItem);
         }
+    
+        wishlist.setItems(items);
+        return wishlistRepository.save(wishlist);
+    }    
 
-        wishlist.setItems(objectMapper.writeValueAsString(items));
-        user.setWishlist(wishlist);
-        userRepository.save(user);
-
-        return wishlist;
-    }
-
-    public Wishlist removeFromWishlist(UUID userId, String productId, Integer quantity) throws JsonProcessingException {
+    public Wishlist removeFromWishlist(UUID userId, UUID productId, Integer quantity) {
         User user = userService.getUserByUuid(userId);
         Wishlist wishlist = user.getWishlist();
 
-        List<WishlistItem> items = objectMapper.readValue(wishlist.getItems(), new TypeReference<List<WishlistItem>>() {});
+        if (wishlist == null) {
+            throw new RuntimeException("Wishlist not found for the user");
+        }
+
+        List<WishlistItem> items = wishlist.getItems();
         items.removeIf(item -> {
-            if (item.getProductId().equals(productId)) {
+            if (item.getProductUuid().equals(productId)) {
                 if (quantity == null || item.getQuantity() <= quantity) {
                     return true;
                 } else {
@@ -101,10 +109,10 @@ public class WishlistService {
             return false;
         });
 
-        wishlist.setItems(objectMapper.writeValueAsString(items));
+        wishlist.setItems(items);
         user.setWishlist(wishlist);
         userRepository.save(user);
 
-        return wishlist;
+        return wishlistRepository.save(wishlist);
     }
 }

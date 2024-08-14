@@ -1,0 +1,43 @@
+databaseChangeLog:
+  - changeSet:
+      id: 12
+      author: Saskoue
+      changes:
+        - insertMany:
+            collectionName: "subcategory"
+            documents: |
+              [
+                {
+                  "_id": {"$binary": {"base64": "j0BzEwv4EBu2gqn367EavA==", "subType": "03"}},
+                  "name": "Ustensile de cuisine",
+                  "description": "Améliorez votre cuisine avec nos ustensiles",
+                  "uri": "cuisines/ustensile-de-cuisine",
+                  "products": [
+                    {"$ref": "product", "$id": {"$binary": {"base64": "1Aa2BBjt27A9whsacnLikw==", "subType": "03"}}}
+                  ],
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "C0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "_class": "com.mobalpa.catalogue.model.Subcategory"
+                },
+                {
+                  "_id": {"$binary": {"base64": "k0BzEwv4EBu2gqn367EavA==", "subType": "03"}},
+                  "name": "Décoration intérieur",
+                  "description": "Découvrez notre sélection de décoration",
+                  "uri": "cuisines/decoration-interieur",
+                  "products": [
+                    {"$ref": "product", "$id": {"$binary": {"base64": "2Bb3CCjt37A9whsacnLikw==", "subType": "03"}}}
+                  ],
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "C0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "_class": "com.mobalpa.catalogue.model.Subcategory"
+                },
+                {
+                  "_id": {"$binary": {"base64": "l0BzEwv4EBu2gqn367EavA==", "subType": "03"}},
+                  "name": "Décoration exterieur",
+                  "description": "Personnalisez votre cuisine extérieure avec nos accessoires",
+                  "uri": "cuisines/decoration-exterieur",
+                  "products": [
+                    {"$ref": "product", "$id": {"$binary": {"base64": "3Cc4DDjt47A9whsacnLikw==", "subType": "03"}}}
+                  ],
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "C0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "_class": "com.mobalpa.catalogue.model.Subcategory"
+                }
+              ]

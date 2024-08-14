@@ -3,6 +3,8 @@ package com.mobalpa.catalogue.controller;
 import com.mobalpa.catalogue.model.Category;
 import com.mobalpa.catalogue.service.CategoryService;
 import com.mobalpa.catalogue.model.Subcategory;
+import com.mobalpa.catalogue.dto.CategoryDTO;
+import com.mobalpa.catalogue.mapper.Mapper;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import java.util.Optional;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/catalogue/categories")
@@ -23,9 +26,10 @@ public class CategoryController {
 
   @GetMapping
   public ResponseEntity<?> getAllCategories() {
-    Optional<List<Category>> categories = categoryService.getAllCategories();
-    if (categories.isPresent() && !categories.get().isEmpty()) {
-      return ResponseEntity.ok(categories.get());
+    List<Category> categories = categoryService.getAllCategories().orElseThrow(() -> new RuntimeException("No categories found"));
+    if (categories != null && !categories.isEmpty()) {
+      List<CategoryDTO> categoriesDTO = categories.stream().map(Mapper::toCategoryDTO).collect(Collectors.toList());
+      return ResponseEntity.ok(categoriesDTO);
     } else {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No categories found");
     }
@@ -48,6 +52,17 @@ public class CategoryController {
       return ResponseEntity.ok(subcategories.get());
     } else {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No subcategories found for this category");
+    }
+  }
+
+  @GetMapping("/{id}/products")
+  public ResponseEntity<?> getProductsByCategoryId(@PathVariable UUID id) {
+    Optional<List<Subcategory>> subcategories = Optional.of(categoryService.getSubcategoriesByCategoryId(id));
+    if (subcategories.isPresent() && !subcategories.get().isEmpty()) {
+      List<UUID> subcategoryIds = subcategories.get().stream().map(Subcategory::getUuid).collect(Collectors.toList());
+      return ResponseEntity.ok(categoryService.getProductsBySubcategoryIds(subcategoryIds));
+    } else {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No products found for this category");
     }
   }
 

@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 
 import java.util.List;
@@ -24,10 +25,16 @@ public class Product {
     private String description;
     private Double price;
     private Integer stock;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime estimatedDelivery;
+
     private Double weight;
     private Double height;
     private Double width;
+    private String uri;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime createdAt = LocalDateTime.now();
     
     @DBRef

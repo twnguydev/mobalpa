@@ -6,11 +6,13 @@ import org.springframework.stereotype.Service;
 import com.mobalpa.catalogue.repository.CategoryRepository;
 import com.mobalpa.catalogue.model.Category;
 import com.mobalpa.catalogue.model.Subcategory;
+import com.mobalpa.catalogue.model.Product;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.Collections;
+import java.util.stream.Collectors;
 
 @Service
 public class CategoryService {
@@ -26,11 +28,34 @@ public class CategoryService {
         return categoryRepository.findById(id);
     }
 
+    public List<Product> getProductsBySubcategoryIds(List<UUID> subcategoryIds) {
+        return categoryRepository.findBySubcategoriesUuidIn(subcategoryIds).stream()
+                .map(Category::getSubcategories)
+                .flatMap(List::stream)
+                .map(Subcategory::getProducts)
+                .flatMap(List::stream)
+                .collect(Collectors.toList());
+    }
+
     public Category createCategory(Category category) {
         Optional<Category> existingCategory = categoryRepository.findByName(category.getName());
+        Optional<Category> existingUri = categoryRepository.findByUri(category.getUri());
         if (existingCategory.isPresent()) {
             throw new IllegalArgumentException("Category with name " + category.getName() + " already exists");
+        } else if (existingUri.isPresent()) {
+            throw new IllegalArgumentException("Category with uri " + category.getUri() + " already exists");
         }
+
+        if (category.getName() == null) {
+            throw new IllegalArgumentException("Category name is required");
+        }
+        if (category.getUri() == null) {
+            throw new IllegalArgumentException("Category uri is required");
+        }
+        if (category.getDescription() == null) {
+            throw new IllegalArgumentException("Category description is required");
+        }
+        
         return categoryRepository.save(category);
     }
 

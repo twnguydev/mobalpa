@@ -1,0 +1,46 @@
+databaseChangeLog:
+  - changeSet:
+      id: 8
+      author: Saskoue
+      changes:
+        - insertMany:
+            collectionName: "subcategory"
+            documents: |
+              [
+                {
+                  "_id": {"$binary": {"base64": "fUBzEwv4EBu2gqn367EavA==", "subType": "03"}},
+                  "name": "Douche",
+                  "description": "Découvrez notre sélection de douches",
+                  "uri": "salle-de-bain/douche",
+                  "products": [],
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "A0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "_class": "com.mobalpa.catalogue.model.Subcategory"
+                },
+                {
+                  "_id": {"$binary": {"base64": "gUBzEwv4EBu2gqn367EavA==", "subType": "03"}},
+                  "name": "Rideau",
+                  "description": "Personnalisez votre salle de bain avec nos rideaux",
+                  "uri": "salle-de-bain/rideau",
+                  "products": [],
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "A0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "_class": "com.mobalpa.catalogue.model.Subcategory"
+                },
+                {
+                  "_id": {"$binary": {"base64": "hUBzEwv4EBu2gqn367EavA==", "subType": "03"}},
+                  "name": "Lavabo",
+                  "description": "Pour une salle de bain moderne",
+                  "uri": "salle-de-bain/lavabo",
+                  "products": [],
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "A0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "_class": "com.mobalpa.catalogue.model.Subcategory"
+                },
+                {
+                  "_id": {"$binary": {"base64": "iUBzEwv4EBu2gqn367EavA==", "subType": "03"}},
+                  "name": "Meuble de rangement",
+                  "description": "Optimisez votre espace de rangement",
+                  "uri": "salle-de-bain/meuble-de-rangement",
+                  "products": [],
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "A0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "_class": "com.mobalpa.catalogue.model.Subcategory"
+                }
+              ]

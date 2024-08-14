@@ -1,6 +1,7 @@
 package com.mobalpa.api.controller;
 
 import com.mobalpa.api.dto.LoginDTO;
+import com.mobalpa.api.dto.LoginRequestDTO;
 import com.mobalpa.api.model.User;
 import com.mobalpa.api.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
@@ -54,7 +55,7 @@ public class AuthControllerTest {
 
         when(userService.registerUser(any(User.class))).thenReturn(user);
 
-        ResponseEntity<String> response = authController.registerUser(user);
+        ResponseEntity<?> response = authController.registerUser(user);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals("Registration successful. Please check your email for confirmation.", response.getBody());
     }
@@ -93,7 +94,8 @@ public class AuthControllerTest {
         ResponseEntity<?> response = authController.loginUser(loginDTO);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals("token", response.getBody());
+        LoginRequestDTO expectedResponse = new LoginRequestDTO(user, "token");
+        assertEquals(expectedResponse, response.getBody());
     }
 
     @Test
@@ -177,7 +179,7 @@ public class AuthControllerTest {
         ResponseEntity<?> response = authController.loginUser(loginDTO);
 
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
-        assertEquals("An error occurred", response.getBody());
+        assertEquals("An error occurred while logging in", response.getBody());
     }
 
     @Test

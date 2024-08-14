@@ -22,7 +22,13 @@ public class Category {
     private UUID uuid = UUID.randomUUID();
     private String name;
     private String description;
+    private String uri;
+
+    @DBRef
+    private Image image;
 
     @DBRef
     private List<Subcategory> subcategories = new ArrayList<>();
+
+    private List<Image> images;
 }
