@@ -52,8 +52,34 @@ export class ProductService {
       }),
       catchError(error => {
         console.error('Error fetching products by category', error);
-        return of([]); // Return an empty array in case of an error
+        return of([]);
       })
     );
-  }  
+  }
+
+  getSubcategoriesByCategory(categoryUri: string): Observable<{ parentCategoryName: string, subcategories: ISubcategory[] }> {
+    const headers: HttpHeaders = this.authService.getAuthHeaders() ?? this.authService.getXApiKeyHeaders();
+
+    return this.getCategories().pipe(
+      map(categories => categories.find(category => category.uri === categoryUri)),
+      switchMap(category => {
+        if (!category) {
+          return new Observable<{ parentCategoryName: string, subcategories: ISubcategory[] }>((observer) => {
+            observer.next({ parentCategoryName: '', subcategories: [] });
+            observer.complete();
+          });
+        }
+        return this.http.get<ICategory>(`${this.apiUrl}/categories/${category.uuid}`, { headers }).pipe(
+          map(categoryResponse => ({
+            parentCategoryName: categoryResponse.name,
+            subcategories: categoryResponse.subcategories
+          }))
+        );
+      }),
+      catchError(error => {
+        console.error('Error fetching subcategories by category', error);
+        return of({ parentCategoryName: '', subcategories: [] });
+      })
+    );
+  }
 }

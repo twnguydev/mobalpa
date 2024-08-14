@@ -23,9 +23,7 @@ export const routes: Routes = [
     { path: 'register', component: RegisterComponent },
     { path: 'categories/:categoryUri/:subcategoryUri', component: CategoryComponent },
     { path: 'profile', component: ProfileComponent },
-    {
-        path: 'sub', component: SubcategoriePageComponent
-    },
+    { path: 'categories/:categoryUri', component: SubcategoriePageComponent },
 ];
 
 const routerOptions: ExtraOptions = {

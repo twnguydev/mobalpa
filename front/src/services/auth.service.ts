@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import type { IUser } from '@interfaces/user.interface';
 import { environment } from '../environments/environment';
@@ -11,9 +13,11 @@ import { environment } from '../environments/environment';
 export class AuthService {
   private apiUrl: string = `${environment.apiUrl}/users`;
   public user: IUser | null = null;
+  private tokenExpirationTimeout: any;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
     this.loadUserFromLocalStorage();
+    this.checkTokenExpiration();
   }
 
   private loadUserFromLocalStorage(): void {
@@ -30,18 +34,13 @@ export class AuthService {
         'X-API-KEY': `${environment.apiKey}`
       }
     }).pipe(
-      map(response => {
+      tap(response => {
         if (response && response.accessToken && response.user) {
           localStorage.setItem('token', response.accessToken);
           localStorage.setItem('currentUser', JSON.stringify(response.user));
           this.user = response.user;
-          console.log(this.user);
+          this.setTokenExpiration(response.accessToken);
         }
-        return response;
-      }),
-      catchError(error => {
-        console.error('Login error', error);
-        return throwError(error);
       })
     );
   }
@@ -127,19 +126,57 @@ export class AuthService {
     localStorage.removeItem('token');
     localStorage.removeItem('currentUser');
     this.user = null;
+    clearTimeout(this.tokenExpirationTimeout);
+    this.router.navigate(['/login']);
   }
 
   isAuthenticated(): boolean {
     return !!localStorage.getItem('token');
   }
 
+  private setTokenExpiration(token: string): void {
+    const expirationDate = this.getTokenExpirationDate(token);
+    if (expirationDate) {
+      const now = new Date().getTime();
+      const expirationTime = expirationDate.getTime() - now;
+      
+      if (expirationTime > 0) {
+        this.tokenExpirationTimeout = setTimeout(() => {
+          this.logout();
+        }, expirationTime);
+      } else {
+        this.logout();
+      }
+    }
+  }
+
+  private getTokenExpirationDate(token: string): Date | null {
+    try {
+      const decoded = JSON.parse(atob(token.split('.')[1]));
+      if (decoded.exp) {
+        return new Date(decoded.exp * 1000);
+      }
+    } catch (error) {
+      console.error('Error parsing token', error);
+    }
+    return null;
+  }
+
+  private checkTokenExpiration(): void {
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.setTokenExpiration(token);
+    }
+  }
+
   getAuthHeaders(): HttpHeaders | null {
     const token: string | null = localStorage.getItem('token');
-    if (!token || token == null) return null;
-    return new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    });
+    if (token) {
+      return new HttpHeaders({
+        'Authorization': `Bearer ${token}`
+      });
+    }
+    return null;
   }
 
   getXApiKeyHeaders(): HttpHeaders {
