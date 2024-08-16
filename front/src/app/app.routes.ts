@@ -10,6 +10,7 @@ import { HomeComponent } from '@components/home-components/home.component';
 import { LoginComponent } from '@components/login-components/login.component';
 import { RegisterComponent } from '@components/register-components/register.component';
 import { CategoryComponent } from '@components/category-components/category.component';
+import { ResetPasswordComponent } from '@components/reset-password/reset-password.component';
 import { ProductComponent } from '@components/product-components/product.component';
 import { ProfileComponent } from '@components/profile-components/profile.component';
 import { LegalNoticeComponent } from '@pages/legal-notice/legal-notice.component';
@@ -25,6 +26,7 @@ export const routes: Routes = [
     { path: 'info', component: HomeComponent },
     { path: 'auth/connexion', component: LoginComponent },
     { path: 'auth/inscription', component: RegisterComponent },
+    { path: 'auth/reinitialiser-mot-de-passe', component: ResetPasswordComponent },
     { path: 'categories/:categoryUri', component: SubcategoriePageComponent },
     { path: 'categories/:categoryUri/:subcategoryUri', component: CategoryComponent },
     { path: 'profil', component: ProfileComponent },

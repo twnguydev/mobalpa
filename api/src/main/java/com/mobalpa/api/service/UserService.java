@@ -136,7 +136,7 @@ public class UserService implements UserDetailsService {
         user.setToken(resetToken);
         userRepository.save(user);
 
-        String resetUrlWithToken = "http://localhost:4200/reset-password?token=" + resetToken;
+        String resetUrlWithToken = "http://localhost:4200/auth/reinitialiser-mot-de-passe?token=" + resetToken;
         try {
             emailService.sendHtmlEmail(user.getEmail(),
                     "Réinitialisation du mot de passe",
