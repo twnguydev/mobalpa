@@ -70,9 +70,27 @@ public class CatalogueController {
   }
 
   @GetMapping("/subcategories/{subcategoryId}/products")
-  public ResponseEntity<?> getProductsBySubcategory(@PathVariable UUID subcategoryId) {
-    return ResponseEntity.ok(catalogueService.getProductsBySubcategoryId(subcategoryId));
+  public ResponseEntity<?> getProductsBySubcategory(
+      @PathVariable UUID subcategoryId,
+      @RequestParam(required = false) String color,
+      @RequestParam(required = false) Double minPrice,
+      @RequestParam(required = false) Double maxPrice,
+      @RequestParam(required = false) String brand) {
+    try {
+      ProductFilter productFilter = new ProductFilter();
+      productFilter.setColorName(color);
+      productFilter.setMinPrice(minPrice);
+      productFilter.setMaxPrice(maxPrice);
+      productFilter.setBrandName(brand);
+      productFilter.setSubcategoryId(subcategoryId);  // Ajoutez le filtre de sous-catégorie
+
+      List<ProductDTO> products = catalogueService.getAllProducts(productFilter);
+      return ResponseEntity.ok(products);
+    } catch (RuntimeException e) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    }
   }
+
 
   @GetMapping("/subcategories/{subcategoryId}")
   public ResponseEntity<?> getSubcategoryById(@PathVariable UUID subcategoryId) {

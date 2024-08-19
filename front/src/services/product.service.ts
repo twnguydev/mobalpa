@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { map, switchMap, catchError } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { AuthService } from '@services/auth.service';
@@ -35,23 +35,41 @@ export class ProductService {
     return this.http.get<ICategory[]>(this.apiUrl + '/categories', { headers });
   }
 
-  getProductsBySubcategoryUri(categoryUri: string, subcategoryUri: string): Observable<IProduct[]> {
+  getProductsBySubcategoryUri(
+    categoryUri: string, 
+    subcategoryUri: string, 
+    filters?: { brandName?: string; color?: string; maxPrice?: number }
+  ): Observable<IProduct[]> {
     const fullUri = `${categoryUri}/${subcategoryUri}`;
     const headers: HttpHeaders = this.authService.getAuthHeaders() ?? this.authService.getXApiKeyHeaders();
+  
     return this.getSubcategories().pipe(
       map(subcategories => subcategories.find(subcategory => subcategory.uri === fullUri)),
       switchMap(subcategory => {
         if (!subcategory) {
           return of([]);
         }
-        return this.http.get<IProduct[]>(`${this.apiUrl}/subcategories/${subcategory.uuid}/products`, { headers });
+  
+        let params = new HttpParams();
+        if (filters?.brandName) {
+          params = params.set('brandName', filters.brandName);
+        }
+        if (filters?.color) {
+          params = params.set('color', filters.color);
+        }
+        if (filters?.maxPrice) {
+          params = params.set('maxPrice', filters.maxPrice.toString());
+        }
+        
+        console.log("headers: " + headers + "params: " + params);
+        return this.http.get<IProduct[]>(`${this.apiUrl}/subcategories/${subcategory.uuid}/products`, { headers, params });
       }),
       catchError(error => {
         console.error('Error fetching products by subcategory', error);
         return of([]);
       })
     );
-  }
+  }  
 
   getSubcategoriesByCategoryUri(categoryUri: string): Observable<{ parentCategoryName: string, subcategories: ISubcategory[] }> {
     const headers: HttpHeaders = this.authService.getAuthHeaders() ?? this.authService.getXApiKeyHeaders();
