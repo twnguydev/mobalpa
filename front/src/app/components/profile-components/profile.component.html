@@ -2,7 +2,8 @@
     <h1 class="text-4xl font-bold mb-8 text-mobalpa-green">Espace personnel</h1>
     <div class="tabs flex flex-wrap border-b mb-3 gap-2 sm:gap-4 md:gap-6 lg:gap-8">
         <div *ngFor="let tab of tabs; let i = index" (click)="selectTab(i)"
-            class="tab p-2 cursor-pointer text-center flex-1 border-b-4" [class.active]="selectedTab === i"
+            class="tab p-2 cursor-pointer text-center flex-1 border-b-4"
+            [class.active]="selectedTab === i"
             [class.border-mobalpa-green]="selectedTab === i"
             [ngClass]="{'text-mobalpa-green': selectedTab === i, 'text-gray-500': selectedTab !== i}">
             {{ tab.title }}
@@ -13,192 +14,151 @@
             <h2 class="text-2xl font-semibold mb-4 text-mobalpa-green">Données personnelles</h2>
             <div *ngIf="successMessage" class="text-green-500 mb-2">{{ successMessage }}</div>
             <div *ngIf="errorMessage" class="text-red-500 mb-2">{{ errorMessage }}</div>
-
+  
             <form class="space-y-4" (ngSubmit)="onSubmit()">
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Prénom</label>
-                    <input type="text" [(ngModel)]="user.firstname" name="firstname"
-                        class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-mobalpa-green"
-                        placeholder="Votre prénom">
+                    <input type="text" [(ngModel)]="user.firstname" name="firstname" class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-mobalpa-green" placeholder="Votre prénom">
                 </div>
-
+  
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Nom</label>
-                    <input type="text" [(ngModel)]="user.lastname" name="lastname"
-                        class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-mobalpa-green"
-                        placeholder="Votre nom">
+                    <input type="text" [(ngModel)]="user.lastname" name="lastname" class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-mobalpa-green" placeholder="Votre nom">
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Email</label>
-                    <input type="email" [(ngModel)]="user.email" name="email"
-                        class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-mobalpa-green"
-                        placeholder="Votre email">
+                    <input type="email" [(ngModel)]="user.email" name="email" class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-mobalpa-green" placeholder="Votre email">
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Téléphone</label>
-                    <input type="tel" [(ngModel)]="user.phoneNumber" name="phoneNumber"
-                        class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-mobalpa-green"
-                        placeholder="Votre numéro de téléphone">
+                    <input type="tel" [(ngModel)]="user.phoneNumber" name="phoneNumber" class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-mobalpa-green" placeholder="Votre numéro de téléphone">
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Date de naissance</label>
-                    <input type="date" [(ngModel)]="user.birthdate" name="birthdate"
-                        class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-mobalpa-green"
-                        placeholder="Votre date de naissance">
+                    <input type="date" [(ngModel)]="user.birthdate" name="birthdate" class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-mobalpa-green" placeholder="Votre date de naissance">
                 </div>
-
-                <button type="submit"
-                    class="bg-mobalpa-green text-white p-2 rounded-lg hover:bg-emerald-green w-full">Enregistrer les
-                    modifications</button>
+  
+                <button type="submit" class="bg-mobalpa-green text-white p-2 rounded-lg hover:bg-emerald-green w-full">Enregistrer les modifications</button>
             </form>
         </div>
-
+  
         <div *ngIf="selectedTab === 2" class="border border-mobalpa-green md:mx-auto md:w-2/3 p-6 rounded-lg shadow-lg">
             <h2 class="text-2xl font-semibold mb-4 text-mobalpa-green">Modes de paiement</h2>
             <div class="space-y-4">
                 <div *ngFor="let payment of payments" class="border p-2 rounded-lg flex justify-between items-center">
                     <span>{{ payment.cardHolder }} **** {{ payment.cardNumber.slice(-4) }}</span>
-                    <button (click)="deletePayment(payment.uuid)"
-                        class="text-red-500 hover:underline">Supprimer</button>
+                    <button (click)="deletePayment(payment.uuid)" class="text-red-500 hover:underline">Supprimer</button>
                 </div>
                 <div *ngIf="successMessage" class="alert alert-success text-green-500">{{ successMessage }}</div>
                 <div *ngIf="errorMessage" class="alert alert-danger text-red-500">{{ errorMessage }}</div>
-
-                <button (click)="togglePaymentForm()"
-                    class="bg-mobalpa-green hover:bg-emerald-green text-white p-2 rounded-lg w-full">
+  
+                <button (click)="togglePaymentForm()" class="bg-mobalpa-green hover:bg-emerald-green text-white p-2 rounded-lg w-full">
                     Ajouter une nouvelle méthode de paiement
                 </button>
-
+  
                 <div *ngIf="isPaymentFormVisible">
-                    <h3 class="text-lg font-semibold mt-4 text-mobalpa-green">Ajouter une nouvelle méthode de paiement
-                    </h3>
+                    <h3 class="text-lg font-semibold mt-4 text-mobalpa-green">Ajouter une nouvelle méthode de paiement</h3>
                     <form (ngSubmit)="addPayment()" class="space-y-4">
                         <div>
-                            <label for="cardHolder" class="block text-sm font-medium text-gray-700">Titulaire de la
-                                carte</label>
-                            <input type="text" [(ngModel)]="newPayment.cardHolder" name="cardHolder"
-                                class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-mobalpa-green"
-                                placeholder="Nom du titulaire" required>
+                            <label for="cardHolder" class="block text-sm font-medium text-gray-700">Titulaire de la carte</label>
+                            <input type="text" [(ngModel)]="newPayment.cardHolder" name="cardHolder" class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-mobalpa-green" placeholder="Nom du titulaire" required>
                         </div>
                         <div>
-                            <label for="cardNumber" class="block text-sm font-medium text-gray-700">Numéro de
-                                carte</label>
-                            <input type="text" [(ngModel)]="newPayment.cardNumber" name="cardNumber"
-                                class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-mobalpa-green"
-                                placeholder="Votre numéro de carte" required>
+                            <label for="cardNumber" class="block text-sm font-medium text-gray-700">Numéro de carte</label>
+                            <input type="text" [(ngModel)]="newPayment.cardNumber" name="cardNumber" class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-mobalpa-green" placeholder="Votre numéro de carte" required>
                         </div>
                         <div>
-                            <label for="expirationDate" class="block text-sm font-medium text-gray-700">Date
-                                d'expiration</label>
-                            <input type="month" [(ngModel)]="newPayment.expirationDate" name="expirationDate"
-                                class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-mobalpa-green"
-                                required>
+                            <label for="expirationDate" class="block text-sm font-medium text-gray-700">Date d'expiration</label>
+                            <input type="month" [(ngModel)]="newPayment.expirationDate" name="expirationDate" class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-mobalpa-green" required>
                         </div>
                         <div>
                             <label for="cvv" class="block text-sm font-medium text-gray-700">CVV</label>
-                            <input type="text" [(ngModel)]="newPayment.cvv" name="cvv"
-                                class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-mobalpa-green"
-                                placeholder="Votre CVV" required>
+                            <input type="text" [(ngModel)]="newPayment.cvv" name="cvv" class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-mobalpa-green" placeholder="Votre CVV" required>
                         </div>
                         <div>
-                            <label for="paymentMethod" class="block text-sm font-medium text-gray-700">Méthode de
-                                paiement</label>
-                            <select [(ngModel)]="newPayment.paymentMethod" name="paymentMethod"
-                                class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-mobalpa-green">
+                            <label for="paymentMethod" class="block text-sm font-medium text-gray-700">Méthode de paiement</label>
+                            <select [(ngModel)]="newPayment.paymentMethod" name="paymentMethod" class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-mobalpa-green">
                                 <option value="CREDIT_CARD">Carte de crédit</option>
                                 <option value="PAYPAL">Paypal</option>
                             </select>
                         </div>
                         <div>
-                            <label for="paypalEmail" class="block text-sm font-medium text-gray-700">Email
-                                Paypal</label>
-                            <input type="email" [(ngModel)]="newPayment.paypalEmail" name="paypalEmail"
-                                class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-mobalpa-green"
-                                placeholder="Votre email Paypal">
+                            <label for="paypalEmail" class="block text-sm font-medium text-gray-700">Email Paypal</label>
+                            <input type="email" [(ngModel)]="newPayment.paypalEmail" name="paypalEmail" class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-mobalpa-green" placeholder="Votre email Paypal">
                         </div>
-                        <button type="submit"
-                            class="bg-mobalpa-green text-white p-2 rounded-lg hover:bg-emerald-green w-full">Ajouter le
-                            mode de paiement</button>
+                        <button type="submit" class="bg-mobalpa-green text-white p-2 rounded-lg hover:bg-emerald-green w-full">Ajouter le mode de paiement</button>
                     </form>
                 </div>
             </div>
         </div>
-
+  
         <div *ngIf="selectedTab === 1" class="border border-mobalpa-green md:mx-auto md:w-2/3 p-6 rounded-lg shadow-lg">
             <h2 class="text-2xl font-semibold mb-4 text-mobalpa-green">Adresses de livraison</h2>
             <div *ngIf="successMessage" class="text-green-500 mb-2">{{ successMessage }}</div>
             <div *ngIf="errorMessage" class="text-red-500 mb-2">{{ errorMessage }}</div>
-
+  
             <form class="space-y-4" (ngSubmit)="onSubmit()">
                 <div>
                     <label for="address" class="block text-sm font-medium text-gray-700">Adresse</label>
-                    <input type="text" [(ngModel)]="user.address" name="address"
-                        class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-mobalpa-green"
-                        placeholder="Votre adresse">
+                    <input type="text" [(ngModel)]="user.address" name="address" class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-mobalpa-green" placeholder="Votre adresse">
                 </div>
                 <div>
                     <label for="city" class="block text-sm font-medium text-gray-700">Ville</label>
-                    <input type="text" [(ngModel)]="user.city" name="city"
-                        class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-mobalpa-green"
-                        placeholder="Votre ville">
+                    <input type="text" [(ngModel)]="user.city" name="city" class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-mobalpa-green" placeholder="Votre ville">
                 </div>
                 <div>
                     <label for="zip" class="block text-sm font-medium text-gray-700">Code postal</label>
-                    <input type="text" [(ngModel)]="user.zipcode" name="zipcode"
-                        class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-mobalpa-green"
-                        placeholder="Votre code postal">
+                    <input type="text" [(ngModel)]="user.zipcode" name="zipcode" class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-mobalpa-green" placeholder="Votre code postal">
                 </div>
-                <button type="submit"
-                    class="bg-mobalpa-green text-white p-2 rounded-lg hover:bg-emerald-green w-full">Enregistrer les
-                    modifications</button>
+                <button type="submit" class="bg-mobalpa-green text-white p-2 rounded-lg hover:bg-emerald-green w-full">Enregistrer les modifications</button>
             </form>
         </div>
-
+  
         <div *ngIf="selectedTab === 0" class="border border-mobalpa-green md:mx-auto md:w-2/3 p-6 rounded-lg shadow-lg">
-            <h2 class="text-2xl font-semibold mb-4 text-mobalpa-green">Mes Commandes</h2>
-
-            <div *ngIf="orders.length === 0" class="text-center text-gray-500">
-                <p>Aucune commande trouvée.</p>
-            </div>
-
-            <ul *ngIf="orders.length > 0" class="space-y-4">
-                <li *ngFor="let order of orders" class="border p-4 rounded-lg">
-                    <span class="font-semibold">Commande №{{ order.orderId }}</span> -
-                    <span class="text-gray-600">{{ order.createdAt | date: 'dd.MM.yyyy' }}</span>
-                    <div class="mt-2">
-                        <span [ngClass]="{
+          <h2 class="text-2xl font-semibold mb-4 text-mobalpa-green">Mes Commandes</h2>
+  
+          <div *ngIf="orders.length === 0" class="text-center text-gray-500">
+              <p>Aucune commande trouvée.</p>
+          </div>
+  
+          
+          <ul *ngIf="orders.length > 0" class="space-y-4">
+              <li *ngFor="let order of orders" class="border p-4 rounded-lg">
+                  <span class="font-semibold">Commande №{{ order.orderId }}</span> -
+                  <span class="text-gray-600">{{ order.createdAt | date: 'dd.MM.yyyy' }}</span>
+                  <div class="mt-2">
+                      <span [ngClass]="{
                           'text-green-500': order.status === 'Livré',
                           'text-yellow-500': order.status === 'En cours de traitement',
                           'text-red-500': order.status === 'Annulé'
                       }">{{ order.status }}</span>
-                        <button class="ml-4 text-mobalpa-green hover:underline" (click)="showOrderDetails(order)">Lire
-                            la suite</button>
-                    </div>
-
-                    <!-- Affichage des détails de la commande si sélectionnée -->
-                    <div *ngIf="selectedOrder === order" class="mt-4">
-                        <h3 class="text-lg font-semibold">Détails de la commande</h3>
-                        <div class="mt-2">
-                            <p><strong>Adresse de livraison:</strong> {{ order.deliveryAddress }}</p>
-                            <p><strong>Réduction:</strong> {{ order.reduction | number: '1.2-2' }} €</p>
-                            <p><strong>Frais de livraison:</strong> {{ order.deliveryFees | number: '1.2-2' }} €</p>
-                            <p><strong>Méthode de livraison:</strong> {{ order.deliveryMethod }}</p>
-                            <p><strong>TVA:</strong> {{ order.vat | number: '1.2-2' }} %</p>
-                            <p><strong>Total HT:</strong> {{ order.totalHt | number: '1.2-2' }} €</p>
-                            <p><strong>Total TTC:</strong> {{ order.totalTtc | number: '1.2-2' }} €</p>
-                        </div>
-
-                        <h4 class="text-md font-semibold mt-4">Articles de la commande:</h4>
-                        <ul class="mt-2 space-y-2">
-                            <li *ngFor="let item of order.items" class="border p-2 rounded-lg">
-                                <span>- Quantité : {{ item.quantity }}</span>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-            </ul>
-        </div>
-
-
+                      <button class="ml-4 text-mobalpa-green hover:underline" (click)="showOrderDetails(order)">Lire la suite</button>
+                  </div>
+  
+                  <!-- Affichage des détails de la commande si sélectionnée -->
+                  <div *ngIf="selectedOrder === order" class="mt-4">
+                      <h3 class="text-lg font-semibold">Détails de la commande</h3>
+                      <div class="mt-2">
+                          <p><strong>Adresse de livraison:</strong> {{ order.deliveryAddress }}</p>
+                          <p><strong>Réduction:</strong> {{ order.reduction | number: '1.2-2' }} €</p>
+                          <p><strong>Frais de livraison:</strong> {{ order.deliveryFees | number: '1.2-2' }} €</p>
+                          <p><strong>Méthode de livraison:</strong> {{ order.deliveryMethod }}</p>
+                          <p><strong>TVA:</strong> {{ order.vat | number: '1.2-2' }} %</p>
+                          <p><strong>Total HT:</strong> {{ order.totalHt | number: '1.2-2' }} €</p>
+                          <p><strong>Total TTC:</strong> {{ order.totalTtc | number: '1.2-2' }} €</p>
+                      </div>
+  
+                      <h4 class="text-md font-semibold mt-4">Articles de la commande:</h4>
+                      <ul class="mt-2 space-y-2">
+                          <li *ngFor="let item of order.items" class="border p-2 rounded-lg">
+                              <span>- Quantité : {{ item.quantity }}</span>
+                          </li>
+                      </ul>
+                  </div>
+              </li>
+          </ul>
+      </div>
+  
+  
     </div>
-</div>
+  </div>

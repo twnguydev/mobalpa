@@ -57,7 +57,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       if (uuid) {
         this.loadUserData(uuid);
         this.loadPayments(uuid);
-        this.loadOrders();  // Chargement des commandes
+        this.loadOrders();
       } else {
         console.log('No UUID available');
       }
@@ -87,10 +87,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
     );
   }
 
-  loadOrders(): void {  // Nouvelle méthode pour charger les commandes
+  loadOrders(): void {
     this.orderService.getOrders().subscribe(
       orders => {
-        this.orders = orders; // Assurez-vous que les items sont inclus dans l'objet `order`
+        this.orders = orders;
       },
       error => {
         console.error('Erreur lors du chargement des commandes:', error);
@@ -98,9 +98,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     );
   }
 
-  // Nouvelle méthode pour sélectionner une commande
   showOrderDetails(order: IOrder): void {
-    this.selectedOrder = order; // Définit l'ordre sélectionné
+    this.selectedOrder = order;
   }
 
   addPayment(): void {
