@@ -1,0 +1,14 @@
+<h2 class=" p-4 bg-emerald-green font-semibold text-gray-100" mat-dialog-title>Confirmation</h2>
+<div mat-dialog-content class="p-4">
+  <p class="text-gray-600">{{ data.message }}</p>
+</div>
+<div mat-dialog-actions class="flex justify-end space-x-2 p-4">
+  <button mat-button (click)="onCancel()"
+    class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded">
+    Annuler
+  </button>
+  <button mat-button color="primary" (click)="onConfirm()"
+    class="bg-mobalpa-green hover:bg-emerald-green text-white font-medium py-2 px-4 rounded">
+    Confirmer
+  </button>
+</div>

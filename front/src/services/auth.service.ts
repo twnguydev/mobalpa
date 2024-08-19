@@ -16,6 +16,9 @@ export class AuthService {
   public user: IUser | null = null;
   private tokenExpirationTimeout: any;
 
+  private currentUserSubject = new BehaviorSubject<IUser | null>(null);
+  currentUser$ = this.currentUserSubject.asObservable();
+
   private authStatus = new BehaviorSubject<boolean>(this.isAuthenticated());
   authStatus$ = this.authStatus.asObservable();
 
@@ -29,6 +32,35 @@ export class AuthService {
     if (storedUser) {
       this.user = JSON.parse(storedUser);
     }
+  }
+
+  loadUserData(uuid: string): Observable<IUser | null> {
+    const token: string | null = localStorage.getItem('token');
+    if (!token) {
+      return of(null);
+    }
+
+    return this.http.get<IUser>(`${this.apiUrl}/${uuid}`, {
+      headers: this.getAuthHeaders() as HttpHeaders
+    }).pipe(
+      map(user => {
+        this.currentUserSubject.next(user);
+        return user;
+      }),
+      catchError(error => {
+        console.error('Error fetching user data:', error);
+        this.clearCurrentUser();
+        return of(null);
+      })
+    );
+  }
+
+  getCurrentUser(): Observable<IUser | null> {
+    return this.currentUser$;
+  }
+
+  clearCurrentUser(): void {
+    this.currentUserSubject.next(null);
   }
 
   login(email: string, password: string): Observable<any> {

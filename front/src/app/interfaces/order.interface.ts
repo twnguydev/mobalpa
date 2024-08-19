@@ -9,6 +9,11 @@ export interface IOrder {
   warranty: string;
   totalHt: number;
   totalTtc: number;
+  createdAt: string;
+  status: string;
+  deliveryFees: number;
+  deliveryAddress: string;
+  paymentId: string;
 }
 
 export interface IOrderItem {
