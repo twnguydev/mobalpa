@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, BehaviorSubject, of, throwError } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
 import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { catchError, map, switchMap } from 'rxjs/operators';
@@ -15,7 +16,10 @@ export class AuthService {
   public user: IUser | null = null;
   private tokenExpirationTimeout: any;
 
-  constructor(private http: HttpClient, private router: Router) {
+  private authStatus = new BehaviorSubject<boolean>(this.isAuthenticated());
+  authStatus$ = this.authStatus.asObservable();
+
+  constructor(private http: HttpClient, private router: Router, private dialog: MatDialog) {
     this.loadUserFromLocalStorage();
     this.checkTokenExpiration();
   }
@@ -39,6 +43,7 @@ export class AuthService {
           localStorage.setItem('token', response.accessToken);
           localStorage.setItem('currentUser', JSON.stringify(response.user));
           this.user = response.user;
+          this.authStatus.next(true);
           this.setTokenExpiration(response.accessToken);
         }
       })
@@ -53,7 +58,7 @@ export class AuthService {
       const day = String(d.getDate()).padStart(2, '0');
       return `${year}-${month}-${day}`;
     };
-  
+
     return this.http.post<any>(`${this.apiUrl}/register`, {
       ...data,
       birthdate: formatDate(data.birthdate)
@@ -72,7 +77,7 @@ export class AuthService {
         return of({ errors: ['Erreur inconnue. Veuillez réessayer.'] });
       })
     );
-  }  
+  }
 
   forgotPassword(email: string): Observable<string> {
     return this.http.post(`${this.apiUrl}/forgot-password`, { email }, {
@@ -112,11 +117,18 @@ export class AuthService {
   }
 
   logout(): void {
-    localStorage.removeItem('token');
-    localStorage.removeItem('currentUser');
-    this.user = null;
-    clearTimeout(this.tokenExpirationTimeout);
-    this.router.navigate(['/auth/connexion']);
+    const confirmation = window.confirm('Êtes-vous sûr de vouloir vous déconnecter ?');
+
+    if (confirmation) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('currentUser');
+      this.user = null;
+      this.authStatus.next(false);
+      clearTimeout(this.tokenExpirationTimeout);
+      this.router.navigate(['/auth/connexion']);
+    } else {
+      console.log("Déconnexion annulée");
+    }
   }
 
   isAuthenticated(): boolean {
@@ -132,7 +144,7 @@ export class AuthService {
     if (expirationDate) {
       const now = new Date().getTime();
       const expirationTime = expirationDate.getTime() - now;
-      
+
       if (expirationTime > 0) {
         this.tokenExpirationTimeout = setTimeout(() => {
           this.logout();
@@ -176,6 +188,21 @@ export class AuthService {
     return new HttpHeaders({
       'X-API-KEY': `${environment.apiKey}`
     });
+  }
+
+  getCurrentUserUuid(): string | null {
+    const token: string | null = localStorage.getItem('token');
+    if (token) {
+      try {
+        const payload = token.split('.')[1];
+        const decodedPayload = JSON.parse(atob(payload));
+        return decodedPayload.uuid;
+      } catch (error) {
+        console.error('Error decoding token:', error);
+        return null;
+      }
+    }
+    return null;
   }
 
   validResetPassword(token: string, newPassword: string): Observable<any> {
