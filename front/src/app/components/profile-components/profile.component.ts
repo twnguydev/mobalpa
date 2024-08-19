@@ -170,28 +170,30 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     const uuid = this.user.uuid;
-  
     if (uuid) {
-      this.userService.update(this.user).subscribe(
-        user => {
-          this.successMessage = 'Données mises à jour avec succès';
+      const userUpdates: Partial<IUser> = {};
 
-          this.authService.loadUserData(uuid).subscribe(
-            updatedUser => {
-              this.user = updatedUser as IUser;
-            },
-            error => {
-              console.error('Erreur lors du rechargement des données utilisateur:', error);
-            }
-          );
+      if (this.user.firstname) userUpdates.firstname = this.user.firstname;
+      if (this.user.lastname) userUpdates.lastname = this.user.lastname;
+      if (this.user.email) userUpdates.email = this.user.email;
+      if (this.user.phoneNumber) userUpdates.phoneNumber = this.user.phoneNumber;
+      if (this.user.birthdate) userUpdates.birthdate = this.user.birthdate;
+      if (this.user.address) userUpdates.address = this.user.address;
+      if (this.user.zipcode) userUpdates.zipcode = this.user.zipcode;
+      if (this.user.city) userUpdates.city = this.user.city;
+
+      this.userService.update(uuid, userUpdates).subscribe(
+        (updatedUser) => {
+          this.successMessage = 'Modifications enregistrées avec succès!';
+          this.errorMessage = null;
         },
-        error => {
-          console.error('Erreur lors de la mise à jour des données:', error);
-          this.errorMessage = 'Erreur lors de la mise à jour des données. Veuillez réessayer.';
+        (error) => {
+          this.errorMessage = 'Erreur lors de la mise à jour des données utilisateur.';
+          this.successMessage = null;
         }
       );
     }
-  }  
+  } 
 
   togglePaymentForm(): void {
     this.isPaymentFormVisible = !this.isPaymentFormVisible;

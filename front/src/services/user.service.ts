@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, map } from 'rxjs';
 import { AuthService } from '@services/auth.service';
 import { IUser } from '@interfaces/user.interface';
 import { IWishlist, IWishlistItem } from '@interfaces/wishlist.interface';
@@ -35,10 +35,11 @@ export class UserService {
     return this.http.post<IUser>(this.apiUrl, user, { headers });
   }
 
-  update(user: IUser): Observable<IUser> {
+  update(userUuid: string, user: Partial<IUser>): Observable<IUser> {
+    console.log(user);
     const headers: HttpHeaders | null = this.authService.getAuthHeaders();
     if (!headers) return new Observable<IUser>();
-    return this.http.patch<IUser>(`${this.apiUrl}/${user.uuid}`, user, { headers });
+    return this.http.patch<IUser>(`${this.apiUrl}/${userUuid}`, user, { headers });
   }
 
   delete(userId: string): Observable<IUser> {

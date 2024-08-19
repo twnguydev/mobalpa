@@ -187,6 +187,14 @@ public class UserService implements UserDetailsService {
             if (user.getAddress() != null)
                 existingUser.setAddress(user.getAddress());
     
+            if (user.getRoles() != null && !user.getRoles().isEmpty()) {
+                Set<Role> roles = user.getRoles().stream()
+                    .map(role -> roleRepository.findByName(role.getName())
+                        .orElseThrow(() -> new IllegalArgumentException("Role " + role.getName() + " not found")))
+                    .collect(Collectors.toSet());
+                existingUser.setRoles(roles);
+            }
+    
             existingUser.setUpdatedAt(LocalDateTime.now());
             return userRepository.save(existingUser);
         }).orElseThrow(() -> new IllegalArgumentException("User with id " + uuid + " not found"));
