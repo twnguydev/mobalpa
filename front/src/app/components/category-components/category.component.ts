@@ -38,7 +38,10 @@ export class CategoryComponent implements OnInit {
     Bleu: '#0000FF',
     Noir: '#000000',
     Blanc: '#FFFFFF',
+    'Jaune': '#FFFF19',
     'Gris anthracite': '#2F4F4F',
+    'Bleu ciel': '#77B5FE',
+    'Vert': '#3CB371',
     Violet: '#8A2BE2'
   };
 
