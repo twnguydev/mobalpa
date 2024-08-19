@@ -9,7 +9,7 @@ databaseChangeLog:
               [
                   {
                     "_id": {"$binary": {"base64": "DEIS5Wjt27A9whsacnLikw==", "subType": "03"}},
-                    "name": "Elégance",
+                    "name": "Escapade",
                     "description": "This is an example product description.",
                     "price": 99.99,
                     "stock": 50,
@@ -41,7 +41,7 @@ databaseChangeLog:
                   },
                   {
                     "_id": {"$binary": {"base64": "HG82LWJTXb2PKNtfJfb9Xg==", "subType": "03"}},
-                    "name": "Rétro",
+                    "name": "Eveil",
                     "description": "This is an example product description.",
                     "price": 149.99,
                     "stock": 50,
@@ -70,7 +70,123 @@ databaseChangeLog:
                         }
                     ],
                     "_class": "com.mobalpa.catalogue.model.Product"
-                  }
+                  },
+                  {
+                    "_id": {"$binary": {"base64": "bHF0T4Vf2RBqlc1vJcXqQA==", "subType": "03"}},
+                    "name": "Expressive",
+                    "description": "This is an example product description.",
+                    "price": 249.99,
+                    "stock": 12,
+                    "estimatedDelivery": {"$date": "2024-08-01T08:00:00.000Z"},
+                    "weight": 3,
+                    "height": 12.5,
+                    "width": 30.0,
+                    "createdAt": {"$date": "2024-08-05T14:24:23.967Z"},
+                    "category": {"$ref": "category", "$id": {"$binary": {"base64": "bkQwUIC3k4R8r3ZrTsocow==", "subType": "03"}}},
+                    "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "jUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                    "colors": [
+                        {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                    ],
+                    "images": [
+                        {
+                            "_id": {"$binary": {"base64": "bHF0T4Vf2RBqlc1vJcXqQA==", "subType": "03"}},
+                            "uri": "/images/kitchen-ecommerce/expressive.png",
+                            "color": {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                        }
+                    ],
+                    "_class": "com.mobalpa.catalogue.model.Product"
+                  },
+                  {
+                    "_id": {"$binary": {"base64": "aW5gTjF9u5RppK5tNkXZyQ==", "subType": "03"}},
+                    "name": "Rétro",
+                    "description": "This is an example product description.",
+                    "price": 70.00,
+                    "stock": 12,
+                    "estimatedDelivery": {"$date": "2024-08-01T08:00:00.000Z"},
+                    "weight": 3,
+                    "height": 12.5,
+                    "width": 30.0,
+                    "createdAt": {"$date": "2024-08-05T14:24:23.967Z"},
+                    "category": {"$ref": "category", "$id": {"$binary": {"base64": "bkQwUIC3k4R8r3ZrTsocow==", "subType": "03"}}},
+                    "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "jUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                    "colors": [
+                        {"$ref": "colors", "$id": {"$binary": {"base64": "uWd9H5JtL4HkpY6pRqX2HQ==", "subType": "03"}}},
+                        {"$ref": "colors", "$id": {"$binary": {"base64": "GE8esJRMho/wUZfnAf81pA==", "subType": "03"}}}
+                    ],
+                    "images": [
+                        {
+                            "_id": {"$binary": {"base64": "lNp4vIXMk6XZr9s3KJd4GQ==", "subType": "03"}},
+                            "uri": "/images/kitchen-ecommerce/retro-jaune.png",
+                            "color": {"$ref": "colors", "$id": {"$binary": {"base64": "uWd9H5JtL4HkpY6pRqX2HQ==", "subType": "03"}}}
+                        },
+                        {
+                            "_id": {"$binary": {"base64": "zPj6Q9Mzv8FdpX7tJnX9JQ==", "subType": "03"}},
+                            "uri": "/images/kitchen-ecommerce/retro-red.png",
+                            "color": {"$ref": "colors", "$id": {"$binary": {"base64": "GE8esJRMho/wUZfnAf81pA==", "subType": "03"}}}
+                        }
+                    ],
+                    "_class": "com.mobalpa.catalogue.model.Product"
+                  },
+                  {
+                    "_id": {"$binary": {"base64": "mWr4C5TpN9XqrU2yKkG5Gg==", "subType": "03"}},
+                    "name": "Rive",
+                    "description": "This is an example product description.",
+                    "price": 90.00,
+                    "stock": 12,
+                    "estimatedDelivery": {"$date": "2024-08-01T08:00:00.000Z"},
+                    "weight": 3,
+                    "height": 12.5,
+                    "width": 30.0,
+                    "createdAt": {"$date": "2024-08-05T14:24:23.967Z"},
+                    "category": {"$ref": "category", "$id": {"$binary": {"base64": "bkQwUIC3k4R8r3ZrTsocow==", "subType": "03"}}},
+                    "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "jUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                    "colors": [
+                        {"$ref": "colors", "$id": {"$binary": {"base64": "eXt8O9MnN2VqlW5rNpY8Fw==", "subType": "03"}}},
+                        {"$ref": "colors", "$id": {"$binary": {"base64": "dQp3I4ZlV9UqoL3mKoZ2GQ==", "subType": "03"}}}
+                    ],
+                    "images": [
+                        {
+                            "_id": {"$binary": {"base64": "bHr7K8WjP2T8lK1mJqX9Fw==", "subType": "03"}},
+                            "uri": "/images/kitchen-ecommerce/rive-blue.png",
+                            "color": {"$ref": "colors", "$id": {"$binary": {"base64": "eXt8O9MnN2VqlW5rNpY8Fw==", "subType": "03"}}}
+                        },
+                        {
+                            "_id": {"$binary": {"base64": "cPw5L7UnT3R6oZ8oMoX7Gw==", "subType": "03"}},
+                            "uri": "/images/kitchen-ecommerce/rive-canard.png",
+                            "color": {"$ref": "colors", "$id": {"$binary": {"base64": "dQp3I4ZlV9UqoL3mKoZ2GQ==", "subType": "03"}}}
+                        }
+                    ],
+                    "_class": "com.mobalpa.catalogue.model.Product"
+                  },
+                  {
+                    "_id": {"$binary": {"base64": "fHq6J3BlR8WspX7nLkV9Gg==", "subType": "03"}},
+                    "name": "Serenite",
+                    "description": "This is an example product description.",
+                    "price": 139.99,
+                    "stock": 12,
+                    "estimatedDelivery": {"$date": "2024-08-01T08:00:00.000Z"},
+                    "weight": 3,
+                    "height": 12.5,
+                    "width": 30.0,
+                    "createdAt": {"$date": "2024-08-05T14:24:23.967Z"},
+                    "category": {"$ref": "category", "$id": {"$binary": {"base64": "bkQwUIC3k4R8r3ZrTsocow==", "subType": "03"}}},
+                    "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "jUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                    "colors": [
+                        {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                    ],
+                    "images": [
+                        {
+                            "_id": {"$binary": {"base64": "fHq6J3BlR8WspX7nLkV9Gg==", "subType": "03"}},
+                            "uri": "/images/kitchen-ecommerce/serenite.png",
+                            "color": {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                        }
+                    ],
+                    "_class": "com.mobalpa.catalogue.model.Product"
+                  },
                   {
                     "_id": {"$binary": {"base64": "H2r7V4RFHJz67zXcOud31A==", "subType": "03"}},
                     "name": "Table de cuisine",

@@ -38,7 +38,10 @@ export class CategoryComponent implements OnInit {
     Bleu: '#0000FF',
     Noir: '#000000',
     Blanc: '#FFFFFF',
+    'Jaune': '#FFFF19',
     'Gris anthracite': '#2F4F4F',
+    'Bleu ciel': '#77B5FE',
+    'Vert': '#3CB371',
     Violet: '#8A2BE2'
   };
 
@@ -120,36 +123,42 @@ export class CategoryComponent implements OnInit {
     const queryParams: any = {};
 
     if (this.selectedBrand) {
-      queryParams['brandName'] = this.selectedBrand;
+        queryParams['brandName'] = this.selectedBrand;
     }
-  
+
     if (this.selectedColor) {
-      queryParams['color'] = this.selectedColor;
+        queryParams['color'] = this.selectedColor;
     }
-  
+
     if (this.selectedPrice && this.selectedPrice !== this.maxPrice) {
-      queryParams['maxPrice'] = this.selectedPrice;
+        queryParams['maxPrice'] = this.selectedPrice;
     }
-  
+
+    const sortSelect = document.querySelector('select') as HTMLSelectElement;
+    if (sortSelect && sortSelect.value) {
+        queryParams['sort'] = sortSelect.value;
+    }
+
     this.router.navigate([], {
-      relativeTo: this.route,
-      queryParams: queryParams,
-      queryParamsHandling: 'merge'
+        relativeTo: this.route,
+        queryParams: queryParams,
+        queryParamsHandling: 'merge'
     });
-  
+
     if (this.categoryUri && this.subcategoryUri) {
-      this.applyFilters();
+        this.applyFilters();
     }
   }
 
   applyFilters(): void {
     this.filteredProducts = this.allProducts.filter(product => {
-      return (
-        (this.selectedBrand ? product.brand.name === this.selectedBrand : true) &&
-        (this.selectedColor ? product.colors.some(color => color.name === this.selectedColor) : true) &&
-        (product.price <= this.selectedPrice)
-      );
+        return (
+            (this.selectedBrand ? product.brand.name === this.selectedBrand : true) &&
+            (this.selectedColor ? product.colors.some(color => color.name === this.selectedColor) : true) &&
+            (product.price <= this.selectedPrice)
+        );
     });
+    this.sortProducts((document.querySelector('select') as HTMLSelectElement).value);
   }
 
   onBrandChange(event: Event): void {
@@ -208,5 +217,23 @@ export class CategoryComponent implements OnInit {
         console.error('Failed to add product to wishlist', error);
       }
     });
+  }
+
+  sortProducts(criteria: string): void {
+    switch (criteria) {
+        case 'price-asc':
+            this.filteredProducts.sort((a, b) => a.price - b.price);
+            break;
+        case 'price-desc':
+            this.filteredProducts.sort((a, b) => b.price - a.price);
+            break;
+        default:
+            break;
+    }
+  }
+
+  onSortChange(event: Event): void {
+    const value = (event.target as HTMLSelectElement).value;
+    this.sortProducts(value);
   }
 }

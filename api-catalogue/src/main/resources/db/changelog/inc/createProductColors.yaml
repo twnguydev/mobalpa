@@ -23,6 +23,11 @@ databaseChangeLog:
                   "_class": "com.mobalpa.catalogue.model.Color"
                 },
                 {
+                  "_id": {"$binary": {"base64": "uWd9H5JtL4HkpY6pRqX2HQ==", "subType": "03"}},
+                  "name": "Jaune",
+                  "_class": "com.mobalpa.catalogue.model.Color"
+                },
+                {
                   "_id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}},
                   "name": "Blanc",
                   "_class": "com.mobalpa.catalogue.model.Color"
@@ -36,5 +41,15 @@ databaseChangeLog:
                   "_id": {"$binary": {"base64": "Pv+kU6+xSsuN7kA0x3P4zQ==", "subType": "03"}},
                   "name": "Violet",
                   "_class": "com.mobalpa.catalogue.model.Color"
-                }
+                },
+                {
+                  "_id": {"$binary": {"base64": "dQp3I4ZlV9UqoL3mKoZ2GQ==", "subType": "03"}},
+                  "name": "Vert",
+                  "_class": "com.mobalpa.catalogue.model.Color"
+                },
+                {
+                  "_id": {"$binary": {"base64": "eXt8O9MnN2VqlW5rNpY8Fw==", "subType": "03"}},
+                  "name": "Bleu ciel",
+                  "_class": "com.mobalpa.catalogue.model.Color"
+                },
               ]

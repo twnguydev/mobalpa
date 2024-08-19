@@ -82,7 +82,7 @@ public class CatalogueController {
       productFilter.setMinPrice(minPrice);
       productFilter.setMaxPrice(maxPrice);
       productFilter.setBrandName(brand);
-      productFilter.setSubcategoryId(subcategoryId);  // Ajoutez le filtre de sous-catégorie
+      productFilter.setSubcategoryId(subcategoryId);
 
       List<ProductDTO> products = catalogueService.getAllProducts(productFilter);
       return ResponseEntity.ok(products);
