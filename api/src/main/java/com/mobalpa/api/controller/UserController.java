@@ -62,15 +62,8 @@ public class UserController {
   }
 
   @PatchMapping("/{uuid}")
-  public ResponseEntity<?> updateUser(@PathVariable UUID uuid, @RequestBody User user) {
-    try {
-      User updatedUser = userService.updateUser(uuid, user);
-      return ResponseEntity.ok(updatedUser);
-    } catch (IllegalArgumentException e) {
-      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-    } catch (RuntimeException e) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-    }
+  public void updateUser(@PathVariable UUID uuid, @RequestBody User user) {
+    userService.updateUser(uuid, user);
   }
 
   @DeleteMapping("/{uuid}")

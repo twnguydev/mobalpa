@@ -170,12 +170,20 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     const uuid = this.user.uuid;
-
+  
     if (uuid) {
       this.userService.update(this.user).subscribe(
         user => {
           this.successMessage = 'Données mises à jour avec succès';
-          this.authService.loadUserData(uuid).subscribe();
+
+          this.authService.loadUserData(uuid).subscribe(
+            updatedUser => {
+              this.user = updatedUser as IUser;
+            },
+            error => {
+              console.error('Erreur lors du rechargement des données utilisateur:', error);
+            }
+          );
         },
         error => {
           console.error('Erreur lors de la mise à jour des données:', error);
@@ -183,7 +191,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         }
       );
     }
-  }
+  }  
 
   togglePaymentForm(): void {
     this.isPaymentFormVisible = !this.isPaymentFormVisible;
