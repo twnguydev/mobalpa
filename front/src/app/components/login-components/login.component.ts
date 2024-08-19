@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
 
     if (storedEmail) {
       this.form.get('email')?.setValue(storedEmail);
-      this.form.get('remember')?.setValue(true); // Set rememberMe control
+      this.form.get('remember')?.setValue(true);
     }
 
     if (storedPassword) {
@@ -47,9 +47,9 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  async onSubmit() {
+  onLoginSubmit() {
     this.submitted = true;
-    this.errors = []; // Clear previous errors
+    this.errors = [];
 
     if (this.form.valid) {
       const { email, password, remember } = this.form.value;

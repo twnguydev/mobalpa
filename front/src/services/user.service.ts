@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { AuthService } from '@services/auth.service';
 import { IUser } from '@interfaces/user.interface';
 import { IWishlist, IWishlistItem } from '@interfaces/wishlist.interface';
+import { IPayment } from '@interfaces/payment.interface';
 import { environment } from '@env/environment';
 
 @Injectable({
@@ -11,6 +12,8 @@ import { environment } from '@env/environment';
 })
 export class UserService {
   private apiUrl: string = `${environment.apiUrl}/users`;
+  private currentUserSubject = new BehaviorSubject<IUser | null>(null);
+  currentUser$ = this.currentUserSubject.asObservable();
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
@@ -55,5 +58,23 @@ export class UserService {
     if (!headers) return new Observable<IWishlist>();
     const body = { action, item };
     return this.http.patch<IWishlist>(`${this.apiUrl}/${userUuid}/wishlist`, body, { headers });
+  }
+
+  getPayments(uuid: string): Observable<IPayment[]> {
+    const headers: HttpHeaders | null = this.authService.getAuthHeaders();
+    if (!headers) return new Observable<IPayment[]>();
+    return this.http.get<IPayment[]>(`${this.apiUrl}/${uuid}/payments`, { headers });
+  }
+  
+  addPayment(uuid: string, payment: IPayment): Observable<IPayment> {
+    const headers: HttpHeaders | null = this.authService.getAuthHeaders();
+    if (!headers) return new Observable<IPayment>();
+    return this.http.post<IPayment>(`${this.apiUrl}/${uuid}/payments`, payment, { headers });
+  }
+  
+  deletePayment(uuid: string, paymentId: string): Observable<void> {
+    const headers: HttpHeaders | null = this.authService.getAuthHeaders();
+    if (!headers) return new Observable<void>();
+    return this.http.delete<void>(`${this.apiUrl}/${uuid}/payments/${paymentId}`, { headers });
   }
 }

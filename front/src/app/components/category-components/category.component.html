@@ -11,15 +11,8 @@
             <option *ngFor="let color of colors" [value]="color">{{ color }}</option>
         </select>
         <div class="border border-gray-300 p-2 rounded-lg">
-            <input 
-                *ngIf="minPrice !== null && maxPrice !== null"
-                type="range" 
-                class="w-full accent-indigo-600" 
-                [min]="minPrice" 
-                [max]="maxPrice" 
-                [(ngModel)]="selectedPrice" 
-                (input)="updateSelectedPrice($event)"
-            />
+            <input *ngIf="minPrice !== null && maxPrice !== null" type="range" class="w-full accent-indigo-600"
+                [min]="minPrice" [max]="maxPrice" [(ngModel)]="selectedPrice" (input)="updateSelectedPrice($event)" />
             <div class="flex justify-between text-gray-500 mt-2">
                 <span>{{ minPrice }} €</span>
                 <span>{{ selectedPrice }} €</span>
@@ -29,7 +22,8 @@
     </div>
 
     <div class="flex justify-between items-center mb-4">
-        <span class="text-gray-700">{{ filteredProducts.length }} article<span *ngIf="filteredProducts.length > 1">s</span>
+        <span class="text-gray-700">{{ filteredProducts.length }} article<span
+                *ngIf="filteredProducts.length > 1">s</span>
             trouvé</span>
         <div class="flex items-center space-x-2">
             <span class="text-gray-500">Trier par:</span>
@@ -59,9 +53,8 @@
                 </div>
                 <div class="flex items-center justify-between my-2">
                     <div class="flex items-center space-x-2">
-                        <span *ngFor="let color of product.colors" 
-                                class="w-5 h-5 rounded-full border border-gray-300" 
-                                [style.background-color]="getColorHex(color.name)">
+                        <span *ngFor="let color of product.colors" class="w-5 h-5 rounded-full border border-gray-300"
+                            [style.background-color]="getColorHex(color.name)">
                         </span>
                     </div>
                 </div>
@@ -70,8 +63,13 @@
                 <p class="text-sm text-red-600" *ngIf="product.stock === 0">Rupture de stock</p>
             </a>
             <button class="mt-4 w-full bg-mobalpa-green-alternate text-white p-2 rounded-lg">Ajouter au panier</button>
-            <button *ngIf="!productAdded" (click)="addToWishlist(product)" class="mt-2 w-full bg-gray-200 text-gray-700 p-2 rounded-lg">Ajouter à la liste de souhaits</button>
-            <button *ngIf="productAdded" class="mt-2 w-full text-gray-700 p-2 rounded-lg">Ajouté à la liste de souhaits</button>
+            <button *ngIf="!productAdded[product.uuid]" (click)="addToWishlist(product)"
+                class="mt-2 w-full bg-gray-200 text-gray-700 p-2 rounded-lg">
+                Ajouter à la liste de souhaits
+            </button>
+            <button *ngIf="productAdded[product.uuid]" class="mt-2 w-full text-gray-700 p-2 rounded-lg">
+                Ajouté à la liste de souhaits
+            </button>
         </div>
     </div>
 

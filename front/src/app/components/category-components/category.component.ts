@@ -31,7 +31,7 @@ export class CategoryComponent implements OnInit {
   categoryUri: string | null = null;
   subcategoryUri: string | null = null;
   subcategory: ISubcategory | null = null;
-  productAdded: boolean = false;
+  productAdded: { [key: string]: boolean } = {};
 
   colorMap: { [key: string]: string } = {
     Rouge: '#FF0000',
@@ -211,7 +211,7 @@ export class CategoryComponent implements OnInit {
       quantity: 1
     }).subscribe({
       next: () => {
-        this.productAdded = true;
+        this.productAdded[product.uuid] = true;
       },
       error: (error) => {
         console.error('Failed to add product to wishlist', error);

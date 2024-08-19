@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductService } from '@services/product.service';
 import { ICategory } from '@interfaces/category.interface';
+import { AuthService } from '@services/auth.service';
 
 @Component({
   selector: 'app-main-header',
@@ -13,12 +14,17 @@ import { ICategory } from '@interfaces/category.interface';
 export class MainHeaderComponent implements OnInit {
   showSearchBar = false;
   menuOpen = false;
+  isLoggedIn = false;
   categories: ICategory[] = [];
 
-  constructor(private productService: ProductService) {}
+  constructor(private productService: ProductService, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.loadCategories();
+
+    this.authService.authStatus$.subscribe((isLoggedIn) => {
+      this.isLoggedIn = isLoggedIn;
+    });
   }
 
   loadCategories(): void {
@@ -53,6 +59,9 @@ export class MainHeaderComponent implements OnInit {
     this.showSearchBar = !this.showSearchBar;
   }
 
+  logout() {
+    this.authService.logout();
+  }
 
   toggleSubcategories(uuid: string): void {
     this.categories = this.categories.map(category => {
