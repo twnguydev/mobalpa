@@ -1,7 +1,7 @@
 import { IProduct } from './product.interface';
 
 export interface IOrder {
-  orderId: string;
+  uuid: string;
   userId: string;
   items: IOrderItem[];
   deliveryMethod: string;

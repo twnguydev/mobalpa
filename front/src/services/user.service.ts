@@ -38,7 +38,7 @@ export class UserService {
   update(user: IUser): Observable<IUser> {
     const headers: HttpHeaders | null = this.authService.getAuthHeaders();
     if (!headers) return new Observable<IUser>();
-    return this.http.put<IUser>(`${this.apiUrl}/${user.uuid}`, user, { headers });
+    return this.http.patch<IUser>(`${this.apiUrl}/${user.uuid}`, user, { headers });
   }
 
   delete(userId: string): Observable<IUser> {

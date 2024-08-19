@@ -54,7 +54,7 @@
         </div>
 
         <div *ngIf="selectedTab === 2" class="border border-mobalpa-green md:mx-auto md:w-2/3 p-6 rounded-lg shadow-lg">
-            <h2 class="text-2xl font-semibold mb-4 text-mobalpa-green">Modes de paiement</h2>
+            <h2 class="text-2xl font-semibold mb-4 text-mobalpa-green">{{ tabs[selectedTab].title }}</h2>
             <div class="space-y-4">
                 <div *ngFor="let payment of payments" class="border p-2 rounded-lg flex justify-between items-center">
                     <span *ngIf="payment.cardHolder && payment.cardNumber" class="flex items-center">
@@ -135,7 +135,7 @@
         </div>
 
         <div *ngIf="selectedTab === 1" class="border border-mobalpa-green md:mx-auto md:w-2/3 p-6 rounded-lg shadow-lg">
-            <h2 class="text-2xl font-semibold mb-4 text-mobalpa-green">Adresses de livraison</h2>
+            <h2 class="text-2xl font-semibold mb-4 text-mobalpa-green">{{ tabs[selectedTab].title }}</h2>
             <div *ngIf="successMessage" class="text-green-500 mb-2">{{ successMessage }}</div>
             <div *ngIf="errorMessage" class="text-red-500 mb-2">{{ errorMessage }}</div>
 
@@ -165,7 +165,7 @@
         </div>
 
         <div *ngIf="selectedTab === 0" class="border border-mobalpa-green md:mx-auto md:w-2/3 p-6 rounded-lg shadow-lg">
-            <h2 class="text-2xl font-semibold mb-4 text-mobalpa-green">Mes Commandes</h2>
+            <h2 class="text-2xl font-semibold mb-4 text-mobalpa-green">{{ tabs[selectedTab].title }}</h2>
 
             <div *ngIf="orders.length === 0" class="text-center text-gray-500">
                 <p>Aucune commande trouvée.</p>
@@ -174,8 +174,8 @@
 
             <ul *ngIf="orders.length > 0" class="space-y-4">
                 <li *ngFor="let order of orders" class="border p-4 rounded-lg">
-                    <span class="font-semibold">Commande №{{ order.orderId }}</span> -
-                    <span class="text-gray-600">{{ order.createdAt | date: 'dd.MM.yyyy' }}</span>
+                    <span class="font-semibold">Commande №{{ order.uuid }}</span> -
+                    <span class="text-gray-600">passée le {{ order.createdAt | date: 'dd.MM.yyyy' }}</span>
                     <div class="mt-2">
                         <span [ngClass]="{
                           'text-green-500': order.status === 'Livré',

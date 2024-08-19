@@ -31,7 +31,7 @@ public class RoleService {
   }
 
   public Role getRoleByName(String name) {
-    Optional<Role> role = Optional.ofNullable(roleRepository.findByName(name));
+    Optional<Role> role = roleRepository.findByName(name);
     return role.orElse(null);
   }
 }
