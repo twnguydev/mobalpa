@@ -91,6 +91,9 @@ public class CatalogueService {
                 matches = matches && product.getColors().stream()
                         .anyMatch(color -> color.getName().equalsIgnoreCase(productFilter.getColorName()));
             }
+            if (productFilter.getSubcategoryId() != null) {
+                matches = matches && product.getSubcategory().getUuid().equals(productFilter.getSubcategoryId());
+            }
             return matches;
         }).collect(Collectors.toList());
     }
@@ -144,14 +147,36 @@ public class CatalogueService {
         return Arrays.asList(response.getBody());
     }
 
-    public List<?> getProductsBySubcategoryId(UUID subcategoryId) {
+    public List<ProductDTO> getProductsBySubcategoryId(UUID subcategoryId, ProductFilter productFilter) {
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-API-KEY", this.apiKey);
         HttpEntity<String> request = new HttpEntity<>(headers);
 
-        ResponseEntity<?> response = restTemplate.exchange(
-                this.baseUrl + "/subcategories/" + subcategoryId + "/products", HttpMethod.GET, request, List.class);
-        return Arrays.asList(response.getBody());
+        ResponseEntity<ProductDTO[]> response = restTemplate.exchange(
+                this.baseUrl + "/subcategories/" + subcategoryId + "/products", 
+                HttpMethod.GET, 
+                request, 
+                ProductDTO[].class);
+
+        List<ProductDTO> products = Arrays.asList(response.getBody());
+
+        return products.stream().filter(product -> {
+            boolean matches = true;
+            if (productFilter.getMaxPrice() != null) {
+                matches = matches && product.getPrice() <= productFilter.getMaxPrice();
+            }
+            if (productFilter.getMinPrice() != null) {
+                matches = matches && product.getPrice() >= productFilter.getMinPrice();
+            }
+            if (productFilter.getBrandName() != null) {
+                matches = matches && product.getBrand().getName().equalsIgnoreCase(productFilter.getBrandName());
+            }
+            if (productFilter.getColorName() != null) {
+                matches = matches && product.getColors().stream()
+                        .anyMatch(color -> color.getName().equalsIgnoreCase(productFilter.getColorName()));
+            }
+            return matches;
+        }).collect(Collectors.toList());
     }
 
     public ProductDTO createProduct(ProductDTO productDTO) {
