@@ -27,7 +27,7 @@
             trouvé</span>
         <div class="flex items-center space-x-2">
             <span class="text-gray-500">Trier par:</span>
-            <select class="border border-gray-300 p-2 rounded-lg" (change)="onSortChange($event)">
+            <select class="border border-gray-300 p-2 rounded-lg" (change)="onSortChange($event)" name="sort">
                 <option value="relevance">Pertinence</option>
                 <option value="price-asc">Prix : du moins cher au plus cher</option>
                 <option value="price-desc">Prix : du plus cher au moins cher</option>
@@ -36,7 +36,7 @@
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 mb-8">
-        <div *ngFor="let product of filteredProducts" class="border p-4 rounded-lg">
+        <div *ngFor="let product of paginatedProducts" class="border p-4 rounded-lg">
             <a href="/categories/{{ product.category.uri }}" class="flex items-center mb-4">
                 <span class="text-sm text-custom-blue ml-1">{{ product.category.name }}</span>
             </a>
@@ -73,11 +73,15 @@
         </div>
     </div>
 
-    <div class="flex justify-center space-x-2">
-        <a href="#" class="text-red-600">1</a>
-        <a href="#" class="text-gray-500">2</a>
-        <a href="#" class="text-gray-500">3</a>
-        <span>...</span>
-        <a href="#" class="text-gray-500">12</a>
+    <div class="flex justify-center space-x-2 mt-4">
+        <button (click)="previousPage()" [disabled]="currentPage === 1" class="px-3 py-1 bg-gray-200 rounded">Précédent</button>
+        <button *ngFor="let page of [].constructor(totalPages); let i = index"
+                (click)="goToPage(i + 1)"
+                [class.bg-blue-500]="currentPage === i + 1"
+                [class.text-white]="currentPage === i + 1"
+                class="px-3 py-1 bg-gray-200 rounded">
+            {{ i + 1 }}
+        </button>
+        <button (click)="nextPage()" [disabled]="currentPage === totalPages" class="px-3 py-1 bg-gray-200 rounded">Suivant</button>
     </div>
 </div>

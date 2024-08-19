@@ -19,6 +19,10 @@ export class CategoryComponent implements OnInit {
   allProducts: IProduct[] = [];
   filteredProducts: IProduct[] = [];
 
+  itemsPerPage: number = 3;
+  currentPage: number = 1;
+  paginatedProducts: IProduct[] = [];
+
   brands: string[] = [];
   colors: string[] = [];
   minPrice: number = 0;
@@ -27,6 +31,7 @@ export class CategoryComponent implements OnInit {
   selectedBrand: string | null = null;
   selectedColor: string | null = null;
   selectedPrice: number = 0;
+  selectedSort: string = '';
 
   categoryUri: string | null = null;
   subcategoryUri: string | null = null;
@@ -61,12 +66,13 @@ export class CategoryComponent implements OnInit {
       this.selectedBrand = params['brandName'] || null;
       this.selectedColor = params['color'] || null;
       this.selectedPrice = params['maxPrice'] ? +params['maxPrice'] : this.maxPrice;
+      this.selectedSort = params['sort'] || '';
+      
+      if (this.subcategoryUri && this.categoryUri) {
+        this.loadSubcategoryProducts(this.categoryUri, this.subcategoryUri);
+        this.loadSubcategoryDetails(this.categoryUri, this.subcategoryUri);
+      }
     });
-  
-    if (this.subcategoryUri && this.categoryUri) {
-      this.loadSubcategoryProducts(this.categoryUri, this.subcategoryUri);
-      this.loadSubcategoryDetails(this.categoryUri, this.subcategoryUri);
-    }
   }
 
   updateSelectorsFromUrl(): void {
@@ -84,6 +90,11 @@ export class CategoryComponent implements OnInit {
       const priceInput = document.querySelector('input[name="maxPrice"]') as HTMLInputElement;
       if (priceInput && this.selectedPrice) {
         priceInput.value = this.selectedPrice.toString();
+      }
+
+      const sortSelect = document.querySelector('select[name="sort"]') as HTMLSelectElement;
+      if (sortSelect && this.selectedSort) {
+        sortSelect.value = this.selectedSort;
       }
     });
   }
@@ -135,60 +146,60 @@ export class CategoryComponent implements OnInit {
     this.colors = Array.from(colorSet).sort();
     this.minPrice = minPrice === Number.MAX_VALUE ? 0 : minPrice;
     this.maxPrice = maxPrice === Number.MIN_VALUE ? 0 : maxPrice;
-    this.selectedPrice = this.maxPrice;
+    this.selectedPrice = this.selectedPrice || this.maxPrice;
   }
 
   updateUrlParams(): void {
     const queryParams: any = {};
-
+  
     if (this.selectedBrand) {
-        queryParams['brandName'] = this.selectedBrand;
+      queryParams['brandName'] = this.selectedBrand;
     }
-
+  
     if (this.selectedColor) {
-        queryParams['color'] = this.selectedColor;
+      queryParams['color'] = this.selectedColor;
     }
-
+  
     if (this.selectedPrice && this.selectedPrice !== this.maxPrice) {
-        queryParams['maxPrice'] = this.selectedPrice;
+      queryParams['maxPrice'] = this.selectedPrice;
     }
-
-    const sortSelect = document.querySelector('select') as HTMLSelectElement;
-    if (sortSelect && sortSelect.value) {
-        queryParams['sort'] = sortSelect.value;
+  
+    if (this.selectedSort) {
+      queryParams['sort'] = this.selectedSort;
     }
-
+  
     this.router.navigate([], {
-        relativeTo: this.route,
-        queryParams: queryParams,
+      relativeTo: this.route,
+      queryParams: queryParams,
     });
-
-    if (this.categoryUri && this.subcategoryUri) {
-        this.applyFilters();
-    }
   }
 
   applyFilters(): void {
     this.filteredProducts = this.allProducts.filter(product => {
-        return (
-            (this.selectedBrand ? product.brand.name === this.selectedBrand : true) &&
-            (this.selectedColor ? product.colors.some(color => color.name === this.selectedColor) : true) &&
-            (product.price <= this.selectedPrice)
-        );
+      return (
+        (this.selectedBrand ? product.brand.name === this.selectedBrand : true) &&
+        (this.selectedColor ? product.colors.some(color => color.name === this.selectedColor) : true) &&
+        (product.price <= this.selectedPrice)
+      );
     });
-    this.sortProducts((document.querySelector('select') as HTMLSelectElement).value);
+  
+    this.sortProducts(this.selectedSort);
+    this.currentPage = 1;
+    this.paginateProducts();
   }
 
   onBrandChange(event: Event): void {
     const value = (event.target as HTMLSelectElement).value;
     this.selectedBrand = value || null;
     this.updateUrlParams();
+    this.applyFilters();
   }
   
   onColorChange(event: Event): void {
     const value = (event.target as HTMLSelectElement).value;
     this.selectedColor = value || null;
     this.updateUrlParams();
+    this.applyFilters();
   }
 
   updateSelectedPrice(event: Event): void {
@@ -197,6 +208,7 @@ export class CategoryComponent implements OnInit {
     if (!isNaN(numericValue)) {
       this.selectedPrice = numericValue;
       this.updateUrlParams();
+      this.applyFilters();
     }
   }
 
@@ -225,19 +237,53 @@ export class CategoryComponent implements OnInit {
 
   sortProducts(criteria: string): void {
     switch (criteria) {
-        case 'price-asc':
-            this.filteredProducts.sort((a, b) => a.price - b.price);
-            break;
-        case 'price-desc':
-            this.filteredProducts.sort((a, b) => b.price - a.price);
-            break;
-        default:
-            break;
+      case 'price-asc':
+        this.filteredProducts.sort((a, b) => a.price - b.price);
+        break;
+      case 'price-desc':
+        this.filteredProducts.sort((a, b) => b.price - a.price);
+        break;
+      default:
+        break;
     }
+    this.paginateProducts();
   }
 
   onSortChange(event: Event): void {
     const value = (event.target as HTMLSelectElement).value;
+    this.selectedSort = value;
+    this.updateUrlParams();
     this.sortProducts(value);
+  }
+
+  paginateProducts(): void {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.paginatedProducts = this.filteredProducts.slice(startIndex, endIndex);
+  }
+
+  nextPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.paginateProducts();
+    }
+  }
+  
+  previousPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.paginateProducts();
+    }
+  }
+  
+  goToPage(page: number): void {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      this.paginateProducts();
+    }
+  }
+  
+  get totalPages(): number {
+    return Math.ceil(this.filteredProducts.length / this.itemsPerPage);
   }
 }
