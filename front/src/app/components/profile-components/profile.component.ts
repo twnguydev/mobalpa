@@ -106,7 +106,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   showOrderDetails(order: IOrder): void {
-    this.selectedOrder = order;
+    this.selectedOrder = !this.selectedOrder || this.selectedOrder.uuid !== order.uuid ? order : null;
   }
 
   addPayment(): void {

@@ -189,7 +189,7 @@
 
             <ul *ngIf="orders.length > 0" class="space-y-4">
                 <li *ngFor="let order of orders" class="border p-4 rounded-lg">
-                    <span class="font-semibold">Commande №{{ order.uuid }}</span> -
+                    <span class="font-semibold">Commande N°{{ order.uuid }}</span> -
                     <span class="text-gray-600">passée le {{ order.createdAt | date: 'dd.MM.yyyy' }}</span>
                     <div class="mt-2">
                         <span [ngClass]="{
@@ -197,8 +197,10 @@
                           'text-yellow-500': order.status === 'En cours de traitement',
                           'text-red-500': order.status === 'Annulé'
                       }">{{ order.status }}</span>
-                        <button class="ml-4 text-mobalpa-green hover:underline" (click)="showOrderDetails(order)">Lire
-                            la suite</button>
+                        <button class="ml-4 text-mobalpa-green hover:underline" (click)="showOrderDetails(order)">
+                            <span *ngIf="selectedOrder !== order">Voir les détails</span>
+                            <span *ngIf="selectedOrder === order">Masquer les détails</span>
+                        </button>
                     </div>
 
                     <div *ngIf="selectedOrder === order" class="mt-4">
