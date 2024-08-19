@@ -103,7 +103,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         console.error('Erreur lors du chargement des commandes:', error);
       }
     );
-  }  
+  }
 
   showOrderDetails(order: IOrder): void {
     this.selectedOrder = order;
@@ -112,11 +112,22 @@ export class ProfileComponent implements OnInit, OnDestroy {
   addPayment(): void {
     const uuid = this.user.uuid;
     if (uuid) {
-      const [year, month] = this.newPayment.expirationDate.split('-');
+      if (this.newPayment.paymentMethod === 'CREDIT_CARD') {
+        if (!this.newPayment.cardHolder || !this.newPayment.cardNumber || !this.newPayment.expirationDate || !this.newPayment.cvv) {
+          this.errorMessage = 'Veuillez remplir tous les champs de la carte de crédit.';
+          return;
+        }
 
-      const formattedDate = `${year}-${month}-01T00:00:00`;
+        const [year, month] = this.newPayment.expirationDate.split('-');
+        const formattedDate = `${year}-${month}-01T00:00:00`;
+        this.newPayment.expirationDate = formattedDate;
 
-      this.newPayment.expirationDate = formattedDate;
+      } else if (this.newPayment.paymentMethod === 'PAYPAL') {
+        if (!this.newPayment.paypalEmail) {
+          this.errorMessage = 'Veuillez entrer votre adresse email PayPal.';
+          return;
+        }
+      }
 
       this.newPayment.userUuid = uuid;
       this.userService.addPayment(uuid, this.newPayment).subscribe(
@@ -136,9 +147,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   deletePayment(paymentId: string): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      data: { message: 'Êtes-vous sûr de vouloir supprimer cette méthode de paiement ?' }
+      data: { message: 'Êtes-vous sûr de vouloir supprimer cette méthode de paiement ?' },
     });
-
+  
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         const uuid = this.user.uuid;
@@ -156,7 +167,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         }
       }
     });
-  }
+  }  
 
   ngOnDestroy(): void {
     this.userSubscription?.unsubscribe();
@@ -193,7 +204,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         }
       );
     }
-  } 
+  }
 
   togglePaymentForm(): void {
     this.isPaymentFormVisible = !this.isPaymentFormVisible;

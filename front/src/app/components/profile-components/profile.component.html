@@ -1,4 +1,4 @@
-<div class="container mx-auto py-8">
+<div class="container mx-auto py-8 min-h-screen h-auto">
     <h1 class="text-4xl font-bold mb-8 text-mobalpa-green">Espace personnel</h1>
     <div class="tabs flex flex-wrap border-b mb-10 gap-2 sm:gap-4 md:gap-6 lg:gap-8">
         <div *ngFor="let tab of tabs; let i = index" (click)="selectTab(i)"
@@ -55,24 +55,27 @@
 
         <div *ngIf="selectedTab === 2" class="border border-mobalpa-green md:mx-auto md:w-2/3 p-6 rounded-lg shadow-lg">
             <h2 class="text-2xl font-semibold mb-4 text-mobalpa-green">{{ tabs[selectedTab].title }}</h2>
+            <div *ngIf="successMessage" class="alert alert-success text-green-500 mb-2">{{ successMessage }}</div>
+            <div *ngIf="errorMessage" class="alert alert-danger text-red-500 mb-2">{{ errorMessage }}</div>
             <div class="space-y-4">
                 <div *ngFor="let payment of payments" class="border p-2 rounded-lg flex justify-between items-center">
                     <span *ngIf="payment.cardHolder && payment.cardNumber" class="flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2 7h20M2 7v10c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7m-2 5H4m6 4h4" />
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M2 7h20M2 7v10c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7m-2 5H4m6 4h4" />
                         </svg>
                         {{ payment.cardHolder }} **** {{ payment.cardNumber.slice(-4) }}
                     </span>
                     <span *ngIf="payment.paypalEmail" class="flex items-center">
-                        <img class="h-4 w-4 mr-3" alt="PayPal Logo Icon 2014" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/PayPal_Logo_Icon_2014.svg/256px-PayPal_Logo_Icon_2014.svg.png?20230314143227">
+                        <img class="h-4 w-4 mr-3" alt="PayPal Logo Icon 2014"
+                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/PayPal_Logo_Icon_2014.svg/256px-PayPal_Logo_Icon_2014.svg.png?20230314143227">
                         {{ payment.paypalEmail }}
                     </span>
                     <button (click)="deletePayment(payment.uuid)" class="text-red-500 hover:underline">
                         Supprimer
                     </button>
-                </div>                
-                <div *ngIf="successMessage" class="alert alert-success text-green-500">{{ successMessage }}</div>
-                <div *ngIf="errorMessage" class="alert alert-danger text-red-500">{{ errorMessage }}</div>
+                </div>
 
                 <button (click)="togglePaymentForm()"
                     class="bg-mobalpa-green hover:bg-emerald-green text-white p-2 rounded-lg w-full">
@@ -80,36 +83,10 @@
                 </button>
 
                 <div *ngIf="isPaymentFormVisible">
-                    <h3 class="text-lg font-semibold mt-4 text-mobalpa-green">Ajouter une nouvelle méthode de paiement
+                    <h3 class="text-lg font-semibold my-4 text-mobalpa-green">Ajouter une nouvelle méthode de paiement
                     </h3>
                     <form (ngSubmit)="addPayment()" class="space-y-4">
-                        <div>
-                            <label for="cardHolder" class="block text-sm font-medium text-gray-700">Titulaire de la
-                                carte</label>
-                            <input type="text" [(ngModel)]="newPayment.cardHolder" name="cardHolder"
-                                class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-mobalpa-green"
-                                placeholder="Nom du titulaire" required>
-                        </div>
-                        <div>
-                            <label for="cardNumber" class="block text-sm font-medium text-gray-700">Numéro de
-                                carte</label>
-                            <input type="text" [(ngModel)]="newPayment.cardNumber" name="cardNumber"
-                                class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-mobalpa-green"
-                                placeholder="Votre numéro de carte" required>
-                        </div>
-                        <div>
-                            <label for="expirationDate" class="block text-sm font-medium text-gray-700">Date
-                                d'expiration</label>
-                            <input type="month" [(ngModel)]="newPayment.expirationDate" name="expirationDate"
-                                class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-mobalpa-green"
-                                required>
-                        </div>
-                        <div>
-                            <label for="cvv" class="block text-sm font-medium text-gray-700">CVV</label>
-                            <input type="text" [(ngModel)]="newPayment.cvv" name="cvv"
-                                class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-mobalpa-green"
-                                placeholder="Votre CVV" required>
-                        </div>
+                        <!-- Méthode de paiement -->
                         <div>
                             <label for="paymentMethod" class="block text-sm font-medium text-gray-700">Méthode de
                                 paiement</label>
@@ -119,13 +96,51 @@
                                 <option value="PAYPAL">Paypal</option>
                             </select>
                         </div>
-                        <div>
+
+                        <!-- Titulaire de la carte -->
+                        <div
+                            *ngIf="newPayment.paymentMethod === 'CREDIT_CARD' || newPayment.paymentMethod === 'PAYPAL'">
+                            <label for="cardHolder" class="block text-sm font-medium text-gray-700">Titulaire de la
+                                carte</label>
+                            <input type="text" [(ngModel)]="newPayment.cardHolder" name="cardHolder"
+                                class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-mobalpa-green"
+                                placeholder="Nom du titulaire">
+                        </div>
+
+                        <!-- Numéro de carte -->
+                        <div *ngIf="newPayment.paymentMethod === 'CREDIT_CARD'">
+                            <label for="cardNumber" class="block text-sm font-medium text-gray-700">Numéro de
+                                carte</label>
+                            <input type="text" [(ngModel)]="newPayment.cardNumber" name="cardNumber"
+                                class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-mobalpa-green"
+                                placeholder="Votre numéro de carte">
+                        </div>
+
+                        <!-- Date d'expiration -->
+                        <div *ngIf="newPayment.paymentMethod === 'CREDIT_CARD'">
+                            <label for="expirationDate" class="block text-sm font-medium text-gray-700">Date
+                                d'expiration</label>
+                            <input type="month" [(ngModel)]="newPayment.expirationDate" name="expirationDate"
+                                class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-mobalpa-green">
+                        </div>
+
+                        <!-- CVV -->
+                        <div *ngIf="newPayment.paymentMethod === 'CREDIT_CARD'">
+                            <label for="cvv" class="block text-sm font-medium text-gray-700">CVV</label>
+                            <input type="text" [(ngModel)]="newPayment.cvv" name="cvv"
+                                class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-mobalpa-green"
+                                placeholder="Votre CVV">
+                        </div>
+
+                        <!-- Email PayPal -->
+                        <div *ngIf="newPayment.paymentMethod === 'PAYPAL'">
                             <label for="paypalEmail" class="block text-sm font-medium text-gray-700">Email
                                 Paypal</label>
                             <input type="email" [(ngModel)]="newPayment.paypalEmail" name="paypalEmail"
                                 class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-mobalpa-green"
                                 placeholder="Votre email Paypal">
                         </div>
+
                         <button type="submit"
                             class="bg-mobalpa-green text-white p-2 rounded-lg hover:bg-emerald-green w-full">Ajouter le
                             mode de paiement</button>
@@ -197,22 +212,22 @@
                             <p><strong>Total HT:</strong> {{ order.totalHt | number: '1.2-2' }} €</p>
                             <p><strong>Total TTC:</strong> {{ order.totalTtc | number: '1.2-2' }} €</p>
                         </div>
-                    
+
                         <h4 class="text-md font-semibold mt-4">Articles de la commande:</h4>
                         <ul class="mt-2 space-y-2">
                             <li *ngFor="let item of order.items" class="border p-2 rounded-lg">
-                                <span class="font-semibold">{{ item.product?.name }}</span> - Quantité : {{ item.quantity }}
+                                <span class="font-semibold">{{ item.product?.name }}</span> - Quantité : {{
+                                item.quantity }}
                                 <div *ngIf="item.product">
                                     <p><strong>Prix unitaire:</strong> {{ item.product.price | number: '1.2-2' }} €</p>
-                                    <p><strong>Sous-total:</strong> {{ item.product.price * item.quantity | number: '1.2-2' }} €</p>
+                                    <p><strong>Sous-total:</strong> {{ item.product.price * item.quantity | number:
+                                        '1.2-2' }} €</p>
                                 </div>
                             </li>
                         </ul>
-                    </div>                    
+                    </div>
                 </li>
             </ul>
         </div>
-
-
     </div>
 </div>
