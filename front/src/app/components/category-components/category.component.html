@@ -24,14 +24,15 @@
     <div class="flex justify-between items-center mb-4">
         <span class="text-gray-700">{{ filteredProducts.length }} article<span
                 *ngIf="filteredProducts.length > 1">s</span>
-            trouvé</span>
+            trouvé<span
+            *ngIf="filteredProducts.length > 1">s</span></span>
         <div class="flex items-center space-x-2">
             <span class="text-gray-500">Trier par:</span>
             <select class="border border-gray-300 p-2 rounded-lg" (change)="onSortChange($event)" name="sort">
                 <option value="relevance">Pertinence</option>
                 <option value="price-asc">Prix : du moins cher au plus cher</option>
                 <option value="price-desc">Prix : du plus cher au moins cher</option>
-            </select>            
+            </select>
         </div>
     </div>
 
