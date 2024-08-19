@@ -33,9 +33,11 @@
             trouvé</span>
         <div class="flex items-center space-x-2">
             <span class="text-gray-500">Trier par:</span>
-            <select class="border border-gray-300 p-2 rounded-lg">
-                <option>Pertinence</option>
-            </select>
+            <select class="border border-gray-300 p-2 rounded-lg" (change)="onSortChange($event)">
+                <option value="relevance">Pertinence</option>
+                <option value="price-asc">Prix : du moins cher au plus cher</option>
+                <option value="price-desc">Prix : du plus cher au moins cher</option>
+            </select>            
         </div>
     </div>
 
