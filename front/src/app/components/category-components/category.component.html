@@ -2,16 +2,16 @@
     <h1 class="text-3xl md:text-6xl font-bold mb-8 text-left">{{ subcategory?.name }}</h1>
 
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        <select class="border border-gray-300 p-2 rounded-lg" (change)="onBrandChange($event)">
+        <select class="border border-gray-300 p-2 rounded-lg" (change)="onBrandChange($event)" name="brandName">
             <option value="">Marque</option>
             <option *ngFor="let brand of brands" [value]="brand">{{ brand }}</option>
         </select>
-        <select class="border border-gray-300 p-2 rounded-lg" (change)="onColorChange($event)">
+        <select class="border border-gray-300 p-2 rounded-lg" (change)="onColorChange($event)" name="color">
             <option value="">Couleur</option>
             <option *ngFor="let color of colors" [value]="color">{{ color }}</option>
         </select>
         <div class="border border-gray-300 p-2 rounded-lg">
-            <input *ngIf="minPrice !== null && maxPrice !== null" type="range" class="w-full accent-indigo-600"
+            <input *ngIf="minPrice !== null && maxPrice !== null" type="range" class="w-full accent-indigo-600" name="maxPrice"
                 [min]="minPrice" [max]="maxPrice" [(ngModel)]="selectedPrice" (input)="updateSelectedPrice($event)" />
             <div class="flex justify-between text-gray-500 mt-2">
                 <span>{{ minPrice }} €</span>
