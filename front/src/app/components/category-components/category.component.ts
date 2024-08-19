@@ -56,17 +56,35 @@ export class CategoryComponent implements OnInit {
   ngOnInit(): void {
     this.categoryUri = this.route.snapshot.paramMap.get('categoryUri');
     this.subcategoryUri = this.route.snapshot.paramMap.get('subcategoryUri');
-    if (this.subcategoryUri && this.categoryUri) {
-      this.loadSubcategoryProducts(this.categoryUri, this.subcategoryUri);
-      this.loadSubcategoryDetails(this.categoryUri, this.subcategoryUri);
-    }
-
+    
     this.route.queryParams.subscribe(params => {
       this.selectedBrand = params['brandName'] || null;
       this.selectedColor = params['color'] || null;
       this.selectedPrice = params['maxPrice'] ? +params['maxPrice'] : this.maxPrice;
+    });
+  
+    if (this.subcategoryUri && this.categoryUri) {
+      this.loadSubcategoryProducts(this.categoryUri, this.subcategoryUri);
+      this.loadSubcategoryDetails(this.categoryUri, this.subcategoryUri);
+    }
+  }
 
-      this.applyFilters();
+  updateSelectorsFromUrl(): void {
+    setTimeout(() => {
+      const brandSelect = document.querySelector('select[name="brandName"]') as HTMLSelectElement;
+      if (brandSelect && this.selectedBrand) {
+        brandSelect.value = this.selectedBrand;
+      }
+  
+      const colorSelect = document.querySelector('select[name="color"]') as HTMLSelectElement;
+      if (colorSelect && this.selectedColor) {
+        colorSelect.value = this.selectedColor;
+      }
+  
+      const priceInput = document.querySelector('input[name="maxPrice"]') as HTMLInputElement;
+      if (priceInput && this.selectedPrice) {
+        priceInput.value = this.selectedPrice.toString();
+      }
     });
   }
 
@@ -76,6 +94,7 @@ export class CategoryComponent implements OnInit {
         if (response && response.length > 0) {
           this.allProducts = response.flat();
           this.extractFilterData();
+          this.updateSelectorsFromUrl();
           this.applyFilters();
         }
       },
@@ -142,7 +161,6 @@ export class CategoryComponent implements OnInit {
     this.router.navigate([], {
         relativeTo: this.route,
         queryParams: queryParams,
-        queryParamsHandling: 'merge'
     });
 
     if (this.categoryUri && this.subcategoryUri) {
@@ -165,26 +183,12 @@ export class CategoryComponent implements OnInit {
     const value = (event.target as HTMLSelectElement).value;
     this.selectedBrand = value || null;
     this.updateUrlParams();
-    if (!value) {
-      this.removeFilterFromUrl('brandName');
-    }
   }
-
+  
   onColorChange(event: Event): void {
     const value = (event.target as HTMLSelectElement).value;
     this.selectedColor = value || null;
     this.updateUrlParams();
-    if (!value) {
-      this.removeFilterFromUrl('color');
-    }
-  }
-
-  removeFilterFromUrl(filter: string): void {
-    const params = new URLSearchParams(window.location.search);
-    params.delete(filter);
-    const newUrl = `${window.location.pathname}?${params.toString()}`;
-    window.history.replaceState({}, '', newUrl);
-    this.applyFilters();
   }
 
   updateSelectedPrice(event: Event): void {
