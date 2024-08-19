@@ -1,3 +1,5 @@
+import { IProduct } from './product.interface';
+
 export interface IOrder {
   orderId: string;
   userId: string;
@@ -19,4 +21,5 @@ export interface IOrder {
 export interface IOrderItem {
   productUuid: string;
   quantity: number;
+  product?: IProduct | null;
 }

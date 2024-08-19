@@ -5,6 +5,7 @@ import { IUser } from '@interfaces/user.interface';
 import { AuthService } from '@services/auth.service';
 import { UserService } from '@services/user.service';
 import { OrderService } from '@services/order.service';
+import { ProductService } from '@services/product.service';
 import { Subscription } from 'rxjs';
 import { IPayment } from '@interfaces/payment.interface';
 import { IOrder } from '@interfaces/order.interface';
@@ -20,7 +21,7 @@ import { ConfirmDialogComponent } from '@components/confirm-dialog/confirm-dialo
 })
 export class ProfileComponent implements OnInit, OnDestroy {
   tabs = [
-    { title: 'Mes Commandes' },
+    { title: 'Mes commandes' },
     { title: 'Adresses de livraison' },
     { title: 'Modes de paiement' },
     { title: 'Données personnelles' },
@@ -44,23 +45,16 @@ export class ProfileComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private userService: UserService,
     private orderService: OrderService,
+    private productService: ProductService,
     private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
-    const token = localStorage.getItem('token');
-
-    if (token) {
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      const uuid = payload.uuid;
-
-      if (uuid) {
-        this.loadUserData(uuid);
-        this.loadPayments(uuid);
-        this.loadOrders();
-      } else {
-        console.log('No UUID available');
-      }
+    if (this.authService.user) {
+      this.user = this.authService.user;
+      this.loadPayments(this.user.uuid);
+      this.loadUserData(this.user.uuid);
+      this.loadOrders(this.user.uuid);
     }
 
     this.userSubscription = this.authService.currentUser$.subscribe(user => {
@@ -87,16 +81,29 @@ export class ProfileComponent implements OnInit, OnDestroy {
     );
   }
 
-  loadOrders(): void {
-    this.orderService.getOrders().subscribe(
+  loadOrders(uuid: string): void {
+    this.userService.getOrders(uuid).subscribe(
       orders => {
         this.orders = orders;
+
+        for (const order of this.orders) {
+          for (const item of order.items) {
+            this.productService.getProductById(item.productUuid).subscribe(
+              product => {
+                item.product = product;
+              },
+              error => {
+                console.error('Erreur lors du chargement des détails du produit:', error);
+              }
+            );
+          }
+        }
       },
       error => {
         console.error('Erreur lors du chargement des commandes:', error);
       }
     );
-  }
+  }  
 
   showOrderDetails(order: IOrder): void {
     this.selectedOrder = order;

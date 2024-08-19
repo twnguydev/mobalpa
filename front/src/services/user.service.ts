@@ -77,4 +77,10 @@ export class UserService {
     if (!headers) return new Observable<void>();
     return this.http.delete<void>(`${this.apiUrl}/${uuid}/payments/${paymentId}`, { headers });
   }
+
+  getOrders(uuid: string): Observable<any> {
+    const headers: HttpHeaders | null = this.authService.getAuthHeaders();
+    if (!headers) return new Observable<any>();
+    return this.http.get<any>(`${this.apiUrl}/${uuid}/orders`, { headers });
+  }
 }
