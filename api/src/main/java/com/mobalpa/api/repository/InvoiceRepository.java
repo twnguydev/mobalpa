@@ -11,4 +11,5 @@ import java.util.Optional;
 public interface InvoiceRepository extends JpaRepository<Invoice, UUID> {
   Optional<Invoice> findByInvoiceNumber(String invoiceNumber);
   Optional<Invoice> findByUuid(UUID id);
+  Optional<Invoice> findByOrderUuid(UUID orderUuid);
 }

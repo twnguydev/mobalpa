@@ -87,6 +87,14 @@ export class ProfileComponent implements OnInit, OnDestroy {
         this.orders = orders;
 
         for (const order of this.orders) {
+          this.orderService.getInvoiceByOrderUuid(order.uuid).subscribe(
+            invoice => {
+              order.invoice = invoice;
+            },
+            error => {
+              console.error('Erreur lors du chargement de la facture:', error);
+            }
+          );
           for (const item of order.items) {
             this.productService.getProductById(item.productUuid).subscribe(
               product => {
@@ -101,6 +109,22 @@ export class ProfileComponent implements OnInit, OnDestroy {
       },
       error => {
         console.error('Erreur lors du chargement des commandes:', error);
+      }
+    );
+  }
+
+  downloadInvoice(orderUuid: string): void {
+    this.orderService.getInvoiceByOrderUuid(orderUuid).subscribe(
+      (blob: Blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `Facture_${orderUuid}.pdf`;
+        link.click();
+        window.URL.revokeObjectURL(url);
+      },
+      error => {
+        console.error('Erreur lors du téléchargement de la facture:', error);
       }
     );
   }

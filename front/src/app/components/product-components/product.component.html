@@ -26,7 +26,8 @@
                 <span class="ml-2 text-2xl font-semibold text-gray-800">{{ product.price }} €</span>
             </div>
             <p class="text-gray-600 mb-4">Réf: {{ product.uuid }}</p>
-            <div class="flex items-center justify-between flex-col md:flex-row shadow-md rounded-xl p-2 mb-4 bg-gray-100">
+            <div
+                class="flex items-center justify-between flex-col md:flex-row shadow-md rounded-xl p-2 mb-4 bg-gray-100">
                 <div class="flex items-center">
                     <button
                         class="w-8 h-8 border rounded-full flex items-center justify-center text-gray-600 hover:bg-gray-200 transition"
@@ -38,14 +39,21 @@
                         (click)="increaseQuantity()">+</button>
                 </div>
 
-                <button
-                    class="bg-red-500 text-white px-4 py-2 rounded-md flex items-center hover:bg-red-600 transition">
-                    <span>Ajouter au panier</span>
-                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg">
+                <button (click)="addToCart()"
+                    [ngClass]="{'bg-custom-blue': isAdded, 'bg-mobalpa-green-alternate': !isAdded, 'transition-colors': true, 'duration-300': true, 'relative': true}"
+                    class="text-white px-4 py-2 rounded-md flex items-center hover:bg-mobalpa-green-alternate transition-colors duration-300"
+                    [attr.aria-label]="isAdded ? 'Produit ajouté' : 'Ajouter au panier'">
+                    <span *ngIf="!isAdded">Ajouter au panier</span>
+                    <span *ngIf="isAdded">Produit ajouté</span>
+                    <svg [ngClass]="{'hidden': isAdded, 'block': !isAdded}" class="w-4 h-4 ml-2" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M3 3h2l.4 2M7 13h10l1.6-8H6.4L5.2 4H3m4 9h10a2 2 0 002-2H5a2 2 0 002 2zm-1 5a1 1 0 110-2 1 1 0 010 2zm11 0a1 1 0 110-2 1 1 0 010 2z">
                         </path>
+                    </svg>
+                    <svg [ngClass]="{'hidden': !isAdded, 'block': isAdded}" class="w-4 h-4 ml-2" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                     </svg>
                 </button>
             </div>
@@ -66,7 +74,9 @@
                 </ul>
             </div>
             <div class="bg-white border rounded-xl p-4 shadow-md flex items-center space-x-4">
-                <svg class="w-8 h-8 text-mobalpa-green flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="w-8 h-8 text-mobalpa-green flex-shrink-0" xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
                     <path d="M12 2l3 7h7l-6 5 2 7-6-4-6 4 2-7-6-5h7z"></path>
                 </svg>
                 <div class="text-gray-800">

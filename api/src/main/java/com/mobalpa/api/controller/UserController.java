@@ -2,7 +2,6 @@ package com.mobalpa.api.controller;
 
 import com.mobalpa.api.service.CatalogueService;
 import com.mobalpa.api.service.UserService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.mobalpa.api.model.Payment;
 import com.mobalpa.api.model.User;
 import com.mobalpa.api.model.Wishlist;

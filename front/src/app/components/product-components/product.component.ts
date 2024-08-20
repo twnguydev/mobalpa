@@ -3,7 +3,9 @@ import { DatePipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ProductService } from '@services/product.service';
+import { UserService } from '@services/user.service';
 import { IProduct } from '@interfaces/product.interface';
+import { IWishlistItem } from '@interfaces/wishlist.interface';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -37,11 +39,13 @@ export class ProductComponent implements OnInit {
   quantity: number = 1;
   product: IProduct | null = null;
   shippingDelay: string | null = null;
+  isAdded: boolean = false;
   errorMessage: string = '';
 
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
+    private userService: UserService,
     private datePipe: DatePipe
   ) { }
 
@@ -73,9 +77,9 @@ export class ProductComponent implements OnInit {
   private calculateShippingDelay(dateString: string): void {
     const now = new Date();
     const estimatedDeliveryDate = new Date(dateString);
-    
+
     const totalDays = Math.ceil((estimatedDeliveryDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
-    
+
     if (totalDays <= 0) {
       this.shippingDelay = 'Expédition immédiate';
       return;
@@ -83,7 +87,7 @@ export class ProductComponent implements OnInit {
 
     const daysInMonth = 30;
     const daysInWeek = 7;
-    
+
     const months = Math.floor(totalDays / daysInMonth);
     const weeks = Math.floor((totalDays % daysInMonth) / daysInWeek);
     const days = totalDays % daysInWeek;
@@ -113,6 +117,28 @@ export class ProductComponent implements OnInit {
   decreaseQuantity() {
     if (this.quantity > 1) {
       this.quantity--;
+    }
+  }
+
+  addToCart() {
+    if (this.product) {
+      const item: IWishlistItem = {
+        productUuid: this.product.uuid,
+        product: this.product,
+        selectedColor: this.product.colors[0].name,
+        quantity: this.quantity,
+        properties: {
+          brand: this.product.brand.name,
+          images: this.product.images[0].uri
+        }
+      };
+
+      this.userService.modifyCartFromLocalstorage('add', item);
+      this.isAdded = true;
+
+      setTimeout(() => {
+        this.isAdded = false;
+      }, 5000);
     }
   }
 
