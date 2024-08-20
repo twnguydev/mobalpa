@@ -19,7 +19,7 @@ export class CategoryComponent implements OnInit {
   allProducts: IProduct[] = [];
   filteredProducts: IProduct[] = [];
 
-  itemsPerPage: number = 1;
+  itemsPerPage: number = 6;
   currentPage: number = 1;
   paginatedProducts: IProduct[] = [];
 

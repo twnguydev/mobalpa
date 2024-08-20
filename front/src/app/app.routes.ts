@@ -8,6 +8,7 @@ import { CartPageComponent } from '@pages/cart_page/cart-page.component';
 import { Wishlist_PageComponent } from '@pages/wishlist-page/wishlist-page.component';
 import { SupportPageComponent } from '@pages/support-page/support-page.component';
 import { SubcategoriePageComponent } from '@pages/subcategorie-page/subcategorie-page.component';
+import { ProductComponent } from '@components/product-components/product.component';
 
 import { HomeComponent } from '@components/home-components/home.component';
 import { LoginComponent } from '@components/login-components/login.component';
@@ -31,6 +32,7 @@ export const routes: Routes = [
     { path: 'auth/reinitialiser-mot-de-passe', component: ResetPasswordComponent, canActivate: [NoAuthGuard] },
     { path: 'categories/:categoryUri', component: SubcategoriePageComponent },
     { path: 'categories/:categoryUri/:subcategoryUri', component: CategoryComponent },
+    { path: 'categories/:categoryUri/:subcategoryUri/:productUri', component: ProductComponent },
     { path: 'profil', component: ProfileComponent, canActivate: [AuthGuard] },
 
     { path: 'mentions-legales', component: LegalNoticeComponent },

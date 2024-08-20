@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject, of, throwError } from 'rxjs';
-import { MatDialog } from '@angular/material/dialog';
 import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { catchError, map, switchMap } from 'rxjs/operators';
@@ -22,7 +21,7 @@ export class AuthService {
   private authStatus = new BehaviorSubject<boolean>(this.isAuthenticated());
   authStatus$ = this.authStatus.asObservable();
 
-  constructor(private http: HttpClient, private router: Router, private dialog: MatDialog) {
+  constructor(private http: HttpClient, private router: Router) {
     this.loadUserFromLocalStorage();
     this.checkTokenExpiration();
   }
@@ -148,20 +147,22 @@ export class AuthService {
     );
   }
 
-  logout(): void {
-    const confirmation = window.confirm('Êtes-vous sûr de vouloir vous déconnecter ?');
-
-    if (confirmation) {
-      localStorage.removeItem('token');
-      localStorage.removeItem('currentUser');
-      this.user = null;
-      this.authStatus.next(false);
-      clearTimeout(this.tokenExpirationTimeout);
-      this.router.navigate(['/auth/connexion']);
+  logout(isTimeout: boolean = false): void {
+    if (isTimeout) {
+      this.performLogout();
     } else {
-      console.log("Déconnexion annulée");
+      console.log('Déconnexion annulée');
     }
   }
+  
+  private performLogout(): void {
+    localStorage.removeItem('token');
+    localStorage.removeItem('currentUser');
+    this.user = null;
+    this.authStatus.next(false);
+    clearTimeout(this.tokenExpirationTimeout);
+    this.redirectToLogin();
+  }  
 
   isAuthenticated(): boolean {
     return !!localStorage.getItem('token');
@@ -179,10 +180,10 @@ export class AuthService {
 
       if (expirationTime > 0) {
         this.tokenExpirationTimeout = setTimeout(() => {
-          this.logout();
+          this.logout(true);
         }, expirationTime);
       } else {
-        this.logout();
+        this.logout(true);
       }
     }
   }
