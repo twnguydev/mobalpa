@@ -14,6 +14,8 @@
                 </th>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Sous-Categorie</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        image</th>
 
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
             </tr>
@@ -24,6 +26,7 @@
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Frigo mono fonction </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Gros Eletro.</td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Frigo</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">frigo-mono-fonction.png</td>
 
                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium flex gap-5">
                     <button class="text-blue-600 hover:text-red-900" (click)="openEdit()">Edit</button>
@@ -54,6 +57,8 @@
                     
                 
                 </select>
+                <label for="image">choisir une image</label>
+                <input type="file" name="image" id="" class="bg-gray-100 p-1" placeholder="choisir une image">
             </form>
             <div class="flex justify-around">
                 <button class="bg-blue-500 text-white px-4 py-2 rounded">
@@ -88,6 +93,8 @@
             
             
                 </select>
+                <label for="image">Changer l'image</label>
+                <input type="file" name="image" id="" class="bg-gray-100 p-1" placeholder="choisir une image">
             </form>
             <div class="flex justify-around">
                 <button class="bg-blue-500 text-white px-4 py-2 rounded">

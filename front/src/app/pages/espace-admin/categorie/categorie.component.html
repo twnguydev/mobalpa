@@ -9,6 +9,8 @@
             <tr>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nom</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Image</th>
+
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
 
             </tr>
@@ -17,6 +19,7 @@
             <tr>
                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">1</td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Gros Electro.</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">gros-eletro.png</td>
 
                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium flex gap-5">
                     <button class="text-blue-600 hover:text-red-900"(click)="openEdit()">Edit</button>
@@ -27,7 +30,7 @@
             <tr>
                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">2</td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Petit Electro.</td>
-            
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">petit-eletro.png</td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium flex gap-5">
                     <button class="text-blue-600 hover:text-red-900"(click)="openEdit()">Edit</button>
 
@@ -37,7 +40,7 @@
             <tr>
                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">3</td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Cuisine</td>
-            
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">cuisine.png</td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium flex gap-5">
                     <button class="text-blue-600 hover:text-red-900"(click)="openEdit()">Edit</button>
 
@@ -46,7 +49,7 @@
                 <tr>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">4</td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Salle de bain</td>
-                
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">salle-de-bain.png</td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium flex gap-5">
                         <button class="text-blue-600 hover:text-red-900"(click)="openEdit()">Edit</button>
 
@@ -56,7 +59,7 @@
                 <tr>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">5</td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Accessoires</td>
-                
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">accessoire.png</td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium flex gap-5">
                         <button class="text-blue-600 hover:text-red-900"(click)="openEdit()">Edit</button>
 
@@ -73,7 +76,8 @@
             <h2 class="text-xl font-bold mb-4">Ajouter une catégorie</h2>
             <form action="" class="flex flex-col gap-5 mb-5">
                 <input type="text" name="categorie" id="" placeholder="Nom de la catégorie" class="bg-gray-100 p-3 h-10 w-full">
-                
+                <label for="image">choisir une image</label>
+                <input type="file" name="image" id="" class="bg-gray-100 p-1" placeholder="choisir une image">
             </form>
             <div class="flex justify-around">
                 <button class="bg-blue-500 text-white px-4 py-2 rounded">
