@@ -2,6 +2,7 @@ import { RouterModule, Routes, ExtraOptions } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { AuthGuard } from './auth.guard';
 import { NoAuthGuard } from './no-auth.guard';
+import { AdminGuard } from './admin.guard';
 
 import { LandingPageComponent } from '@pages/landing-page/landing-page.component';
 import { CartPageComponent } from '@pages/cart_page/cart-page.component';
@@ -40,7 +41,7 @@ export const routes: Routes = [
     { path: 'politique-de-confidentialite', component: PrivacyPolicyComponent },
     { path: 'conditions-generales-de-vente', component: TermsAndConditionsComponent },
     { path: 'conditions-generales-utilisation', component: TermsOfUseComponent },
-    { path: 'admin', component: EspaceAdminComponent },
+    { path: 'admin', component: EspaceAdminComponent, canActivate: [AdminGuard] },
 ];
 
 const routerOptions: ExtraOptions = {
