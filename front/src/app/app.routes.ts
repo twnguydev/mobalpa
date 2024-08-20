@@ -26,6 +26,7 @@ import { PuisJeRenvoyerTousLesArticlesComponent } from '@components/footer-pages
 import { FraisDeRetourComponent } from '@components/footer-pages/retour-de-marchandises/parts/frais-de-retour/frais-de-retour.component';
 
 import { ServiceDeGarantieComponent } from '@components/footer-pages/service-de-garantie/service-de-garantie.component';
+import { ReparationSousGarantieComponent } from '@components/footer-pages/service-de-garantie/pages/reparation-sous-garantie/reparation-sous-garantie.component';
 
 export const routes: Routes = [
     { path: '', component: LandingPageComponent },
@@ -53,6 +54,7 @@ export const routes: Routes = [
     { path: 'retour-de-marchandises/frais-de-retour', component: FraisDeRetourComponent },
 
     { path: 'service-de-garantie', component:ServiceDeGarantieComponent },
+    { path: "service-de-garantie/reparation-sous-garantie", component:ReparationSousGarantieComponent }
 ];
 
 const routerOptions: ExtraOptions = {
