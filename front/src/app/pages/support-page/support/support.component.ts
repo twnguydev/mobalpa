@@ -1,15 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule, FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FaqComponent } from './faq/faq.component';
 
 @Component({
   selector: 'app-support',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, FaqComponent],
   templateUrl: './support.component.html',
   styleUrls: ['./support.component.css']  // Correction ici
 })
 export class SupportComponent implements OnInit {
+  searchQuery: string = '';
+
 
   supForm!: FormGroup;
   feedForm!: FormGroup;
@@ -32,7 +35,7 @@ export class SupportComponent implements OnInit {
 
   tabs = [
     { title: 'FAQ' },
-    { title: 'Support' },
+    { title: 'Contact' },
     { title: 'Votre avis' }
   ];
 
@@ -79,4 +82,5 @@ export class SupportComponent implements OnInit {
       this.submissionSuccess = false;
     }, 5000);
   }
+  
 }

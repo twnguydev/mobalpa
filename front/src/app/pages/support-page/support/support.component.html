@@ -4,7 +4,7 @@
 
         <p class="text-white text-4xl">En quoi pouvons nous vous aidez ?</p>
 
-        <input class="w-1/2 p-3 rounded-2xl" type="text" placeholder="Posez votre question">
+        <input class="w-1/2 p-3 rounded-2xl" type="text" [(ngModel)]="searchQuery"placeholder="Posez votre question" >
 
     </div>
     <div class="mx-20 flex justify-center ">
@@ -19,36 +19,9 @@
             <div class="tab-content p-4 ">
                 <div *ngIf="selectedTab === 0" class="flex justify-center">
                     <div class="flex flex-col gap-8 w-full ">
-                        <div>
-                            <p class="text-custom-red text-2xl">Quels types de produits vendez-vous ?</p>
-                            <p class=" ml-5">Nous vendons actuellement des éléctroménager petit et grand et des
-                                meuble pour cuisine et autres pièce</p>
-                        </div>
-                        <div>
-                            <p class="text-custom-red text-2xl">Comment puis-je passer une commande ?</p>
-                            <p class=" ml-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero error
-                                animi deleniti deserunt eum aliquid nesciunt ducimus corporis fugit recusandae, nobis
-                                necessitatibus sed possimus omnis molestiae facere non culpa. Nisi.</p>
-                        </div>
-                        <div>
-                            <p class="text-custom-red text-2xl">Quels sont les délais de livraison ?</p>
-                            <p class=" ml-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero error
-                                animi deleniti deserunt eum aliquid nesciunt ducimus corporis fugit recusandae, nobis
-                                necessitatibus sed possimus omnis molestiae facere non culpa. Nisi.</p>
-                        </div>
-                        <div>
-                            <p class="text-custom-red text-2xl">Comment puis-je retourner un produit ?</p>
-                            <p class=" ml-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero error
-                                animi deleniti deserunt eum aliquid nesciunt ducimus corporis fugit recusandae, nobis
-                                necessitatibus sed possimus omnis molestiae facere non culpa. Nisi.</p>
-                        </div>
-                        <div>
-                            <p class="text-custom-red text-2xl">Puis-je échanger un produit ?</p>
-                            <p class=" ml-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero error
-                                animi deleniti deserunt eum aliquid nesciunt ducimus corporis fugit recusandae, nobis
-                                necessitatibus sed possimus omnis molestiae facere non culpa. Nisi.</p>
-                        </div>
+                    <app-faq [searchQuery]="searchQuery"></app-faq>
                     </div>
+
 
                 </div>
                 <div *ngIf="selectedTab === 1" class="justify-center flex">
