@@ -1,34 +1,45 @@
-<div class="container mx-auto py-8" *ngIf="product; else noProduct">
-    <div class="tabs flex flex-wrap border-b mb-3 gap-2 sm:gap-4 md:gap-6 lg:gap-8">
+<div class="container mx-auto py-8 px-4" *ngIf="product; else noProduct">
+    <div class="tabs flex flex-wrap border-b mb-6 gap-2 sm:gap-4 md:gap-6 lg:gap-8">
         <div *ngFor="let tab of tabs; let i = index" (click)="selectTab(i)"
-            class="tab p-2 cursor-pointer text-center flex-1" [class.active]="selectedTab === i"
-            [class.border-blue-500]="selectedTab === i">
+            class="tab cursor-pointer text-center flex-1 py-2 px-4 border-b-2 transition-colors duration-300 ease-in-out"
+            [class.border-mobalpa-green]="selectedTab === i" [class.text-mobalpa-green]="selectedTab === i"
+            [class.text-gray-600]="selectedTab !== i">
             {{ tab.title }}
         </div>
     </div>
-    
+
     <div *ngIf="selectedTab === 0" class="flex flex-col md:flex-row">
         <div class="md:w-1/2 p-4">
-            <div class="bg-emerald-green bg-opacity-50">
-                <img [src]="product.images[0].uri" [alt]="product.name" class="w-full h-auto mb-4">
+            <div class="bg-gray-100 p-2 rounded-lg mb-4">
+                <img [src]="product.images[0].uri" [alt]="product.name" class="w-full h-auto rounded-lg shadow-md">
             </div>
-            <div class="flex space-x-2">
+            <div class="flex space-x-2 overflow-x-auto">
                 <img *ngFor="let image of product.images" [src]="image.uri" [alt]="product.name"
-                    class="w-16 h-auto hover:border border-black">
+                    class="w-16 h-auto rounded-lg cursor-pointer transition-transform transform hover:scale-105">
             </div>
         </div>
-        <div class="ml-5 md:w-2/3 lg:w-1/2 p-4">
-            <h1 class="text-4xl font-bold mb-4">{{ product.name }}</h1>
+
+        <div class="md:ml-5 md:w-2/3 lg:w-1/2 p-4">
+            <h1 class="text-4xl font-bold mb-4 text-gray-800">{{ product.name }}</h1>
             <div class="flex items-center mb-4">
-                <span class="text-yellow-500">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
-                <span class="ml-2 text-xl font-semibold">{{ product.price }}€</span>
+                <span class="text-yellow-500 text-xl">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
+                <span class="ml-2 text-2xl font-semibold text-gray-800">{{ product.price }} €</span>
             </div>
-            <p class="text-gray-500 mb-4">ref: {{ product.uuid }}</p>
-            <div class="flex shadow p-2 rounded-xl md:w-4/5 items-center mb-4">
-                <button class="border p-2" (click)="decreaseQuantity()">-</button>
-                <input type="text" [value]="quantity" class="w-12 text-center border-t border-b p-2" readonly>
-                <button class="border p-2" (click)="increaseQuantity()">+</button>
-                <button class="bg-red-500 text-white p-2 rounded ml-4 flex hover:border border-black items-center">
+            <p class="text-gray-600 mb-4">Réf: {{ product.uuid }}</p>
+            <div class="flex items-center justify-between flex-col md:flex-row shadow-md rounded-xl p-2 mb-4 bg-gray-100">
+                <div class="flex items-center">
+                    <button
+                        class="w-8 h-8 border rounded-full flex items-center justify-center text-gray-600 hover:bg-gray-200 transition"
+                        (click)="decreaseQuantity()">-</button>
+                    <input type="text" [value]="quantity" class="w-16 text-center border-t border-b p-2 mx-2 bg-white"
+                        readonly>
+                    <button
+                        class="w-8 h-8 border rounded-full flex items-center justify-center text-gray-600 hover:bg-gray-200 transition"
+                        (click)="increaseQuantity()">+</button>
+                </div>
+
+                <button
+                    class="bg-red-500 text-white px-4 py-2 rounded-md flex items-center hover:bg-red-600 transition">
                     <span>Ajouter au panier</span>
                     <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg">
@@ -38,28 +49,35 @@
                     </svg>
                 </button>
             </div>
-            <div class="flex items-center lg:w-1/3 md:w-1/2 w-1/2 justify-between shadow rounded-xl p-2 mb-4 space-x-2">
-                <span *ngFor="let color of product.colors" [style.background-color]="color.name"
-                    class="w-6 h-6 hover:border border-current"></span>
+            <div
+                class="flex items-center lg:w-1/3 md:w-1/2 w-full justify-between shadow-md rounded-xl p-2 mb-4 bg-gray-100 space-x-2 overflow-x-auto">
+                <span *ngFor="let color of product.colors" [style.background-color]="getColorHex(color.name)"
+                    class="w-6 h-6 rounded-full border-2 border-transparent hover:border-gray-400 transition"></span>
             </div>
-            <p class="text-green-600 mb-4" *ngIf="product.stock > 0">En stock</p>
-            <p class="text-red-600 mb-4" *ngIf="product.stock === 0">Rupture de stock</p>
-            <p class="text-gray-500 mb-4">Expédition sous {{ product.estimatedDelivery | date:'dd MMMM yyyy' }}</p>
+            <p class="text-mobalpa-green mb-4 font-medium" *ngIf="product.stock > 0">En stock</p>
+            <p class="text-custom-orange mb-4 font-medium" *ngIf="product.stock === 0">Rupture de stock</p>
+            <p class="text-gray-600 mb-4">
+                {{ shippingDelay }}
+            </p>
             <div class="border-t border-b py-4 mb-4">
-                <h3 class="text-xl font-semibold mb-2">Les plus</h3>
-                <ul class="list-disc border rounded-xl p-2 list-inside">
-                    <li>Design raffiné et élégant</li>
-                    <li>Revêtement en velours blanc pour un confort optimal</li>
-                    <li>Pietement en métal pour une meilleure stabilité et durabilité</li>
-                    <li>Fabrication française</li>
+                <h3 class="text-xl font-semibold mb-2 text-gray-800">Descriptif du produit</h3>
+                <ul class="list-disc pl-5 text-gray-700">
+                    <li>{{ product.description }}</li>
                 </ul>
             </div>
-            <p class="text-gray-500 border rounded-xl p-2"><span class="font-semibold"> Garantie 7 ans Échange/retour
-                    des marchandises dans un délai de 14 jours</span></p>
+            <div class="bg-white border rounded-xl p-4 shadow-md flex items-center space-x-4">
+                <svg class="w-8 h-8 text-mobalpa-green flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2l3 7h7l-6 5 2 7-6-4-6 4 2-7-6-5h7z"></path>
+                </svg>
+                <div class="text-gray-800">
+                    <p class="font-semibold text-lg mb-1">Garantie 7 ans</p>
+                    <p class="text-gray-600">Échange et retour des marchandises dans un délai de 14 jours.</p>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
 <ng-template #noProduct>
-    <p class="text-center text-red-500">Produit non trouvé</p>
+    <p class="text-center text-red-500 text-lg font-semibold py-8">Produit non trouvé</p>
 </ng-template>
