@@ -22,6 +22,7 @@ import { GarantieComponent } from '@components/footer-pages/retour-de-marchandis
 import { CommentRetournerUnProduitComponent } from '@components/footer-pages/retour-de-marchandises/parts/comment-retourner-un-produit/comment-retourner-un-produit.component';
 import { DansQuellesSituationsPuisJeRetournerLesMarchandisesComponent } from '@components/footer-pages/retour-de-marchandises/parts/dans-quelles-situations-puis-je-retourner-les-marchandises/dans-quelles-situations-puis-je-retourner-les-marchandises.component';
 import { PuisJeRenvoyerTousLesArticlesComponent } from '@components/footer-pages/retour-de-marchandises/parts/puis-je-renvoyer-tous-les-articles/puis-je-renvoyer-tous-les-articles.component';
+import { FraisDeRetourComponent } from '@components/footer-pages/retour-de-marchandises/parts/frais-de-retour/frais-de-retour.component';
 
 export const routes: Routes = [
     { path: '', component: LandingPageComponent },
@@ -44,8 +45,8 @@ export const routes: Routes = [
     { path: 'garantie', component: GarantieComponent },
     { path: 'garantie/comment-retourner-un-produit', component: CommentRetournerUnProduitComponent },
     { path: 'garantie/dans-quelles-situations-puis-je-retourner-les-marchandises', component: DansQuellesSituationsPuisJeRetournerLesMarchandisesComponent },
-    { path: 'garantie/puis-je-renvoyer-tous-les-articles', component: PuisJeRenvoyerTousLesArticlesComponent }
-
+    { path: 'garantie/puis-je-renvoyer-tous-les-articles', component: PuisJeRenvoyerTousLesArticlesComponent },
+    { path: 'garantie/frais-de-retour', component: FraisDeRetourComponent },
 
 ];
 
