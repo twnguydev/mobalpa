@@ -1,15 +1,16 @@
-import { Component,Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-faq',
   standalone: true,
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './faq.component.html',
   styleUrl: './faq.component.css'
 })
 export class FaqComponent {
   @Input() searchQuery: string = '';
+  noResult: boolean = false;
   faqs = [
     {
       question: 'Quels types de produits vendez-vous ?',
@@ -79,16 +80,19 @@ export class FaqComponent {
 
   filteredFaqs() {
     if (!this.searchQuery) {
+      this.noResult = false;
       return this.faqs;
     }
 
     const keywords = this.searchQuery.toLowerCase().split(' ');
-    
-    return this.faqs.filter(faq => {
-      return keywords.every(keyword =>
+    const filtered = this.faqs.filter(faq =>
+
+      keywords.every(keyword =>
         faq.question.toLowerCase().includes(keyword) ||
         faq.answer.toLowerCase().includes(keyword)
-      );
-    });
+      )
+    );
+    this.noResult = filtered.length === 0;
+    return filtered;
   }
 }

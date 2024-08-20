@@ -8,7 +8,7 @@ import { FaqComponent } from './faq/faq.component';
   standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule, FaqComponent],
   templateUrl: './support.component.html',
-  styleUrls: ['./support.component.css']  // Correction ici
+  styleUrls: ['./support.component.css']  
 })
 export class SupportComponent implements OnInit {
   searchQuery: string = '';

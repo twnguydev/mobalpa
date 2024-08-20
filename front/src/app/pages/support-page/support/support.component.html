@@ -4,7 +4,7 @@
 
         <p class="text-white text-4xl">En quoi pouvons nous vous aidez ?</p>
 
-        <input class="w-1/2 p-3 rounded-2xl" type="text" [(ngModel)]="searchQuery"placeholder="Posez votre question" >
+        <input class="w-1/2 p-3 rounded-2xl" type="text" [(ngModel)]="searchQuery" placeholder="Posez votre question">
 
     </div>
     <div class="mx-20 flex justify-center ">
@@ -19,7 +19,7 @@
             <div class="tab-content p-4 ">
                 <div *ngIf="selectedTab === 0" class="flex justify-center">
                     <div class="flex flex-col gap-8 w-full ">
-                    <app-faq [searchQuery]="searchQuery"></app-faq>
+                        <app-faq [searchQuery]="searchQuery"></app-faq>
                     </div>
 
 
@@ -36,16 +36,23 @@
                                     <option value="3">Livraison</option>
                                     <option value="4">Autre</option>
                                 </select>
-                                <span *ngIf="supForm.get('requestType')?.errors?.['required']" class="text-red-500">
+                                <span
+                                    *ngIf="supForm.get('requestType')?.touched && supForm.get('requestType')?.errors?.['required']"
+                                    class="text-red-500">
                                     Le type de requête est requis.
                                 </span>
                             </div>
                             <div class="flex-grow">
-                                <input formControlName="object" class="bg-gray-100 p-3 h-10 w-full" type="text" placeholder="Objet">
-                                <span *ngIf="supForm.get('object')?.errors?.['required']" class="text-red-500 ">
+                                <input formControlName="object" class="bg-gray-100 p-3 h-10 w-full" type="text"
+                                    placeholder="Objet">
+                                <span
+                                    *ngIf="supForm.get('object')?.touched && supForm.get('object')?.errors?.['required']"
+                                    class="text-red-500">
                                     L'objet est requis.
                                 </span>
-                                <span *ngIf="supForm.get('object')?.errors?.['minlength']" class="text-red-500 ">
+                                <span
+                                    *ngIf="supForm.get('object')?.touched && supForm.get('object')?.errors?.['minlength']"
+                                    class="text-red-500">
                                     L'objet doit comporter au moins 5 caractères.
                                 </span>
                             </div>
@@ -61,13 +68,13 @@
                                 contenu de la
                                 demande doit comporter au moins 10 caractères.</span>
                         </div>
-
                         <input
                             class="p-2 bg-emerald-green md:w-full w-full mt-1 lg:w-1/4 text-white hover:bg-emerald-600"
                             type="submit" value="Envoyer" [disabled]="supForm.invalid">
                         <div *ngIf="submissionSuccess" class="text-green-500 mt-4">
                             Votre demande a été envoyée avec succès !
                         </div>
+
                     </form>
 
 
