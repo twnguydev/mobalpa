@@ -17,7 +17,10 @@ import { LegalNoticeComponent } from '@pages/legal-notice/legal-notice.component
 import { PrivacyPolicyComponent } from '@pages/privacy-policy/privacy-policy.component';
 import { TermsAndConditionsComponent } from '@pages/terms-and-conditions/terms-and-conditions.component';
 import { TermsOfUseComponent } from '@pages/terms-of-use/terms-of-use.component';
-import { AboutAsComponent } from '@components/footer-pages/about-as/about-as.component'
+import { AboutAsComponent } from '@components/footer-pages/about-as/about-as.component';
+import { GarantieComponent } from '@components/footer-pages/retour-de-marchandises/garantie.component';
+import { CommentRetournerUnProduitComponent } from '@components/footer-pages/retour-de-marchandises/parts/comment-retourner-un-produit/comment-retourner-un-produit.component';
+
 export const routes: Routes = [
     { path: '', component: LandingPageComponent },
     { path: 'panier', component: CartPageComponent },
@@ -36,6 +39,8 @@ export const routes: Routes = [
     { path: 'conditions-generales-de-vente', component: TermsAndConditionsComponent },
     { path: 'conditions-generales-utilisation', component: TermsOfUseComponent },
     { path: 'à-propos-de', component: AboutAsComponent },
+    { path: 'garantie', component: GarantieComponent },
+    { path: 'garantie/comment-retourner-un-produit', component: CommentRetournerUnProduitComponent},
 
 ];
 
