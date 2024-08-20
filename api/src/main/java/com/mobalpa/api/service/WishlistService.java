@@ -80,6 +80,8 @@ public class WishlistService {
         } else {
             newItem.setWishlist(wishlist);
             newItem.setProduct(product);
+            newItem.setSelectedColor(newItem.getSelectedColor());
+            newItem.setQuantity(newItem.getQuantity());
             newItem.setProperties(properties);
             items.add(newItem);
         }
