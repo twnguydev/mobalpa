@@ -1,72 +1,59 @@
-<div class="flex justify-center mx-4 md:mx-20 flex-col">
-    <div class="flex justify-center">
-        <h1 class="font-gotham text-2xl md:text-4xl bg-gray-100 px-10 md:px-40 py-4 md:py-6 my-6 md:m-16 rounded-3xl w-full  flex justify-center"> Votre Panier</h1>
-    </div>
+<div class="container mx-auto py-8 min-h-screen h-auto">
+    <h1 class="text-4xl font-bold mb-8 text-mobalpa-green">Votre panier</h1>
+
     <div class="flex flex-col md:flex md:flex-row md:justify-between">
         <div class="w-full">
-            <div class="bg-gray-100 py-4 md:py-6 rounded-3xl flex justify-around m-2 hidden md:flex">
+            <div
+                class="bg-gray-100 px-10 py-4 md:py-6 rounded-3xl grid grid-cols-3 gap-4 items-center m-2 hidden md:grid">
                 <p class="font-gotham w-auto text-sm md:text-base hidden md:flex">Article</p>
-                <p class="font-gotham w-auto text-sm md:text-base hidden md:flex">Quantité</p>
-                <p class="font-gotham w-auto text-sm md:text-base hidden md:flex">Prix</p>
+                <p class="font-gotham w-auto text-sm md:text-base flex items-center justify-end hidden md:flex">Quantité
+                </p>
+                <p class="font-gotham w-auto text-sm md:text-base flex items-center justify-end hidden md:flex">Prix</p>
                 <p class="font-gotham w-auto text-sm md:text-base  md:hidden">Vos articles</p>
-
             </div>
-            <!-- article -->
-            <div class="bg-gray-100 py-4 rounded-3xl flex flex-col md:flex-row justify-around m-2 items-center">
-                <div class="flex mb-4 md:mb-0">
-                    <img src="assets/grille-pain-avec-2-fentes-toasteo-de-kitchencook.jpg" alt=""
-                        class="h-24 md:h-40 mr-3">
-                    <div>
-                        <h2 class="text-sm md:text-lg font-gotham"><b>Grille Pain</b></h2>
-                        <p class="font-gotham text-sm md:text-base">🟢 en stock</p>
+
+            <!-- Items -->
+            <div *ngFor="let item of cart"
+                class="bg-gray-100 py-4 px-4 rounded-3xl grid grid-cols-1 md:grid-cols-4 gap-4 items-center m-2">
+                <!-- Article Column -->
+                <div *ngIf="item.product" class="flex items-center space-x-4 md:space-x-6 col-span-1 md:col-span-2">
+                    <a href="/categories/{{ item.product.uri }}"
+                        class="flex items-center space-x-4 md:space-x-6 col-span-1 md:col-span-2">
+                        <img [src]="item.properties.images" alt="{{item.product.name}}"
+                            class="w-20 h-20 md:w-32 md:h-32 object-cover rounded-3xl">
+                        <div class="flex flex-col">
+                            <h2 class="text-sm md:text-lg font-gotham">
+                                <b>{{ item.product.name }}</b>
+                            </h2>
+                            <p class="font-gotham text-sm md:text-base">Couleur: {{ item.selectedColor }}</p>
+                            <p class="font-gotham text-sm md:text-base">Marque: {{ item.properties.brand }}</p>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Quantité Column -->
+                <div *ngIf="item.product" class="flex justify-center md:justify-start items-center col-span-1">
+                    <div class="flex items-center space-x-2">
+                        <button (click)="decreaseQuantity(item)"
+                            class="text-lg px-4 py-1 bg-mobalpa-green-alternate text-white rounded-2xl">-</button>
+                        <p class="font-gotham text-lg">{{ item.quantity }}</p>
+                        <button (click)="increaseQuantity(item)"
+                            class="text-lg px-4 py-1 bg-mobalpa-green-alternate text-white rounded-2xl">+</button>
                     </div>
                 </div>
-                <select class="w-16 rounded-xl p-2 mb-4 md:mb-0">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                    <!-- ajouter d'autre quantité si nécéssaire -->
-                </select>
-                <div class="flex items-center">
-                    <p class="font-gotham text-red-500 w-auto text-xl md:text-3xl">$299</p> <!-- prix exemple -->
-                    <button class="ml-4 md:ml-10 text-xl md:text-2xl">x</button>
+
+                <!-- Prix Column -->
+                <div *ngIf="item.product"
+                    class="flex md:flex-col justify-center md:justify-start items-center col-span-1">
+                    <p class="font-gotham text-mobalpa-green w-auto text-xl md:text-3xl">
+                        {{ (item.product.price * item.quantity) | number:'1.2-2' }} €
+                    </p>
+                    <p class="font-gotham text-sm md:text-base">
+                        Prix unitaire :<br> {{ item.product.price | number:'1.2-2' }} €
+                    </p>
                 </div>
             </div>
 
-
-            <div class="bg-gray-100 py-4 rounded-3xl flex flex-col md:flex-row justify-around m-2 items-center">
-                <div class="flex mb-4 md:mb-0">
-                    <img src="assets/grille-pain-avec-2-fentes-toasteo-de-kitchencook.jpg" alt="" class="h-24 md:h-40 mr-3">
-                    <div>
-                        <h2 class="text-sm md:text-lg font-gotham"><b>Grille Pain</b></h2>
-                        <p class="font-gotham text-sm md:text-base">🟢 en stock</p>
-                    </div>
-                </div>
-                <select class="w-16 rounded-xl p-2 mb-4 md:mb-0">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                    <!-- ajouter d'autre quantité si nécéssaire -->
-                </select>
-                <div class="flex items-center">
-                    <p class="font-gotham text-red-500 w-auto text-xl md:text-3xl">$299</p> <!-- prix exemple -->
-                    <button class="ml-4 md:ml-10 text-xl md:text-2xl">x</button>
-                </div>
-            </div>
             <!-- input pour code promo -->
             <div class="flex flex-col md:flex-row justify-end items-center gap-2 mb-10 md:mb-20">
                 <p class="text-sm md:text-base">Vous avez un code promo ?</p>
@@ -77,7 +64,24 @@
             </div>
         </div>
         <div class="w-full md:w-auto mt-4 md:mt-0 mb-10">
-            <app-side></app-side>
+            <div class="bg-gray-100 justify-end rounded-3xl p-5 my-2">
+                <div class="flex  flex-col text-center ">
+                    <p class="text-2xl mb-5">Récapitulatif du panier</p>
+                    <p class="font-gotham text-mobalpa-green w-auto my-5 text-xl md:text-3xl">
+                        {{ calculateTotalCart() | number:'1.2-2' }} €
+                    </p>
+                    <p class="text-xs">voir le panier HT</p>
+                    <div class="justify-center mb-3">
+                        <button class="text-lg px-7 py-1 bg-lime-600  rounded-2xl ">Passer commande</button>
+                    </div>
+                    <div class="flex justify-center gap-3 items-center mb-3">
+                        <p class="text-sm">Sauvegarder le panier</p>
+                        <img src="assets/icon/download.png" alt="download" class="h-6">
+                    </div>
+                    <p class="text-xs text-gray-500">Prix TTC, TVA appliquée sur la base du pays: France
+                        (métropolitaine)</p>
+                </div>
+            </div>
         </div>
     </div>
 </div>

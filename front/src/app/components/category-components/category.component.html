@@ -63,7 +63,13 @@
                 <p class="text-sm text-green-600" *ngIf="product.stock > 0">En stock</p>
                 <p class="text-sm text-red-600" *ngIf="product.stock === 0">Rupture de stock</p>
             </a>
-            <button class="mt-4 w-full bg-mobalpa-green-alternate text-white p-2 rounded-lg">Ajouter au panier</button>
+            <button *ngIf="!productAddedOnCart[product.uuid]" (click)="addToCart(product)"
+                class="mt-4 w-full bg-mobalpa-green-alternate text-white p-2 rounded-lg">
+                Ajouter au panier
+            </button>
+            <button *ngIf="productAddedOnCart[product.uuid]" class="mt-4 w-full text-mobalpa-green-alternate p-2 rounded-lg">
+                Ajouté au panier
+            </button>
             <button *ngIf="!productAdded[product.uuid]" (click)="addToWishlist(product)"
                 class="mt-2 w-full bg-gray-200 text-gray-700 p-2 rounded-lg">
                 Ajouter à la liste de souhaits
