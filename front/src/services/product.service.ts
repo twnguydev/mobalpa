@@ -8,7 +8,7 @@ import { ICategory, ISubcategory } from '@interfaces/category.interface';
 import { environment } from '@env/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductService {
   private apiUrl: string = `${environment.apiUrl}/catalogue`;
@@ -110,6 +110,17 @@ export class ProductService {
       map(subcategories => subcategories.find(subcategory => subcategory.uri === fullUri) || null),
       catchError(error => {
         console.error('Error fetching subcategory by URI', error);
+        return of(null);
+      })
+    );
+  }
+
+  getProductByUri(categoryUri: string, subcategoryUri: string, productUri: string): Observable<IProduct | null> {
+    const fullUri = `${categoryUri}/${subcategoryUri}/${productUri}`;
+    return this.getProducts().pipe(
+      map(products => products.find(product => product.uri === fullUri) || null),
+      catchError(error => {
+        console.error('Error fetching product by URI', error);
         return of(null);
       })
     );
