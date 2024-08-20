@@ -75,14 +75,32 @@
     </div>
 
     <div class="flex justify-center space-x-2 mt-4">
-        <button (click)="previousPage()" [disabled]="currentPage === 1" class="px-3 py-1 bg-gray-200 rounded">Précédent</button>
-        <button *ngFor="let page of [].constructor(totalPages); let i = index"
-                (click)="goToPage(i + 1)"
-                [class.bg-blue-500]="currentPage === i + 1"
-                [class.text-white]="currentPage === i + 1"
-                class="px-3 py-1 bg-gray-200 rounded">
-            {{ i + 1 }}
+        <button (click)="previousPage()" [disabled]="currentPage === 1" class="px-3 py-1 bg-gray-200 rounded">
+            Précédent
         </button>
-        <button (click)="nextPage()" [disabled]="currentPage === totalPages" class="px-3 py-1 bg-gray-200 rounded">Suivant</button>
-    </div>
+        <button (click)="goToPage(1)"
+                [class.bg-blue-500]="currentPage === 1"
+                [class.text-white]="currentPage === 1"
+                class="px-3 py-1 bg-gray-200 rounded">
+            1
+        </button>
+        <button *ngIf="currentPage > 3" class="px-3 py-1 bg-gray-200 rounded">...</button>
+        <button *ngFor="let page of getDisplayedPages()"
+                (click)="goToPage(page)"
+                [class.bg-blue-500]="currentPage === page"
+                [class.text-white]="currentPage === page"
+                class="px-3 py-1 bg-gray-200 rounded">
+            {{ page }}
+        </button>
+        <button *ngIf="currentPage < totalPages - 2" class="px-3 py-1 bg-gray-200 rounded">...</button>
+        <button (click)="goToPage(totalPages)"
+                [class.bg-blue-500]="currentPage === totalPages"
+                [class.text-white]="currentPage === totalPages"
+                class="px-3 py-1 bg-gray-200 rounded">
+            {{ totalPages }}
+        </button>
+        <button (click)="nextPage()" [disabled]="currentPage === totalPages" class="px-3 py-1 bg-gray-200 rounded">
+            Suivant
+        </button>
+    </div>    
 </div>
