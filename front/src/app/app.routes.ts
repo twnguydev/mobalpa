@@ -20,6 +20,7 @@ import { TermsOfUseComponent } from '@pages/terms-of-use/terms-of-use.component'
 import { AboutAsComponent } from '@components/footer-pages/about-as/about-as.component';
 import { GarantieComponent } from '@components/footer-pages/retour-de-marchandises/garantie.component';
 import { CommentRetournerUnProduitComponent } from '@components/footer-pages/retour-de-marchandises/parts/comment-retourner-un-produit/comment-retourner-un-produit.component';
+import { DansQuellesSituationsPuisJeRetournerLesMarchandisesComponent } from '@components/footer-pages/retour-de-marchandises/parts/dans-quelles-situations-puis-je-retourner-les-marchandises/dans-quelles-situations-puis-je-retourner-les-marchandises.component';
 
 export const routes: Routes = [
     { path: '', component: LandingPageComponent },
@@ -40,7 +41,10 @@ export const routes: Routes = [
     { path: 'conditions-generales-utilisation', component: TermsOfUseComponent },
     { path: 'à-propos-de', component: AboutAsComponent },
     { path: 'garantie', component: GarantieComponent },
-    { path: 'garantie/comment-retourner-un-produit', component: CommentRetournerUnProduitComponent},
+    { path: 'garantie/comment-retourner-un-produit', component: CommentRetournerUnProduitComponent },
+    { path: 'garantie/dans-quelles-situations-puis-je-retourner-les-marchandises', component: DansQuellesSituationsPuisJeRetournerLesMarchandisesComponent },
+
+
 
 ];
 
