@@ -19,6 +19,7 @@ import { LegalNoticeComponent } from '@pages/legal-notice/legal-notice.component
 import { PrivacyPolicyComponent } from '@pages/privacy-policy/privacy-policy.component';
 import { TermsAndConditionsComponent } from '@pages/terms-and-conditions/terms-and-conditions.component';
 import { TermsOfUseComponent } from '@pages/terms-of-use/terms-of-use.component';
+import { EspaceAdminComponent } from '@pages/espace-admin/espace-admin.component';
 
 export const routes: Routes = [
     { path: '', component: LandingPageComponent },
@@ -37,6 +38,7 @@ export const routes: Routes = [
     { path: 'politique-de-confidentialite', component: PrivacyPolicyComponent },
     { path: 'conditions-generales-de-vente', component: TermsAndConditionsComponent },
     { path: 'conditions-generales-utilisation', component: TermsOfUseComponent },
+    { path: 'admin', component: EspaceAdminComponent },
 ];
 
 const routerOptions: ExtraOptions = {

@@ -1,0 +1,106 @@
+<div class="p-4">
+    <div class="flex justify-between mb-4">
+        <h2 class=" font-bold  ">Sous-catégorie</h2>
+        <button class="text-white bg-blue-500 p-1 px-1 rounded-2xl" (click)="openModal()">Ajouter Elément</button>
+    </div>
+
+    <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+            <tr>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nom</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Categorie
+                </th>
+
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+
+            </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+            <tr>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">1</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Frigo</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Gros Electro.</td>
+
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium flex gap-5">
+                    <button class="text-blue-600 hover:text-red-900" (click)="openEdit()">Edit</button>
+
+                    <button class="text-red-600 hover:text-red-900">X</button>
+                </td>
+            </tr>
+            <tr>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">2</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Micro-onde</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Petit Electro.</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium flex gap-5">
+                    <button class="text-blue-600 hover:text-red-900"(click)="openEdit()">Edit</button>
+
+                    <button class="text-red-600 hover:text-red-900">X</button>
+                </td>
+            </tr>
+            <tr>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">3</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Lave vaisselle</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Gros Electro.</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium flex gap-5">
+                    <button class="text-blue-600 hover:text-red-900"(click)="openEdit()">Edit</button>
+
+                    <button class="text-red-600 hover:text-red-900">X</button>
+                </td>
+            </tr>
+            <!-- Autres sous categorie -->
+        </tbody>
+    </table>
+
+    <div *ngIf="isModalOpen" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
+        <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
+            <h2 class="text-xl font-bold mb-4">Ajouter une sous catégorie</h2>
+            <form action="" class="flex flex-col gap-5 mb-5">
+                <input type="text" name="subcatgorie" id="" placeholder="Nom de la sous catégorie" class="bg-gray-100 p-3 h-10 w-full">
+                <select class=" border h-10 w-full">
+                    <option value="0">Choisir une catégorie</option>
+                    <option value="1">Gros Electroménager</option>
+                    <option value="2">Petit Électroménager</option>
+                    <option value="3">Cuisine</option>
+                    <option value="4">Salle de bain</option>
+                    <option value="5">Accessoire</option>
+
+                </select>
+            </form>
+            <div class="flex justify-around">
+            <button class="bg-blue-500 text-white px-4 py-2 rounded" >
+                Valider
+            </button>
+            <button class="bg-blue-500 text-white px-4 py-2 rounded" (click)="closeModal()">
+                Fermer
+            </button>
+        </div>
+        </div>
+    </div>
+    <div *ngIf="isEditOpen" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
+        <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
+            <h2 class="text-xl font-bold mb-4">Modifier Sous-catégorie</h2>
+        <form action="" class="flex flex-col gap-5 mb-5">
+            <input type="text" name="subcatgorie" id="" placeholder="Nom de la sous catégorie"
+                class="bg-gray-100 p-3 h-10 w-full">
+            <select class=" border h-10 w-full">
+                <option value="0">Choisir une catégorie</option>
+                <option value="1">Gros Electroménager</option>
+                <option value="2">Petit Électroménager</option>
+                <option value="3">Cuisine</option>
+                <option value="4">Salle de bain</option>
+                <option value="5">Accessoire</option>
+        
+            </select>
+        </form>
+            <div class="flex justify-around">
+                <button class="bg-blue-500 text-white px-4 py-2 rounded">
+                    Modifier
+                </button>
+                <button class="bg-blue-500 text-white px-4 py-2 rounded" (click)="closeEdit()">
+                    Fermer
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
