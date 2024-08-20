@@ -16,6 +16,7 @@ export interface IOrder {
   deliveryFees: number;
   deliveryAddress: string;
   paymentId: string;
+  invoice: Blob | null;
 }
 
 export interface IOrderItem {

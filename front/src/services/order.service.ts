@@ -34,4 +34,13 @@ export class OrderService {
     if (!headers) return new Observable<IOrder>();
     return this.http.get<IOrder>(`${this.orderUrl}/${orderId}`, { headers });
   }
+
+  getInvoiceByOrderUuid(orderUuid: string): Observable<Blob> {
+    const headers: HttpHeaders | null = this.authService.getAuthHeaders();
+    if (!headers) return new Observable<Blob>();
+    return this.http.get(`${this.orderUrl}/${orderUuid}/invoice`, {
+      headers,
+      responseType: 'blob',
+    });
+  }
 }
