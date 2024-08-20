@@ -19,7 +19,7 @@ export class CategoryComponent implements OnInit {
   allProducts: IProduct[] = [];
   filteredProducts: IProduct[] = [];
 
-  itemsPerPage: number = 3;
+  itemsPerPage: number = 6;
   currentPage: number = 1;
   paginatedProducts: IProduct[] = [];
 
@@ -285,5 +285,16 @@ export class CategoryComponent implements OnInit {
   
   get totalPages(): number {
     return Math.ceil(this.filteredProducts.length / this.itemsPerPage);
+  }
+
+  getDisplayedPages(): number[] {
+    const startPage = Math.max(2, this.currentPage - 1);
+    const endPage = Math.min(this.totalPages - 1, this.currentPage + 1);
+
+    const pages = [];
+    for (let i = startPage; i <= endPage; i++) {
+        pages.push(i);
+    }
+    return pages;
   }
 }
