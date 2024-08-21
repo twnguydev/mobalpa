@@ -75,6 +75,7 @@ export class AuthService {
           localStorage.setItem('token', response.accessToken);
           localStorage.setItem('currentUser', JSON.stringify(response.user));
           this.user = response.user;
+          this.currentUserSubject.next(response.user);
           this.authStatus.next(true);
           this.setTokenExpiration(response.accessToken);
         }

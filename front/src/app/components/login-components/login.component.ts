@@ -58,9 +58,6 @@ export class LoginComponent implements OnInit {
         next: response => {
           console.log('Login successful', response);
 
-          // Check the role of the user
-          const roles = response.user.roles.map((role: any) => role.name);
-
           if (remember) {
             const hashedPassword = this.hashPassword(password);
             localStorage.setItem('rememberedEmail', email);
@@ -70,7 +67,7 @@ export class LoginComponent implements OnInit {
             localStorage.removeItem('rememberedPassword');
           }
 
-          if (roles.includes('ROLE_ADMIN')) {
+          if (response.user && response.user.roles && response.user.roles.some((role: any) => role.name === 'ROLE_ADMIN')) {
             this.router.navigate(['/admin']);
           } else {
             this.router.navigate(['/profil']);

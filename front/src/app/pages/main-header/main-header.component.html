@@ -26,6 +26,10 @@
         <button (click)="toggleSousMenu()" class="text-white font-gotham">Nos produits</button>
         <a href="#" class="text-white font-gotham">Nouveautés</a>
         <a href="/support" class="text-white font-gotham">Support</a>
+        <ng-container *ngIf="isLoggedIn">
+          <a *ngIf="isAdmin" href="/admin" class="text-white font-gotham hover:text-emerald-green">Espace Admin</a>
+        </ng-container>
+
       </nav>
     </div>
 
@@ -70,10 +74,11 @@
       <div class="w-1/2 flex flex-col items-start">
         <a href="#" class="block px-6 py-4 hover:bg-mobalpa-green-alternate w-full text-left  text-lg font-bold  cursor-pointer">Nouveautés</a>
         <a href="/support" class="block px-6 py-4 hover:bg-mobalpa-green-alternate w-full text-left  text-lg font-bold  cursor-pointer">Support</a>
-        <a href="/liste-de-souhaits" class="block px-6 py-4 hover:bg-mobalpa-green-alternate w-full text-left  text-lg font-bold  cursor-pointer">Liste de souhaits</a>
         <ng-container *ngIf="isLoggedIn; else loggedOut2">
+          <a *ngIf="isAdmin" href="/admin" class="block px-6 py-4 hover:bg-mobalpa-green-alternate w-full text-left  text-lg font-bold  cursor-pointer">Espace Admin</a>
+          <a href="/liste-de-souhaits" class="block px-6 py-4 hover:bg-mobalpa-green-alternate w-full text-left  text-lg font-bold  cursor-pointer">Liste de souhaits</a>
           <a href="/profil" class="block px-6 py-4 hover:bg-mobalpa-green-alternate w-full text-left  text-lg font-bold  cursor-pointer">Mon compte</a>
-          <a href="#" (click)="logout()" class="block px-6 py-4 hover:bg-mobalpa-green-alternate w-full text-left  text-lg font-bold  cursor-pointer">Déconnexion</a>
+          <button (click)="logout()" class="block px-6 py-4 hover:bg-mobalpa-green-alternate w-full text-left  text-lg font-bold  cursor-pointer">Déconnexion</button>
         </ng-container>
         <ng-template #loggedOut2>
           <a href="/auth/inscription" class="block px-6 py-4 hover:bg-mobalpa-green-alternate w-full text-left  text-lg font-bold  cursor-pointer">Inscription</a>
