@@ -21,6 +21,15 @@ import { TermsAndConditionsComponent } from '@pages/terms-and-conditions/terms-a
 import { TermsOfUseComponent } from '@pages/terms-of-use/terms-of-use.component';
 import { EspaceAdminComponent } from '@pages/espace-admin/espace-admin.component';
 import { ContactPageComponent } from '@pages/contact-page/contact-page.component';
+import { LivraisonComponent } from '@pages/livraison/livraison.component';
+import { QuellesSontLesMethodesDeLivraisonComponent } from '@pages/livraison/quelles-sont-les-methodes-de-livraison/quelles-sont-les-methodes-de-livraison.component';
+import { CommentSePasseUneLivraisonComponent } from '@pages/livraison/comment-se-passe-une-livraison/comment-se-passe-une-livraison.component';
+import { AnnulerCommandeEnCoursDeLivraisonComponent } from '@pages/livraison/annuler-commande-en-cours-de-livraison/annuler-commande-en-cours-de-livraison.component';
+import { QuelleSontLesFraisDeLivraisonComponent } from '@pages/livraison/quelle-sont-les-frais-de-livraison/quelle-sont-les-frais-de-livraison.component';
+
+
+
+
 
 export const routes: Routes = [
     { path: '', component: LandingPageComponent },
@@ -41,6 +50,13 @@ export const routes: Routes = [
     { path: 'conditions-generales-utilisation', component: TermsOfUseComponent },
     { path: 'admin', component: EspaceAdminComponent },
     { path: 'contactez-nous', component: ContactPageComponent },
+    { path: 'livraison', component: LivraisonComponent },
+    { path: 'livraison/quelles-sont-les-methodes-de-livraison', component: QuellesSontLesMethodesDeLivraisonComponent },
+    { path: 'livraison/comment-se-passe-une-livraison', component: CommentSePasseUneLivraisonComponent },
+    { path: 'livraison/annuler-commande-en-cours-de-livraison', component: AnnulerCommandeEnCoursDeLivraisonComponent },
+    { path: 'livraison/quelle-sont-les-frais-de-livraison', component: QuelleSontLesFraisDeLivraisonComponent },
+    
+
 ];
 
 const routerOptions: ExtraOptions = {
