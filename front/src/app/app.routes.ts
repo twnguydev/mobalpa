@@ -26,7 +26,11 @@ import { PuisJeRenvoyerTousLesArticlesComponent } from '@components/footer-pages
 import { FraisDeRetourComponent } from '@components/footer-pages/retour-de-marchandises/parts/frais-de-retour/frais-de-retour.component';
 
 import { ServiceDeGarantieComponent } from '@components/footer-pages/service-de-garantie/service-de-garantie.component';
-import { ReparationSousGarantieComponent } from '@components/footer-pages/service-de-garantie/pages/reparation-sous-garantie/reparation-sous-garantie.component';
+import { ReparationSousGarantieComponent } from '@components/footer-pages/service-de-garantie/parts/reparation-sous-garantie/reparation-sous-garantie.component';
+import { QuelsProduitsSontRetournesSousGarantieComponent } from '@components/footer-pages/service-de-garantie/parts/quels-produits-sont-retournes-sous-garantie/quels-produits-sont-retournes-sous-garantie.component';
+import { OuDemanderLeServiceDeGarantieComponent } from '@components/footer-pages/service-de-garantie/parts/ou-demander-le-service-de-garantie/ou-demander-le-service-de-garantie.component';
+import { QueSePasseTIlSiLeCentreDeServiceNePeutPasReparerLeProduitPendantLaPeriodeDeGarantieComponent } from '@components/footer-pages/service-de-garantie/parts/que-se-passe-t-il-si-le-centre-de-service-ne-peut-pas-reparer-le-produit-pendant-la-periode-de-garantie/que-se-passe-t-il-si-le-centre-de-service-ne-peut-pas-reparer-le-produit-pendant-la-periode-de-garantie.component';
+import { DansQuelsCasLaGarantieNEstEllePasAssureeComponent } from '@components/footer-pages/service-de-garantie/parts/dans-quels-cas-la-garantie-n-est-elle-pas-assuree/dans-quels-cas-la-garantie-n-est-elle-pas-assuree.component';
 
 export const routes: Routes = [
     { path: '', component: LandingPageComponent },
@@ -54,7 +58,11 @@ export const routes: Routes = [
     { path: 'retour-de-marchandises/frais-de-retour', component: FraisDeRetourComponent },
 
     { path: 'service-de-garantie', component:ServiceDeGarantieComponent },
-    { path: "service-de-garantie/reparation-sous-garantie", component:ReparationSousGarantieComponent }
+    { path: "service-de-garantie/reparation-sous-garantie", component:ReparationSousGarantieComponent },
+    { path: "service-de-garantie/quels-produits-sont-retournes-sous-garantie", component:QuelsProduitsSontRetournesSousGarantieComponent },
+    { path: "service-de-garantie/ou-demander-le-service-de-garantie", component:OuDemanderLeServiceDeGarantieComponent },
+    { path: "service-de-garantie/que-se-passe-t-il-si-le-centre-de-service-ne-peut-pas-reparer-le-produit-pendant-la-periode-de-garantie", component:QueSePasseTIlSiLeCentreDeServiceNePeutPasReparerLeProduitPendantLaPeriodeDeGarantieComponent },
+    { path: "service-de-garantie/dans-quels-cas-la-garantie-n'est-elle-pas-assuree", component: DansQuelsCasLaGarantieNEstEllePasAssureeComponent },
 ];
 
 const routerOptions: ExtraOptions = {
