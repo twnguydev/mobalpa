@@ -69,6 +69,13 @@ public class OrderController {
     public ResponseEntity<?> applyCoupon(@PathVariable UUID userUuid, @RequestBody CouponRequestDTO couponRequest) {
         User user = userService.getUserByUuid(userUuid);
         CouponCode coupon = promotionService.getCouponByName(couponRequest.getCouponCode().trim());
+        if (coupon == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Coupon not found");
+        }
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+
         Double discountRate = promotionService.claimCoupon(user, coupon);
         return ResponseEntity.ok(Map.of("discountRate", discountRate));
     }

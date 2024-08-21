@@ -1,9 +1,13 @@
 package com.mobalpa.api.service;
 
 import com.mobalpa.api.model.User;
+import com.mobalpa.api.model.UserCoupon;
 import com.mobalpa.api.repository.RoleRepository;
 import com.mobalpa.api.repository.UserRepository;
+import com.mobalpa.api.repository.UserCouponRepository;
+import com.mobalpa.api.repository.CouponCodeRepository;
 import com.mobalpa.api.util.JwtUtil;
+import com.mobalpa.api.model.CouponCode;
 import com.mobalpa.api.model.Role;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,15 +19,19 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.scheduling.annotation.Scheduled;
 
+import java.time.format.DateTimeFormatter;
 import jakarta.mail.MessagingException;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Set;
+import java.util.List;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -50,6 +58,12 @@ public class UserService implements UserDetailsService {
     @Autowired
     private TokenService tokenService;
 
+    @Autowired
+    private CouponCodeRepository couponCodeRepository;
+
+    @Autowired
+    private UserCouponRepository userCouponRepository;
+
     @Value("${app.base.url}")
     private String appBaseUrl;
 
@@ -61,6 +75,10 @@ public class UserService implements UserDetailsService {
         }
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
                 new ArrayList<>());
+    }
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 
     public User getUserByEmail(String email) {
@@ -186,21 +204,76 @@ public class UserService implements UserDetailsService {
                 existingUser.setCity(user.getCity());
             if (user.getAddress() != null)
                 existingUser.setAddress(user.getAddress());
-    
+
             if (user.getRoles() != null && !user.getRoles().isEmpty()) {
                 Set<Role> roles = user.getRoles().stream()
-                    .map(role -> roleRepository.findByName(role.getName())
-                        .orElseThrow(() -> new IllegalArgumentException("Role " + role.getName() + " not found")))
-                    .collect(Collectors.toSet());
+                        .map(role -> roleRepository.findByName(role.getName())
+                                .orElseThrow(
+                                        () -> new IllegalArgumentException("Role " + role.getName() + " not found")))
+                        .collect(Collectors.toSet());
                 existingUser.setRoles(roles);
             }
-    
+
             existingUser.setUpdatedAt(LocalDateTime.now());
             return userRepository.save(existingUser);
         }).orElseThrow(() -> new IllegalArgumentException("User with id " + uuid + " not found"));
-    }    
+    }
 
     public void deleteUser(UUID uuid) {
         userRepository.deleteById(uuid);
+    }
+
+    @Scheduled(cron = "0 15 * * * *")
+    public void createBirthdayPromos() {
+        LocalDate today = LocalDate.now();
+        List<User> usersWithBirthdayToday = userRepository.findAllByBirthdate(today);
+
+        for (User user : usersWithBirthdayToday) {
+            createPromoForUser(user);
+        }
+    }
+
+    private void createPromoForUser(User user) {
+        String couponName = "BIRTHDAY_" + user.getUuid();
+        CouponCode existingCoupon = couponCodeRepository.findByName(couponName).orElse(null);
+
+        if (existingCoupon != null) {
+            return;
+        }
+
+        CouponCode coupon = new CouponCode();
+        coupon.setName(couponName);
+        coupon.setDiscountRate(10.0);
+        coupon.setDiscountType(CouponCode.DiscountType.PERCENTAGE);
+        coupon.setDateStart(LocalDateTime.now());
+        coupon.setDateEnd(LocalDateTime.now().plusWeeks(1));
+        coupon.setTargetType(CouponCode.TargetType.USER);
+        coupon.setTargetUsers(List.of(user.getUuid().toString()));
+        coupon.setMaxUse(1);
+
+        couponCodeRepository.save(coupon);
+
+        UserCoupon userCoupon = new UserCoupon();
+        userCoupon.setUser(user);
+        userCoupon.setCoupon(coupon);
+        userCoupon.setClaimed(false);
+        userCouponRepository.save(userCoupon);
+
+        try {
+            emailService.sendHtmlEmail(
+                    user.getEmail(),
+                    "Bon anniversaire, " + user.getFirstname() + " !",
+                    "promoBirthdayTemplate.html",
+                    null,
+                    null,
+                    "${user.firstName}", user.getFirstname(),
+                    "${promoCode}", coupon.getName(),
+                    "${discountAmount}", coupon.getDiscountRate().toString() + (coupon.getDiscountType() == CouponCode.DiscountType.PERCENTAGE ? "%" : "€"),
+                    "${validUntil}", coupon.getDateEnd().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                    "${appName}", "Mobalpa"
+            );
+        } catch (MessagingException | IOException e) {
+            e.printStackTrace();
+        }
     }
 }

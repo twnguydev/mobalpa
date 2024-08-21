@@ -87,7 +87,7 @@ public class User implements UserDetails {
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference
-    private Wishlist wishlist;
+    private Wishlist wishlist = new Wishlist();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnore

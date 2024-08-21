@@ -43,4 +43,12 @@ export class OrderService {
       responseType: 'blob',
     });
   }
+
+  testPromoCode(code: string): Observable<string[]> {
+    const headers: HttpHeaders | null = this.authService.getAuthHeaders();
+    if (!headers) return new Observable<string[]>();
+    return this.http.post<string[]>(`${this.orderUrl}/${this.authService.user?.uuid}/apply-coupon`, {
+      'couponCode': code
+    }, { headers });
+  }
 }

@@ -10,16 +10,23 @@ import com.mobalpa.api.model.UserCoupon;
 import com.mobalpa.api.repository.CampaignRepository;
 import com.mobalpa.api.repository.CouponCodeRepository;
 import com.mobalpa.api.repository.UserCouponRepository;
+import com.mobalpa.api.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class PromotionService {
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private CampaignRepository campaignRepository;
@@ -131,10 +138,10 @@ public class PromotionService {
         if (coupon.getDateStart().isAfter(coupon.getDateEnd())) {
             throw new IllegalArgumentException("The start date cannot be after the end date.");
         }
-        if (coupon.getDateStart().isBefore(java.time.LocalDateTime.now())) {
+        if (coupon.getDateStart().isBefore(LocalDateTime.now())) {
             throw new IllegalArgumentException("The start date cannot be in the past.");
         }
-        if (coupon.getDateEnd().isBefore(java.time.LocalDateTime.now())) {
+        if (coupon.getDateEnd().isBefore(LocalDateTime.now())) {
             throw new IllegalArgumentException("The end date cannot be in the past.");
         }
         if (coupon.getName() == null || coupon.getName().length() < 3) {
@@ -143,19 +150,67 @@ public class PromotionService {
         if (coupon.getDiscountType() == null) {
             throw new IllegalArgumentException("The discount type must be specified.");
         }
-        if (coupon.getDiscountType() == CouponCode.DiscountType.PERCENTAGE && (coupon.getDiscountRate() < 0 || coupon.getDiscountRate() > 100)) {
+        if (coupon.getDiscountType() == CouponCode.DiscountType.PERCENTAGE &&
+                (coupon.getDiscountRate() < 0 || coupon.getDiscountRate() > 100)) {
             throw new IllegalArgumentException("The discount rate for a percentage must be between 0 and 100.");
         }
-        if (coupon.getDiscountType() == CouponCode.DiscountType.AMOUNT && coupon.getDiscountRate() < 0) {
+        if (coupon.getDiscountType() == CouponCode.DiscountType.AMOUNT &&
+                coupon.getDiscountRate() < 0) {
             throw new IllegalArgumentException("The discount amount cannot be negative.");
+        }
+        if (coupon.getTargetType() == null) {
+            throw new IllegalArgumentException("The target type must be specified.");
+        }
+        if (coupon.getTargetType() == CouponCode.TargetType.SPECIFIC_USERS &&
+                (coupon.getTargetUsers() == null || coupon.getTargetUsers().isEmpty())) {
+            throw new IllegalArgumentException("The target users must be specified.");
+        }
+        if (coupon.getMaxUse() < 0) {
+            throw new IllegalArgumentException("The maximum use count cannot be negative.");
         }
 
         CouponCode existingCoupon = couponCodeRepository.findByName(coupon.getName()).orElse(null);
         if (existingCoupon != null) {
             throw new IllegalArgumentException("A coupon with this name already exists.");
         }
-    
-        return couponCodeRepository.save(coupon);
+
+        CouponCode savedCoupon = couponCodeRepository.save(coupon);
+
+        switch (coupon.getTargetType()) {
+            case ALL_USERS:
+                List<User> users = userRepository.findAll();
+                for (User user : users) {
+                    UserCoupon userCoupon = new UserCoupon();
+                    userCoupon.setUser(user);
+                    userCoupon.setCoupon(savedCoupon);
+                    userCoupon.setClaimed(false);
+                    userCouponRepository.save(userCoupon);
+                }
+                break;
+            case SPECIFIC_USERS:
+                for (String targetUserUuid : coupon.getTargetUsers()) {
+                    User user = userRepository.findByUuid(UUID.fromString(targetUserUuid))
+                        .orElseThrow(() -> new RuntimeException("User not found"));
+                    UserCoupon userCoupon = new UserCoupon();
+                    userCoupon.setUser(user);
+                    userCoupon.setCoupon(savedCoupon);
+                    userCoupon.setClaimed(false);
+                    userCouponRepository.save(userCoupon);
+                }
+                break;
+            case USER:
+                String targetUserUuid = coupon.getTargetUsers().get(0);
+                User user = userRepository.findByUuid(UUID.fromString(targetUserUuid))
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+                UserCoupon userCoupon = new UserCoupon();
+                userCoupon.setUser(user);
+                userCoupon.setCoupon(savedCoupon);
+                userCoupon.setClaimed(false);
+                userCouponRepository.save(userCoupon);
+                break;
+        }
+
+        return savedCoupon;
     }
 
     public CouponCode updateCoupon(Integer id, CouponCode couponDetails) {
@@ -174,6 +229,15 @@ public class PromotionService {
         if (couponDetails.getDateEnd() != null) {
             coupon.setDateEnd(couponDetails.getDateEnd());
         }
+        if (couponDetails.getTargetType() != null) {
+            coupon.setTargetType(couponDetails.getTargetType());
+        }
+        if (couponDetails.getMaxUse() != null) {
+            coupon.setMaxUse(couponDetails.getMaxUse());
+        }
+        if (couponDetails.getTargetUsers() != null) {
+            coupon.setTargetUsers(couponDetails.getTargetUsers());
+        }
         return couponCodeRepository.save(coupon);
     }
 
@@ -182,23 +246,32 @@ public class PromotionService {
     }
 
     @Transactional
-    public void assignCouponToUser(User user, CouponCode couponCode) {
-        UserCoupon userCoupon = new UserCoupon();
-        userCoupon.setUser(user);
-        userCoupon.setCoupon(couponCode);
-        userCoupon.setClaimed(false);
-        userCouponRepository.save(userCoupon);
-    }
-
-    @Transactional
     public Double claimCoupon(User user, CouponCode couponCode) {
-        UserCoupon userCoupon = userCouponRepository.findByUserAndCoupon(user, couponCode);
-        if (userCoupon != null && !userCoupon.isClaimed()) {
-            userCoupon.setClaimed(true);
-            userCouponRepository.save(userCoupon);
-            return couponCode.getDiscountRate();
-        } else {
-            throw new RuntimeException("Coupon not found for the user or already claimed");
+        LocalDateTime now = LocalDateTime.now();
+        if (couponCode.getDateStart() != null && couponCode.getDateStart().isAfter(now)) {
+            throw new RuntimeException("Coupon not yet valid");
         }
-    }
+        if (couponCode.getDateEnd() != null && couponCode.getDateEnd().isBefore(now)) {
+            throw new RuntimeException("Coupon expired");
+        }
+        if (couponCode.getMaxUse() != null && couponCode.getCurrentUse() >= couponCode.getMaxUse()) {
+            throw new RuntimeException("Coupon usage limit reached");
+        }
+
+        UserCoupon userCoupon = userCouponRepository.findByUserAndCoupon(user, couponCode)
+            .orElseThrow(() -> new RuntimeException("Coupon not found for the user"));
+
+        if (userCoupon.isClaimed()) {
+            throw new RuntimeException("Coupon already claimed");
+        }
+
+        userCoupon.setClaimed(true);
+        userCoupon.setDateClaimed(LocalDate.now());
+        userCouponRepository.save(userCoupon);
+
+        couponCode.setCurrentUse(couponCode.getCurrentUse() + 1);
+        couponCodeRepository.save(couponCode);
+
+        return couponCode.getDiscountRate();
+    }    
 }

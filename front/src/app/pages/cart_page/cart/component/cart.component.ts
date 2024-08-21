@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { UserService } from '@services/user.service';
 import { AuthService } from '@services/auth.service';
+import { OrderService } from '@services/order.service';
 import { IWishlist, IWishlistItem } from '@interfaces/wishlist.interface';
 import { IProduct } from '@interfaces/product.interface';
 import { CommonModule } from '@angular/common';
@@ -9,7 +11,8 @@ import { CommonModule } from '@angular/common';
   selector: 'app-cart',
   standalone: true,
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule
   ],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css'
@@ -17,10 +20,13 @@ import { CommonModule } from '@angular/common';
 export class CartComponent {
   cart: IWishlistItem[] = [];
   productAdded: { [key: string]: boolean } = {};
+  couponCode: string = '';
+  couponCodeMessage: { success: string, error: string } = { success: '', error: '' };
 
   constructor(
     private userService: UserService,
-    private authService: AuthService
+    private authService: AuthService,
+    private orderService: OrderService
   ) { }
 
   ngOnInit(): void {
@@ -61,6 +67,27 @@ export class CartComponent {
     } else {
       return this.calculateSubtotal() - this.calculateSavings() + this.estimateShipping() + this.calculateVAT();
     }
+  }
+
+  checkPromoCode(code: string) {
+    if (!code) {
+      this.couponCodeMessage.error = 'Veuillez entrer un code promotionnel';
+      this.couponCodeMessage.success = '';
+      return;
+    }
+
+    this.orderService.testPromoCode(code).subscribe({
+      next: (response) => {
+        console.log('Promo code applied', response);
+        this.couponCodeMessage.success = 'Code promotionnel appliqué avec succès';
+        this.couponCodeMessage.error = '';
+      },
+      error: (error) => {
+        console.error('Failed to apply promo code', error);
+        this.couponCodeMessage.error = 'Code promotionnel invalide ou déjà utilisé';
+        this.couponCodeMessage.success = '';
+      }
+    });
   }
 
   addToWishlist(item: IWishlistItem): void {

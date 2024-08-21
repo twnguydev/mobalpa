@@ -1,6 +1,42 @@
 <div class="full-container mx-5 py-8 min-h-screen h-auto">
     <h1 class="text-4xl font-bold mb-8 text-mobalpa-green">Votre panier</h1>
 
+    <div class="mx-20 mb-10 flex justify-center items-center py-4">
+        <div class="flex items-center">
+            <div class="flex items-center justify-center w-6 h-6 rounded-full bg-mobalpa-green-alternate text-white">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+            </div>
+            <span class="ml-2 text-mobalpa-green-alternate">Confirmation du panier</span>
+        </div>
+
+        <div class="flex-auto border-t border-gray-300 mx-4"></div>
+
+        <div class="flex items-center">
+            <div class="flex items-center justify-center w-6 h-6 rounded-full bg-gray-300 text-gray-600">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+            </div>
+            <span class="ml-2 text-gray-500">Confirmation de paiement</span>
+        </div>
+
+        <div class="flex-auto border-t border-gray-300 mx-4"></div>
+
+        <div class="flex items-center">
+            <div class="flex items-center justify-center w-6 h-6 rounded-full bg-gray-300 text-gray-600">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+            </div>
+            <span class="ml-2 text-gray-500">Récapitulatif de la commande</span>
+        </div>
+    </div>
+
     <div class="bg-mobalpa-green-alternate p-6 rounded-3xl mb-8 text-white w-full md:w-1/2">
         <p class="text-lg mb-4">Vous bénéficiez de la <span class="font-bold">livraison gratuite</span> si votre panier
             atteint <span class="font-bold">100 €</span> !</p>
@@ -67,7 +103,8 @@
                 </div>
 
                 <!-- Actions Column -->
-                <div *ngIf="item.product" class="flex flex-col justify-center md:justify-end items-center col-span-1 space-y-3">
+                <div *ngIf="item.product"
+                    class="flex flex-col justify-center md:justify-end items-center col-span-1 space-y-3">
                     <button *ngIf="!productAdded[item.productUuid]" (click)="addToWishlist(item)"
                         class="w-full bg-mobalpa-green-alternate text-white p-2 rounded-lg">
                         Sauvegarder
@@ -107,8 +144,7 @@
                             calculateTotalCart() | number:'1.2-2' }} €</span>
                     </div>
                     <div class="justify-center mb-3">
-                        <button
-                            class="mt-4 md:mt-0 w-full bg-mobalpa-green-alternate text-white p-2 rounded-lg">
+                        <button class="mt-4 md:mt-0 w-full bg-mobalpa-green-alternate text-white p-2 rounded-lg">
                             Procéder au paiement
                         </button>
                     </div>
@@ -131,14 +167,22 @@
                 </div>
             </div>
             <div class="bg-gray-100 justify-end rounded-3xl p-5 my-2">
-                <p class="text-sm md:text-base font-bold mb-5">Vous avez un code promo ?</p>
+                <p class="text-sm md:text-base font-bold mb-5">Vous avez un code promotionnel ?</p>
                 <div class="flex items-center gap-x-3">
-                    <input type="text" placeholder="Saisir code promo"
+                    <input type="text" placeholder="Saisir le code" [(ngModel)]="couponCode"
                         class="w-full rounded-xl p-2 bg-gray-300 text-sm md:text-base">
-                    <button
-                        class="text-white bg-emerald-green p-2 md:px-5 rounded-2xl text-sm md:text-base">OK</button>
+                    <button (click)="checkPromoCode(couponCode)" 
+                        class="text-white bg-emerald-green p-2 md:px-5 rounded-2xl text-sm md:text-base">
+                        OK
+                    </button>
                 </div>
-            </div>
+                <p *ngIf="couponCodeMessage.success" class="text-xs text-mobalpa-green mt-2">
+                    {{ couponCodeMessage.success }}
+                </p>
+                <p *ngIf="couponCodeMessage.error" class="text-xs text-custom-orange mt-3">
+                    {{ couponCodeMessage.error }}
+                </p>
+            </div>            
         </div>
     </div>
 </div>
