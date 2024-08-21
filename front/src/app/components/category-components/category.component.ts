@@ -39,6 +39,8 @@ export class CategoryComponent implements OnInit {
   productAdded: { [key: string]: boolean } = {};
   productAddedOnCart: { [key: string]: boolean } = {};
 
+  isUserAuthenticated: boolean = false;
+
   colorMap: { [key: string]: string } = {
     Rouge: '#FF0000',
     Bleu: '#0000FF',
@@ -74,6 +76,8 @@ export class CategoryComponent implements OnInit {
         this.loadSubcategoryDetails(this.categoryUri, this.subcategoryUri);
       }
     });
+
+    this.isUserAuthenticated = this.authService.isAuthenticated();
   }
 
   updateSelectorsFromUrl(): void {
@@ -241,10 +245,6 @@ export class CategoryComponent implements OnInit {
   }
 
   addToCart(product: IProduct): void {
-    if (!this.authService.isAuthenticated()) {
-      this.authService.redirectToLogin();
-      return;
-    }
     const item = {
       productUuid: product.uuid,
       product: product,

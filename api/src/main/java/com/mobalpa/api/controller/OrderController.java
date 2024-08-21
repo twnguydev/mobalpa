@@ -80,6 +80,17 @@ public class OrderController {
         return ResponseEntity.ok(discountRate);
     }
 
+    @PostMapping("/apply-coupon")
+    public ResponseEntity<?> applyCoupon(@RequestBody CouponRequestDTO couponRequest) {
+        CouponCode coupon = promotionService.getCouponByName(couponRequest.getCouponCode().trim());
+        if (coupon == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Coupon not found");
+        }
+
+        Map<String, Object> discountRate = promotionService.claimCoupon(null, coupon);
+        return ResponseEntity.ok(discountRate);
+    }
+
     // @GetMapping("/{uuid}/track")
     // public ResponseEntity<?> trackOrder(@PathVariable UUID uuid) {
     // try {

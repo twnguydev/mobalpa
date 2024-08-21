@@ -56,7 +56,7 @@ export class CartComponent {
     if (this.couponType === 'AMOUNT') {
       return this.couponAmount;
     } else if (this.couponType === 'PERCENTAGE') {
-      return (this.calculateSubtotal() * this.couponAmount);
+      return this.calculateSubtotal() * (this.couponAmount / 100);
     }
     return 0;
   }
