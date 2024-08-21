@@ -26,6 +26,10 @@ import { QuellesSontLesMethodesDeLivraisonComponent } from '@pages/livraison/que
 import { CommentSePasseUneLivraisonComponent } from '@pages/livraison/comment-se-passe-une-livraison/comment-se-passe-une-livraison.component';
 import { AnnulerCommandeEnCoursDeLivraisonComponent } from '@pages/livraison/annuler-commande-en-cours-de-livraison/annuler-commande-en-cours-de-livraison.component';
 import { QuelleSontLesFraisDeLivraisonComponent } from '@pages/livraison/quelle-sont-les-frais-de-livraison/quelle-sont-les-frais-de-livraison.component';
+import { CooperationComponent } from '@pages/cooperation/cooperation.component';
+import { FournisseurComponent } from '@pages/fournisseur/fournisseur.component';
+
+
 
 
 
@@ -55,6 +59,11 @@ export const routes: Routes = [
     { path: 'livraison/comment-se-passe-une-livraison', component: CommentSePasseUneLivraisonComponent },
     { path: 'livraison/annuler-commande-en-cours-de-livraison', component: AnnulerCommandeEnCoursDeLivraisonComponent },
     { path: 'livraison/quelle-sont-les-frais-de-livraison', component: QuelleSontLesFraisDeLivraisonComponent },
+    { path: 'cooperation', component: CooperationComponent },
+    { path: 'fournisseur', component: FournisseurComponent },
+
+
+    
     
 
 ];
