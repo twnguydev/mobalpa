@@ -26,6 +26,7 @@ import jakarta.mail.MessagingException;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.MonthDay;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.ArrayList;
@@ -223,22 +224,44 @@ public class UserService implements UserDetailsService {
         userRepository.deleteById(uuid);
     }
 
-    @Scheduled(cron = "0 15 * * * *")
+    @Scheduled(cron = "0 0 0 * * ?")
     public void createBirthdayPromos() {
-        LocalDate today = LocalDate.now();
-        List<User> usersWithBirthdayToday = userRepository.findAllByBirthdate(today);
-
-        for (User user : usersWithBirthdayToday) {
-            createPromoForUser(user);
+        System.out.println("Cron job started at " + LocalDateTime.now());
+        MonthDay today = MonthDay.now();
+        List<User> users = userRepository.findAll();
+    
+        for (User user : users) {
+            System.out.println("Checking user: " + user.getUuid());
+            if (isBirthdayToday(user, today)) {
+                createPromoForUser(user);
+            } else {
+                System.out.println("No birthday promo for user " + user.getUuid() + " at date " + today + " expecting " + user.getBirthdate());
+            }
         }
-    }
+        System.out.println("Cron job finished at " + LocalDateTime.now());
+    }    
+
+    private boolean isBirthdayToday(User user, MonthDay today) {
+        return MonthDay.from(user.getBirthdate()).equals(today);
+    }    
 
     private void createPromoForUser(User user) {
-        String couponName = "BIRTHDAY_" + user.getUuid();
-        CouponCode existingCoupon = couponCodeRepository.findByName(couponName).orElse(null);
+        int currentYear = LocalDate.now().getYear();
+        String couponName = "BIRTHDAY_" + user.getUuid() + "_" + currentYear;
 
+        CouponCode existingCoupon = couponCodeRepository.findByName(couponName).orElse(null);
         if (existingCoupon != null) {
+            System.out.println("Coupon déjà existant pour l'utilisateur " + user.getUuid() + " pour l'année " + currentYear);
             return;
+        }
+
+        String lastYearCouponName = "BIRTHDAY_" + user.getUuid() + "_" + (currentYear - 1);
+        CouponCode lastYearCoupon = couponCodeRepository.findByName(lastYearCouponName).orElse(null);
+        if (lastYearCoupon != null) {
+            UserCoupon lastYearUserCoupon = userCouponRepository.findByUserAndCoupon(user, lastYearCoupon).orElse(null);
+            if (lastYearUserCoupon != null && lastYearUserCoupon.isClaimed()) {
+                System.out.println("Coupon d'anniversaire pour l'année " + (currentYear - 1) + " déjà réclamé.");
+            }
         }
 
         CouponCode coupon = new CouponCode();
@@ -250,15 +273,15 @@ public class UserService implements UserDetailsService {
         coupon.setTargetType(CouponCode.TargetType.USER);
         coupon.setTargetUsers(List.of(user.getUuid().toString()));
         coupon.setMaxUse(1);
-
+    
         couponCodeRepository.save(coupon);
-
+    
         UserCoupon userCoupon = new UserCoupon();
         userCoupon.setUser(user);
         userCoupon.setCoupon(coupon);
         userCoupon.setClaimed(false);
         userCouponRepository.save(userCoupon);
-
+    
         try {
             emailService.sendHtmlEmail(
                     user.getEmail(),
@@ -275,5 +298,5 @@ public class UserService implements UserDetailsService {
         } catch (MessagingException | IOException e) {
             e.printStackTrace();
         }
-    }
+    }    
 }
