@@ -22,6 +22,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -63,6 +64,10 @@ public class UserService implements UserDetailsService {
                 new ArrayList<>());
     }
 
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+    
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
