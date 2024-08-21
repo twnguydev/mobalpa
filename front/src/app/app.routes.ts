@@ -23,7 +23,7 @@ import { TermsOfUseComponent } from '@pages/terms-of-use/terms-of-use.component'
 
 export const routes: Routes = [
     { path: '', component: LandingPageComponent },
-    { path: 'panier', component: CartPageComponent, canActivate: [NoAuthGuard] },
+    { path: 'panier', component: CartPageComponent },
     { path: 'liste-de-souhaits', component: Wishlist_PageComponent, canActivate: [AuthGuard] },
     { path: 'support', component: SupportPageComponent },
     { path: 'info', component: HomeComponent },

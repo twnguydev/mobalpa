@@ -77,7 +77,7 @@ export class CartComponent {
     }
   }
 
-  checkPromoCode(code: string) {
+  checkPromoCode(code: string): void {
     if (!code) {
       this.couponCodeMessage.error = 'Veuillez entrer un code promotionnel';
       this.couponCodeMessage.success = '';
