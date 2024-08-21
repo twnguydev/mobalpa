@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IOrder } from '@interfaces/order.interface';
+import { IOrder, ICouponCodeResponse } from '@interfaces/order.interface';
 import { IPayment } from '@interfaces/payment.interface';
 import { IWishlist, IWishlistItem } from '@interfaces/wishlist.interface';
 import { AuthService } from '@services/auth.service';
@@ -44,10 +44,10 @@ export class OrderService {
     });
   }
 
-  testPromoCode(code: string): Observable<string[]> {
+  testPromoCode(code: string): Observable<ICouponCodeResponse> {
     const headers: HttpHeaders | null = this.authService.getAuthHeaders();
-    if (!headers) return new Observable<string[]>();
-    return this.http.post<string[]>(`${this.orderUrl}/${this.authService.user?.uuid}/apply-coupon`, {
+    if (!headers) return new Observable<ICouponCodeResponse>();
+    return this.http.post<ICouponCodeResponse>(`${this.orderUrl}/${this.authService.user?.uuid}/apply-coupon`, {
       'couponCode': code
     }, { headers });
   }

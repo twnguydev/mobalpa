@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -246,7 +247,7 @@ public class PromotionService {
     }
 
     @Transactional
-    public Double claimCoupon(User user, CouponCode couponCode) {
+    public Map<String, Object> claimCoupon(User user, CouponCode couponCode) {
         LocalDateTime now = LocalDateTime.now();
         if (couponCode.getDateStart() != null && couponCode.getDateStart().isAfter(now)) {
             throw new RuntimeException("Coupon not yet valid");
@@ -272,6 +273,6 @@ public class PromotionService {
         couponCode.setCurrentUse(couponCode.getCurrentUse() + 1);
         couponCodeRepository.save(couponCode);
 
-        return couponCode.getDiscountRate();
+        return Map.of("discountRate", couponCode.getDiscountRate(), "discountType", couponCode.getDiscountType());
     }    
 }

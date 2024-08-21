@@ -76,8 +76,8 @@ public class OrderController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
         }
 
-        Double discountRate = promotionService.claimCoupon(user, coupon);
-        return ResponseEntity.ok(Map.of("discountRate", discountRate));
+        Map<String, Object> discountRate = promotionService.claimCoupon(user, coupon);
+        return ResponseEntity.ok(discountRate);
     }
 
     // @GetMapping("/{uuid}/track")

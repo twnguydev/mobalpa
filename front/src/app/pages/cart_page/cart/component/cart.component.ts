@@ -4,6 +4,7 @@ import { UserService } from '@services/user.service';
 import { AuthService } from '@services/auth.service';
 import { OrderService } from '@services/order.service';
 import { IWishlist, IWishlistItem } from '@interfaces/wishlist.interface';
+import { ICouponCodeResponse } from '@interfaces/order.interface';
 import { IProduct } from '@interfaces/product.interface';
 import { CommonModule } from '@angular/common';
 
@@ -22,6 +23,8 @@ export class CartComponent {
   productAdded: { [key: string]: boolean } = {};
   couponCode: string = '';
   couponCodeMessage: { success: string, error: string } = { success: '', error: '' };
+  couponAmount: number = 0;
+  couponType: "PERCENTAGE" | "AMOUNT" = "PERCENTAGE";
 
   constructor(
     private userService: UserService,
@@ -50,7 +53,12 @@ export class CartComponent {
   }
 
   calculateSavings(): number {
-    return this.calculateSubtotal() * 0.10;
+    if (this.couponType === 'AMOUNT') {
+      return this.couponAmount;
+    } else if (this.couponType === 'PERCENTAGE') {
+      return (this.calculateSubtotal() * this.couponAmount);
+    }
+    return 0;
   }
 
   estimateShipping(): number {
@@ -77,8 +85,10 @@ export class CartComponent {
     }
 
     this.orderService.testPromoCode(code).subscribe({
-      next: (response) => {
+      next: (response: ICouponCodeResponse) => {
         console.log('Promo code applied', response);
+        this.couponAmount = response.discountRate;
+        this.couponType = response.discountType;
         this.couponCodeMessage.success = 'Code promotionnel appliqué avec succès';
         this.couponCodeMessage.error = '';
       },
