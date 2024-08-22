@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import com.mobalpa.api.service.CatalogueService;
+import com.mobalpa.api.service.PromotionService;
 import com.mobalpa.api.filter.ProductFilter;
 import com.mobalpa.api.dto.ProductWithCampaignDTO;
 import com.mobalpa.api.dto.catalogue.ProductDTO;
@@ -22,6 +23,9 @@ public class CatalogueController {
   @Autowired
   private CatalogueService catalogueService;
 
+  @Autowired
+  private PromotionService promotionService;
+
   @GetMapping("/categories")
   public ResponseEntity<?> getAllCategories() {
     return ResponseEntity.ok(catalogueService.getAllCategories());
@@ -30,6 +34,11 @@ public class CatalogueController {
   @GetMapping("/best-sellers")
   public ResponseEntity<?> getBestSellers() {
     return ResponseEntity.ok(catalogueService.getBestSellers());
+  }
+
+  @GetMapping("/campaigns")
+  public ResponseEntity<?> getAllCampaigns() {
+    return ResponseEntity.ok(promotionService.getAllCampaigns());
   }
 
   @GetMapping("/products")
