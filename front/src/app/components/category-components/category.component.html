@@ -45,7 +45,7 @@
                 <div class="flex items-center justify-center">
                     <img [src]="product.images[0].uri" alt="{{ product.name }}" class="w-40 h-auto object-cover mb-4">
                 </div>
-                <h2 class="flex items-center justify-start gap-x-4 text-lg font-bold mb-2">{{ product.name }} <span *ngIf="discountRate" class="text-xl font-semibold text-red-600">&mdash; {{ discountRate(product) | number: '1.0' }}%</span></h2>
+                <h2 class="flex items-center justify-start gap-x-4 text-lg font-bold mb-2">{{ product.name }} <span *ngIf="discountRate(product) !== null" class="text-xl font-semibold text-red-600">&mdash; {{ discountRate(product) | number: '1.0' }}%</span></h2>
                 <p class="text-sm text-gray-500">{{ product.description }}</p>
                 <div class="flex items-center justify-between mt-4">
                     <div class="flex items-center space-x-2">
@@ -61,8 +61,8 @@
                 </div>
                 <p class="text-xl font-semibold mb-2">
                     <span *ngIf="discountedPrice(product) else noDiscount">
-                        <span class="line-through text-gray-500">{{ product.price | number: '1.2-2' }} €</span>
-                        <span class="ml-2">{{ discountedPrice(product) | number: '1.2-2' }} €</span>
+                        <span>{{ discountedPrice(product) | number: '1.2-2' }} €</span>
+                        <span class="ml-2 text-sm line-through text-gray-500">{{ product.price | number: '1.2-2' }} €</span>
                     </span>
                     <ng-template #noDiscount>
                         {{ product.price | number: '1.2-2' }} €
