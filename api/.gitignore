@@ -3,7 +3,7 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-**/resources
+**/resources/db/changelog/scripts
 
 ### STS ###
 .apt_generated

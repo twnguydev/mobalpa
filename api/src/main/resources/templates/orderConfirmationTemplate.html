@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmation de Commande</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+        body {
+            background-color: #f7fafc;
+            padding: 24px;
+            font-family: 'Inter', sans-serif;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background-color: #ffffff;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            border: 2px solid #1E4347;
+        }
+        .header {
+            background-color: #1E4347;
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2rem;
+            margin: 0;
+        }
+        .content {
+            padding: 24px;
+        }
+        .content h2 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2d3748;
+        }
+        .content p {
+            margin-top: 0.5rem;
+            line-height: 1.5;
+            color: #4a5568;
+        }
+        .order-details {
+            margin-top: 16px;
+            padding: 16px;
+            background-color: #f7fafc;
+            border-radius: 0.5rem;
+            border: 1px solid #e2e8f0;
+        }
+        .order-details p {
+            margin: 0;
+            padding: 4px 0;
+            font-weight: 600;
+        }
+        .footer {
+            margin-top: 24px;
+            text-align: center;
+            color: #718096;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Confirmation de votre commande</h1>
+        </div>
+        <div class="content">
+            <h2>Merci pour votre commande, ${user.firstName} !</h2>
+            <p>Nous sommes ravis de vous informer que votre commande a été confirmée avec succès. Vous trouverez ci-dessous les détails de votre commande :</p>
+            <div class="order-details">
+                <p><strong>Numéro de commande :</strong> ${orderNumber}</p>
+                <p><strong>Date de commande :</strong> ${orderDate}</p>
+                <p><strong>Adresse de livraison :</strong> ${deliveryAddress}</p>
+                <p><strong>Total TTC :</strong> ${totalAmount}</p>
+            </div>
+            <p>Nous vous tiendrons informé dès que votre commande sera expédiée. Vous pouvez suivre l'état de votre commande en vous connectant à votre compte sur notre site.</p>
+            <p>Si vous avez des questions ou des préoccupations, n'hésitez pas à nous contacter.</p>
+        </div>
+        <div class="footer">
+            <p>Merci pour votre confiance,<br>L'équipe Mobalpa</p>
+        </div>
+    </div>
+</body>
+</html>
