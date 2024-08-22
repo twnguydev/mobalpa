@@ -37,6 +37,9 @@ export class CategoryComponent implements OnInit {
   subcategoryUri: string | null = null;
   subcategory: ISubcategory | null = null;
   productAdded: { [key: string]: boolean } = {};
+  productAddedOnCart: { [key: string]: boolean } = {};
+
+  isUserAuthenticated: boolean = false;
 
   colorMap: { [key: string]: string } = {
     Rouge: '#FF0000',
@@ -73,6 +76,8 @@ export class CategoryComponent implements OnInit {
         this.loadSubcategoryDetails(this.categoryUri, this.subcategoryUri);
       }
     });
+
+    this.isUserAuthenticated = this.authService.isAuthenticated();
   }
 
   updateSelectorsFromUrl(): void {
@@ -228,11 +233,33 @@ export class CategoryComponent implements OnInit {
     }).subscribe({
       next: () => {
         this.productAdded[product.uuid] = true;
+
+        setTimeout(() => {
+          this.productAdded[product.uuid] = false;
+        }, 5000);
       },
       error: (error) => {
         console.error('Failed to add product to wishlist', error);
       }
     });
+  }
+
+  addToCart(product: IProduct): void {
+    const item = {
+      productUuid: product.uuid,
+      product: product,
+      selectedColor: product.colors[0].name,
+      quantity: 1,
+      properties: {
+        brand: product.brand.name,
+        images: product.images[0].uri
+      }
+    };
+    this.userService.modifyCartFromLocalstorage('add', item);
+    this.productAddedOnCart[product.uuid] = true;
+    setTimeout(() => {
+      this.productAddedOnCart[product.uuid] = false;
+    }, 5000);
   }
 
   sortProducts(criteria: string): void {

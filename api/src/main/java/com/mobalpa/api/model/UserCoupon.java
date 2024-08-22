@@ -3,6 +3,7 @@ package com.mobalpa.api.model;
 import java.time.LocalDate;
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -27,6 +28,7 @@ public class UserCoupon {
     @Column(nullable = false)
     private boolean claimed;
 
-    @Column(nullable = false)
-    private LocalDate dateClaimed = LocalDate.now();
+    @Column(nullable = true)
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate dateClaimed = null;
 }
