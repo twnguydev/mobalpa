@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ProductService } from '@services/product.service';
 import { UserService } from '@services/user.service';
-import { IProduct } from '@interfaces/product.interface';
+import { IProduct, ICampaign } from '@interfaces/product.interface';
 import { IWishlistItem } from '@interfaces/wishlist.interface';
 import { Observable } from 'rxjs';
 
@@ -38,6 +38,8 @@ export class ProductComponent implements OnInit {
   selectedTab: number = 0;
   quantity: number = 1;
   product: IProduct | null = null;
+  discountedPrice: number | null = null;
+  discountRate: number | null = null;
   shippingDelay: string | null = null;
   isAdded: boolean = false;
   errorMessage: string = '';
@@ -60,6 +62,8 @@ export class ProductComponent implements OnInit {
           if (product) {
             this.product = product;
             this.calculateShippingDelay(product.estimatedDelivery);
+            this.applyCampaigns(product.campaigns);
+            console.log('Produit récupéré', product);
           } else {
             this.errorMessage = 'Produit non trouvé.';
           }
@@ -71,6 +75,18 @@ export class ProductComponent implements OnInit {
       );
     } else {
       this.errorMessage = 'URL invalide.';
+    }
+  }
+
+  private applyCampaigns(campaigns: ICampaign[]): void {
+    if (campaigns.length > 0) {
+      const maxDiscount = Math.max(...campaigns.map(campaign => campaign.discountRate));
+      const campaign = campaigns.find(c => c.discountRate === maxDiscount);
+
+      if (campaign) {
+        this.discountRate = campaign.discountRate;
+        this.discountedPrice = this.product!.price * (1 - this.discountRate / 100);
+      }
     }
   }
 

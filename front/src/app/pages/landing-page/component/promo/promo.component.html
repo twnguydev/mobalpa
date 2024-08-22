@@ -6,9 +6,9 @@
             <p class="text-lg md:text-xl text-white">{{ products[0].product.description }}</p>
             <p class="text-white mt-2 uppercase">Offre limitée !</p>
             <div class="flex bg-white p-2 rounded-lg justify-between items-center mt-4 md:space-y-0 md:space-x-2">
-                <p class="text-red-600 font-bold text-xl md:text-2xl">{{ products[1].discountedPrice | number:'1.2-2' }} €</p>
-                <p class="text-red-600 line-through text-sm md:text-lg px-2">{{ products[1].originalPrice }} €</p>
-                <a href="products[0].product.uri" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm md:text-lg transition duration-300 ease-in-out flex items-center">
+                <p class="text-red-600 font-bold text-xl md:text-2xl">{{ products[0].discountedPrice | number:'1.2-2' }} €</p>
+                <p class="text-red-600 line-through text-sm md:text-lg px-2">{{ products[0].originalPrice }} €</p>
+                <a href="/categories/{{ products[0].product.uri }}" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm md:text-lg transition duration-300 ease-in-out flex items-center">
                     <span>Je fonce</span>
                 </a>
             </div>
@@ -24,7 +24,7 @@
                 <div class="flex bg-white p-2 rounded-lg justify-between items-center mt-4 md:space-y-0 md:space-x-2">
                     <p class="text-red-600 font-bold text-xl md:text-2xl">{{ products[1].discountedPrice | number:'1.2-2' }} €</p>
                     <p class="text-red-600 line-through text-sm md:text-lg px-2">{{ products[1].originalPrice }} €</p>
-                    <a href="products[1].product.uri" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm md:text-lg transition duration-300 ease-in-out flex items-center">
+                    <a href="/categories/{{ products[1].product.uri }}" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm md:text-lg transition duration-300 ease-in-out flex items-center">
                         <span>Je fonce</span>
                     </a>
                 </div>
@@ -39,7 +39,7 @@
                 <div class="flex bg-white p-2 rounded-lg justify-between items-center mt-4 md:space-y-0 md:space-x-2">
                     <p class="text-red-600 font-bold text-xl md:text-2xl">{{ products[2].discountedPrice | number:'1.2-2' }} €</p>
                     <p class="text-red-600 line-through text-sm md:text-lg px-2">{{ products[2].originalPrice }} €</p>
-                    <a href="products[2].product.uri" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm md:text-lg transition duration-300 ease-in-out flex items-center">
+                    <a href="/categories/{{ products[2].product.uri }}" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm md:text-lg transition duration-300 ease-in-out flex items-center">
                         <span>Je fonce</span>
                     </a>
                 </div>

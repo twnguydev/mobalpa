@@ -1,5 +1,6 @@
 import { IProduct } from '@interfaces/product.interface';
 import { IImage } from '@interfaces/image.interface';
+import { ICampaign } from '@interfaces/product.interface';
 
 export interface ICategory {
   uuid: string;
@@ -9,6 +10,7 @@ export interface ICategory {
   images: IImage[];
   subcategories: ISubcategory[];
   isOpen?: boolean;
+  campaigns: ICampaign[];
 }
 
 export interface ISubcategory {
@@ -18,4 +20,5 @@ export interface ISubcategory {
   description: string;
   category: ICategory;
   products: IProduct[];
+  campaigns: ICampaign[];
 }
