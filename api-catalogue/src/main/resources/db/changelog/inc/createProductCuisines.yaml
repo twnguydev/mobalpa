@@ -224,7 +224,7 @@ databaseChangeLog:
                     "_id": {"$binary": {"base64": "WEQExTBaRiuyF3qa9JYDTQ==", "subType": "03"}},
                     "name": "Bucolique",
                     "description": "This is an example product description.",
-                    "price": 599.99,
+                    "price": 449.99,
                     "stock": 12,
                     "estimatedDelivery": {"$date": "2024-08-01T08:00:00.000Z"},
                     "weight": 3,
@@ -241,7 +241,7 @@ databaseChangeLog:
                     "images": [
                         {
                             "_id": {"$binary": {"base64": "OXvIM7MqRfG9O29mQmsjfw==", "subType": "03"}},
-                            "uri": "/images/kitchen-ecommerce/brooklyn.png",
+                            "uri": "/images/kitchen-ecommerce/bucolique.png",
                             "color": {"$ref": "colors", "$id": {"$binary": {"base64": "uWd9H5JtL4HkpY6pRqX2HQ==", "subType": "03"}}}
                         }
                     ],
@@ -268,7 +268,7 @@ databaseChangeLog:
                     "images": [
                         {
                             "_id": {"$binary": {"base64": "OXvIM7MqRfG9O29mQmsjfw==", "subType": "03"}},
-                            "uri": "/images/kitchen-ecommerce/brooklyn.png",
+                            "uri": "/images/kitchen-ecommerce/campagne.png",
                             "color": {"$ref": "colors", "$id": {"$binary": {"base64": "uWd9H5JtL4HkpY6pRqX2HQ==", "subType": "03"}}}
                         }
                     ],

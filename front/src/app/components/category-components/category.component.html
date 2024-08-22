@@ -74,7 +74,7 @@
         </div>
     </div>
 
-    <div class="flex justify-center space-x-2 mt-4">
+    <div class="flex justify-center space-x-2 mt-4" *ngIf="totalPages > 1">
         <button (click)="previousPage()" [disabled]="currentPage === 1" class="px-3 py-1 bg-gray-200 rounded">
             Précédent
         </button>
