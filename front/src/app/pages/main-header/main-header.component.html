@@ -2,12 +2,8 @@
   <div class="bg-emerald-green h-10 hidden lg:block">
     <div class="flex p-1 pt-2 justify-around items-center overflow-hidden">
       <div class="flex text_move">
-        <img class='w-6' src="/assets/icon/truck.png" alt="">
-        <p class="px-4 lg:text-base text-xs">LIVRAISON RAPIDE !</p>
-      </div>
-      <div class="flex text_move">
-        <img class='w-6' src="/assets/icon/discount.png" alt="">
-        <p class="px-4 lg:text-base text-xs">PROMO DU MOMENT !</p>
+        <img class='w-6' src="/assets/icon/appareil-electromenager.png" alt="">
+        <p class="px-4 lg:text-base text-xs">TOUS LES PRODUITS ELECTROMÉNAGERS SONT GARANTIES 7 ANS !</p>
       </div>
       <div class='flex text_move'>
         <img class='w-6' src="/assets/icon/back-arrow.png" alt="">
@@ -24,7 +20,11 @@
       <!-- Menu pour grands écrans -->
       <nav class="hidden lg:flex space-x-6">
         <button (click)="toggleSousMenu()" class="text-white font-gotham">Nos produits</button>
-        <a href="#" class="text-gray-500 font-gotham">Nouveautés</a>
+        <a href="#" class="text-white font-gotham">Nouveautés</a>
+        <ng-container *ngIf="isLoggedIn">
+          <a *ngIf="isAdmin" href="/admin" class="text-white font-gotham hover:text-emerald-green">Espace Admin</a>
+        </ng-container>
+
       </nav>
     </div>
 
@@ -63,11 +63,11 @@
       <!-- Colonne de gauche pour les liens principaux -->
       <div class="w-1/2 flex flex-col items-start">
         <a href="#" class="block px-6 py-4 hover:bg-mobalpa-green-alternate w-full text-left  text-lg font-bold  cursor-pointer">Nouveautés</a>
-        <a href="/support" class="block px-6 py-4 hover:bg-mobalpa-green-alternate w-full text-left  text-lg font-bold  cursor-pointer">Support</a>
-        <a href="/liste-de-souhaits" class="block px-6 py-4 hover:bg-mobalpa-green-alternate w-full text-left  text-lg font-bold  cursor-pointer">Liste de souhaits</a>
         <ng-container *ngIf="isLoggedIn; else loggedOut2">
+          <a *ngIf="isAdmin" href="/admin" class="block px-6 py-4 hover:bg-mobalpa-green-alternate w-full text-left  text-lg font-bold  cursor-pointer">Espace Admin</a>
+          <a href="/liste-de-souhaits" class="block px-6 py-4 hover:bg-mobalpa-green-alternate w-full text-left  text-lg font-bold  cursor-pointer">Liste de souhaits</a>
           <a href="/profil" class="block px-6 py-4 hover:bg-mobalpa-green-alternate w-full text-left  text-lg font-bold  cursor-pointer">Mon compte</a>
-          <a href="#" (click)="logout()" class="block px-6 py-4 hover:bg-mobalpa-green-alternate w-full text-left  text-lg font-bold  cursor-pointer">Déconnexion</a>
+          <button (click)="logout()" class="block px-6 py-4 hover:bg-mobalpa-green-alternate w-full text-left  text-lg font-bold  cursor-pointer">Déconnexion</button>
         </ng-container>
         <ng-template #loggedOut2>
           <a href="/auth/inscription" class="block px-6 py-4 hover:bg-mobalpa-green-alternate w-full text-left  text-lg font-bold  cursor-pointer">Inscription</a>
@@ -94,7 +94,7 @@
   </div>
 
   <div id="sous-menu" class="bg-white text-black font-gotham divide-y divide-gray-200 absolute top-full left-0 right-0 z-50 hidden">
-    <div class="mx-5 py-8">
+    <div class="px-5 py-8 border-b-2 shadow-2xl border-black">
       <div class="hidden lg:grid lg:grid-cols-5 lg:gap-8 lg:mb-4">
         <div *ngFor="let category of categories" class="flex items-center">
           <h2 class="text-xl font-bold">

@@ -17,6 +17,7 @@ export class MainHeaderComponent implements OnInit {
   showSearchBar = false;
   menuOpen = false;
   isLoggedIn = false;
+  isAdmin = false;
   categories: ICategory[] = [];
 
   constructor(
@@ -30,6 +31,9 @@ export class MainHeaderComponent implements OnInit {
 
     this.authService.authStatus$.subscribe((isLoggedIn) => {
       this.isLoggedIn = isLoggedIn;
+    });
+    this.authService.getCurrentUser().subscribe(user => {
+      this.isAdmin = user?.roles?.some(role => role.name === 'ROLE_ADMIN') ?? false;
     });
   }
 
@@ -69,7 +73,7 @@ export class MainHeaderComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: { message: 'Êtes-vous sûr de vouloir vous déconnecter ?' },
     });
-  
+
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.authService.logout(true);

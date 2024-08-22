@@ -30,6 +30,7 @@ export class AuthService {
     const storedUser: string | null = localStorage.getItem('currentUser');
     if (storedUser) {
       this.user = JSON.parse(storedUser);
+      this.currentUserSubject.next(this.user)
     }
   }
 
@@ -74,6 +75,7 @@ export class AuthService {
           localStorage.setItem('token', response.accessToken);
           localStorage.setItem('currentUser', JSON.stringify(response.user));
           this.user = response.user;
+          this.currentUserSubject.next(response.user);
           this.authStatus.next(true);
           this.setTokenExpiration(response.accessToken);
         }
@@ -154,7 +156,7 @@ export class AuthService {
       console.log('Déconnexion annulée');
     }
   }
-  
+
   private performLogout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('currentUser');
@@ -162,7 +164,7 @@ export class AuthService {
     this.authStatus.next(false);
     clearTimeout(this.tokenExpirationTimeout);
     this.redirectToLogin();
-  }  
+  }
 
   isAuthenticated(): boolean {
     return !!localStorage.getItem('token');
