@@ -18,6 +18,9 @@ export interface IProduct {
   images: IImage[];
   stores: IStore[];
   campaigns: ICampaign[];
+  oldPrice?: number;
+  newPrice?: number;
+  discountRate?: number;
 }
 
 export interface IBrand {

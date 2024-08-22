@@ -61,6 +61,11 @@ public class CatalogueController {
     }
   }
 
+  @GetMapping("/products/{productUuid}/campaigns")
+  public ResponseEntity<?> getProductCampaigns(@PathVariable UUID productUuid) {
+    return ResponseEntity.ok(promotionService.getProductCampaigns(productUuid));
+  }
+
   @GetMapping("/products-with-campaigns")
   public ResponseEntity<?> getAllProductsWithCampaigns() {
     try {

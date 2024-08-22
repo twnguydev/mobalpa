@@ -21,18 +21,35 @@ export class WishlistComponent {
   ngOnInit(): void {
     this.loadWishlist();
   }
-
+  
   loadWishlist(): void {
     if (!this.authService.user) {
       console.error('User not logged in');
       return;
     }
-
+  
     this.userService.getWishlist(this.authService.user.uuid).subscribe({
       next: (wishlist) => {
         console.log('Wishlist loaded', wishlist);
+  
         this.wishlist = wishlist;
+
+        if (!this.wishlist) {
+          this.wishlistNotFound = true;
+          return;
+        }
+
+        this.wishlist.items.forEach(item => {
+          if (item.product) {
+            item.product.oldPrice = item.product.price;
+            const maxDiscountRate = this.getMaxDiscountRate(item);
+            item.product.discountRate = maxDiscountRate;
+            item.product.newPrice = this.getDiscountedPrice(item.product.price, maxDiscountRate);
+          }
+        });
+  
         this.wishlistNotFound = false;
+        console.log('Wishlist updated with prices', this.wishlist);
       },
       error: (err) => {
         if (err.status === 404) {
@@ -44,6 +61,17 @@ export class WishlistComponent {
       }
     });
   }
+  
+  getMaxDiscountRate(item: IWishlistItem): number {
+    if (!item.campaigns || item.campaigns.length === 0) {
+      return 0;
+    }
+    return Math.max(...item.campaigns.map(campaign => campaign.discountRate));
+  }
+  
+  getDiscountedPrice(price: number, discountRate: number): number {
+    return price - (price * discountRate / 100);
+  }  
 
   saveToCart(item: IWishlistItem): void {
     if (!this.authService.user) return;
