@@ -94,11 +94,26 @@
                 <!-- Prix Column -->
                 <div *ngIf="item.product"
                     class="flex md:flex-col justify-center md:justify-start items-center col-span-2">
-                    <p class="font-gotham text-mobalpa-green w-auto text-xl md:text-3xl">
-                        {{ (item.product.price * item.quantity) | number:'1.2-2' }} €
+                    <p *ngIf="item.product.newPrice" class="font-gotham text-mobalpa-green w-auto text-xl md:text-3xl">
+                        {{ (item.product.newPrice * item.quantity) | number:'1.2-2' }} €
                     </p>
+
                     <p class="font-gotham text-sm md:text-base">
-                        Prix unitaire :<br> {{ item.product.price | number:'1.2-2' }} €
+                        Prix unitaire : <br>
+                        <span *ngIf="item.product.discountRate && item.product.discountRate > 0" class="line-through">
+                            {{ item.product.oldPrice | number:'1.2-2' }} €
+                        </span>
+                        <span *ngIf="item.product.discountRate && item.product.discountRate > 0" class="text-red-600">
+                            {{ item.product.newPrice | number:'1.2-2' }} €
+                        </span>
+                        <span *ngIf="item.product.discountRate === 0">
+                            {{ item.product.price | number:'1.2-2' }} €
+                        </span>
+                    </p>
+
+                    <p class="font-gotham text-sm md:text-base"
+                        *ngIf="item.product.discountRate && item.product.discountRate > 0">
+                        Réduction: -{{ item.product.discountRate }}%
                     </p>
                 </div>
 
@@ -171,7 +186,7 @@
                 <div class="flex items-center gap-x-3">
                     <input type="text" placeholder="Saisir le code" [(ngModel)]="couponCode"
                         class="w-full rounded-xl p-2 bg-gray-300 text-sm md:text-base">
-                    <button (click)="checkPromoCode(couponCode)" 
+                    <button (click)="checkPromoCode(couponCode)"
                         class="text-white bg-emerald-green p-2 md:px-5 rounded-2xl text-sm md:text-base">
                         OK
                     </button>
@@ -182,7 +197,7 @@
                 <p *ngIf="couponCodeMessage.error" class="text-xs text-custom-orange mt-3">
                     {{ couponCodeMessage.error }}
                 </p>
-            </div>            
+            </div>
         </div>
     </div>
 </div>

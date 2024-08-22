@@ -50,12 +50,10 @@
                 <!-- Prix Column -->
                 <div *ngIf="item.product"
                     class="flex md:flex-col justify-center md:justify-start items-center col-span-1">
-                    <!-- Prix total avec réduction si applicable -->
-                    <p *ngIf="item.product.newPrice" class="font-gotham text-red-600 w-auto text-xl md:text-3xl">
+                    <p *ngIf="item.product.newPrice" class="font-gotham text-mobalpa-green w-auto text-xl md:text-3xl">
                         {{ (item.product.newPrice * item.quantity) | number:'1.2-2' }} €
                     </p>
 
-                    <!-- Prix unitaire avec ou sans réduction -->
                     <p class="font-gotham text-sm md:text-base">
                         Prix unitaire : <br>
                         <span *ngIf="item.product.discountRate && item.product.discountRate > 0" class="line-through">
@@ -69,7 +67,6 @@
                         </span>
                     </p>
 
-                    <!-- Affichage du taux de réduction si applicable -->
                     <p class="font-gotham text-sm md:text-base" *ngIf="item.product.discountRate && item.product.discountRate > 0">
                         Réduction: -{{ item.product.discountRate }}%
                     </p>
