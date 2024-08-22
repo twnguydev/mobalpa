@@ -1,7 +1,8 @@
 <div class="">
-    <div class="h-88 bg-cover bg-center flex justify-center flex-col gap-10 items-center bg-[url('/assets/marbretexturevert.png')]">
-        <p class="text-white text-4xl">En quoi pouvons-nous vous aider ?</p>
-        <input class="w-1/2 p-3 rounded-2xl" type="text" placeholder="Posez votre question">
+    <div
+        class="h-88 bg-cover bg-center flex justify-center flex-col gap-10 items-center bg-[url('/assets/marbretexturevert.png')]">
+        <p class="text-white text-4xl">En quoi pouvons nous vous aider ?</p>
+        <input class="w-1/2 p-3 rounded-2xl" type="text" [(ngModel)]="searchQuery" placeholder="Posez votre question">
     </div>
 
     <div class="mx-20 mb-20 flex justify-center">
@@ -18,26 +19,7 @@
                 <!-- FAQ Section -->
                 <div *ngIf="selectedTab === 0" class="flex justify-center">
                     <div class="flex flex-col gap-8 w-full">
-                        <div>
-                            <p class="text-custom-red text-2xl">Quels types de produits vendez-vous ?</p>
-                            <p class="ml-5">Nous proposons une large gamme d'appareils électroménagers, des petits équipements de cuisine aux grands appareils, ainsi que des meubles pour la cuisine et d'autres pièces de la maison.</p>
-                        </div>
-                        <div>
-                            <p class="text-custom-red text-2xl">Comment puis-je passer une commande ?</p>
-                            <p class="ml-5">Pour passer une commande, naviguez sur notre site, ajoutez les produits souhaités à votre panier, et suivez les instructions pour finaliser votre achat. Vous recevrez une confirmation par email une fois votre commande validée.</p>
-                        </div>
-                        <div>
-                            <p class="text-custom-red text-2xl">Quels sont les délais de livraison ?</p>
-                            <p class="ml-5">Les délais de livraison varient en fonction de votre localisation et de la disponibilité des produits. En général, les livraisons sont effectuées sous 3 à 7 jours ouvrables.</p>
-                        </div>
-                        <div>
-                            <p class="text-custom-red text-2xl">Comment puis-je retourner un produit ?</p>
-                            <p class="ml-5">Pour retourner un produit, contactez notre service client via le formulaire de contact ou par téléphone. Les retours sont acceptés sous 14 jours après réception de votre commande, sous réserve que le produit soit en parfait état.</p>
-                        </div>
-                        <div>
-                            <p class="text-custom-red text-2xl">Puis-je échanger un produit ?</p>
-                            <p class="ml-5">Oui, les échanges sont possibles sous 14 jours après réception du produit. Veuillez contacter notre service client pour organiser l'échange.</p>
-                        </div>
+                        <app-faq [searchQuery]="searchQuery"></app-faq>
                     </div>
                 </div>
 
@@ -53,16 +35,23 @@
                                     <option value="3">Livraison</option>
                                     <option value="4">Autre</option>
                                 </select>
-                                <span *ngIf="supForm.get('requestType')?.errors?.['required']" class="text-red-500">
+                                <span
+                                    *ngIf="supForm.get('requestType')?.touched && supForm.get('requestType')?.errors?.['required']"
+                                    class="text-red-500">
                                     Le type de requête est requis.
                                 </span>
                             </div>
                             <div class="flex-grow">
-                                <input formControlName="object" class="bg-gray-100 p-3 h-10 w-full" type="text" placeholder="Objet">
-                                <span *ngIf="supForm.get('object')?.errors?.['required']" class="text-red-500">
+                                <input formControlName="object" class="bg-gray-100 p-3 h-10 w-full" type="text"
+                                    placeholder="Objet">
+                                <span
+                                    *ngIf="supForm.get('object')?.touched && supForm.get('object')?.errors?.['required']"
+                                    class="text-red-500">
                                     L'objet est requis.
                                 </span>
-                                <span *ngIf="supForm.get('object')?.errors?.['minlength']" class="text-red-500">
+                                <span
+                                    *ngIf="supForm.get('object')?.touched && supForm.get('object')?.errors?.['minlength']"
+                                    class="text-red-500">
                                     L'objet doit comporter au moins 5 caractères.
                                 </span>
                             </div>
@@ -77,11 +66,13 @@
                                 Le contenu de la demande doit comporter au moins 10 caractères.
                             </span>
                         </div>
-
-                        <input class="p-2 bg-emerald-green md:w-full w-full mt-1 lg:w-1/4 text-white hover:bg-emerald-600" type="submit" value="Envoyer" [disabled]="supForm.invalid">
+                        <input
+                            class="p-2 bg-emerald-green md:w-full w-full mt-1 lg:w-1/4 text-white hover:bg-emerald-600"
+                            type="submit" value="Envoyer" [disabled]="supForm.invalid">
                         <div *ngIf="submissionSuccess" class="text-green-500 mt-4">
                             Votre demande a été envoyée avec succès !
                         </div>
+
                     </form>
                 </div>
 

@@ -1,0 +1,36 @@
+<div class="">
+    
+    <div class=" flex justify-center ">
+        <div class="container mx-auto  flex">
+            <div class="w-64 h-screen  bg-gray-200 text-black p-4">
+                <div class="tabs  border-gray-600 mb-4">
+                    <div *ngFor="let tab of tabs; let i = index" (click)="selectTab(i)"
+                        class="tab p-2 cursor-pointer text-start flex-1 sm:flex-auto hover:bg-gray-300" [class.active]="selectedTab === i"
+                        [class.border-blue-500]="selectedTab === i">
+                        {{ tab.title }}
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content p-4 ">
+                <div *ngIf="selectedTab === 0" class="flex justify-center">
+                <app-utilisateur/>
+
+                </div>
+                <div *ngIf="selectedTab === 1" class="justify-center flex">
+
+                    <app-produits />
+
+
+                </div>
+                <div *ngIf="selectedTab === 2" class="justify-center flex ">
+                
+                   <app-categorie/>
+                </div>
+                <div *ngIf="selectedTab === 3" class="justify-center flex ">
+                
+                   <app-sous-categorie/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
