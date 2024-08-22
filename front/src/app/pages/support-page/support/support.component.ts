@@ -39,7 +39,7 @@ export class SupportComponent implements OnInit {
     { title: 'Votre avis' }
   ];
 
-  ratings: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  ratings: number[] = [1, 2, 3, 4, 5];
   feedback = {
     rating: 0,
     comment: ''
