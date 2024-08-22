@@ -221,6 +221,22 @@ export class CategoryComponent implements OnInit {
     return this.colorMap[colorName] || '#CCCCCC';
   }
 
+  discountedPrice(product: IProduct): number | null {
+    const campaign = product.campaigns.find(campaign => campaign.type === 'SUBCATEGORY');
+    if (campaign) {
+      return product.price * (1 - campaign.discountRate / 100);
+    }
+    return null;
+  }
+
+  discountRate(product: IProduct): number | null {
+    const campaign = product.campaigns.find(campaign => campaign.type === 'SUBCATEGORY');
+    if (campaign) {
+      return campaign.discountRate;
+    }
+    return null;
+  }
+
   addToWishlist(product: IProduct): void {
     if (!this.authService.isAuthenticated()) {
       this.authService.redirectToLogin();
