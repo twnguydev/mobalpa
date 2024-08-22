@@ -125,4 +125,8 @@ export class ProductService {
       })
     );
   }
+
+  // getProductsWithCampaign(): Observable<IProduct[]> {
+
+  // }
 }
