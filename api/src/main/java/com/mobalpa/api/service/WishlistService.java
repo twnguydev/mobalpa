@@ -35,11 +35,12 @@ public class WishlistService {
 
     public Wishlist getWishlistByUserUuid(UUID userUuid) {
         Wishlist wishlist = wishlistRepository.findByUserUuid(userUuid);
-
+    
         if (wishlist == null) {
-            User user = userService.getUserByUuid(userUuid);
-
-            if (user != null) {
+            Optional<User> userOpt = userRepository.findById(userUuid);
+    
+            if (userOpt.isPresent()) {
+                User user = userOpt.get();
                 wishlist = new Wishlist();
                 wishlist.setUser(user);
                 wishlist = wishlistRepository.save(wishlist);
@@ -48,7 +49,7 @@ public class WishlistService {
             }
         }
         return wishlist;
-    }
+    }    
 
     public Wishlist addToWishlist(UUID userId, WishlistItem newItem) {
         User user = userService.getUserByUuid(userId);
@@ -80,8 +81,6 @@ public class WishlistService {
         } else {
             newItem.setWishlist(wishlist);
             newItem.setProduct(product);
-            newItem.setSelectedColor(newItem.getSelectedColor());
-            newItem.setQuantity(newItem.getQuantity());
             newItem.setProperties(properties);
             items.add(newItem);
         }

@@ -24,3 +24,8 @@ export interface IOrderItem {
   quantity: number;
   product?: IProduct | null;
 }
+
+export interface ICouponCodeResponse {
+  discountRate: number;
+  discountType: "PERCENTAGE" | "AMOUNT";
+}

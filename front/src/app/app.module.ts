@@ -20,4 +20,3 @@ registerLocaleData(localeFr);
   bootstrap: []
 })
 export class AppModule { }
-

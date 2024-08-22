@@ -14,6 +14,7 @@ import { IWishlist, IWishlistItem } from '@interfaces/wishlist.interface';
 export class WishlistComponent {
   wishlist: IWishlist | null = null;
   wishlistNotFound: boolean = false;
+  productAdded: { [key: string]: boolean } = {};
 
   constructor(private userService: UserService, private authService: AuthService) { }
 
@@ -42,6 +43,16 @@ export class WishlistComponent {
         }
       }
     });
+  }
+
+  saveToCart(item: IWishlistItem): void {
+    if (!this.authService.user) return;
+    this.userService.modifyCartFromLocalstorage('add', item);
+    this.productAdded[item.productUuid] = true;
+
+    setTimeout(() => {
+      this.productAdded[item.productUuid] = false;
+    }, 5000);
   }
 
   increaseQuantity(item: IWishlistItem): void {

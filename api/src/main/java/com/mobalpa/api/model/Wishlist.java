@@ -2,6 +2,8 @@ package com.mobalpa.api.model;
 
 import lombok.Data;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.*;
 
@@ -20,7 +22,7 @@ public class Wishlist {
 
     @OneToOne
     @JoinColumn(name = "user_uuid", referencedColumnName = "uuid")
-    @JsonIgnore
+    @JsonIgnoreProperties("wishlist")
     private User user;
 
     @OneToMany(mappedBy = "wishlist", cascade = CascadeType.ALL, orphanRemoval = true)

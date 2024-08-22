@@ -30,20 +30,15 @@
 
     <!-- Autres éléments -->
     <div class="flex items-center space-x-7 hidden lg:flex">
-      <div class="searchBar" *ngIf="showSearchBar">
-        <input type="text" name="search" class="rounded-md w-60 p-1" placeholder="Rechercher...">
-      </div>
-      <button (click)="toggleSearchBar()" class="w-8 h-8 flex-shrink-0">
-        <img src="assets/icon/loupe (1).png" alt="Search" class="w-full h-full object-contain">
-      </button>
       <ng-container *ngIf="isLoggedIn; else loggedOut">
-        <a href="liste-de-souhaits"> <img src="assets/icon/heart (2).png" alt="Favorites" class="w-6 h-6 lg:w-8 lg:h-8"></a>
+        <a href="/liste-de-souhaits"> <img src="assets/icon/heart (2).png" alt="Favorites" class="w-6 h-6 lg:w-8 lg:h-8"></a>
         <a href="/panier"> <img src="assets/icon/shopping-bag (2).png" alt="Cart" class="w-6 h-6 lg:w-8 lg:h-8"></a>
         <a href="/profil" class="text-white font-gotham hover:text-emerald-green"><img src="assets/icon/user.png" alt="User" class="w-6 h-6 lg:w-8 lg:h-8"></a>
         <button (click)="logout()" class="text-white font-gotham hover:text-emerald-green">Déconnexion</button>
       </ng-container>
 
       <ng-template #loggedOut>
+        <a href="/panier"> <img src="assets/icon/shopping-bag (2).png" alt="Cart" class="w-6 h-6 lg:w-8 lg:h-8"></a>
         <a href="/auth/connexion" class="text-white font-gotham hover:text-emerald-green">Connexion</a>
         <a href="/auth/inscription" class="text-white font-gotham hover:text-emerald-green">Inscription</a>
       </ng-template>
