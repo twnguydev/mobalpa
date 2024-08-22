@@ -43,6 +43,8 @@ export class ProductComponent implements OnInit {
   shippingDelay: string | null = null;
   isAdded: boolean = false;
   errorMessage: string = '';
+  selectedImage: string | null = null;
+  selectedColor: string | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -61,6 +63,8 @@ export class ProductComponent implements OnInit {
         (product: IProduct | null) => {
           if (product) {
             this.product = product;
+            this.selectedImage = product.images[0]?.uri || null;
+            this.selectedColor = this.product.colors[0]?.name || null;
             this.calculateShippingDelay(product.estimatedDelivery);
             this.applyCampaigns(product.campaigns);
             console.log('Produit récupéré', product);
@@ -76,6 +80,14 @@ export class ProductComponent implements OnInit {
     } else {
       this.errorMessage = 'URL invalide.';
     }
+  }
+
+  selectImage(imageUri: string): void {
+    this.selectedImage = imageUri;
+  }
+
+  selectColor(colorName: string) {
+    this.selectedColor = colorName;
   }
 
   private applyCampaigns(campaigns: ICampaign[]): void {
@@ -137,11 +149,11 @@ export class ProductComponent implements OnInit {
   }
 
   addToCart() {
-    if (this.product) {
+    if (this.product && this.selectedColor) {
       const item: IWishlistItem = {
         productUuid: this.product.uuid,
         product: this.product,
-        selectedColor: this.product.colors[0].name,
+        selectedColor: this.selectedColor,
         quantity: this.quantity,
         properties: {
           brand: this.product.brand.name,
@@ -155,6 +167,8 @@ export class ProductComponent implements OnInit {
       setTimeout(() => {
         this.isAdded = false;
       }, 5000);
+    } else {
+      alert('Veuillez sélectionner une couleur avant d\'ajouter au panier.');
     }
   }
 
