@@ -11,11 +11,12 @@
     <div *ngIf="selectedTab === 0" class="flex flex-col md:flex-row">
         <div class="md:w-1/2 p-4">
             <div class="bg-gray-100 p-2 rounded-lg mb-4">
-                <img [src]="product.images[0].uri" [alt]="product.name" class="w-full h-auto rounded-lg shadow-md">
+                <img [src]="selectedImage" [alt]="product.name" class="w-full h-auto rounded-lg shadow-md">
             </div>
             <div class="flex space-x-2 overflow-x-auto">
                 <img *ngFor="let image of product.images" [src]="image.uri" [alt]="product.name"
-                    class="w-16 h-auto rounded-lg cursor-pointer transition-transform transform hover:scale-105">
+                    class="w-16 h-auto rounded-lg cursor-pointer transition-transform transform hover:scale-105"
+                    (click)="selectImage(image.uri)">
             </div>
         </div>
 

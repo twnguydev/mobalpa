@@ -41,6 +41,7 @@ export class ProductComponent implements OnInit {
   shippingDelay: string | null = null;
   isAdded: boolean = false;
   errorMessage: string = '';
+  selectedImage: string | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -59,6 +60,7 @@ export class ProductComponent implements OnInit {
         (product: IProduct | null) => {
           if (product) {
             this.product = product;
+            this.selectedImage = product.images[0]?.uri || null;
             this.calculateShippingDelay(product.estimatedDelivery);
           } else {
             this.errorMessage = 'Produit non trouvé.';
@@ -72,6 +74,10 @@ export class ProductComponent implements OnInit {
     } else {
       this.errorMessage = 'URL invalide.';
     }
+  }
+
+  selectImage(imageUri: string): void {
+    this.selectedImage = imageUri;
   }
 
   private calculateShippingDelay(dateString: string): void {
