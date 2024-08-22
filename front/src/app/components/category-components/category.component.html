@@ -37,7 +37,7 @@
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 mb-8">
-        <div *ngFor="let product of paginatedProducts" class="border p-4 rounded-lg">
+        <div *ngFor="let product of paginatedProducts" class="border p-4 rounded-lg flex flex-col">
             <a href="/categories/{{ product.uri }}" class="flex items-center space-x-1">
                 <span class="text-sm text-custom-blue ml-1">{{ product.category.name }}</span>
             </a>
