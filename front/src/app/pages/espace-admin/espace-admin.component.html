@@ -88,31 +88,91 @@
     <!-- Catégories Tab -->
     <div *ngIf="selectedTab === 2" class="min-w-full">
       <div *ngIf="categories.length > 0; else noCategories">
-        <ul>
-          <li *ngFor="let category of categories" class="text-sm text-gray-500">{{ category.name }}</li>
-        </ul>
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nom</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <tr *ngFor="let category of categories">
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                {{ category.name }}
+                <div *ngIf="category.images && category.images.length > 0">
+                  <img
+
+                  >
+                </div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                {{ category.description || 'Non spécifié' }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
       <ng-template #noCategories>
         <p>Aucune Catégorie trouvée.</p>
       </ng-template>
     </div>
 
-    <!-- Sous-Catégories Tab -->
-    <div *ngIf="selectedTab === 3" class="min-w-full">
-      <div *ngIf="subcategories.length > 0; else noSubcategories">
-        <ul>
-          <li *ngFor="let subcategory of subcategories" class="text-sm text-gray-500">{{ subcategory.name }}</li>
-        </ul>
-      </div>
-      <ng-template #noSubcategories>
-        <p>Aucune Sous-Catégorie trouvée.</p>
-      </ng-template>
-    </div>
 
-    <!-- Contenu pour Commandes -->
-    <div *ngIf="selectedTab === 4">
-      <p>Aucune Commande.</p>
-    </div>
+
+<!-- Sous-Catégories Tab -->
+<div *ngIf="selectedTab === 3" class="min-w-full">
+  <div *ngIf="subcategories.length > 0; else noSubcategories">
+    <table class="min-w-full divide-y divide-gray-200">
+      <thead class="bg-gray-50">
+        <tr>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nom</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-200">
+        <tr *ngFor="let subcategory of subcategories">
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ subcategory.name }}</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ subcategory.description || 'Non spécifié' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <ng-template #noSubcategories>
+    <p>Aucune Sous-Catégorie trouvée.</p>
+  </ng-template>
+</div>
+
+
+<!-- Commandes Tab -->
+<div *ngIf="selectedTab === 4" class="min-w-full">
+  <div *ngIf="orders.length > 0; else noOrders">
+    <table class="min-w-full divide-y divide-gray-200">
+      <thead class="bg-gray-50">
+        <tr>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Numéro de Commande</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Client</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Réduction</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Montant Total</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date de Commande</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Statut</th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-200">
+        <tr *ngFor="let order of orders">
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.uuid }}</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.userId }}</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.reduction }}%</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.totalTtc }} €</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.createdAt }}</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.status }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <ng-template #noOrders>
+    <p>Aucune Commande trouvée.</p>
+  </ng-template>
+</div>
 
     <!-- Contenu pour Pour les codes Promo -->
     <div *ngIf="selectedTab === 5">
