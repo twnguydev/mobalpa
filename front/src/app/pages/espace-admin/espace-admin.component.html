@@ -1,36 +1,127 @@
-<div class="">
-    
-    <div class=" flex justify-center ">
-        <div class="container mx-auto  flex">
-            <div class="w-64 h-screen  bg-gray-200 text-black p-4">
-                <div class="tabs  border-gray-600 mb-4">
-                    <div *ngFor="let tab of tabs; let i = index" (click)="selectTab(i)"
-                        class="tab p-2 cursor-pointer text-start flex-1 sm:flex-auto hover:bg-gray-300" [class.active]="selectedTab === i"
-                        [class.border-blue-500]="selectedTab === i">
-                        {{ tab.title }}
-                    </div>
-                </div>
-            </div>
-            <div class="tab-content p-4 ">
-                <div *ngIf="selectedTab === 0" class="flex justify-center">
-                <app-utilisateur/>
-
-                </div>
-                <div *ngIf="selectedTab === 1" class="justify-center flex">
-
-                    <app-produits />
-
-
-                </div>
-                <div *ngIf="selectedTab === 2" class="justify-center flex ">
-                
-                   <app-categorie/>
-                </div>
-                <div *ngIf="selectedTab === 3" class="justify-center flex ">
-                
-                   <app-sous-categorie/>
-                </div>
-            </div>
-        </div>
+<div class="flex w-screen">
+  <!-- Sidebar -->
+  <div class="w-64 h-screen bg-gray-200 text-black p-4">
+    <div class="tabs border-gray-600 mb-4">
+      <div *ngFor="let tab of tabs; let i = index" (click)="selectTab(i)"
+           class="tab p-2 cursor-pointer text-start flex-1 sm:flex-auto hover:bg-gray-300"
+           [class.active]="selectedTab === i" [class.border-blue-500]="selectedTab === i">
+        {{ tab.title }}
+      </div>
     </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="tab-content p-4 w-screen overflow-auto">
+    <!-- Utilisateurs Tab -->
+    <div *ngIf="selectedTab === 0" class="min-w-full">
+      <div *ngIf="users.length > 0; else noUsers">
+        <!-- Barre de Recherche -->
+        <input type="text" class="mb-4 p-2 border border-gray-300 rounded w-full"
+               placeholder="Rechercher par prénom, nom, email, etc."
+               [(ngModel)]="searchTerm" (input)="filterUsers()" />
+
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prénom</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nom</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Téléphone</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date de Naissance</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Adresse</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Code Postal</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ville</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actif</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Créé le</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Mis à Jour le</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <tr *ngFor="let user of filteredUsers">
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.firstname }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.lastname }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.email }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.phoneNumber }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.birthdate }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.address || 'Non spécifié' }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.zipcode || 'Non spécifié' }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.city || 'Non spécifié' }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.active ? 'Oui' : 'Non' }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.createdAt }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.updatedAt || 'Jamais' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <ng-template #noUsers>
+        <p>Aucun Utilisateur trouvé.</p>
+      </ng-template>
+    </div>
+
+    <!-- Produits Tab -->
+    <div *ngIf="selectedTab === 1" class="min-w-full">
+      <div *ngIf="products.length > 0; else noProducts">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nom</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prix</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Marque</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Catégorie</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <tr *ngFor="let product of products">
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ product.name }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ product.price }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ product.brand.name }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ product.category.name }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <ng-template #noProducts>
+        <p>Aucun Produit trouvé.</p>
+      </ng-template>
+    </div>
+
+    <!-- Catégories Tab -->
+    <div *ngIf="selectedTab === 2" class="min-w-full">
+      <div *ngIf="categories.length > 0; else noCategories">
+        <ul>
+          <li *ngFor="let category of categories" class="text-sm text-gray-500">{{ category.name }}</li>
+        </ul>
+      </div>
+      <ng-template #noCategories>
+        <p>Aucune Catégorie trouvée.</p>
+      </ng-template>
+    </div>
+
+    <!-- Sous-Catégories Tab -->
+    <div *ngIf="selectedTab === 3" class="min-w-full">
+      <div *ngIf="subcategories.length > 0; else noSubcategories">
+        <ul>
+          <li *ngFor="let subcategory of subcategories" class="text-sm text-gray-500">{{ subcategory.name }}</li>
+        </ul>
+      </div>
+      <ng-template #noSubcategories>
+        <p>Aucune Sous-Catégorie trouvée.</p>
+      </ng-template>
+    </div>
+
+    <!-- Contenu pour Commandes -->
+    <div *ngIf="selectedTab === 4">
+      <p>Aucune Commande.</p>
+    </div>
+
+    <!-- Contenu pour Pour les codes Promo -->
+    <div *ngIf="selectedTab === 5">
+      <p>Aucun Code Promo.</p>
+    </div>
+
+    <!-- Contenu pour Pour les Stats -->
+    <div *ngIf="selectedTab === 6">
+      <p>Aucune Statistique.</p>
+    </div>
+  </div>
 </div>

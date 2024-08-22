@@ -125,4 +125,9 @@ export class ProductService {
       })
     );
   }
+
+  getProductsWithCampaign(): Observable<IProduct[]> {
+    const headers: HttpHeaders = this.authService.getAuthHeaders() ?? this.authService.getXApiKeyHeaders();
+    return this.http.get<IProduct[]>(`${this.apiUrl}/products-with-campaigns`, { headers });
+  }
 }
