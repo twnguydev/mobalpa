@@ -1,5 +1,10 @@
 package com.mobalpa.api.service;
 
+import com.mobalpa.api.model.Campaign;
+import com.mobalpa.api.repository.CampaignRepository;
+import com.mobalpa.api.dto.CategoryWithCampaignDTO;
+import com.mobalpa.api.dto.ProductWithCampaignDTO;
+import com.mobalpa.api.dto.SubcategoryWithCampaignDTO;
 import com.mobalpa.api.dto.catalogue.CategoryDTO;
 import com.mobalpa.api.dto.catalogue.ProductDTO;
 import com.mobalpa.api.dto.catalogue.SubcategoryDTO;
@@ -19,6 +24,9 @@ import org.springframework.http.MediaType;
 
 import org.springframework.http.ResponseEntity;
 
+import java.time.LocalDateTime;
+import java.util.Objects;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,6 +43,9 @@ public class CatalogueService {
 
     @Value("${catalogue.api-key}")
     private String apiKey;
+
+    @Autowired
+    private CampaignRepository campaignRepository;
 
     public List<CategoryDTO> getAllCategories() {
         HttpHeaders headers = new HttpHeaders();
@@ -72,8 +83,8 @@ public class CatalogueService {
         HttpEntity<String> request = new HttpEntity<>(headers);
 
         ResponseEntity<ProductDTO[]> response = restTemplate.exchange(
-            this.baseUrl + "/products", HttpMethod.GET, request, ProductDTO[].class);
-        
+                this.baseUrl + "/products", HttpMethod.GET, request, ProductDTO[].class);
+
         List<ProductDTO> products = Arrays.asList(response.getBody());
 
         return products.stream().filter(product -> {
@@ -98,6 +109,97 @@ public class CatalogueService {
         }).collect(Collectors.toList());
     }
 
+    public List<ProductWithCampaignDTO> getAllProductsWithCampaign(ProductFilter productFilter) {
+        List<ProductDTO> allProducts = getAllProducts(productFilter);
+        List<Campaign> campaigns = campaignRepository.findAll();
+        LocalDateTime now = LocalDateTime.now();
+
+        return allProducts.stream()
+                .map(product -> {
+                    List<Campaign> activeCampaigns = campaigns.stream()
+                            .filter(campaign -> campaign.getTargetUuid().equals(product.getUuid())
+                                    && campaign.getDateStart().isBefore(now)
+                                    && campaign.getDateEnd().isAfter(now))
+                            .collect(Collectors.toList());
+
+                    List<Campaign> activeCampaignsOnSubcategory = campaigns.stream()
+                            .filter(campaign -> campaign.getType() == Campaign.Type.SUBCATEGORY
+                                    && campaign.getTargetUuid().equals(product.getSubcategory().getUuid())
+                                    && campaign.getDateStart().isBefore(now)
+                                    && campaign.getDateEnd().isAfter(now))
+                            .collect(Collectors.toList());
+
+                    List<Campaign> combinedCampaigns = new ArrayList<>();
+                    combinedCampaigns.addAll(activeCampaigns);
+                    combinedCampaigns.addAll(activeCampaignsOnSubcategory);
+
+                    if (!combinedCampaigns.isEmpty()) {
+                        ProductWithCampaignDTO productWithCampaign = new ProductWithCampaignDTO();
+                        productWithCampaign.setProduct(product);
+                        productWithCampaign.setCampaigns(combinedCampaigns);
+                        return productWithCampaign;
+                    } else {
+                        return null;
+                    }
+                })
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+    }
+
+    public List<CategoryWithCampaignDTO> getAllCategoriesWithCampaign() {
+        List<CategoryDTO> allCategories = getAllCategories();
+        List<Campaign> campaigns = campaignRepository.findAll();
+        LocalDateTime now = LocalDateTime.now();
+
+        return allCategories.stream()
+                .map(category -> {
+                    List<Campaign> activeCampaigns = campaigns.stream()
+                            .filter(campaign -> campaign.getType() == Campaign.Type.CATEGORY &&
+                                    campaign.getTargetUuid().equals(category.getUuid()) &&
+                                    campaign.getDateStart().isBefore(now) &&
+                                    campaign.getDateEnd().isAfter(now))
+                            .collect(Collectors.toList());
+
+                    if (!activeCampaigns.isEmpty()) {
+                        CategoryWithCampaignDTO categoryWithCampaign = new CategoryWithCampaignDTO();
+                        categoryWithCampaign.setCategory(category);
+                        categoryWithCampaign.setCampaigns(activeCampaigns);
+                        return categoryWithCampaign;
+                    } else {
+                        return null;
+                    }
+                })
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+    }
+
+    public List<SubcategoryWithCampaignDTO> getAllSubcategoriesWithCampaign() {
+        List<SubcategoryDTO> allSubcategories = getAllSubcategories();
+        List<Campaign> campaigns = campaignRepository.findAll();
+        LocalDateTime now = LocalDateTime.now();
+
+        return allSubcategories.stream()
+                .map(subcategory -> {
+                    List<Campaign> activeCampaigns = campaigns.stream()
+                            .filter(campaign -> campaign.getType() == Campaign.Type.SUBCATEGORY &&
+                                    campaign.getTargetUuid().equals(subcategory.getUuid()) &&
+                                    campaign.getDateStart().isBefore(now) &&
+                                    campaign.getDateEnd().isAfter(now))
+                            .collect(Collectors.toList());
+
+                    if (!activeCampaigns.isEmpty()) {
+                        SubcategoryWithCampaignDTO subcategoryWithCampaign = new SubcategoryWithCampaignDTO();
+                        subcategoryWithCampaign.setSubcategory(subcategory);
+                        subcategoryWithCampaign.setCampaigns(activeCampaigns);
+                        return subcategoryWithCampaign;
+                    } else {
+                        return null;
+                    }
+                })
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+    }
+
     public ProductDTO getProductById(UUID id) {
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-API-KEY", this.apiKey);
@@ -105,7 +207,7 @@ public class CatalogueService {
 
         try {
             ResponseEntity<ProductDTO> response = restTemplate.exchange(
-                this.baseUrl + "/products/" + id.toString(), HttpMethod.GET, request, ProductDTO.class);
+                    this.baseUrl + "/products/" + id.toString(), HttpMethod.GET, request, ProductDTO.class);
 
             return response.getBody();
         } catch (HttpClientErrorException e) {
@@ -153,9 +255,9 @@ public class CatalogueService {
         HttpEntity<String> request = new HttpEntity<>(headers);
 
         ResponseEntity<ProductDTO[]> response = restTemplate.exchange(
-                this.baseUrl + "/subcategories/" + subcategoryId + "/products", 
-                HttpMethod.GET, 
-                request, 
+                this.baseUrl + "/subcategories/" + subcategoryId + "/products",
+                HttpMethod.GET,
+                request,
                 ProductDTO[].class);
 
         List<ProductDTO> products = Arrays.asList(response.getBody());

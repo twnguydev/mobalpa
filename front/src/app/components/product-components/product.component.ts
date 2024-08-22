@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ProductService } from '@services/product.service';
 import { UserService } from '@services/user.service';
-import { IProduct } from '@interfaces/product.interface';
+import { IProduct, ICampaign } from '@interfaces/product.interface';
 import { IWishlistItem } from '@interfaces/wishlist.interface';
 import { Observable } from 'rxjs';
 
@@ -38,9 +38,13 @@ export class ProductComponent implements OnInit {
   selectedTab: number = 0;
   quantity: number = 1;
   product: IProduct | null = null;
+  discountedPrice: number | null = null;
+  discountRate: number | null = null;
   shippingDelay: string | null = null;
   isAdded: boolean = false;
   errorMessage: string = '';
+  selectedImage: string | null = null;
+  selectedColor: string | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -59,7 +63,11 @@ export class ProductComponent implements OnInit {
         (product: IProduct | null) => {
           if (product) {
             this.product = product;
+            this.selectedImage = product.images[0]?.uri || null;
+            this.selectedColor = this.product.colors[0]?.name || null;
             this.calculateShippingDelay(product.estimatedDelivery);
+            this.applyCampaigns(product.campaigns);
+            console.log('Produit récupéré', product);
           } else {
             this.errorMessage = 'Produit non trouvé.';
           }
@@ -71,6 +79,26 @@ export class ProductComponent implements OnInit {
       );
     } else {
       this.errorMessage = 'URL invalide.';
+    }
+  }
+
+  selectImage(imageUri: string): void {
+    this.selectedImage = imageUri;
+  }
+
+  selectColor(colorName: string) {
+    this.selectedColor = colorName;
+  }
+
+  private applyCampaigns(campaigns: ICampaign[]): void {
+    if (campaigns.length > 0) {
+      const maxDiscount = Math.max(...campaigns.map(campaign => campaign.discountRate));
+      const campaign = campaigns.find(c => c.discountRate === maxDiscount);
+
+      if (campaign) {
+        this.discountRate = campaign.discountRate;
+        this.discountedPrice = this.product!.price * (1 - this.discountRate / 100);
+      }
     }
   }
 
@@ -121,11 +149,11 @@ export class ProductComponent implements OnInit {
   }
 
   addToCart() {
-    if (this.product) {
+    if (this.product && this.selectedColor) {
       const item: IWishlistItem = {
         productUuid: this.product.uuid,
         product: this.product,
-        selectedColor: this.product.colors[0].name,
+        selectedColor: this.selectedColor,
         quantity: this.quantity,
         properties: {
           brand: this.product.brand.name,
@@ -139,6 +167,8 @@ export class ProductComponent implements OnInit {
       setTimeout(() => {
         this.isAdded = false;
       }, 5000);
+    } else {
+      alert('Veuillez sélectionner une couleur avant d\'ajouter au panier.');
     }
   }
 

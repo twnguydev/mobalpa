@@ -168,7 +168,11 @@
         <version>8.0.5</version>
     </dependency>
 
-
+    <dependency>
+        <groupId>org.liquibase</groupId>
+        <artifactId>liquibase-core</artifactId>
+        <version>4.20.0</version>
+    </dependency>
     <!-- Implémentation de Jakarta Mail -->
     <dependency>
         <groupId>com.sun.mail</groupId>
@@ -219,6 +223,14 @@
                 <version>3.0.0-M5</version>
                 <configuration>
                     <testSourceDirectory>tests</testSourceDirectory>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <version>4.20.0</version>
+                <configuration>
+                    <propertyFile>src/main/resources/liquibase.properties</propertyFile>
                 </configuration>
             </plugin>
         </plugins>

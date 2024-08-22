@@ -6,8 +6,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import com.mobalpa.api.service.CatalogueService;
+import com.mobalpa.api.service.PromotionService;
 import com.mobalpa.api.filter.ProductFilter;
+import com.mobalpa.api.dto.ProductWithCampaignDTO;
 import com.mobalpa.api.dto.catalogue.ProductDTO;
+import com.mobalpa.api.dto.CategoryWithCampaignDTO;
+import com.mobalpa.api.dto.SubcategoryWithCampaignDTO;
 
 import java.util.List;
 import java.util.UUID;
@@ -19,6 +23,9 @@ public class CatalogueController {
   @Autowired
   private CatalogueService catalogueService;
 
+  @Autowired
+  private PromotionService promotionService;
+
   @GetMapping("/categories")
   public ResponseEntity<?> getAllCategories() {
     return ResponseEntity.ok(catalogueService.getAllCategories());
@@ -27,6 +34,11 @@ public class CatalogueController {
   @GetMapping("/best-sellers")
   public ResponseEntity<?> getBestSellers() {
     return ResponseEntity.ok(catalogueService.getBestSellers());
+  }
+
+  @GetMapping("/campaigns")
+  public ResponseEntity<?> getAllCampaigns() {
+    return ResponseEntity.ok(promotionService.getAllCampaigns());
   }
 
   @GetMapping("/products")
@@ -44,6 +56,37 @@ public class CatalogueController {
 
       List<ProductDTO> products = catalogueService.getAllProducts(productFilter);
       return ResponseEntity.ok(products);
+    } catch (RuntimeException e) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    }
+  }
+
+  @GetMapping("/products-with-campaigns")
+  public ResponseEntity<?> getAllProductsWithCampaigns() {
+    try {
+      ProductFilter productFilter = new ProductFilter();
+      List<ProductWithCampaignDTO> productsWithCampaigns = catalogueService.getAllProductsWithCampaign(productFilter);
+      return ResponseEntity.ok(productsWithCampaigns);
+    } catch (RuntimeException e) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    }
+  }
+
+  @GetMapping("/subcategories-with-campaigns")
+  public ResponseEntity<?> getAllSubcategoriesWithCampaigns() {
+    try {
+      List<SubcategoryWithCampaignDTO> subcategoriesWithCampaigns = catalogueService.getAllSubcategoriesWithCampaign();
+      return ResponseEntity.ok(subcategoriesWithCampaigns);
+    } catch (RuntimeException e) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    }
+  }
+
+  @GetMapping("/categories-with-campaigns")
+  public ResponseEntity<?> getAllCategoriesWithCampaigns() {
+    try {
+      List<CategoryWithCampaignDTO> categoriesWithCampaigns = catalogueService.getAllCategoriesWithCampaign();
+      return ResponseEntity.ok(categoriesWithCampaigns);
     } catch (RuntimeException e) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
@@ -90,7 +133,6 @@ public class CatalogueController {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
   }
-
 
   @GetMapping("/subcategories/{subcategoryId}")
   public ResponseEntity<?> getSubcategoryById(@PathVariable UUID subcategoryId) {
