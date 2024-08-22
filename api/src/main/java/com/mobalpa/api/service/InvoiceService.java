@@ -52,6 +52,10 @@ public class InvoiceService {
     return invoiceRepository.findByUuid(id).orElseThrow(() -> new RuntimeException("Invoice not found"));
   }
 
+  public Invoice getInvoiceByOrderUuid(UUID orderUuid) {
+    return invoiceRepository.findByOrderUuid(orderUuid).orElseThrow(() -> new RuntimeException("Invoice not found"));
+  }
+
   public Iterable<Invoice> getAllInvoices() {
     Iterable<Invoice> invoices = invoiceRepository.findAll();
     if (invoices == null || !invoices.iterator().hasNext()) {

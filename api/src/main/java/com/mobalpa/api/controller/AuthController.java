@@ -57,6 +57,9 @@ public class AuthController {
     public ResponseEntity<?> loginUser(@RequestBody LoginDTO loginDTO) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword()));
         User user = userService.getUserByEmail(loginDTO.getEmail());
+        if (user.getToken() != null) {
+            return ResponseEntity.badRequest().body("User account not confirmed.");
+        }
         String token = userService.generateToken(user);
         return ResponseEntity.ok(new LoginRequestDTO(user, token));
     }

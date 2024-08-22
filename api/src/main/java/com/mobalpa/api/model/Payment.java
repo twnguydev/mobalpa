@@ -24,7 +24,7 @@ public class Payment {
 
     @ManyToOne
     @JoinColumn(name = "user_uuid", nullable = false)
-    @JsonIgnore
+    @JsonIgnoreProperties("payments")
     private User user;
 
     @Column(nullable = true)

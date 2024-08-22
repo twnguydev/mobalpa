@@ -69,7 +69,7 @@ export class LoginComponent implements OnInit {
         },
         error: error => {
           console.error('Login error', error);
-          this.errors = error.errors || ['Une erreur est survenue. Veuillez réessayer.'];
+          this.errors = error.errors || ['Une erreur est survenue. Veuillez réessayer. Il se peut que votre email ou mot de passe soient incorrects ou que votre compte ne soit pas confirmé.'];
         }
       });
     }

@@ -82,4 +82,13 @@ public class GlobalExceptionHandler {
 
     return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
   }
+
+  @ExceptionHandler(StackOverflowError.class)
+  public ResponseEntity<Object> handleStackOverflowError(StackOverflowError ex, WebRequest request) {
+    Map<String, Object> body = new LinkedHashMap<>();
+    body.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
+    body.put("message", "An unexpected error occurred: " + ex.getMessage());
+
+    return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
+  }
 }

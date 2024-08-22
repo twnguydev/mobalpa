@@ -16,10 +16,16 @@ export interface IOrder {
   deliveryFees: number;
   deliveryAddress: string;
   paymentId: string;
+  invoice: Blob | null;
 }
 
 export interface IOrderItem {
   productUuid: string;
   quantity: number;
   product?: IProduct | null;
+}
+
+export interface ICouponCodeResponse {
+  discountRate: number;
+  discountType: "PERCENTAGE" | "AMOUNT";
 }

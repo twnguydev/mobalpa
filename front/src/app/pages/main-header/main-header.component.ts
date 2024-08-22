@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ProductService } from '@services/product.service';
 import { ICategory } from '@interfaces/category.interface';
 import { AuthService } from '@services/auth.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '@components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-main-header',
@@ -17,7 +19,11 @@ export class MainHeaderComponent implements OnInit {
   isLoggedIn = false;
   categories: ICategory[] = [];
 
-  constructor(private productService: ProductService, private authService: AuthService) {}
+  constructor(
+    private productService: ProductService,
+    private authService: AuthService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.loadCategories();
@@ -60,7 +66,15 @@ export class MainHeaderComponent implements OnInit {
   }
 
   logout() {
-    this.authService.logout();
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: { message: 'Êtes-vous sûr de vouloir vous déconnecter ?' },
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.authService.logout(true);
+      }
+    });
   }
 
   toggleSubcategories(uuid: string): void {
