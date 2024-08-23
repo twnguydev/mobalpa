@@ -84,4 +84,42 @@ export class UserService {
     if (!headers) return new Observable<any>();
     return this.http.get<any>(`${this.apiUrl}/${uuid}/orders`, { headers });
   }
+
+  getCartFromLocalstorage(): IWishlistItem[] {
+    const cart: string | null = localStorage.getItem('cart');
+    if (cart) {
+      return JSON.parse(cart);
+    }
+    return [];
+  }
+
+  modifyCartFromLocalstorage(action: 'add' | 'remove', item: IWishlistItem): void {
+    let cart: IWishlistItem[] = this.getCartFromLocalstorage();
+
+    if (!item.product) {
+      console.error('Item product is undefined or null');
+      return;
+    }
+  
+    if (action === 'add') {
+      const existingProduct: IWishlistItem | undefined = cart.find(cartItem => 
+        cartItem.product && cartItem.product.uuid === item.product?.uuid
+      );
+      
+      if (existingProduct) {
+        existingProduct.quantity += item.quantity;
+      } else {
+        cart.push(item);
+      }
+    } else if (action === 'remove') {
+      cart = cart.filter(cartItem => 
+        cartItem.product && cartItem.product.uuid !== item.product?.uuid
+      );
+    } else {
+      console.error('Invalid action');
+      return;
+    }
+  
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }  
 }

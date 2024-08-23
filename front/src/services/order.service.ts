@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IOrder } from '@interfaces/order.interface';
+import { IOrder, ICouponCodeResponse } from '@interfaces/order.interface';
 import { IPayment } from '@interfaces/payment.interface';
 import { IWishlist, IWishlistItem } from '@interfaces/wishlist.interface';
 import { AuthService } from '@services/auth.service';
@@ -33,5 +33,22 @@ export class OrderService {
     const headers: HttpHeaders | null = this.authService.getAuthHeaders();
     if (!headers) return new Observable<IOrder>();
     return this.http.get<IOrder>(`${this.orderUrl}/${orderId}`, { headers });
+  }
+
+  getInvoiceByOrderUuid(orderUuid: string): Observable<Blob> {
+    const headers: HttpHeaders | null = this.authService.getAuthHeaders();
+    if (!headers) return new Observable<Blob>();
+    return this.http.get(`${this.orderUrl}/${orderUuid}/invoice`, {
+      headers,
+      responseType: 'blob',
+    });
+  }
+
+  testPromoCode(code: string): Observable<ICouponCodeResponse> {
+    const headers: HttpHeaders | null = this.authService.getAuthHeaders();
+    if (!headers) return new Observable<ICouponCodeResponse>();
+    return this.http.post<ICouponCodeResponse>(`${this.orderUrl}/${this.authService.user?.uuid}/apply-coupon`, {
+      'couponCode': code
+    }, { headers });
   }
 }

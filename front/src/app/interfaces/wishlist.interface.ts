@@ -6,7 +6,7 @@ export interface IWishlist {
 }
 
 export interface IWishlistItem {
-  uuid: string;
+  uuid?: string | null;
   productUuid: string;
   product?: IProduct | null;
   quantity: number;
