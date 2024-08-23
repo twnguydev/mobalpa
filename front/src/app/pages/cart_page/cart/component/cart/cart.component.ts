@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { UserService } from '@services/user.service';
 import { AuthService } from '@services/auth.service';
 import { OrderService } from '@services/order.service';
@@ -29,7 +30,8 @@ export class CartComponent {
   constructor(
     private userService: UserService,
     private authService: AuthService,
-    private orderService: OrderService
+    private orderService: OrderService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -160,13 +162,10 @@ export class CartComponent {
   }
 
   proceedToPayment(): void {
-    if (!this.authService.isAuthenticated()) {
-      this.authService.redirectToLogin();
-      return;
-    }
+
 
     const order: IOrder = {
-      uuid: this.generateUUID(),
+      uuid: '',
       userId: this.authService.user?.uuid ?? '',
       items: this.cart.map(item => ({
         productUuid: item.productUuid,
@@ -178,16 +177,10 @@ export class CartComponent {
       totalTtc: this.calculateTotalCart(),
       status: 'PENDING',
       deliveryFees: this.estimateShipping(),
-      deliveryAddress: '', // Will be filled later
+      deliveryAddress: '',
     };
 
-    this.orderService.saveTempOrder(order).subscribe({
-      next: () => {
-        this.router.navigate(['/commande/livraison']);
-      },
-      error: (error) => {
-        console.error('Failed to save the order', error);
-      }
-    });
+    this.orderService.saveTempOrder(order);
+    this.router.navigate(['/commande/livraison']);
   }
 }

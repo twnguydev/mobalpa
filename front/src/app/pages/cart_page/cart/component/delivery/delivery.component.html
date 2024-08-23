@@ -1,17 +1,19 @@
 <div class="container mx-auto py-8 min-h-screen h-auto">
   <h1 class="text-4xl font-bold mb-8 text-mobalpa-green">Livraison</h1>
 
-  <div *ngIf="!deliveryOptions || deliveryOptions.length === 0" class="space-y-3 mb-16">
+  <div *ngIf="getDeliveryKeys().length === 0" class="space-y-3 mb-16">
     <p class="font-gotham text-2xl">Aucune option de livraison disponible pour le moment.</p>
   </div>
 
-  <div *ngIf="deliveryOptions && deliveryOptions.length > 0" class="space-y-3 mb-16">
+  <div *ngIf="getDeliveryKeys().length > 0" class="space-y-3 mb-16">
     <div class="w-full">
       <div
         class="bg-gray-100 px-10 py-4 md:py-6 rounded-3xl grid grid-cols-1 md:grid-cols-3 gap-4 items-center m-2">
         <p class="font-gotham text-sm md:text-base">Sélectionnez votre mode de livraison :</p>
         <select class="font-gotham text-lg px-4 py-2 bg-white rounded-lg" [(ngModel)]="selectedOption">
-          <option *ngFor="let option of deliveryOptions" [value]="option.id">{{ option.name }} - {{ option.price | number:'1.2-2' }} €</option>
+          <option *ngFor="let key of getDeliveryKeys()" [value]="key">
+            {{ key }} - {{ deliveryOptions[key].price | number:'1.2-2' }} €
+          </option>
         </select>
       </div>
     </div>

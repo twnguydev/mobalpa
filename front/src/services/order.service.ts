@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { IOrder, ICouponCodeResponse } from '@interfaces/order.interface';
 import { IPayment } from '@interfaces/payment.interface';
 import { IWishlist, IWishlistItem } from '@interfaces/wishlist.interface';
+import { IDeliveryResponse } from '@interfaces/order.interface';
 import { AuthService } from '@services/auth.service';
 import { environment } from '@env/environment';
 
@@ -14,6 +15,7 @@ export class OrderService {
   private orderUrl: string = `${environment.apiUrl}/orders`;
   private paymentUrl: string = `${environment.apiUrl}/payments`;
   private wishlistUrl: string = `${environment.apiUrl}/wishlist`;
+  private tempOrder: IOrder | null = null;
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
@@ -52,22 +54,31 @@ export class OrderService {
     }, { headers });
   }
 
-  saveTempOrder(order: IOrder): Observable<IOrder> {
+  saveTempOrder(order: IOrder): void {
     this.tempOrder = order;
-    // Simule une requête HTTP pour sauvegarder la commande (vous pouvez remplacer par une vraie requête)
-    return new Observable<IOrder>(observer => {
-      observer.next(order);
-      observer.complete();
-    });
+    localStorage.setItem('tempOrder', JSON.stringify(order));
   }
 
   getTempOrder(): IOrder | null {
+    if (!this.tempOrder) {
+      const tempOrder = localStorage.getItem('tempOrder');
+      if (tempOrder) {
+        this.tempOrder = JSON.parse(tempOrder);
+      }
+    }
     return this.tempOrder;
   }
 
   updateTempOrder(updatedFields: Partial<IOrder>): void {
     if (this.tempOrder) {
       this.tempOrder = { ...this.tempOrder, ...updatedFields };
+      localStorage.setItem('tempOrder', JSON.stringify(this.tempOrder));
     }
+  }
+
+  getDeliveryOptions(): Observable<IDeliveryResponse> {
+    const headers: HttpHeaders | null = this.authService.getAuthHeaders() ?? this.authService.getXApiKeyHeaders();
+    if (!headers) return new Observable<IDeliveryResponse>();
+    return this.http.get<IDeliveryResponse>(`${this.orderUrl}/delivery-prices`, { headers });
   }
 }

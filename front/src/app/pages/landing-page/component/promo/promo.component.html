@@ -1,4 +1,4 @@
-<div class="p-4 flex flex-col lg:flex-row justify-center items-center my-10 mx-4 lg:mx-15 space-y-4 lg:space-y-0 lg:space-x-4">
+<div *ngIf="products.length > 0" class="p-4 flex flex-col lg:flex-row justify-center items-center my-10 mx-4 lg:mx-15 space-y-4 lg:space-y-0 lg:space-x-4">
     <div class="w-full lg:w-1/2 h-96 bg-gradient-to-r from-emerald-green to-emerald-700 flex flex-col md:flex-row justify-between items-center p-4 rounded-lg shadow-lg">
         <img class="w-1/3 h-1/3 object-contain" [src]="products[0].imageUrl" alt="products[0].product.name">
         <div class="w-full flex flex-col justify-center md:ml-5">
