@@ -5,7 +5,7 @@ import { AuthService } from '@services/auth.service';
 import { OrderService } from '@services/order.service';
 import { IWishlist, IWishlistItem } from '@interfaces/wishlist.interface';
 import { ICouponCodeResponse } from '@interfaces/order.interface';
-import { IProduct } from '@interfaces/product.interface';
+import { IOrder } from '@interfaces/order.interface';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -34,7 +34,7 @@ export class CartComponent {
 
   ngOnInit(): void {
     this.cart = this.userService.getCartFromLocalstorage();
-    console.log('Cart loaded', this.cart);
+    // console.log('Cart loaded', this.cart);
 
     this.cart.forEach(item => {
       item.product.oldPrice = item.product?.price;

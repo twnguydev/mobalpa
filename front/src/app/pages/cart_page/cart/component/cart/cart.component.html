@@ -40,9 +40,9 @@
     <div class="bg-mobalpa-green-alternate p-6 rounded-3xl mb-8 text-white w-full md:w-1/2">
         <p class="text-lg mb-4">Vous bénéficiez de la <span class="font-bold">livraison gratuite</span> si votre panier
             atteint <span class="font-bold">100 €</span> !</p>
-        <input type="range" min="0" max="100" [value]="calculateTotalCart()" class="w-full bg-white" disabled>
+        <input type="range" min="0" max="100" [value]="calculateSubtotal()" class="w-full bg-white" disabled>
         <p class="text-lg mt-2 text-gray-300">
-            {{ calculateTotalCart() | number:'1.2-2' }} € / 100 €
+            {{ calculateSubtotal() | number:'1.2-2' }} € / 100 €
         </p>
     </div>
 
@@ -141,7 +141,7 @@
                         <span class="text-lg">Sous-total</span>
                         <span class="text-lg font-bold">{{ calculateSubtotal() | number:'1.2-2' }} €</span>
                     </div>
-                    <div class="flex justify-between my-2">
+                    <div *ngIf="calculateSavings() > 0" class="flex justify-between my-2">
                         <span class="text-lg text-red-500">Économies</span>
                         <span class="text-lg text-red-500">- {{ calculateSavings() | number:'1.2-2' }} €</span>
                     </div>

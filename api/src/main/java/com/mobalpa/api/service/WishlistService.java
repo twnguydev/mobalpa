@@ -65,22 +65,13 @@ public class WishlistService {
         User user = userService.getUserByUuid(userId);
         Wishlist wishlist = getWishlistByUserUuid(userId);
     
-        // Récupération du produit depuis le catalogue
         ProductDTO product = catalogueService.getProductById(newItem.getProductUuid());
         if (product == null) {
             throw new RuntimeException("Product with UUID " + newItem.getProductUuid() + " not found");
         }
     
-        // Récupération des campagnes associées au produit
-        List<Campaign> campaigns = promotionService.getProductCampaigns(newItem.getProductUuid());
+        List<Campaign> campaigns = promotionService.getProductCampaigns(product.getUuid());
     
-        if (campaigns != null && !campaigns.isEmpty()) {
-            System.out.println("Campaigns found: " + campaigns);
-        } else {
-            System.out.println("No campaigns found for product UUID: " + newItem.getProductUuid());
-        }
-    
-        // Vérification de la couleur sélectionnée
         if (newItem.getSelectedColor() != null && !product.getColors().stream().map(ColorDTO::getName)
                 .collect(Collectors.toList()).contains(newItem.getSelectedColor())) {
             throw new RuntimeException("Color " + newItem.getSelectedColor() + " not available for product with UUID "
@@ -88,7 +79,6 @@ public class WishlistService {
         }
     
         List<WishlistItem> items = wishlist.getItems();
-    
         Optional<WishlistItem> existingItemOpt = items.stream()
                 .filter(item -> item.getProductUuid().equals(newItem.getProductUuid())
                         && item.getSelectedColor().equals(newItem.getSelectedColor()))
@@ -101,21 +91,26 @@ public class WishlistService {
                         : "No image");
     
         if (existingItemOpt.isPresent()) {
-            // Mise à jour de l'item existant
             WishlistItem existingItem = existingItemOpt.get();
             existingItem.setQuantity(existingItem.getQuantity() + newItem.getQuantity());
-            existingItem.setCampaigns(campaigns != null ? campaigns : existingItem.getCampaigns()); 
         } else {
-            // Ajout d'un nouvel item à la wishlist
             newItem.setWishlist(wishlist);
+            newItem.setProduct(product);
             newItem.setCampaigns(campaigns != null ? campaigns : new ArrayList<>());
             newItem.setProperties(properties);
             items.add(newItem);
         }
-    
+
         wishlist.setItems(items);
-        return wishlistRepository.save(wishlist);
-    }    
+        Wishlist savedWishlist = wishlistRepository.save(wishlist);
+
+        for (WishlistItem item : savedWishlist.getItems()) {
+            ProductDTO itemProduct = catalogueService.getProductById(item.getProductUuid());
+            item.setProduct(itemProduct);
+        }
+    
+        return savedWishlist;
+    }         
 
     public Wishlist removeFromWishlist(UUID userId, UUID productId, Integer quantity) {
         User user = userService.getUserByUuid(userId);

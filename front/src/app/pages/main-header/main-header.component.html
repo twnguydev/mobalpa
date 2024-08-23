@@ -70,9 +70,9 @@
       <div class="w-1/2 flex flex-col items-start">
         <a href="#" class="block px-6 py-4 hover:bg-mobalpa-green-alternate w-full text-left  text-lg font-bold  cursor-pointer">Nouveautés</a>
         <ng-container *ngIf="isLoggedIn; else loggedOut2">
-          <a *ngIf="isAdmin" href="/admin" class="block px-6 py-4 hover:bg-mobalpa-green-alternate w-full text-left  text-lg font-bold  cursor-pointer">Espace Admin</a>
           <a href="/liste-de-souhaits" class="block px-6 py-4 hover:bg-mobalpa-green-alternate w-full text-left  text-lg font-bold  cursor-pointer">Liste de souhaits</a>
           <a href="/profil" class="block px-6 py-4 hover:bg-mobalpa-green-alternate w-full text-left  text-lg font-bold  cursor-pointer">Mon compte</a>
+          <a *ngIf="isAdmin" href="/admin" class="block px-6 py-4 hover:bg-mobalpa-green-alternate w-full text-left  text-lg font-bold  cursor-pointer">Administration</a>
           <button (click)="logout()" class="block px-6 py-4 hover:bg-mobalpa-green-alternate w-full text-left  text-lg font-bold  cursor-pointer">Déconnexion</button>
         </ng-container>
         <ng-template #loggedOut2>
