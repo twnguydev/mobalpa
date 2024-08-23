@@ -4,19 +4,19 @@ export interface IOrder {
   uuid: string;
   userId: string;
   items: IOrderItem[];
-  deliveryMethod: string;
+  deliveryMethod?: string;
   vat: number;
   reduction: number;
-  taxDelivery: number;
-  warranty: string;
+  taxDelivery?: number;
+  warranty?: string;
   totalHt: number;
   totalTtc: number;
-  createdAt: string;
+  createdAt?: string;
   status: string;
   deliveryFees: number;
   deliveryAddress: string;
-  paymentId: string;
-  invoice: Blob | null;
+  paymentId?: string;
+  invoice?: Blob | null;
 }
 
 export interface IOrderItem {

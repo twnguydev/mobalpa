@@ -51,4 +51,23 @@ export class OrderService {
       'couponCode': code
     }, { headers });
   }
+
+  saveTempOrder(order: IOrder): Observable<IOrder> {
+    this.tempOrder = order;
+    // Simule une requête HTTP pour sauvegarder la commande (vous pouvez remplacer par une vraie requête)
+    return new Observable<IOrder>(observer => {
+      observer.next(order);
+      observer.complete();
+    });
+  }
+
+  getTempOrder(): IOrder | null {
+    return this.tempOrder;
+  }
+
+  updateTempOrder(updatedFields: Partial<IOrder>): void {
+    if (this.tempOrder) {
+      this.tempOrder = { ...this.tempOrder, ...updatedFields };
+    }
+  }
 }
