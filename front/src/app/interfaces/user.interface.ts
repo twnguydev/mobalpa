@@ -24,6 +24,21 @@ export interface IUser {
   orders?: IOrder[];
 }
 
+export interface IVisitor {
+  uuid?: string;
+  firstname: string;
+  lastname: string;
+  email: string;
+  phoneNumber: string;
+  address?: string | null;
+  zipcode?: string | null;
+  city?: string | null;
+  active: boolean;
+  createdAt?: string;
+  payments?: IPayment[];
+  orders?: IOrder[];
+}
+
 export interface IRole {
   id: string;
   name: string;

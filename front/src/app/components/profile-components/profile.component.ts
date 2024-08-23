@@ -74,6 +74,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.userService.getPayments(uuid).subscribe(
       payments => {
         this.payments = payments;
+        console.log('Méthodes de paiement chargées:', payments);
       },
       error => {
         console.error('Erreur lors du chargement des méthodes de paiement:', error);

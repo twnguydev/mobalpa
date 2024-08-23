@@ -51,8 +51,6 @@ public class Visitor {
   @OneToMany(mappedBy = "visitor", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Order> orders = new ArrayList<>();
 
-
-
   @Column(nullable = false, updatable = false)
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
   private LocalDateTime createdAt = LocalDateTime.now();

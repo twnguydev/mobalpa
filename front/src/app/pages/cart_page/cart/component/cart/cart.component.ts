@@ -161,7 +161,7 @@ export class CartComponent {
     this.cart = this.cart.filter(cartItem => cartItem.productUuid !== item.productUuid);
   }
 
-  proceedToPayment(): void {
+  confirmOrder(): void {
 
 
     const order: IOrder = {
@@ -169,7 +169,8 @@ export class CartComponent {
       userId: this.authService.user?.uuid ?? '',
       items: this.cart.map(item => ({
         productUuid: item.productUuid,
-        quantity: item.quantity
+        quantity: item.quantity,
+        product: item.product,
       })),
       vat: this.calculateVAT(),
       reduction: this.calculateSavings(),
@@ -181,6 +182,6 @@ export class CartComponent {
     };
 
     this.orderService.saveTempOrder(order);
-    this.router.navigate(['/commande/livraison']);
+    this.router.navigate(['/commande/confirmation']);
   }
 }
