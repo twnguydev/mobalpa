@@ -141,7 +141,7 @@
                         <span class="text-lg">Sous-total</span>
                         <span class="text-lg font-bold">{{ calculateSubtotal() | number:'1.2-2' }} €</span>
                     </div>
-                    <div class="flex justify-between my-2">
+                    <div *ngIf="calculateSavings() > 0" class="flex justify-between my-2">
                         <span class="text-lg text-red-500">Économies</span>
                         <span class="text-lg text-red-500">- {{ calculateSavings() | number:'1.2-2' }} €</span>
                     </div>
