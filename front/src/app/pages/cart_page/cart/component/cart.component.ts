@@ -33,7 +33,25 @@ export class CartComponent {
   ) { }
 
   ngOnInit(): void {
-    this.cart = this.userService.getCartFromLocalstorage()
+    this.cart = this.userService.getCartFromLocalstorage();
+    console.log('Cart loaded', this.cart);
+
+    this.cart.forEach(item => {
+      item.product.oldPrice = item.product?.price;
+      const maxDiscountRate = this.getMaxDiscountRate(item);
+      item.product.discountRate = maxDiscountRate;
+      item.product.newPrice = this.getDiscountedPrice(item.product?.price, maxDiscountRate);
+    });
+  }
+
+  getMaxDiscountRate(item: IWishlistItem): number {
+    return item.product?.campaigns.reduce((maxRate: number, campaign: any) => {
+      return campaign.discountRate > maxRate ? campaign.discountRate : maxRate;
+    }, 0);
+  }
+
+  getDiscountedPrice(price: number | null, discountRate: number): number {
+    return price ? price - (price * discountRate / 100) : 0;
   }
 
   decreaseQuantity(item: IWishlistItem): void {
@@ -49,16 +67,29 @@ export class CartComponent {
   }
 
   calculateSubtotal(): number {
-    return this.cart.reduce((acc, item) => acc + (item.product ? item.product.price : 0) * item.quantity, 0);
+    return this.cart.reduce((acc, item) => {
+      const price = item.product?.newPrice ?? item.product?.price ?? 0;
+      return acc + (price * item.quantity);
+    }, 0);
+  }
+
+  calculateShippingSavings(): number {
+    const shippingCost = 20;
+    return this.calculateSubtotal() >= 100 ? shippingCost : 0;
   }
 
   calculateSavings(): number {
+    let savings = 0;
+    
     if (this.couponType === 'AMOUNT') {
-      return this.couponAmount;
+      savings += this.couponAmount;
     } else if (this.couponType === 'PERCENTAGE') {
-      return this.calculateSubtotal() * (this.couponAmount / 100);
+      savings += this.calculateSubtotal() * (this.couponAmount / 100);
     }
-    return 0;
+    
+    savings += this.calculateShippingSavings();
+    
+    return savings;
   }
 
   estimateShipping(): number {

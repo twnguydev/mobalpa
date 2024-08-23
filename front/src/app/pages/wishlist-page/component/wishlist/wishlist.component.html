@@ -50,22 +50,36 @@
                 <!-- Prix Column -->
                 <div *ngIf="item.product"
                     class="flex md:flex-col justify-center md:justify-start items-center col-span-1">
-                    <p class="font-gotham text-mobalpa-green w-auto text-xl md:text-3xl">
-                        {{ (item.product.price * item.quantity) | number:'1.2-2' }} €
+                    <p *ngIf="item.product.newPrice" class="font-gotham text-mobalpa-green w-auto text-xl md:text-3xl">
+                        {{ (item.product.newPrice * item.quantity) | number:'1.2-2' }} €
                     </p>
+
                     <p class="font-gotham text-sm md:text-base">
-                        Prix unitaire :<br> {{ item.product.price | number:'1.2-2' }} €
+                        Prix unitaire : <br>
+                        <span *ngIf="item.product.discountRate && item.product.discountRate > 0" class="line-through">
+                            {{ item.product.oldPrice | number:'1.2-2' }} €
+                        </span>
+                        <span *ngIf="item.product.discountRate && item.product.discountRate > 0" class="text-red-600">
+                            {{ item.product.newPrice | number:'1.2-2' }} €
+                        </span>
+                        <span *ngIf="item.product.discountRate === 0">
+                            {{ item.product.price | number:'1.2-2' }} €
+                        </span>
+                    </p>
+
+                    <p class="font-gotham text-sm md:text-base" *ngIf="item.product.discountRate && item.product.discountRate > 0">
+                        Réduction: -{{ item.product.discountRate }}%
                     </p>
                 </div>
 
                 <!-- Actions Column -->
                 <div *ngIf="item.product" class="flex justify-center md:justify-end items-center col-span-2 space-x-4">
                     <button *ngIf="!productAdded[item.productUuid]" (click)="saveToCart(item)"
-                        class="mt-4 md:mt-0 w-full bg-mobalpa-green-alternate text-white p-2 rounded-lg">
+                        class="w-full bg-mobalpa-green-alternate text-white p-2 rounded-lg">
                         Ajouter au panier
                     </button>
                     <button *ngIf="productAdded[item.productUuid]"
-                        class="mt-4 md:mt-0 w-full text-mobalpa-green-alternate p-2 rounded-lg">
+                        class="w-full text-mobalpa-green-alternate p-2 rounded-lg">
                         Ajouté au panier
                     </button>
                     <button (click)="removeFromWishlist(item)"

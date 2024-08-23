@@ -3,6 +3,7 @@ import { AdminService } from '@services/admin.service';
 import { IUser } from '@interfaces/user.interface';
 import { IProduct } from '@interfaces/product.interface';
 import { ICategory, ISubcategory } from '@interfaces/category.interface';
+import { IOrder } from '@interfaces/order.interface';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -28,6 +29,7 @@ export class EspaceAdminComponent implements OnInit {
   products: IProduct[] = [];
   categories: ICategory[] = [];
   subcategories: ISubcategory[] = [];
+  orders: IOrder[] = [];
   filteredUsers: IUser[] = [];
   searchTerm: string = '';
 
@@ -45,6 +47,10 @@ export class EspaceAdminComponent implements OnInit {
       this.loadProducts();
     } else if (index === 2) {
       this.loadCategories();
+    } else if (index === 3) {
+      this.loadSubcategories();
+    } else if (index === 4) {
+      this.loadOrders();
     }
   }
 
@@ -61,15 +67,15 @@ export class EspaceAdminComponent implements OnInit {
   }
 
   loadProducts(): void {
-    this.adminService.getAllProducts().subscribe({
-      next: (data: IProduct[]) => {
-        this.products = data;
-      },
-      error: (err) => {
-        console.error('Failed to load products', err);
-      }
-    });
-  }
+  this.adminService.getAllProducts().subscribe({
+    next: (data: IProduct[]) => {
+      this.products = data;
+    },
+    error: (err) => {
+      console.error('Échec du chargement des produits', err);
+    }
+  });
+}
 
   loadCategories(): void {
     this.adminService.getAllCategories().subscribe({
@@ -89,6 +95,17 @@ export class EspaceAdminComponent implements OnInit {
       },
       error: (err) => {
         console.error('Failed to load subcategories', err);
+      }
+    });
+  }
+
+  loadOrders(): void {
+    this.adminService.getAllOrders().subscribe({
+      next: (data: IOrder[]) => {
+        this.orders = data;
+      },
+      error: (err) => {
+        console.error('Échec du chargement des commandes', err);
       }
     });
   }

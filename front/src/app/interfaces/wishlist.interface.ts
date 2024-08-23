@@ -1,4 +1,4 @@
-import { IProduct } from './product.interface';
+import { IProduct, ICampaign } from './product.interface';
 
 export interface IWishlist {
   uuid: string;
@@ -8,9 +8,10 @@ export interface IWishlist {
 export interface IWishlistItem {
   uuid?: string | null;
   productUuid: string;
-  product?: IProduct | null;
+  product: IProduct;
   quantity: number;
   selectedColor: string;
+  campaigns?: ICampaign[];
   properties: {
     brand: string;
     images: string;

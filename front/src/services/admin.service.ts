@@ -6,7 +6,7 @@ import { IUser } from '@interfaces/user.interface';
 import { AuthService } from '@services/auth.service';
 import { IProduct } from '@interfaces/product.interface';
 import { ICategory, ISubcategory } from '@interfaces/category.interface';
-
+import { IOrder } from '@interfaces/order.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +25,7 @@ export class AdminService {
   getAllProducts(): Observable<IProduct[]> {
     const headers: HttpHeaders | null = this.authService.getAuthHeaders();
     if (!headers) return new Observable<IProduct[]>();
-    return this.http.get<IProduct[]>(`${this.apiUrl}/products`, { headers });
+    return this.http.get<IProduct[]>(`http://localhost:8080/api/catalogue/products`, { headers });
   }
 
   getAllCategories(): Observable<ICategory[]> {
@@ -40,11 +40,10 @@ export class AdminService {
     return this.http.get<ISubcategory[]>(`${this.apiUrl}/subcategories`, { headers });
   }
 
-  createCategory(category: ICategory): Observable<ICategory> {
+  getAllOrders(): Observable<IOrder[]> {
     const headers: HttpHeaders | null = this.authService.getAuthHeaders();
-    if (!headers) return new Observable<ICategory>();
-    return this.http.post<ICategory>(`${this.apiUrl}/categories`, category, { headers });
+    if (!headers) return new Observable<IOrder[]>();
+    return this.http.get<IOrder[]>(`${this.apiUrl}/orders`, { headers });
   }
-
 
 }
