@@ -11,19 +11,26 @@
     <div *ngIf="selectedTab === 0" class="flex flex-col md:flex-row">
         <div class="md:w-1/2 p-4">
             <div class="bg-gray-100 p-2 rounded-lg mb-4">
-                <img [src]="product.images[0].uri" [alt]="product.name" class="w-full h-auto rounded-lg shadow-md">
+                <img [src]="selectedImage" [alt]="product.name" class="w-full h-auto rounded-lg shadow-md">
             </div>
             <div class="flex space-x-2 overflow-x-auto">
                 <img *ngFor="let image of product.images" [src]="image.uri" [alt]="product.name"
-                    class="w-16 h-auto rounded-lg cursor-pointer transition-transform transform hover:scale-105">
+                    class="w-16 h-auto rounded-lg cursor-pointer transition-transform transform hover:scale-105"
+                    (click)="selectImage(image.uri)">
             </div>
         </div>
 
         <div class="md:ml-5 md:w-2/3 lg:w-1/2 p-4">
-            <h1 class="text-4xl font-bold mb-4 text-gray-800">{{ product.name }}</h1>
+            <h1 class="flex items-center justify-start gap-x-4 text-4xl font-bold mb-4 text-gray-800">{{ product.name }} <span *ngIf="discountRate" class="text-xl font-semibold text-red-600">&mdash; {{ discountRate }}%</span></h1>
             <div class="flex items-center mb-4">
                 <span class="text-yellow-500 text-xl">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
-                <span class="ml-2 text-2xl font-semibold text-gray-800">{{ product.price }} €</span>
+                <span class="ml-2 text-2xl font-semibold text-gray-800" *ngIf="!discountedPrice">
+                    {{ product.price | number: '1.2-2' }} €
+                </span>
+                <span class="ml-2 text-2xl font-semibold text-gray-800" *ngIf="discountedPrice">
+                    <span class="ml-2">{{ discountedPrice | number: '1.2-2' }} €</span>
+                    <span class="ml-2 line-through text-base text-gray-500">{{ product.price | number: '1.2-2' }} €</span>
+                </span>
             </div>
             <p class="text-gray-600 mb-4">Réf: {{ product.uuid }}</p>
             <div
@@ -58,9 +65,13 @@
                 </button>
             </div>
             <div
-                class="flex items-center lg:w-1/3 md:w-1/2 w-full justify-between shadow-md rounded-xl p-2 mb-4 bg-gray-100 space-x-2 overflow-x-auto">
-                <span *ngFor="let color of product.colors" [style.background-color]="getColorHex(color.name)"
-                    class="w-6 h-6 rounded-full border-2 border-transparent hover:border-gray-400 transition"></span>
+                class="flex items-center lg:w-1/3 md:w-1/2 w-full justify-start shadow-md rounded-xl p-2 mb-4 bg-gray-100 space-x-2 overflow-x-auto">
+                <span *ngFor="let color of product.colors" 
+                    [style.background-color]="getColorHex(color.name)"
+                    class="w-6 h-6 rounded-full border-2 cursor-pointer border-transparent hover:border-gray-400 transition"
+                    [class.border-gray-800]="color.name === selectedColor"
+                    (click)="selectColor(color.name)">
+                </span>
             </div>
             <p class="text-mobalpa-green mb-4 font-medium" *ngIf="product.stock > 0">En stock</p>
             <p class="text-custom-orange mb-4 font-medium" *ngIf="product.stock === 0">Rupture de stock</p>

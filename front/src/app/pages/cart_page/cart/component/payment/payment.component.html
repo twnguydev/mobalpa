@@ -1,0 +1,23 @@
+<div class="container mx-auto py-8 min-h-screen h-auto">
+  <h1 class="text-4xl font-bold mb-8 text-mobalpa-green">Paiement</h1>
+
+  <div *ngIf="!paymentMethods || paymentMethods.length === 0" class="space-y-3 mb-16">
+    <p class="font-gotham text-2xl">Aucun moyen de paiement disponible pour le moment.</p>
+  </div>
+
+  <div *ngIf="paymentMethods && paymentMethods.length > 0" class="space-y-3 mb-16">
+    <div class="w-full">
+      <div
+        class="bg-gray-100 px-10 py-4 md:py-6 rounded-3xl grid grid-cols-1 md:grid-cols-3 gap-4 items-center m-2">
+        <p class="font-gotham text-sm md:text-base">Sélectionnez votre mode de paiement :</p>
+        <select class="font-gotham text-lg px-4 py-2 bg-white rounded-lg" [(ngModel)]="selectedMethod">
+          <option *ngFor="let method of paymentMethods" [value]="method.id">{{ method.name }}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <button (click)="confirmPayment()" class="bg-mobalpa-green-alternate text-white p-4 rounded-lg">
+    Confirmer le paiement
+  </button>
+</div>

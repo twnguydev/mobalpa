@@ -10,6 +10,7 @@ import com.mobalpa.api.model.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.http.*;
@@ -81,14 +82,16 @@ public class DeliveryService {
     return response.getBody();
   }
 
-  public List<DepotDTO> getDeliveryPrices() {
+  public Map<String, DepotRequest> getDeliveryPrices() {
     HttpHeaders headers = new HttpHeaders();
     headers.set("X-API-KEY", this.apiKey);
     HttpEntity<String> request = new HttpEntity<>(headers);
 
-    ResponseEntity<DepotDTO[]> response = restTemplate.exchange(
-        this.baseUrl + "depot", HttpMethod.GET, request, DepotDTO[].class);
-    return Arrays.asList(response.getBody());
+    ResponseEntity<Map<String, DepotRequest>> response = restTemplate.exchange(
+        this.baseUrl + "depot", HttpMethod.GET, request, new ParameterizedTypeReference<Map<String, DepotRequest>>() {
+        });
+
+    return response.getBody();
   }
 
   public Optional<DepotDTO> getDeliveryPrice(String method) {

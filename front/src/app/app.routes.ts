@@ -2,6 +2,7 @@ import { RouterModule, Routes, ExtraOptions } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { AuthGuard } from './auth.guard';
 import { NoAuthGuard } from './no-auth.guard';
+import { AdminGuard } from './admin.guard';
 
 import { LandingPageComponent } from '@pages/landing-page/landing-page.component';
 import { CartPageComponent } from '@pages/cart_page/cart-page.component';
@@ -9,6 +10,9 @@ import { Wishlist_PageComponent } from '@pages/wishlist-page/wishlist-page.compo
 import { SupportPageComponent } from '@pages/support-page/support-page.component';
 import { SubcategoriePageComponent } from '@pages/subcategorie-page/subcategorie-page.component';
 import { ProductComponent } from '@components/product-components/product.component';
+import { DeliveryComponent } from '@pages/cart_page/cart/component/delivery/delivery.component';
+// import { PaymentComponent } from '@pages/cart_page/cart/component/payment/payment.component';
+// import { OrderDetailsComponent } from '@pages/cart_page/cart/component/order-details/order-details.component';
 
 import { HomeComponent } from '@components/home-components/home.component';
 import { LoginComponent } from '@components/login-components/login.component';
@@ -39,6 +43,9 @@ import { FournisseurComponent } from '@pages/fournisseur/fournisseur.component';
 export const routes: Routes = [
     { path: '', component: LandingPageComponent },
     { path: 'panier', component: CartPageComponent },
+    { path: 'commande/livraison', component: DeliveryComponent },
+    // { path: 'commande/paiement', component: PaymentComponent },
+    // { path: 'commande/details', component: OrderDetailsComponent },
     { path: 'liste-de-souhaits', component: Wishlist_PageComponent, canActivate: [AuthGuard] },
     { path: 'support', component: SupportPageComponent },
     { path: 'info', component: HomeComponent },
@@ -54,7 +61,7 @@ export const routes: Routes = [
     { path: 'politique-de-confidentialite', component: PrivacyPolicyComponent },
     { path: 'conditions-generales-de-vente', component: TermsAndConditionsComponent },
     { path: 'conditions-generales-utilisation', component: TermsOfUseComponent },
-    { path: 'admin', component: EspaceAdminComponent },
+    { path: 'admin', component: EspaceAdminComponent, canActivate: [AdminGuard] },
     { path: 'contactez-nous', component: ContactPageComponent },
     { path: 'livraison', component: LivraisonComponent },
     { path: 'livraison/quelles-sont-les-methodes-de-livraison', component: QuellesSontLesMethodesDeLivraisonComponent },
@@ -65,8 +72,8 @@ export const routes: Routes = [
     { path: 'fournisseur', component: FournisseurComponent },
 
 
-    
-    
+
+
 
 ];
 

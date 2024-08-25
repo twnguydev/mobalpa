@@ -49,6 +49,23 @@ public class PromotionService {
         return campaignRepository.findById(id);
     }
 
+    public List<Campaign> getProductCampaigns(UUID productUuid) {
+        Optional<ProductDTO> product = Optional.of(catalogueService.getProductById(productUuid));
+        if (product.isEmpty()) {
+            throw new RuntimeException("Product not found");
+        }
+
+        List<Campaign> allCampaigns = campaignRepository.findAll();
+
+        return allCampaigns.stream()
+            .filter(campaign -> 
+                campaign.getType().equals(Campaign.Type.PRODUCT) && campaign.getTargetUuid().equals(productUuid) ||
+                campaign.getType().equals(Campaign.Type.CATEGORY) && catalogueService.getProductById(productUuid).getCategory().getUuid().equals(campaign.getTargetUuid()) ||
+                campaign.getType().equals(Campaign.Type.SUBCATEGORY) && catalogueService.getProductById(productUuid).getSubcategory().getUuid().equals(campaign.getTargetUuid())
+            )
+            .toList();
+    }
+
     public Campaign createCampaign(Campaign campaign) {
         if (campaign.getType().toString().equals("PRODUCT")) {
             Optional<ProductDTO> product = Optional.of(catalogueService.getProductById(campaign.getTargetUuid()));

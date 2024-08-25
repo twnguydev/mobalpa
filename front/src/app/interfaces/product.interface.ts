@@ -17,6 +17,10 @@ export interface IProduct {
   colors: IColor[];
   images: IImage[];
   stores: IStore[];
+  campaigns: ICampaign[];
+  oldPrice?: number;
+  newPrice?: number;
+  discountRate?: number;
 }
 
 export interface IBrand {
@@ -43,4 +47,15 @@ export interface IStore {
   email: string;
   openingHours: string;
   products: IProduct[];
+}
+
+export interface ICampaign {
+  id: string;
+  name: string;
+  description: string;
+  discountRate: number;
+  dateStart: Date;
+  dateEnd: Date;
+  targetUuid: string;
+  type: 'PRODUCT' | 'SUBCATEGORY' | 'CATEGORY';
 }
