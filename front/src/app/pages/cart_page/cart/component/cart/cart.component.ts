@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { UserService } from '@services/user.service';
 import { AuthService } from '@services/auth.service';
 import { OrderService } from '@services/order.service';
@@ -29,7 +30,8 @@ export class CartComponent {
   constructor(
     private userService: UserService,
     private authService: AuthService,
-    private orderService: OrderService
+    private orderService: OrderService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -157,5 +159,29 @@ export class CartComponent {
   removeFromCart(item: IWishlistItem): void {
     this.userService.modifyCartFromLocalstorage('remove', item);
     this.cart = this.cart.filter(cartItem => cartItem.productUuid !== item.productUuid);
+  }
+  
+  confirmOrder(): void {
+
+
+    const order: IOrder = {
+      uuid: '',
+      userId: this.authService.user?.uuid ?? '',
+      items: this.cart.map(item => ({
+        productUuid: item.productUuid,
+        quantity: item.quantity,
+        product: item.product,
+      })),
+      vat: this.calculateVAT(),
+      reduction: this.calculateSavings(),
+      totalHt: this.calculateSubtotal(),
+      totalTtc: this.calculateTotalCart(),
+      status: 'PENDING',
+      deliveryFees: this.estimateShipping(),
+      deliveryAddress: '',
+    };
+
+    this.orderService.saveTempOrder(order);
+    this.router.navigate(['/commande/confirmation']);
   }
 }

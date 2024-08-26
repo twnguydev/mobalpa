@@ -104,7 +104,7 @@ public class OrderController {
     @GetMapping("/delivery-prices")
     public ResponseEntity<?> getDeliveryPrices() {
         try {
-            List<DepotDTO> deliveryPrices = deliveryService.getDeliveryPrices();
+            Map<String,DepotRequest> deliveryPrices = deliveryService.getDeliveryPrices();
             return ResponseEntity.ok(deliveryPrices);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());

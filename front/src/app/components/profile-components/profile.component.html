@@ -58,6 +58,9 @@
             <h2 class="text-2xl font-semibold mb-4 text-mobalpa-green">{{ tabs[selectedTab].title }}</h2>
             <div *ngIf="successMessage" class="alert alert-success text-green-500 mb-2">{{ successMessage }}</div>
             <div *ngIf="errorMessage" class="alert alert-danger text-red-500 mb-2">{{ errorMessage }}</div>
+            <div *ngIf="payments.length === 0" class="text-center text-gray-500 mb-5">
+                <p>Aucune méthode de paiement trouvée.</p>
+            </div>
             <div class="space-y-4">
                 <div *ngFor="let payment of payments" class="border p-2 rounded-lg flex justify-between items-center">
                     <span *ngIf="payment.cardHolder && payment.cardNumber" class="flex items-center">

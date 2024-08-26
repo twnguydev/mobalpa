@@ -7,7 +7,7 @@ export interface IUser {
   firstname: string;
   lastname: string;
   email: string;
-  password: string;
+  password?: string;
   confirmPassword?: string | undefined;
   phoneNumber: string;
   birthdate: string;
@@ -16,12 +16,27 @@ export interface IUser {
   city?: string | null;
   token?: string | null;
   active: boolean;
-  createdAt: string;
+  createdAt?: string;
   updatedAt?: string | null;
-  roles: IRole[];
+  roles?: IRole[];
   wishlist?: IWishlist | null;
-  payments: IPayment[];
-  orders: IOrder[];
+  payments?: IPayment[];
+  orders?: IOrder[];
+}
+
+export interface IVisitor {
+  uuid?: string;
+  firstname: string;
+  lastname: string;
+  email: string;
+  phoneNumber: string;
+  address?: string | null;
+  zipcode?: string | null;
+  city?: string | null;
+  active: boolean;
+  createdAt?: string;
+  payments?: IPayment[];
+  orders?: IOrder[];
 }
 
 export interface IRole {

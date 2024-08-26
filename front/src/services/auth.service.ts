@@ -243,4 +243,20 @@ export class AuthService {
   validResetPassword(token: string, newPassword: string): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/reset-password?token=${token}`, { newPassword });
   }
+
+  generateVisitorUser(email: string, firstname: string, lastname: string, address: string, zipcode: string, city: string): IUser {
+    return {
+      uuid: 'visitor',
+      firstname,
+      lastname,
+      email,
+      password: '',
+      phoneNumber: '',
+      birthdate: '',
+      address,
+      zipcode,
+      city,
+      active: false,
+    };
+  }
 }

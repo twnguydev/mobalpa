@@ -29,3 +29,13 @@ export interface ICouponCodeResponse {
   discountRate: number;
   discountType: "PERCENTAGE" | "AMOUNT";
 }
+
+export interface IDeliveryMethod {
+  name?: string;
+  price: number;
+  address: string;
+}
+
+export interface IDeliveryResponse {
+  [key: string]: IDeliveryMethod;
+}

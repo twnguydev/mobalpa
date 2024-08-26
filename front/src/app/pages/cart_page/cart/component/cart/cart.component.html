@@ -21,7 +21,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                 </svg>
             </div>
-            <span class="ml-2 text-gray-500">Confirmation de paiement</span>
+            <span class="ml-2 text-gray-500">Confirmation de la commande</span>
         </div>
 
         <div class="flex-auto border-t border-gray-300 mx-4"></div>
@@ -159,8 +159,8 @@
                             calculateTotalCart() | number:'1.2-2' }} €</span>
                     </div>
                     <div class="justify-center mb-3">
-                        <button class="mt-4 md:mt-0 w-full bg-mobalpa-green-alternate text-white p-2 rounded-lg">
-                            Procéder au paiement
+                        <button (click)="confirmOrder()" class="mt-4 md:mt-0 w-full bg-mobalpa-green-alternate text-white p-2 rounded-lg">
+                            Confirmer la commande
                         </button>
                     </div>
                     <div class="flex justify-center gap-4 mt-4">
