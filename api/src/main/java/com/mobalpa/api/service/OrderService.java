@@ -10,11 +10,14 @@ import com.mobalpa.api.dto.catalogue.ColorDTO;
 import com.mobalpa.api.model.Invoice;
 import com.mobalpa.api.model.Order;
 import com.mobalpa.api.model.User;
+import com.mobalpa.api.model.Visitor;
 import com.mobalpa.api.model.Payment;
+import com.mobalpa.api.model.Person;
 import com.mobalpa.api.model.OrderItem;
 import com.mobalpa.api.repository.OrderRepository;
 import com.mobalpa.api.repository.PaymentRepository;
 import com.mobalpa.api.repository.UserRepository;
+import com.mobalpa.api.repository.VisitorRepository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,6 +61,9 @@ public class OrderService {
 
   @Autowired
   private UserRepository userRepository;
+
+  @Autowired
+  private VisitorRepository visitorRepository;
 
   @Autowired
   private PaymentRepository paymentRepository;
@@ -159,8 +165,10 @@ public class OrderService {
 
   @Transactional
   public ParcelDTO processOrder(OrderRequestDTO orderRequestDTO) {
-    User user = userRepository.findById(orderRequestDTO.getUserUuid())
-        .orElseThrow(() -> new RuntimeException("User not found"));
+    Person person = userRepository.findById(orderRequestDTO.getUserUuid())
+        .<Person>map(u -> u)
+        .orElseGet(() -> visitorRepository.findById(orderRequestDTO.getUserUuid())
+            .orElseThrow(() -> new RuntimeException("User or Visitor not found")));
 
     Payment payment = paymentRepository.findById(orderRequestDTO.getPaymentUuid())
         .orElseThrow(() -> new RuntimeException("Payment not found"));
@@ -177,7 +185,7 @@ public class OrderService {
 
     Order order = createOrder(orderRequestDTO);
 
-    ParcelDTO delivery = deliveryService.processDelivery(orderRequestDTO, order, depot, user);
+    ParcelDTO delivery = deliveryService.processDelivery(orderRequestDTO, order, depot, person);
 
     order.setDeliveryNumbers(new ArrayList<>(List.of(delivery.getShipment().getDeliveryNumber())));
     Order createdOrder = orderRepository.save(order);
@@ -186,7 +194,7 @@ public class OrderService {
       throw new RuntimeException("Order creation failed");
     }
 
-    sendOrderConfirmationEmail(user, createdOrder);
+    sendOrderConfirmationEmail(person, createdOrder);
 
     return delivery;
   }
@@ -211,10 +219,10 @@ public class OrderService {
       orderRequestDTO.setReduction(0.0);
     }
 
-    Optional<User> user = userRepository.findById(orderRequestDTO.getUserUuid());
-    if (user.isEmpty()) {
-      throw new RuntimeException("User not found");
-    }
+    Person person = userRepository.findById(orderRequestDTO.getUserUuid())
+        .<Person>map(u -> u)
+        .orElseGet(() -> visitorRepository.findById(orderRequestDTO.getUserUuid())
+            .orElseThrow(() -> new RuntimeException("User or Visitor not found")));
 
     Optional<Payment> payment = paymentRepository.findById(orderRequestDTO.getPaymentUuid());
     if (payment.isEmpty()) {
@@ -234,14 +242,18 @@ public class OrderService {
     }
 
     Order order = new Order();
-    order.setUser(user.get());
+    if (person instanceof User) {
+      order.setUser((User) person);
+    } else {
+      order.setVisitor((Visitor) person);
+    }
     order.setPayment(payment.get());
     order.setDeliveryAddress(orderRequestDTO.getDeliveryAddress());
     order.setReduction(orderRequestDTO.getReduction());
     order.setStatus("PENDING");
     order.setTotalHt(orderRequestDTO.getTotalHt());
     order.setDeliveryFees(depot.get().getPrice());
-    order.setDeliveryAddress(user.get().getAddress() + " " + user.get().getZipcode() + " " + user.get().getCity());
+    order.setDeliveryAddress(person.getAddress() + " " + person.getZipcode() + " " + person.getCity());
     order.setDeliveryMethod(orderRequestDTO.getDeliveryMethod());
     order.setVat(orderRequestDTO.getTotalHt() * VAT);
     order.setTotalTtc(order.getTotalHt() + order.getVat() + order.getDeliveryFees() - order.getReduction());
@@ -294,22 +306,22 @@ public class OrderService {
     return orderRepository.save(order);
   }
 
-  public void sendOrderConfirmationEmail(User user, Order order) {
+  public void sendOrderConfirmationEmail(Person person, Order order) {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
     String formattedIssueDate = order.getCreatedAt().format(formatter);
-    
+
     try {
-      Invoice invoice = invoiceService.createInvoice(order, user);
+      Invoice invoice = invoiceService.createInvoice(order, person);
       byte[] invoicePdf = invoiceService.generateInvoicePdf(invoice);
       invoiceService.saveInvoicePdfToFile(invoice, invoicePdf);
 
       emailService.sendHtmlEmail(
-          user.getEmail(),
+          person.getEmail(),
           "Confirmation de votre commande - Mobalpa",
           "orderConfirmationTemplate.html",
           invoicePdf,
           "invoice_" + invoice.getInvoiceNumber() + ".pdf",
-          "${user.firstName}", user.getFirstname(),
+          "${user.firstName}", person.getFirstname(),
           "${orderNumber}", order.getUuid().toString(),
           "${orderDate}", formattedIssueDate,
           "${deliveryAddress}", order.getDeliveryAddress(),

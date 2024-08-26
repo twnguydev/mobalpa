@@ -37,6 +37,10 @@ public class Invoice {
   private Order order;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "user_uuid", nullable = false)
+  @JoinColumn(name = "user_uuid", nullable = true)
   private User user;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "visitor_uuid", nullable = true)
+  private Visitor visitor;
 }

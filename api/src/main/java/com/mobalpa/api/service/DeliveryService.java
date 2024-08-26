@@ -6,7 +6,7 @@ import com.mobalpa.api.dto.catalogue.ColorDTO;
 import com.mobalpa.api.dto.catalogue.ProductDTO;
 import com.mobalpa.api.dto.delivery.*;
 import com.mobalpa.api.model.Order;
-import com.mobalpa.api.model.User;
+import com.mobalpa.api.model.Person;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,9 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.http.*;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -104,7 +102,7 @@ public class DeliveryService {
     return Optional.ofNullable(response.getBody());
   }
 
-  public ParcelDTO processDelivery(OrderRequestDTO orderRequestDTO, Order order, DepotDTO depot, User user) {
+  public ParcelDTO processDelivery(OrderRequestDTO orderRequestDTO, Order order, DepotDTO depot, Person user) {
     DeliveryRequestDTO deliveryRequest = new DeliveryRequestDTO();
     deliveryRequest.setOrderUuid(order.getUuid());
     deliveryRequest.setParcelItems(orderRequestDTO.getItems().stream().map(itemDTO -> {

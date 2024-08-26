@@ -6,9 +6,9 @@ import { UserService } from '@services/user.service';
 import { OrderService } from '@services/order.service';
 import { Router } from '@angular/router';
 import { IDeliveryResponse, IDeliveryMethod } from '@interfaces/order.interface';
-import { IOrder } from '@interfaces/order.interface';
+import { IOrder, IOrderItem } from '@interfaces/order.interface';
 import { IPayment } from '@interfaces/payment.interface';
-import { IUser } from '@interfaces/user.interface';
+import { IUser, IVisitor } from '@interfaces/user.interface';
 
 @Component({
   selector: 'app-confirm-order',
@@ -23,8 +23,8 @@ export class ConfirmOrderComponent implements OnInit {
   order: IOrder | null = null;
   user: IUser | null = null;
 
-  successMessage: { payment: string, address: string } | null = null;
-  errorMessage: { payment: string, address: string } | null = null;
+  successMessage: { payment: string, address: string, order: string } | null = null;
+  errorMessage: { payment: string, address: string, order: string } | null = null;
 
   newPayment: IPayment = {} as IPayment;
   isPaymentFormVisible: boolean = false;
@@ -37,7 +37,8 @@ export class ConfirmOrderComponent implements OnInit {
   userPaymentMethods: IPayment[] = [];
   selectedPaymentMethod: IPayment | null = null;
   tempAddress = { line1: '', city: '', postalCode: '' };
-  tempPaymentMethod: IPayment = { uuid: '', userUuid: '', cardHolder: '', paymentMethod: 'CREDIT_CARD', cardNumber: '', expirationDate: '', cvv: '' };
+  tempPaymentMethod: IPayment = {} as IPayment;
+  tempVisitor: IVisitor = {} as IVisitor;
 
   constructor(
     private authService: AuthService,
@@ -80,41 +81,179 @@ export class ConfirmOrderComponent implements OnInit {
   loadDeliveryOptions(): void {
     this.orderService.getDeliveryOptions().subscribe({
       next: (options: IDeliveryResponse) => {
+        for (const key in options) {
+          if (options.hasOwnProperty(key)) {
+            options[key].name = key;
+          }
+        }
+
         this.deliveryOptions = options;
       },
       error: (err) => {
         console.error('Failed to load delivery options', err);
       },
     });
-  }
+  }  
 
   loadOrderDetails(): void {
     this.order = this.orderService.getTempOrder();
     console.log('Order loaded', this.order);
   }
 
-  processToPayment(): void {
-    if (this.selectedOption) {
-      this.selectedDelivery = this.deliveryOptions[this.selectedOption] || null;
-
-      if (this.selectedDelivery) {
-        localStorage.setItem('selectedDelivery', JSON.stringify({
-          name: this.selectedOption,
-          ...this.selectedDelivery,
-        }));
-
-        if (!this.isUserLoggedIn && (!this.tempAddress.line1 || !this.tempAddress.city || !this.tempAddress.postalCode)) {
-          console.error('Adresse invalide pour le visiteur');
-          return;
+  processOrder(): void {
+    if (!this.authService.user) {
+        if (!this.order ||
+            !this.tempVisitor.email ||
+            !this.tempVisitor.firstname ||
+            !this.tempVisitor.lastname ||
+            !this.tempVisitor.phoneNumber ||
+            !this.tempAddress.line1 ||
+            !this.tempAddress.city ||
+            !this.tempAddress.postalCode ||
+            !this.selectedOption ||
+            !this.deliveryOptions[this.selectedOption] ||
+            !this.tempPaymentMethod) {
+            this.errorMessage = {
+                payment: '',
+                address: '',
+                order: 'Veuillez renseigner toutes les informations nécessaires avant de passer la commande.'
+            };
+            console.log('Informations manquantes pour un visiteur.');
+            console.table({
+                visitor: this.tempVisitor,
+                address: this.tempAddress,
+                selectedOption: this.selectedOption,
+                deliveryOptions: this.deliveryOptions,
+                selectedPaymentMethod: this.selectedPaymentMethod
+            });
+            return;
         }
 
-        this.router.navigate(['/commande/paiement']);
-      } else {
-        console.error('Selected delivery option not found');
-      }
+        const visitor: IVisitor = {
+            email: this.tempVisitor.email,
+            firstname: this.tempVisitor.firstname,
+            lastname: this.tempVisitor.lastname,
+            phoneNumber: this.tempVisitor.phoneNumber,
+            address: this.tempAddress.line1,
+            city: this.tempAddress.city,
+            zipcode: this.tempAddress.postalCode
+        };
+
+        this.authService.signupVisitor(visitor).subscribe(
+            (user) => {
+                this.tempVisitor = user;
+                console.log('Visiteur enregistré :', user);
+
+                if (this.tempPaymentMethod && this.tempPaymentMethod.expirationDate) {
+                  const [year, month] = this.tempPaymentMethod.expirationDate.split('-');
+                  const formattedDate = `${year}-${month}-01T00:00:00`;
+                  this.tempPaymentMethod.expirationDate = formattedDate;
+                }                
+
+                const visitorPayment: IPayment = {
+                    ...this.tempPaymentMethod,
+                    userUuid: this.tempVisitor.uuid || '',
+                    cardHolder: `${this.tempVisitor.firstname} ${this.tempVisitor.lastname}`,
+                    paymentMethod: 'CREDIT_CARD'
+                };
+
+                this.userService.addPaymentVisitor(this.tempVisitor.uuid || '', visitorPayment).subscribe(
+                    (payment) => {
+                        console.log('Méthode de paiement ajoutée pour le visiteur :', payment);
+
+                        if (!this.order || !this.selectedOption) return;
+                        const deliveryMethod = this.deliveryOptions[this.selectedOption];
+
+                        this.createOrder(
+                            deliveryMethod,
+                            `${visitor.address}, ${visitor.zipcode} ${visitor.city}`,
+                            payment.uuid || '',
+                            user.uuid || '',
+                            this.order.reduction,
+                            this.order.totalHt,
+                            this.order.items
+                        );
+                    },
+                    (error) => {
+                        console.error('Échec de l\'ajout de la méthode de paiement pour le visiteur :', error);
+                        this.errorMessage = {
+                            payment: 'Erreur lors de l\'ajout de la méthode de paiement.',
+                            address: '',
+                            order: ''
+                        };
+                    }
+                );
+            },
+            (error) => {
+                console.error('Erreur lors de l\'inscription du visiteur :', error);
+                this.errorMessage = {
+                    payment: '',
+                    address: '',
+                    order: 'Erreur lors de l\'inscription du visiteur.'
+                };
+            }
+        );
     } else {
-      console.error('No delivery option selected');
+        if (!this.order ||
+            !this.selectedOption ||
+            !this.deliveryOptions[this.selectedOption] ||
+            !this.selectedPaymentMethod) {
+            this.errorMessage = {
+                payment: '',
+                address: '',
+                order: 'Veuillez renseigner toutes les informations nécessaires avant de passer la commande.'
+            };
+            return;
+        }
+
+        this.createOrder(
+            this.deliveryOptions[this.selectedOption],
+            `${this.userAddress?.line1}, ${this.userAddress?.postalCode} ${this.userAddress?.city}`,
+            this.selectedPaymentMethod.uuid,
+            this.authService.user.uuid,
+            this.order.reduction,
+            this.order.totalHt,
+            this.order.items
+        );
     }
+}
+
+  createOrder(
+    deliveryMethod: IDeliveryMethod,
+    deliveryAddress: string,
+    paymentUuid: string,
+    userUuid: string,
+    reduction: number,
+    totalHt: number,
+    items: IOrderItem[]
+  ): void {
+    const orderDetails: IOrder = {
+      deliveryMethod: deliveryMethod.name,
+      deliveryAddress,
+      paymentUuid,
+      userUuid,
+      reduction,
+      totalHt,
+      items,
+    };
+
+    console.log('Creating order:', orderDetails);
+
+    this.orderService.createOrder(orderDetails).subscribe(
+      (order) => {
+        this.orderService.saveTempOrder(order);
+        console.log('Order created:', order);
+        this.router.navigate(['/commande/details']);
+      },
+      (error) => {
+        console.error('Failed to create order:', error);
+        this.errorMessage = {
+          payment: '',
+          address: '',
+          order: 'Erreur lors de la création de la commande.'
+        };
+      }
+    );
   }
 
   addPayment(): void {
@@ -122,7 +261,7 @@ export class ConfirmOrderComponent implements OnInit {
     if (uuid) {
       if (this.newPayment.paymentMethod === 'CREDIT_CARD') {
         if (!this.newPayment.cardHolder || !this.newPayment.cardNumber || !this.newPayment.expirationDate || !this.newPayment.cvv) {
-          this.errorMessage = { payment: 'Veuillez remplir tous les champs de la carte de crédit.', address: '' };
+          this.errorMessage = { payment: 'Veuillez remplir tous les champs de la carte de crédit.', address: '', order: '' };
           return;
         }
 
@@ -132,7 +271,7 @@ export class ConfirmOrderComponent implements OnInit {
 
       } else if (this.newPayment.paymentMethod === 'PAYPAL') {
         if (!this.newPayment.paypalEmail) {
-          this.errorMessage = { payment: 'Veuillez renseigner l\'adresse email PayPal.', address: '' };
+          this.errorMessage = { payment: 'Veuillez renseigner l\'adresse email PayPal.', address: '', order: '' };
           return;
         }
       }
@@ -142,12 +281,12 @@ export class ConfirmOrderComponent implements OnInit {
         payment => {
           this.userPaymentMethods.push(payment);
           this.newPayment = {} as IPayment;
-          this.successMessage = { payment: 'Méthode de paiement ajoutée avec succès!', address: '' };
+          this.successMessage = { payment: 'Méthode de paiement ajoutée avec succès!', address: '', order: '' };
           this.isPaymentFormVisible = false;
         },
         error => {
           console.error('Erreur lors de l\'ajout de la méthode de paiement:', error);
-          this.errorMessage = { payment: 'Erreur lors de l\'ajout de la méthode de paiement.', address: '' };
+          this.errorMessage = { payment: 'Erreur lors de l\'ajout de la méthode de paiement.', address: '', order: '' };
         }
       );
     }
@@ -166,7 +305,7 @@ export class ConfirmOrderComponent implements OnInit {
     if (!uuid) return;
 
     if (!this.newAddress.line1 || !this.newAddress.city || !this.newAddress.postalCode) {
-      this.errorMessage = { address: 'Veuillez remplir tous les champs de l\'adresse.', payment: '' };
+      this.errorMessage = { address: 'Veuillez remplir tous les champs de l\'adresse.', payment: '', order: '' };
       return;
     }
 
@@ -183,7 +322,7 @@ export class ConfirmOrderComponent implements OnInit {
 
     this.userService.update(uuid, userUpdates).subscribe(
       (updatedUser) => {
-        this.successMessage = { address: 'Modifications enregistrées avec succès!', payment: '' };
+        this.successMessage = { address: 'Modifications enregistrées avec succès!', payment: '', order: '' };
         this.errorMessage = null;
         this.userAddress = {
           line1: this.newAddress.line1,
@@ -195,7 +334,7 @@ export class ConfirmOrderComponent implements OnInit {
         this.authService.setUser(updatedUser);
       },
       (error) => {
-        this.errorMessage = { address: 'Erreur lors de l\'enregistrement des modifications.', payment: '' };
+        this.errorMessage = { address: 'Erreur lors de l\'enregistrement des modifications.', payment: '', order: '' };
         this.successMessage = null;
       }
     );
@@ -232,6 +371,4 @@ export class ConfirmOrderComponent implements OnInit {
   changePaymentMethod(): void {
     this.resetPaymentForm();
   }
-
-
 }

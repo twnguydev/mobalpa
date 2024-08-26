@@ -2,7 +2,9 @@ package com.mobalpa.api.service;
 
 import com.mobalpa.api.model.Invoice;
 import com.mobalpa.api.model.Order;
+import com.mobalpa.api.model.Person;
 import com.mobalpa.api.model.User;
+import com.mobalpa.api.model.Visitor;
 import com.mobalpa.api.repository.InvoiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +28,7 @@ public class InvoiceService {
   @Autowired
   private InvoiceRepository invoiceRepository;
 
-  public Invoice createInvoice(Order order, User user) {
+  public Invoice createInvoice(Order order, Person person) {
     Invoice invoice = new Invoice();
     invoice.setInvoiceNumber(generateInvoiceNumber());
     invoice.setIssueDate(LocalDateTime.now());
@@ -34,7 +36,13 @@ public class InvoiceService {
     invoice.setVatAmount(order.getVat());
     invoice.setAmountExcludingTax(order.getTotalHt());
     invoice.setOrder(order);
-    invoice.setUser(user);
+
+    if (person instanceof User) {
+      invoice.setUser((User) person);
+    } else if (person instanceof Visitor) {
+      invoice.setVisitor((Visitor) person);
+    }
+
     Invoice createdInvoice = invoiceRepository.save(invoice);
 
     if (createdInvoice == null) {

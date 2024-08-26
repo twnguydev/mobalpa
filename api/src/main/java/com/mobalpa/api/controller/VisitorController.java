@@ -39,6 +39,11 @@ public class VisitorController {
     }
   }
 
+  @GetMapping
+  public ResponseEntity<?> getAllVisitors() {
+    return ResponseEntity.ok(visitorService.getAllVisitors());
+  }
+
   @PostMapping
   public ResponseEntity<?> createVisitor(@RequestBody Visitor visitor) {
     try {

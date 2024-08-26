@@ -33,7 +33,7 @@ export interface IVisitor {
   address?: string | null;
   zipcode?: string | null;
   city?: string | null;
-  active: boolean;
+  active?: boolean;
   createdAt?: string;
   payments?: IPayment[];
   orders?: IOrder[];
