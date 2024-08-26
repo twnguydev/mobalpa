@@ -219,6 +219,14 @@
             <div *ngIf="!isUserLoggedIn">
               <div class="bg-gray-100 px-5 py-4 rounded-3xl m-2 ml-0">
                 <h3 class="text-xl font-bold mb-4">Adresse de livraison</h3>
+                <input type="text" placeholder="Nom" [(ngModel)]="tempVisitor.lastname"
+                  class="font-gotham text-lg px-4 py-2 bg-white rounded-lg w-full mb-4">
+                <input type="text" placeholder="Prénom" [(ngModel)]="tempVisitor.firstname"
+                  class="font-gotham text-lg px-4 py-2 bg-white rounded-lg w-full mb-4">
+                <input type="text" placeholder="Adresse e-mail" [(ngModel)]="tempVisitor.email"
+                  class="font-gotham text-lg px-4 py-2 bg-white rounded-lg w-full mb-4">
+                <input type="text" placeholder="Numéro de téléphone" [(ngModel)]="tempVisitor.phoneNumber"
+                  class="font-gotham text-lg px-4 py-2 bg-white rounded-lg w-full mb-4">
                 <input type="text" placeholder="Adresse de livraison" [(ngModel)]="tempAddress.line1"
                   class="font-gotham text-lg px-4 py-2 bg-white rounded-lg w-full mb-4">
                 <input type="text" placeholder="Ville" [(ngModel)]="tempAddress.city"
@@ -231,8 +239,7 @@
                 <h3 class="text-xl font-bold mb-4">Moyen de paiement</h3>
                 <input type="text" placeholder="Numéro de carte" [(ngModel)]="tempPaymentMethod.cardNumber"
                   class="font-gotham text-lg px-4 py-2 bg-white rounded-lg w-full mb-4">
-                <input type="text" placeholder="Date d'expiration (MM/AAAA)"
-                  [(ngModel)]="tempPaymentMethod.expirationDate"
+                <input type="month" placeholder="Date d'expiration" [(ngModel)]="tempPaymentMethod.expirationDate"
                   class="font-gotham text-lg px-4 py-2 bg-white rounded-lg w-full mb-4">
                 <input type="text" placeholder="Code CVC" [(ngModel)]="tempPaymentMethod.cvv"
                   class="font-gotham text-lg px-4 py-2 bg-white rounded-lg w-full">
@@ -264,12 +271,17 @@
         </div>
         <div class="flex justify-between items-center my-2">
           <span class="text-lg">Montant total</span>
-          <span class="font-gotham text-mobalpa-green text-xl md:text-3xl">{{ order?.totalTtc | number:'1.2-2' }}
-            €</span>
-        </div>
-        <button (click)="processToPayment()" class="w-full bg-mobalpa-green-alternate text-white p-2 rounded-lg mt-5">
+          <span *ngIf="!selectedOption" class="font-gotham text-mobalpa-green text-xl md:text-3xl">
+            {{ order?.totalTtc | number:'1.2-2' }} €
+          </span>
+          <span *ngIf="selectedOption && order && order.totalTtc" class="font-gotham text-mobalpa-green text-xl md:text-3xl">
+            {{ (order.totalTtc + (deliveryOptions[selectedOption].price || 0)) | number:'1.2-2' }} €
+          </span>
+        </div>        
+        <button (click)="processOrder()" class="w-full bg-mobalpa-green-alternate text-white p-2 rounded-lg mt-5">
           Procéder au paiement
         </button>
+        <p *ngIf="errorMessage?.order" class="text-xs text-custom-orange mt-3">{{ errorMessage?.order }}</p>
       </div>
     </div>
   </div>

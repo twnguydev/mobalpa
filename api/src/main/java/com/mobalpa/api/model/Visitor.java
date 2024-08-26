@@ -15,7 +15,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "visitor")
 @Data
-public class Visitor {
+public class Visitor implements Person {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)

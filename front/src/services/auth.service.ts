@@ -4,7 +4,7 @@ import { Observable, BehaviorSubject, of, throwError } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { catchError, map, switchMap } from 'rxjs/operators';
-import type { IUser } from '@interfaces/user.interface';
+import type { IUser, IVisitor } from '@interfaces/user.interface';
 import { environment } from '../environments/environment';
 
 @Injectable({
@@ -12,6 +12,7 @@ import { environment } from '../environments/environment';
 })
 export class AuthService {
   private apiUrl: string = `${environment.apiUrl}/users`;
+  private visitorUrl: string = `${environment.apiUrl}/visitors`;
   public user: IUser | null = null;
   private tokenExpirationTimeout: any;
 
@@ -250,19 +251,8 @@ export class AuthService {
     return this.http.post<any>(`${this.apiUrl}/reset-password?token=${token}`, { newPassword });
   }
 
-  generateVisitorUser(email: string, firstname: string, lastname: string, address: string, zipcode: string, city: string): IUser {
-    return {
-      uuid: 'visitor',
-      firstname,
-      lastname,
-      email,
-      password: '',
-      phoneNumber: '',
-      birthdate: '',
-      address,
-      zipcode,
-      city,
-      active: false,
-    };
+  signupVisitor(visitor: IVisitor): Observable<IVisitor> {
+    const headers: HttpHeaders = this.getXApiKeyHeaders();
+    return this.http.post<IVisitor>(`${this.visitorUrl}`, visitor, { headers });
   }
 }

@@ -114,7 +114,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     );
   }
 
-  downloadInvoice(orderUuid: string): void {
+  downloadInvoice(orderUuid: string | undefined): void {
+    if (!orderUuid) return;
     this.orderService.getInvoiceByOrderUuid(orderUuid).subscribe(
       (blob: Blob) => {
         const url = window.URL.createObjectURL(blob);

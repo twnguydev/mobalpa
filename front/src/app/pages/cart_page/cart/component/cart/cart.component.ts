@@ -170,7 +170,7 @@ export class CartComponent {
 
     const order: IOrder = {
       uuid: '',
-      userId: this.authService.user?.uuid ?? '',
+      userUuid: this.authService.user?.uuid ?? '',
       items: this.cart.map(item => ({
         productUuid: item.productUuid,
         quantity: item.quantity,

@@ -12,6 +12,7 @@ import { environment } from '@env/environment';
 })
 export class UserService {
   private apiUrl: string = `${environment.apiUrl}/users`;
+  private visitorUrl: string = `${environment.apiUrl}/visitors`;
   private currentUserSubject = new BehaviorSubject<IUser | null>(null);
   currentUser$ = this.currentUserSubject.asObservable();
 
@@ -72,6 +73,12 @@ export class UserService {
     if (!headers) return new Observable<IPayment>();
     return this.http.post<IPayment>(`${this.apiUrl}/${uuid}/payments`, payment, { headers });
   }
+
+  addPaymentVisitor(uuid: string, payment: IPayment): Observable<IPayment> {
+    const headers: HttpHeaders | null = this.authService.getXApiKeyHeaders();
+    if (!headers) return new Observable<IPayment>();
+    return this.http.post<IPayment>(`${this.visitorUrl}/${uuid}/payments`, payment, { headers });
+  }
   
   deletePayment(uuid: string, paymentId: string): Observable<void> {
     const headers: HttpHeaders | null = this.authService.getAuthHeaders();
@@ -121,5 +128,5 @@ export class UserService {
     }
   
     localStorage.setItem('cart', JSON.stringify(cart));
-  }  
+  }
 }

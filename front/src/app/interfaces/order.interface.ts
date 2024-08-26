@@ -1,21 +1,21 @@
 import { IProduct } from './product.interface';
 
 export interface IOrder {
-  uuid: string;
-  userId: string;
+  uuid?: string | undefined;
+  userUuid: string | undefined;
   items: IOrderItem[];
   deliveryMethod?: string;
-  vat: number;
+  vat?: number;
   reduction: number;
   taxDelivery?: number;
   warranty?: string;
   totalHt: number;
-  totalTtc: number;
+  totalTtc?: number;
   createdAt?: string;
-  status: string;
-  deliveryFees: number;
+  status?: string;
+  deliveryFees?: number;
   deliveryAddress: string;
-  paymentId?: string;
+  paymentUuid?: string;
   invoice?: Blob | null;
 }
 
