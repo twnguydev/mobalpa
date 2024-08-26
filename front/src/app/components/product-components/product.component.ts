@@ -57,6 +57,7 @@ export class ProductComponent implements OnInit {
     const categoryUri: string | null = this.route.snapshot.paramMap.get('categoryUri');
     const subcategoryUri: string | null = this.route.snapshot.paramMap.get('subcategoryUri');
     const productUri: string | null = this.route.snapshot.paramMap.get('productUri');
+    console.log("jhgf :" + this.product)
 
     if (categoryUri && subcategoryUri && productUri) {
       this.productService.getProductByUri(categoryUri, subcategoryUri, productUri).subscribe(
