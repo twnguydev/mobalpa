@@ -16,11 +16,11 @@ public class Satisfaction {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID uuid;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "user_uuid", nullable = true)
     private User userUuid;
 
-    @Column(name = "target_uuid", nullable = false)
+    @Column(name = "target_uuid")
     private UUID targetUuid;
 
     @Column(name = "target_type", nullable = false)
