@@ -37,14 +37,23 @@
         </div>
     </div>
 
-    <div class="bg-mobalpa-green-alternate p-6 rounded-3xl mb-8 text-white w-full md:w-1/2">
-        <p class="text-lg mb-4">Vous bénéficiez de la <span class="font-bold">livraison gratuite</span> si votre panier
-            atteint <span class="font-bold">100 €</span> !</p>
-        <input type="range" min="0" max="100" [value]="calculateSubtotal()" class="w-full bg-white" disabled>
-        <p class="text-lg mt-2 text-gray-300">
-            {{ calculateSubtotal() | number:'1.2-2' }} € / 100 €
-        </p>
-    </div>
+    <div class="flex flex-col md:flex-row gap-6">
+        <!-- Conteneur de livraison gratuite existant -->
+        <div class="bg-mobalpa-green-alternate p-6 rounded-3xl mb-8 text-white">
+            <p class="text-lg mb-4">Vous bénéficiez de la <span class="font-bold">livraison gratuite</span> si votre panier
+                atteint <span class="font-bold">100 €</span> !</p>
+            <input type="range" min="0" max="100" [value]="calculateSubtotal()" class="w-full bg-white" disabled>
+            <p class="text-lg mt-2 text-gray-300">
+                {{ calculateSubtotal() | number:'1.2-2' }} € / 100 €
+            </p>
+        </div>
+
+        <div class="bg-mobalpa-green p-6 rounded-3xl mb-8 text-white flex flex-col justify-center">
+            <p class="text-lg mb-4">Tous nos produits sont couverts par une <span class="font-bold">garantie de 7 ans</span> à compter
+            de la date de votre commande.</p>
+            <p class="text-lg">Pour plus d'informations, consultez notre <a href="/support" class="underline">support</a>.</p>
+        </div>
+    </div>    
 
     <div class="flex flex-col md:flex md:flex-row md:justify-between">
         <div class="w-full">
@@ -157,9 +166,6 @@
                         <span class="text-lg">Total</span>
                         <span class="font-gotham text-mobalpa-green w-auto my-5 text-xl md:text-3xl">{{
                             calculateTotalCart() | number:'1.2-2' }} €</span>
-                    </div>
-                    <div >
-                        <p class="text-md  mb-2">Vos produits sont éligible à la garantie de 7 ans</p>
                     </div>
                     <div class="justify-center mb-3">
                         <button (click)="confirmOrder()" class="mt-4 md:mt-0 w-full bg-mobalpa-green-alternate text-white p-2 rounded-lg">

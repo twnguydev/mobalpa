@@ -55,6 +55,12 @@ export class AuthService {
     );
   }
 
+  setUser(user: IUser): void {
+    this.user = user;
+    this.currentUserSubject.next(user);
+    localStorage.setItem('currentUser', JSON.stringify(user));
+  }
+
   getCurrentUser(): Observable<IUser | null> {
     return this.currentUser$;
   }

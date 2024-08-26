@@ -234,4 +234,21 @@ export class ProfileComponent implements OnInit, OnDestroy {
   togglePaymentForm(): void {
     this.isPaymentFormVisible = !this.isPaymentFormVisible;
   }
+
+  resetPaymentForm(): void {
+    this.newPayment = {
+      paymentMethod: this.newPayment.paymentMethod,
+      cardHolder: '',
+      cardNumber: '',
+      expirationDate: '',
+      cvv: '',
+      paypalEmail: ''
+    } as IPayment;
+    this.successMessage = null;
+    this.errorMessage = null;
+  }
+
+  changePaymentMethod(): void {
+    this.resetPaymentForm();
+  }
 }

@@ -36,20 +36,24 @@ export class CartComponent {
 
   ngOnInit(): void {
     this.cart = this.userService.getCartFromLocalstorage();
-    // console.log('Cart loaded', this.cart);
-
+  
     this.cart.forEach(item => {
       item.product.oldPrice = item.product?.price;
-      const maxDiscountRate = this.getMaxDiscountRate(item);
+      const maxDiscountRate = this.getMaxDiscountRate(item) ?? 0;
       item.product.discountRate = maxDiscountRate;
       item.product.newPrice = this.getDiscountedPrice(item.product?.price, maxDiscountRate);
     });
+  
+    console.log('Cart updated with prices', this.cart);
   }
 
   getMaxDiscountRate(item: IWishlistItem): number {
-    return item.product?.campaigns.reduce((maxRate: number, campaign: any) => {
-      return campaign.discountRate > maxRate ? campaign.discountRate : maxRate;
-    }, 0);
+    if (item.product?.campaigns && item.product.campaigns.length > 0) {
+      return item.product.campaigns.reduce((maxRate: number, campaign: any) => {
+        return campaign.discountRate > maxRate ? campaign.discountRate : maxRate;
+      }, 0);
+    }
+    return 0;
   }
 
   getDiscountedPrice(price: number | null, discountRate: number): number {
