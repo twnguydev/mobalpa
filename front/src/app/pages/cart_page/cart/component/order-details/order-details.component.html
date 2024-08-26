@@ -1,0 +1,57 @@
+<div class="container mx-auto px-4 py-8 min-h-screen h-auto">
+  <h1 class="text-3xl md:text-4xl font-bold mb-8 text-mobalpa-green">Récapitulatif de la commande</h1>
+
+  <div class="flex flex-col items-center md:flex-row md:justify-center mb-10 py-4 space-y-4 md:space-y-0 md:space-x-6">
+    <div class="flex items-center">
+      <div class="w-6 h-6 rounded-full bg-mobalpa-green-alternate text-white flex items-center justify-center">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+        </svg>
+      </div>
+      <span class="ml-2">Confirmation du panier</span>
+    </div>
+    <div class="flex-auto border-t border-gray-300"></div>
+    <div class="flex items-center">
+      <div class="w-6 h-6 rounded-full bg-mobalpa-green-alternate text-white flex items-center justify-center">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+        </svg>
+      </div>
+      <span class="ml-2">Confirmation de la commande</span>
+    </div>
+    <div class="flex-auto border-t border-gray-300"></div>
+    <div class="flex items-center">
+      <div class="w-6 h-6 rounded-full bg-mobalpa-green-alternate text-white flex items-center justify-center">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+        </svg>
+      </div>
+      <span class="ml-2">Récapitulatif de la commande</span>
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-4 md:flex-row md:justify-between">
+    <div class="w-full md:w-2/3">
+      <div *ngIf="order" class="bg-gray-100 rounded-3xl p-5">
+        <p class="text-2xl mb-5 text-center">Merci pour votre commande, {{ order.recipientName }} !</p>
+        <p class="text-lg mb-2">Numéro de commande : <strong>{{ order.orderUuid }}</strong></p>
+        <p class="text-lg mb-2">Méthode d'expédition : <strong>{{ order.shippingMethodCheckoutName }}</strong></p>
+        <p class="text-lg mb-2">Adresse de livraison :</p>
+        <p class="ml-4">{{ order.recipientAddress }}</p>
+        <p class="text-lg mt-4">Nous vous remercions d'avoir passé commande chez nous et espérons vous revoir bientôt !</p>
+      </div>
+    </div>
+
+    <div class="w-full md:w-1/3 mt-4 md:mt-0">
+      <div class="bg-gray-100 rounded-3xl p-5">
+        <p class="text-2xl mb-5 text-center">Récapitulatif de la commande</p>
+        <ul>
+          <li *ngFor="let item of order.parcelItems" class="flex justify-between mb-2">
+            <span>{{ item.productUuid }}</span>
+            <span>{{ item.quantity }} x {{ item.price | number: '1.2-2' }} €</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
