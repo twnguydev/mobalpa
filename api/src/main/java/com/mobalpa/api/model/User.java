@@ -26,7 +26,7 @@ import java.util.List;
 @Table(name = "\"user\"")
 @Data
 @EqualsAndHashCode(exclude = {"payments", "orders", "roles", "wishlist", "tickets", "respondedTickets"})
-public class User implements UserDetails {
+public class User implements UserDetails, Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -3,8 +3,7 @@
     <div class="tabs flex flex-wrap border-b mb-6 gap-2 sm:gap-4 md:gap-6 lg:gap-8">
         <div *ngFor="let tab of tabs; let i = index" (click)="selectTab(i)"
             class="tab cursor-pointer text-center flex-1 py-2 px-4 border-b-2 transition-colors duration-300 ease-in-out"
-            [class.border-mobalpa-green]="selectedTab === i"
-            [class.text-mobalpa-green]="selectedTab === i"
+            [class.border-mobalpa-green]="selectedTab === i" [class.text-mobalpa-green]="selectedTab === i"
             [class.text-gray-600]="selectedTab !== i">
             {{ tab.title }}
         </div>
@@ -58,6 +57,9 @@
             <h2 class="text-2xl font-semibold mb-4 text-mobalpa-green">{{ tabs[selectedTab].title }}</h2>
             <div *ngIf="successMessage" class="alert alert-success text-green-500 mb-2">{{ successMessage }}</div>
             <div *ngIf="errorMessage" class="alert alert-danger text-red-500 mb-2">{{ errorMessage }}</div>
+            <div *ngIf="payments.length === 0" class="text-center text-gray-500 mb-5">
+                <p>Aucune méthode de paiement trouvée.</p>
+            </div>
             <div class="space-y-4">
                 <div *ngFor="let payment of payments" class="border p-2 rounded-lg flex justify-between items-center">
                     <span *ngIf="payment.cardHolder && payment.cardNumber" class="flex items-center">
@@ -92,10 +94,12 @@
                             <label for="paymentMethod" class="block text-sm font-medium text-gray-700">Méthode de
                                 paiement</label>
                             <select [(ngModel)]="newPayment.paymentMethod" name="paymentMethod"
-                                class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-mobalpa-green">
+                                class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-mobalpa-green"
+                                (change)="changePaymentMethod()">
                                 <option value="CREDIT_CARD">Carte de crédit</option>
                                 <option value="PAYPAL">Paypal</option>
                             </select>
+
                         </div>
 
                         <!-- Titulaire de la carte -->

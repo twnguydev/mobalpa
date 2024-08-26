@@ -1,11 +1,12 @@
-<div class="">
+<div class=" ">
     <div
         class="h-88 bg-cover bg-center flex justify-center flex-col gap-10 items-center bg-[url('/assets/marbretexturevert.png')]">
-        <p class="text-white text-4xl">En quoi pouvons nous vous aider ?</p>
+
+        <p class="text-white text-2xl md:text-4xl font-gotham">En quoi pouvons nous vous aidez ?</p>
+
         <input class="w-1/2 p-3 rounded-2xl" type="text" [(ngModel)]="searchQuery" placeholder="Posez votre question">
     </div>
-
-    <div class="mx-20 mb-20 flex justify-center">
+    <div class="mx-5 md:mx-20 flex justify-center ">
         <div class="container mx-auto mt-4">
             <div class="tabs flex flex-wrap border-b gap-2 md:justify-center sm:gap-4 md:gap-6 lg:gap-8">
                 <div *ngFor="let tab of tabs; let i = index" (click)="selectTab(i)"
@@ -72,7 +73,6 @@
                         <div *ngIf="submissionSuccess" class="text-green-500 mt-4">
                             Votre demande a été envoyée avec succès !
                         </div>
-
                     </form>
                 </div>
 
@@ -80,10 +80,13 @@
                 <div *ngIf="selectedTab === 2" class="justify-center flex">
                     <form [formGroup]="feedForm" (ngSubmit)="onFeedSubmit()" class="space-y-4 w-full">
                         <div>
-                            <div class="grid grid-cols-10 gap-2">
-                                <label *ngFor="let rating of ratings" class="inline-flex items-center justify-center border border-emerald-green p-2 cursor-pointer" [class.bg-emerald-green]="feedForm.get('rating')?.value === rating" [class.text-white]="feedForm.get('rating')?.value === rating">
+                            <div class="grid grid-cols-5 gap-2">
+                                <label *ngFor="let rating of ratings"
+                                    class="inline-flex items-center justify-center border border-emerald-green p-2 cursor-pointer w-full"
+                                    [class.bg-emerald-green]="feedForm.get('rating')?.value === rating"
+                                    [class.text-white]="feedForm.get('rating')?.value === rating">
                                     <input type="radio" formControlName="rating" [value]="rating" class="hidden">
-                                    <span>{{ rating }}</span>
+                                    <span >{{ rating }}</span>
                                 </label>
                             </div>
                             <div *ngIf="feedForm.get('rating')?.touched && feedForm.get('rating')?.invalid">

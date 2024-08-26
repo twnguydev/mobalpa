@@ -2,23 +2,24 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule, FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { FaqComponent } from './faq/faq.component';
+import { TicketService, TicketRequestDTO } from '@services/ticket.service';
+import { AuthService } from '@services/auth.service';
 
 @Component({
   selector: 'app-support',
   standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule, FaqComponent],
   templateUrl: './support.component.html',
-  styleUrls: ['./support.component.css']  
+  styleUrls: ['./support.component.css']
 })
 export class SupportComponent implements OnInit {
   searchQuery: string = '';
-
 
   supForm!: FormGroup;
   feedForm!: FormGroup;
   submissionSuccess = false;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private ticketService: TicketService, private authService: AuthService) { }
 
   ngOnInit() {
     this.supForm = this.fb.group({
@@ -39,7 +40,7 @@ export class SupportComponent implements OnInit {
     { title: 'Votre avis' }
   ];
 
-  ratings: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  ratings: number[] = [1, 2, 3, 4, 5];
   feedback = {
     rating: 0,
     comment: ''
@@ -52,24 +53,46 @@ export class SupportComponent implements OnInit {
   }
 
   onSubmit() {
-    this.supForm.markAllAsTouched();  // Marque tous les champs comme touchés pour afficher les erreurs
+    this.supForm.markAllAsTouched();
 
     if (this.supForm.invalid) {
       return;
     }
 
-    console.log(this.supForm.value);
-    this.submissionSuccess = true;
+    const userUuid = this.authService.user?.uuid;
 
-    this.supForm.reset();
+    if (!userUuid) {
+      console.error('User UUID not found');
+      return;
+    }
 
-    setTimeout(() => {
-      this.submissionSuccess = false;
-    }, 5000);
+    const ticketRequest: TicketRequestDTO = {
+      userUuid: userUuid,
+      type: this.supForm.get('requestType')?.value,
+      name: this.supForm.get('object')?.value,
+      issue: this.supForm.get('requestContent')?.value,
+    };
+
+    console.log("ticket:" + ticketRequest.userUuid + "token:" );
+
+    this.ticketService.createTicket(ticketRequest).subscribe(
+      response => {
+        console.log('Ticket créé avec succès:', response);
+        this.submissionSuccess = true;
+        this.supForm.reset();
+
+        setTimeout(() => {
+          this.submissionSuccess = false;
+        }, 5000);
+      },
+      error => {
+        console.error('Erreur lors de la création du ticket:', error);
+      }
+    );
   }
 
   onFeedSubmit() {
-    this.feedForm.markAllAsTouched();  
+    this.feedForm.markAllAsTouched();
     if (this.feedForm.invalid) {
       return;
     }
@@ -82,5 +105,4 @@ export class SupportComponent implements OnInit {
       this.submissionSuccess = false;
     }, 5000);
   }
-  
 }
