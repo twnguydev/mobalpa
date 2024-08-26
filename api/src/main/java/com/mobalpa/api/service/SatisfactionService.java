@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.UUID;
+import java.util.List;
 
 @Service
 public class SatisfactionService {
@@ -51,5 +52,9 @@ public class SatisfactionService {
         }
 
         return satisfactionRepository.save(satisfaction);
+    }
+
+    public List<Satisfaction> getAllSatisfaction() {
+        return satisfactionRepository.findAll();
     }
 }

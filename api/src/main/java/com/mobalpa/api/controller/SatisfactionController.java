@@ -4,6 +4,8 @@ import com.mobalpa.api.dto.SatisfactionRequestDTO;
 import com.mobalpa.api.model.Satisfaction;
 import com.mobalpa.api.service.SatisfactionService;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +28,16 @@ public class SatisfactionController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
+    @GetMapping
+    public ResponseEntity<?> getAllSatisfaction() {
+        try {
+            List<Satisfaction> satisfactions = satisfactionService.getAllSatisfaction();
+            return ResponseEntity.ok(satisfactions);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while fetching the satisfaction entries.");
         }
     }
 }
