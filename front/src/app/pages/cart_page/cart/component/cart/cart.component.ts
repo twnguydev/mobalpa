@@ -166,7 +166,10 @@ export class CartComponent {
   }
   
   confirmOrder(): void {
-
+    if (this.cart.length === 0) {
+      this.router.navigate(['/panier']);
+      return;
+    }
 
     const order: IOrder = {
       uuid: '',

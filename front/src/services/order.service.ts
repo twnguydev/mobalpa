@@ -70,6 +70,12 @@ export class OrderService {
     return this.tempOrder;
   }
 
+  clearTempOrder(): void {
+    this.tempOrder = null;
+    localStorage.removeItem('tempOrder');
+    localStorage.removeItem('cart');
+  }
+
   updateTempOrder(updatedFields: Partial<IOrder>): void {
     if (this.tempOrder) {
       this.tempOrder = { ...this.tempOrder, ...updatedFields };

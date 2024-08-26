@@ -18,5 +18,6 @@ export class OrderDetailsComponent {
 
   ngOnInit(): void {
     this.order = this.orderService.getTempOrder();
+    this.orderService.clearTempOrder();
   }
 }
