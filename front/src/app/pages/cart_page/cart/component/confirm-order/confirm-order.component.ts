@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { IDeliveryResponse, IDeliveryMethod } from '@interfaces/order.interface';
 import { IOrder } from '@interfaces/order.interface';
 import { IPayment } from '@interfaces/payment.interface';
+import { IUser } from '@interfaces/user.interface';
 
 @Component({
   selector: 'app-confirm-order',
@@ -20,12 +21,16 @@ export class ConfirmOrderComponent implements OnInit {
   selectedOption: string | null = null;
   selectedDelivery: IDeliveryMethod | null = null;
   order: IOrder | null = null;
+  user: IUser | null = null;
 
-  successMessage: string | null = null;
-  errorMessage: string | null = null;
+  successMessage: { payment: string, address: string } | null = null;
+  errorMessage: { payment: string, address: string } | null = null;
 
   newPayment: IPayment = {} as IPayment;
   isPaymentFormVisible: boolean = false;
+
+  newAddress: { line1: string; city: string; postalCode: string } = { line1: '', city: '', postalCode: '' };
+  isAddressFormVisible: boolean = false;
 
   isUserLoggedIn: boolean = false;
   userAddress: { line1: string; city: string; postalCode: string } | null = null;
@@ -39,7 +44,7 @@ export class ConfirmOrderComponent implements OnInit {
     private userService: UserService,
     private orderService: OrderService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadUserDetails();
@@ -64,6 +69,7 @@ export class ConfirmOrderComponent implements OnInit {
           console.error('Failed to load user payment methods', err);
         },
       });
+      this.user = user;
 
       console.log('User details loaded', user);
       console.log('User address', this.userAddress);
@@ -116,7 +122,7 @@ export class ConfirmOrderComponent implements OnInit {
     if (uuid) {
       if (this.newPayment.paymentMethod === 'CREDIT_CARD') {
         if (!this.newPayment.cardHolder || !this.newPayment.cardNumber || !this.newPayment.expirationDate || !this.newPayment.cvv) {
-          this.errorMessage = 'Veuillez remplir tous les champs de la carte de crédit.';
+          this.errorMessage = { payment: 'Veuillez remplir tous les champs de la carte de crédit.', address: '' };
           return;
         }
 
@@ -126,7 +132,7 @@ export class ConfirmOrderComponent implements OnInit {
 
       } else if (this.newPayment.paymentMethod === 'PAYPAL') {
         if (!this.newPayment.paypalEmail) {
-          this.errorMessage = 'Veuillez entrer votre adresse email PayPal.';
+          this.errorMessage = { payment: 'Veuillez renseigner l\'adresse email PayPal.', address: '' };
           return;
         }
       }
@@ -136,15 +142,63 @@ export class ConfirmOrderComponent implements OnInit {
         payment => {
           this.userPaymentMethods.push(payment);
           this.newPayment = {} as IPayment;
-          this.successMessage = 'Méthode de paiement ajoutée avec succès!';
+          this.successMessage = { payment: 'Méthode de paiement ajoutée avec succès!', address: '' };
           this.isPaymentFormVisible = false;
         },
         error => {
           console.error('Erreur lors de l\'ajout de la méthode de paiement:', error);
-          this.errorMessage = 'Erreur lors de l\'ajout de la méthode de paiement.';
+          this.errorMessage = { payment: 'Erreur lors de l\'ajout de la méthode de paiement.', address: '' };
         }
       );
     }
+  }
+
+  toggleAddressForm(): void {
+    this.isAddressFormVisible = !this.isAddressFormVisible;
+    this.successMessage = null;
+    this.errorMessage = null;
+  }
+
+  addAddress(): void {
+    const user = this.authService.user;
+    const uuid = user?.uuid;
+
+    if (!uuid) return;
+
+    if (!this.newAddress.line1 || !this.newAddress.city || !this.newAddress.postalCode) {
+      this.errorMessage = { address: 'Veuillez remplir tous les champs de l\'adresse.', payment: '' };
+      return;
+    }
+
+    const userUpdates: Partial<IUser> = {
+      firstname: user.firstname,
+      lastname: user.lastname,
+      email: user.email,
+      phoneNumber: user.phoneNumber,
+      birthdate: user.birthdate,
+      address: this.newAddress.line1,
+      city: this.newAddress.city,
+      zipcode: this.newAddress.postalCode
+    };
+
+    this.userService.update(uuid, userUpdates).subscribe(
+      (updatedUser) => {
+        this.successMessage = { address: 'Modifications enregistrées avec succès!', payment: '' };
+        this.errorMessage = null;
+        this.userAddress = {
+          line1: this.newAddress.line1,
+          city: this.newAddress.city,
+          postalCode: this.newAddress.postalCode
+        };
+        this.newAddress = { line1: '', city: '', postalCode: '' };
+        this.isAddressFormVisible = false;
+        this.authService.setUser(updatedUser);
+      },
+      (error) => {
+        this.errorMessage = { address: 'Erreur lors de l\'enregistrement des modifications.', payment: '' };
+        this.successMessage = null;
+      }
+    );
   }
 
   choosePayment(paymentId: string): void {
@@ -157,5 +211,27 @@ export class ConfirmOrderComponent implements OnInit {
 
   togglePaymentForm(): void {
     this.isPaymentFormVisible = !this.isPaymentFormVisible;
+    this.newPayment = {} as IPayment;
+    this.successMessage = null;
+    this.errorMessage = null;
   }
+
+  resetPaymentForm(): void {
+    this.newPayment = {
+      paymentMethod: this.newPayment.paymentMethod,
+      cardHolder: '',
+      cardNumber: '',
+      expirationDate: '',
+      cvv: '',
+      paypalEmail: ''
+    } as IPayment;
+    this.successMessage = null;
+    this.errorMessage = null;
+  }
+
+  changePaymentMethod(): void {
+    this.resetPaymentForm();
+  }
+
+
 }
