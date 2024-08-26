@@ -13,7 +13,6 @@ import { ProductComponent } from '@components/product-components/product.compone
 import { ConfirmOrderComponent } from '@pages/cart_page/cart/component/confirm-order/confirm-order.component';
 // import { PaymentComponent } from '@pages/cart_page/cart/component/payment/payment.component';
 // import { OrderDetailsComponent } from '@pages/cart_page/cart/component/order-details/order-details.component';
-
 import { HomeComponent } from '@components/home-components/home.component';
 import { LoginComponent } from '@components/login-components/login.component';
 import { RegisterComponent } from '@components/register-components/register.component';

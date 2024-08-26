@@ -160,7 +160,7 @@ export class CartComponent {
     this.userService.modifyCartFromLocalstorage('remove', item);
     this.cart = this.cart.filter(cartItem => cartItem.productUuid !== item.productUuid);
   }
-
+  
   confirmOrder(): void {
 
 
