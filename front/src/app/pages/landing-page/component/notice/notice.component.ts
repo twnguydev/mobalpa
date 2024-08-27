@@ -48,4 +48,10 @@ export class NoticeComponent implements OnInit {
 
     return `${dayFormatted} ${monthFormatted} ${yearFormatted}`;
   }
+
+  getStars(rating: number): number[] {
+    const filledStars = Array(rating).fill(1);
+    const emptyStars = Array(5 - rating).fill(0);
+    return filledStars.concat(emptyStars);
+  }
 }
