@@ -2,7 +2,6 @@ package com.mobalpa.api.controller;
 
 import com.mobalpa.api.service.CatalogueService;
 import com.mobalpa.api.service.UserService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.mobalpa.api.model.Payment;
 import com.mobalpa.api.model.User;
 import com.mobalpa.api.model.Wishlist;
@@ -64,6 +63,7 @@ public class UserController {
   @PatchMapping("/{uuid}")
   public ResponseEntity<?> updateUser(@PathVariable UUID uuid, @RequestBody User user) {
     try {
+      System.out.println("User: " + user);
       User updatedUser = userService.updateUser(uuid, user);
       return ResponseEntity.ok(updatedUser);
     } catch (IllegalArgumentException e) {
@@ -167,5 +167,24 @@ public class UserController {
     Payment savedPayment = paymentRepository.save(payment);
 
     return ResponseEntity.status(HttpStatus.CREATED).body(savedPayment);
+  }
+
+  @DeleteMapping("/{id}/payments/{paymentId}")
+  public ResponseEntity<?> deletePayment(@PathVariable UUID id, @PathVariable UUID paymentId) {
+    Optional<User> userOptional = userRepository.findById(id);
+    if (userOptional.isEmpty()) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+    }
+
+    User user = userOptional.get();
+    Optional<Payment> paymentOptional = user.getPayments().stream().filter(p -> p.getUuid().equals(paymentId)).findFirst();
+    if (paymentOptional.isEmpty()) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Payment not found");
+    }
+
+    Payment payment = paymentOptional.get();
+    paymentRepository.delete(payment);
+
+    return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Payment deleted");
   }
 }

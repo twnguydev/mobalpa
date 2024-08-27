@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -23,8 +22,14 @@ public class Order {
   private UUID uuid = UUID.randomUUID();
 
   @ManyToOne
-  @JoinColumn(name = "user_uuid", nullable = false)
+  @JoinColumn(name = "user_uuid", nullable = true)
+  @JsonIgnoreProperties("orders")
   private User user;
+
+  @ManyToOne
+  @JoinColumn(name = "visitor_uuid", nullable = true)
+  @JsonIgnoreProperties("orders")
+  private Visitor visitor;
 
   @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<OrderItem> items = new ArrayList<>();

@@ -1,10 +1,21 @@
 package com.mobalpa.api.filter;
 
+import java.util.UUID;
+
 public class ProductFilter {
     private Double maxPrice;
     private Double minPrice;
     private String brandName;
     private String colorName;
+    private UUID subcategoryId;
+
+    public UUID getSubcategoryId() {
+        return subcategoryId;
+    }
+
+    public void setSubcategoryId(UUID subcategoryId) {
+        this.subcategoryId = subcategoryId;
+    }
 
     public Double getMaxPrice() {
         return maxPrice;

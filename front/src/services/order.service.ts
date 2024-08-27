@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IOrder } from '@interfaces/order.interface';
+import { IOrder, ICouponCodeResponse } from '@interfaces/order.interface';
 import { IPayment } from '@interfaces/payment.interface';
 import { IWishlist, IWishlistItem } from '@interfaces/wishlist.interface';
+import { IDeliveryResponse } from '@interfaces/order.interface';
 import { AuthService } from '@services/auth.service';
 import { environment } from '@env/environment';
 
@@ -14,46 +15,77 @@ export class OrderService {
   private orderUrl: string = `${environment.apiUrl}/orders`;
   private paymentUrl: string = `${environment.apiUrl}/payments`;
   private wishlistUrl: string = `${environment.apiUrl}/wishlist`;
+  private tempOrder: IOrder | null = null;
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
-  createOrder(order: Omit<IOrder, 'orderId'>): Observable<IOrder> {
-    const headers = this.authService.getAuthHeaders();
+  createOrder(order: IOrder): Observable<IOrder> {
+    const headers: HttpHeaders | null = this.authService.getAuthHeaders() ?? this.authService.getXApiKeyHeaders();
+    if (!headers) return new Observable<IOrder>();
     return this.http.post<IOrder>(this.orderUrl, order, { headers });
   }
 
   getOrders(): Observable<IOrder[]> {
-    const headers: HttpHeaders = this.authService.getAuthHeaders();
+    const headers: HttpHeaders | null = this.authService.getAuthHeaders();
+    if (!headers) return new Observable<IOrder[]>();
     return this.http.get<IOrder[]>(this.orderUrl, { headers });
   }
 
   getOrderById(orderId: string): Observable<IOrder> {
-    const headers: HttpHeaders = this.authService.getAuthHeaders();
+    const headers: HttpHeaders | null = this.authService.getAuthHeaders();
+    if (!headers) return new Observable<IOrder>();
     return this.http.get<IOrder>(`${this.orderUrl}/${orderId}`, { headers });
   }
 
-  getPayments(): Observable<IPayment[]> {
-    const headers: HttpHeaders = this.authService.getAuthHeaders();
-    return this.http.get<IPayment[]>(this.paymentUrl, { headers });
+  getInvoiceByOrderUuid(orderUuid: string | undefined): Observable<Blob> {
+    if (!orderUuid) return new Observable<Blob>();
+    const headers: HttpHeaders | null = this.authService.getAuthHeaders();
+    if (!headers) return new Observable<Blob>();
+    return this.http.get(`${this.orderUrl}/${orderUuid}/invoice`, {
+      headers,
+      responseType: 'blob',
+    });
   }
 
-  createPayment(payment: IPayment): Observable<IPayment> {
-    const headers: HttpHeaders = this.authService.getAuthHeaders();
-    return this.http.post<IPayment>(this.paymentUrl, payment, { headers });
+  testPromoCode(code: string): Observable<ICouponCodeResponse> {
+    const headers: HttpHeaders | null = this.authService.getAuthHeaders();
+    if (!headers) return new Observable<ICouponCodeResponse>();
+    return this.http.post<ICouponCodeResponse>(`${this.orderUrl}/${this.authService.user?.uuid}/apply-coupon`, {
+      'couponCode': code
+    }, { headers });
+  }
+  
+  saveTempOrder(order: IOrder): void {
+    this.tempOrder = order;
+    localStorage.setItem('tempOrder', JSON.stringify(order));
   }
 
-  getWishlist(): Observable<IWishlist> {
-    const headers: HttpHeaders = this.authService.getAuthHeaders();
-    return this.http.get<IWishlist>(this.wishlistUrl, { headers });
+  getTempOrder(): IOrder | null {
+    if (!this.tempOrder) {
+      const tempOrder = localStorage.getItem('tempOrder');
+      if (tempOrder) {
+        this.tempOrder = JSON.parse(tempOrder);
+      }
+    }
+    return this.tempOrder;
   }
 
-  addToWishlist(item: IWishlistItem): Observable<IWishlist> {
-    const headers: HttpHeaders = this.authService.getAuthHeaders();
-    return this.http.post<IWishlist>(this.wishlistUrl, item, { headers });
+  clearTempOrder(): void {
+    this.tempOrder = null;
+    localStorage.removeItem('tempOrder');
+    localStorage.removeItem('cart');
   }
 
-  removeFromWishlist(itemId: string): Observable<IWishlist> {
-    const headers: HttpHeaders = this.authService.getAuthHeaders();
-    return this.http.delete<IWishlist>(`${this.wishlistUrl}/${itemId}`, { headers });
+  updateTempOrder(updatedFields: Partial<IOrder>): void {
+    if (this.tempOrder) {
+      this.tempOrder = { ...this.tempOrder, ...updatedFields };
+      localStorage.setItem('tempOrder', JSON.stringify(this.tempOrder));
+    }
+  }
+
+  getDeliveryOptions(): Observable<IDeliveryResponse> {
+    const headers: HttpHeaders | null = this.authService.getAuthHeaders() ?? this.authService.getXApiKeyHeaders();
+    if (!headers) return new Observable<IDeliveryResponse>();
+    return this.http.get<IDeliveryResponse>(`${this.orderUrl}/delivery-prices`, { headers });
   }
 }

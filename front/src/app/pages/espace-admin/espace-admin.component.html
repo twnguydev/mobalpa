@@ -1,0 +1,292 @@
+<div class="flex w-screen">
+  <!-- Sidebar -->
+  <div class="w-64 h-screen bg-gray-200 text-black p-4">
+    <div class="border-b border-gray-600 mb-4">
+      <div *ngFor="let tab of tabs; let i = index" (click)="selectTab(i)"
+           class="p-2 cursor-pointer text-start flex-1 sm:flex-auto hover:bg-gray-300 transition-colors"
+           [class.bg-emerald-green]="selectedTab === i" [class.text-white]="selectedTab === i">
+        {{ tab.title }}
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="p-4 w-full overflow-auto">
+    <!-- Utilisateurs Tab -->
+    <div *ngIf="selectedTab === 0" class="min-w-full">
+      <div *ngIf="users.length > 0; else noUsers">
+        <!-- Barre de Recherche -->
+        <input type="text" class="mb-4 p-2 border border-gray-300 rounded w-full"
+               placeholder="Rechercher par prénom, nom, email, etc."
+               [(ngModel)]="searchTermUsers" (input)="filterUsers()" />
+
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prénom</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nom</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Téléphone</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Adresse</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ville</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Code Postal</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <tr *ngFor="let user of filteredUsers">
+              <td class="px-6 py-4 whitespace-nowrap">{{ user.firstname }}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{{ user.lastname }}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{{ user.email }}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{{ user.phoneNumber }}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{{ user.address }}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{{ user.city }}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{{ user.zipcode }}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Pagination -->
+        <app-pagination
+          [currentPage]="currentPageUsers"
+          [itemsPerPage]="itemsPerPageUsers"
+          [totalItems]="users.length"
+          (pageChange)="onPageChangeUsers($event)"
+          class="mt-4"
+        ></app-pagination>
+      </div>
+
+      <ng-template #noUsers>
+        <p>Aucun Utilisateur trouvé.</p>
+      </ng-template>
+    </div>
+
+    <!-- Produits Tab -->
+    <div *ngIf="selectedTab === 1" class="min-w-full">
+      <div *ngIf="products.length > 0; else noProducts">
+        <!-- Barre de Recherche -->
+        <input type="text" class="mb-4 p-2 border border-gray-300 rounded w-full"
+               placeholder="Rechercher par nom, prix, etc."
+               [(ngModel)]="searchTermProducts" (input)="filterProducts()" />
+
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nom</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prix</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Marque</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Catégorie</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <tr *ngFor="let product of filteredProducts">
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ product.name }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ product.description }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ product.price }}€</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ product.brand.name }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ product.category.name }}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Pagination -->
+        <app-pagination
+          [currentPage]="currentPageProducts"
+          [itemsPerPage]="itemsPerPageProducts"
+          [totalItems]="products.length"
+          (pageChange)="onPageChangeProducts($event)"
+          class="mt-4"
+        ></app-pagination>
+      </div>
+
+      <ng-template #noProducts>
+        <p>Aucun Produit trouvé.</p>
+      </ng-template>
+    </div>
+
+    <!-- Catégories Tab -->
+    <div *ngIf="selectedTab === 2" class="min-w-full">
+      <div *ngIf="categories.length > 0; else noCategories">
+        <!-- Barre de Recherche -->
+        <input type="text" class="mb-4 p-2 border border-gray-300 rounded w-full"
+               placeholder="Rechercher par nom, description, etc."
+               [(ngModel)]="searchTermCategories" (input)="filterCategories()" />
+
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nom</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <tr *ngFor="let category of filteredCategories">
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                {{ category.name }}
+                <div *ngIf="category.images && category.images.length > 0">
+                  <img [src]="category.images[0].uri" alt="{{ category.name }}" class="w-16 h-16 object-cover"/>
+                </div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                {{ category.description || 'Non spécifié' }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Pagination -->
+        <app-pagination
+          [currentPage]="currentPageCategories"
+          [itemsPerPage]="itemsPerPageCategories"
+          [totalItems]="categories.length"
+          (pageChange)="onPageChangeCategories($event)"
+          class="mt-4"
+        ></app-pagination>
+      </div>
+
+      <ng-template #noCategories>
+        <p>Aucune Catégorie trouvée.</p>
+      </ng-template>
+    </div>
+
+    <!-- Sous-Catégories Tab -->
+    <div *ngIf="selectedTab === 3" class="min-w-full">
+      <div *ngIf="subcategories.length > 0; else noSubcategories">
+        <!-- Barre de Recherche -->
+        <input type="text" class="mb-4 p-2 border border-gray-300 rounded w-full"
+               placeholder="Rechercher par nom, description, etc."
+               [(ngModel)]="searchTermSubcategories" (input)="filterSubcategories()" />
+
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nom</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <tr *ngFor="let subcategory of filteredSubcategories">
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ subcategory.name }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ subcategory.description || 'Non spécifié' }}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Pagination -->
+        <app-pagination
+          [currentPage]="currentPageSubcategories"
+          [itemsPerPage]="itemsPerPageSubcategories"
+          [totalItems]="subcategories.length"
+          (pageChange)="onPageChangeSubcategories($event)"
+          class="mt-4"
+        ></app-pagination>
+      </div>
+
+      <ng-template #noSubcategories>
+        <p>Aucune Sous-Catégorie trouvée.</p>
+      </ng-template>
+    </div>
+
+    <!-- Commandes Tab -->
+    <div *ngIf="selectedTab === 4" class="min-w-full">
+      <div *ngIf="orders.length > 0; else noOrders">
+        <!-- Barre de Recherche -->
+        <input type="text" class="mb-4 p-2 border border-gray-300 rounded w-full"
+               placeholder="Rechercher par numéro, client, etc."
+               [(ngModel)]="searchTermOrders" (input)="filterOrders()" />
+
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Numéro de Commande</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Client</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Réduction</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Montant Total</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date de Commande</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Statut</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <tr *ngFor="let order of filteredOrders">
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.uuid }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                {{ order.user?.firstname }} {{ order.user?.lastname }}
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.reduction }}%</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.totalTtc }} €</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.createdAt | date }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.status }}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Pagination -->
+        <app-pagination
+          [currentPage]="currentPageOrders"
+          [itemsPerPage]="itemsPerPageOrders"
+          [totalItems]="orders.length"
+          (pageChange)="onPageChangeOrders($event)"
+          class="mt-4"
+        ></app-pagination>
+      </div>
+
+      <ng-template #noOrders>
+        <p>Aucune Commande trouvée.</p>
+      </ng-template>
+    </div>
+
+    <!-- Code Promo Tab -->
+    <div *ngIf="selectedTab === 5" class="min-w-full">
+      <div *ngIf="codePromos.length > 0; else noCodepromo">
+        <!-- Barre de Recherche -->
+        <input type="text" class="mb-4 p-2 border border-gray-300 rounded w-full"
+               placeholder="Rechercher par code, description, etc."
+               [(ngModel)]="searchTermCodePromos" (input)="filterCodePromos()" />
+
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Code</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Réduction</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date de Début</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date de Fin</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <tr *ngFor="let codePromo of codePromos">
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ codePromo.code }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ codePromo.description }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ codePromo.discount }}%</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ codePromo.startDate | date }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ codePromo.endDate | date }}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Pagination -->
+        <app-pagination
+          [currentPage]="currentPageCodePromos"
+          [itemsPerPage]="itemsPerPageCodePromos"
+          [totalItems]="codePromos.length"
+          (pageChange)="onPageChangeCodePromos($event)"
+          class="mt-4"
+        ></app-pagination>
+      </div>
+
+      <ng-template #noCodepromo>
+        <p>Aucun code promo trouvé.</p>
+      </ng-template>
+    </div>
+
+    <!-- Statistiques Tab -->
+    <div *ngIf="selectedTab === 6" class="min-w-full">
+      <div *ngIf="statistics.length > 0; else noStatistique">
+        <!-- Contenu statistique à ajouter ici -->
+      </div>
+      <ng-template #noStatistique>
+        <p>Aucune statistique trouvée.</p>
+      </ng-template>
+    </div>
+  </div>
+</div>

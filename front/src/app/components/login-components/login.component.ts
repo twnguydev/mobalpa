@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
     this.form = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      remember: [false] // Changed from 'rememberMe' to match FormControl name
+      remember: [false]
     });
 
     this.forgotPasswordForm = this.fb.group({
@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
 
     if (storedEmail) {
       this.form.get('email')?.setValue(storedEmail);
-      this.form.get('remember')?.setValue(true); // Set rememberMe control
+      this.form.get('remember')?.setValue(true);
     }
 
     if (storedPassword) {
@@ -47,9 +47,9 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  async onSubmit() {
+  onLoginSubmit() {
     this.submitted = true;
-    this.errors = []; // Clear previous errors
+    this.errors = [];
 
     if (this.form.valid) {
       const { email, password, remember } = this.form.value;
@@ -57,6 +57,7 @@ export class LoginComponent implements OnInit {
       this.authService.login(email, password).subscribe({
         next: response => {
           console.log('Login successful', response);
+
           if (remember) {
             const hashedPassword = this.hashPassword(password);
             localStorage.setItem('rememberedEmail', email);
@@ -65,11 +66,16 @@ export class LoginComponent implements OnInit {
             localStorage.removeItem('rememberedEmail');
             localStorage.removeItem('rememberedPassword');
           }
-          this.router.navigate(['/profil']);
+
+          if (response.user && response.user.roles && response.user.roles.some((role: any) => role.name === 'ROLE_ADMIN')) {
+            this.router.navigate(['/admin']);
+          } else {
+            this.router.navigate(['/profil']);
+          }
         },
         error: error => {
           console.error('Login error', error);
-          this.errors = error.errors || ['Une erreur est survenue. Veuillez réessayer.'];
+          this.errors = error.errors || ['Une erreur est survenue. Veuillez réessayer. Il se peut que votre email ou mot de passe soient incorrects ou que votre compte ne soit pas confirmé.'];
         }
       });
     }

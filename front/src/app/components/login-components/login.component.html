@@ -5,7 +5,7 @@
     class="w-auto mx-5 md:mx-0 my-20 md:w-2/3 lg:w-1/2 p-8 md:p-16 bg-white shadow-lg relative z-20 rounded-3xl md:transform md:-translate-x-1/4">
     <h1 class="text-3xl md:text-5xl font-bold text-emerald-green mb-6">Connexion</h1>
 
-    <form [formGroup]="form" (ngSubmit)="onSubmit()" method="post" action="#">
+    <form [formGroup]="form" (ngSubmit)="onLoginSubmit()" method="post" action="#">
 
       <div class="mb-4">
         <label for="email" class="block text-xl font-bold text-emerald-green mb-2">Adresse e-mail</label>
@@ -39,7 +39,7 @@
       </div>
 
       <div class="mb-8">
-        <button (click)="showForgotPassword()" class="text-mobalpa-green text-sm font-normal">Mot de passe
+        <button type="button" (click)="showForgotPassword()" class="text-mobalpa-green text-sm font-normal">Mot de passe
           oublié ?</button>
       </div>
 
@@ -79,7 +79,7 @@
 
       <span class="text-red-600 mb-2" *ngIf="errorMessage">{{ errorMessage }}</span>
 
-      <form [formGroup]="forgotPasswordForm" (ngSubmit)="onForgotPassword()">
+      <form [formGroup]="forgotPasswordForm" (ngSubmit)="onForgotPassword()" method="post" action="#">
         <input id="forgot-password-email" formControlName="forgotPasswordEmail" type="email" name="email"
           placeholder="Adresse e-mail" class="bg-emerald-green pl-2 bg-opacity-30 rounded-xl h-12 w-full mb-1">
         <span class="text-red-600 text-sm mt-1"

@@ -1,94 +1,72 @@
-<div class="">
+<div class=" ">
     <div
         class="h-88 bg-cover bg-center flex justify-center flex-col gap-10 items-center bg-[url('/assets/marbretexturevert.png')]">
 
-        <p class="text-white text-4xl">En quoi pouvons nous vous aidez ?</p>
+        <p class="text-white text-2xl md:text-4xl font-gotham">En quoi pouvons nous vous aidez ?</p>
 
-        <input class="w-1/2 p-3 rounded-2xl" type="text" placeholder="Posez votre question">
-
+        <input class="w-1/2 p-3 rounded-2xl" type="text" [(ngModel)]="searchQuery" placeholder="Posez votre question">
     </div>
-    <div class="mx-20 flex justify-center ">
+    <div class="mx-5 md:mx-20 flex justify-center ">
         <div class="container mx-auto mt-4">
-            <div class="tabs flex  flex-wrap border-b gap-2  md:justify-center sm:gap-4 md:gap-6 lg:gap-8  ">
+            <div class="tabs flex flex-wrap border-b gap-2 md:justify-center sm:gap-4 md:gap-6 lg:gap-8">
                 <div *ngFor="let tab of tabs; let i = index" (click)="selectTab(i)"
-                    class="tab p-2 cursor-pointer text-center  flex-1 sm:flex-auto " [class.active]="selectedTab === i"
-                    [class.border-blue-500]="selectedTab === i">
+                    class="tab p-2 cursor-pointer text-center flex-1 sm:flex-auto"
+                    [class.active]="selectedTab === i" [class.border-blue-500]="selectedTab === i">
                     {{ tab.title }}
                 </div>
             </div>
-            <div class="tab-content p-4 ">
+
+            <div class="tab-content p-4">
+                <!-- FAQ Section -->
                 <div *ngIf="selectedTab === 0" class="flex justify-center">
-                    <div class="flex flex-col gap-8 w-full ">
-                        <div>
-                            <p class="text-custom-red text-2xl">Quels types de produits vendez-vous ?</p>
-                            <p class=" ml-5">Nous vendons actuellement des éléctroménager petit et grand et des
-                                meuble pour cuisine et autres pièce</p>
-                        </div>
-                        <div>
-                            <p class="text-custom-red text-2xl">Comment puis-je passer une commande ?</p>
-                            <p class=" ml-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero error
-                                animi deleniti deserunt eum aliquid nesciunt ducimus corporis fugit recusandae, nobis
-                                necessitatibus sed possimus omnis molestiae facere non culpa. Nisi.</p>
-                        </div>
-                        <div>
-                            <p class="text-custom-red text-2xl">Quels sont les délais de livraison ?</p>
-                            <p class=" ml-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero error
-                                animi deleniti deserunt eum aliquid nesciunt ducimus corporis fugit recusandae, nobis
-                                necessitatibus sed possimus omnis molestiae facere non culpa. Nisi.</p>
-                        </div>
-                        <div>
-                            <p class="text-custom-red text-2xl">Comment puis-je retourner un produit ?</p>
-                            <p class=" ml-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero error
-                                animi deleniti deserunt eum aliquid nesciunt ducimus corporis fugit recusandae, nobis
-                                necessitatibus sed possimus omnis molestiae facere non culpa. Nisi.</p>
-                        </div>
-                        <div>
-                            <p class="text-custom-red text-2xl">Puis-je échanger un produit ?</p>
-                            <p class=" ml-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero error
-                                animi deleniti deserunt eum aliquid nesciunt ducimus corporis fugit recusandae, nobis
-                                necessitatibus sed possimus omnis molestiae facere non culpa. Nisi.</p>
-                        </div>
+                    <div class="flex flex-col gap-8 w-full">
+                        <app-faq [searchQuery]="searchQuery"></app-faq>
                     </div>
-
                 </div>
-                <div *ngIf="selectedTab === 1" class="justify-center flex">
 
+                <!-- Customer Support Request Form -->
+                <div *ngIf="selectedTab === 1" class="justify-center flex">
                     <form [formGroup]="supForm" (ngSubmit)="onSubmit()" class="flex-wrap w-full gap-4 p-4">
                         <div class="w-full flex flex-wrap gap-4 my-2">
                             <div class="flex-grow">
                                 <select formControlName="requestType" class="bg-gray-100 p-2 h-10 w-full rounded-none">
                                     <option value="0">Type de requête</option>
-                                    <option value="1">Service après vente</option>
+                                    <option value="1">Service après-vente</option>
                                     <option value="2">Réclamation sur un produit</option>
                                     <option value="3">Livraison</option>
                                     <option value="4">Autre</option>
                                 </select>
-                                <span *ngIf="supForm.get('requestType')?.errors?.['required']" class="text-red-500">
+                                <span
+                                    *ngIf="supForm.get('requestType')?.touched && supForm.get('requestType')?.errors?.['required']"
+                                    class="text-red-500">
                                     Le type de requête est requis.
                                 </span>
                             </div>
                             <div class="flex-grow">
-                                <input formControlName="object" class="bg-gray-100 p-3 h-10 w-full" type="text" placeholder="Objet">
-                                <span *ngIf="supForm.get('object')?.errors?.['required']" class="text-red-500 ">
+                                <input formControlName="object" class="bg-gray-100 p-3 h-10 w-full" type="text"
+                                    placeholder="Objet">
+                                <span
+                                    *ngIf="supForm.get('object')?.touched && supForm.get('object')?.errors?.['required']"
+                                    class="text-red-500">
                                     L'objet est requis.
                                 </span>
-                                <span *ngIf="supForm.get('object')?.errors?.['minlength']" class="text-red-500 ">
+                                <span
+                                    *ngIf="supForm.get('object')?.touched && supForm.get('object')?.errors?.['minlength']"
+                                    class="text-red-500">
                                     L'objet doit comporter au moins 5 caractères.
                                 </span>
                             </div>
                         </div>
 
-                        <textarea formControlName="requestContent" class="w-full h-52 bg-gray-100 p-5 resize-none"
-                            placeholder="Tapez votre demande"></textarea>
+                        <textarea formControlName="requestContent" class="w-full h-52 bg-gray-100 p-5 resize-none" placeholder="Tapez votre demande"></textarea>
                         <div *ngIf="supForm.get('requestContent')?.touched && supForm.get('requestContent')?.invalid">
-                            <span *ngIf="supForm.get('requestContent')?.errors?.['required']" class="text-red-500">Le
-                                contenu de la
-                                demande est requis.</span>
-                            <span *ngIf="supForm.get('requestContent')?.errors?.['minlength']" class="text-red-500">Le
-                                contenu de la
-                                demande doit comporter au moins 10 caractères.</span>
+                            <span *ngIf="supForm.get('requestContent')?.errors?.['required']" class="text-red-500">
+                                Le contenu de la demande est requis.
+                            </span>
+                            <span *ngIf="supForm.get('requestContent')?.errors?.['minlength']" class="text-red-500">
+                                Le contenu de la demande doit comporter au moins 10 caractères.
+                            </span>
                         </div>
-
                         <input
                             class="p-2 bg-emerald-green md:w-full w-full mt-1 lg:w-1/4 text-white hover:bg-emerald-600"
                             type="submit" value="Envoyer" [disabled]="supForm.invalid">
@@ -96,45 +74,42 @@
                             Votre demande a été envoyée avec succès !
                         </div>
                     </form>
-
-
                 </div>
-                <div *ngIf="selectedTab === 2" class="justify-center flex ">
 
+                <!-- Feedback Form -->
+                <div *ngIf="selectedTab === 2" class="justify-center flex">
                     <form [formGroup]="feedForm" (ngSubmit)="onFeedSubmit()" class="space-y-4 w-full">
                         <div>
-                            <div class="grid grid-cols-10 gap-2">
+                            <div class="grid grid-cols-5 gap-2">
                                 <label *ngFor="let rating of ratings"
-                                    class="inline-flex items-center justify-center border border-emerald-green p-2 cursor-pointer"
+                                    class="inline-flex items-center justify-center border border-emerald-green p-2 cursor-pointer w-full"
                                     [class.bg-emerald-green]="feedForm.get('rating')?.value === rating"
                                     [class.text-white]="feedForm.get('rating')?.value === rating">
                                     <input type="radio" formControlName="rating" [value]="rating" class="hidden">
-                                    <span>{{ rating }}</span>
+                                    <span >{{ rating }}</span>
                                 </label>
                             </div>
                             <div *ngIf="feedForm.get('rating')?.touched && feedForm.get('rating')?.invalid">
-                                <span *ngIf="feedForm.get('rating')?.errors?.['required']" class="text-red-500">Veuillez
-                                    cliquer sur une
-                                    notation.</span>
+                                <span *ngIf="feedForm.get('rating')?.errors?.['required']" class="text-red-500">
+                                    Veuillez sélectionner une notation.
+                                </span>
                             </div>
                         </div>
 
                         <div>
-                            <textarea formControlName="comment" rows="4"
-                                class="w-full px-3 py-2 text-gray-700 bg-gray-100 h-52 focus:outline-none resize-none"
-                                placeholder="Rédiger votre avis"></textarea>
+                            <textarea formControlName="comment" rows="4" class="w-full px-3 py-2 text-gray-700 bg-gray-100 h-52 focus:outline-none resize-none" placeholder="Rédigez votre avis"></textarea>
                             <div *ngIf="feedForm.get('comment')?.touched && feedForm.get('comment')?.invalid">
-                                <span *ngIf="feedForm.get('comment')?.errors?.['required']" class="text-red-500">Vous
-                                    devez mettre un
-                                    avis.</span>
+                                <span *ngIf="feedForm.get('comment')?.errors?.['required']" class="text-red-500">
+                                    Vous devez mettre un avis.
+                                </span>
                                 <span *ngIf="feedForm.get('comment')?.errors?.['minlength']" class="text-red-500">
-                                    Au moins 10 caractères.</span>
+                                    Au moins 10 caractères.
+                                </span>
                             </div>
                         </div>
 
                         <div>
-                            <button [disabled]="feedForm.invalid" type="submit"
-                                class="w-full bg-emerald-green hover:bg-emerald-600 text-white font-bold py-2 px-4 focus:outline-none">
+                            <button [disabled]="feedForm.invalid" type="submit" class="w-full bg-emerald-green hover:bg-emerald-600 text-white font-bold py-2 px-4 focus:outline-none">
                                 Envoyer
                             </button>
                             <div *ngIf="submissionSuccess" class="text-green-500 mt-4">

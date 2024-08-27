@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductService } from '@services/product.service';
 import { ICategory } from '@interfaces/category.interface';
+import { AuthService } from '@services/auth.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '@components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-main-header',
@@ -13,12 +16,25 @@ import { ICategory } from '@interfaces/category.interface';
 export class MainHeaderComponent implements OnInit {
   showSearchBar = false;
   menuOpen = false;
+  isLoggedIn = false;
+  isAdmin = false;
   categories: ICategory[] = [];
 
-  constructor(private productService: ProductService) {}
+  constructor(
+    private productService: ProductService,
+    private authService: AuthService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.loadCategories();
+
+    this.authService.authStatus$.subscribe((isLoggedIn) => {
+      this.isLoggedIn = isLoggedIn;
+    });
+    this.authService.getCurrentUser().subscribe(user => {
+      this.isAdmin = user?.roles?.some(role => role.name === 'ROLE_ADMIN') ?? false;
+    });
   }
 
   loadCategories(): void {
@@ -53,6 +69,17 @@ export class MainHeaderComponent implements OnInit {
     this.showSearchBar = !this.showSearchBar;
   }
 
+  logout() {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: { message: 'Êtes-vous sûr de vouloir vous déconnecter ?' },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.authService.logout(true);
+      }
+    });
+  }
 
   toggleSubcategories(uuid: string): void {
     this.categories = this.categories.map(category => {

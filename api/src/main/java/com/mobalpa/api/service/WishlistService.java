@@ -6,12 +6,16 @@ import com.mobalpa.api.repository.UserRepository;
 import com.mobalpa.api.dto.catalogue.ProductDTO;
 import com.mobalpa.api.model.User;
 import com.mobalpa.api.repository.WishlistRepository;
+import com.mobalpa.api.repository.CampaignRepository;
+import com.mobalpa.api.model.Campaign;
+import com.mobalpa.api.service.PromotionService;
 import com.mobalpa.api.dto.catalogue.ColorDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -28,6 +32,12 @@ public class WishlistService {
     private UserRepository userRepository;
 
     @Autowired
+    private PromotionService promotionService;
+
+    @Autowired
+    private CampaignRepository campaignRepository;
+
+    @Autowired
     private UserService userService;
 
     @Autowired
@@ -37,9 +47,10 @@ public class WishlistService {
         Wishlist wishlist = wishlistRepository.findByUserUuid(userUuid);
 
         if (wishlist == null) {
-            User user = userService.getUserByUuid(userUuid);
+            Optional<User> userOpt = userRepository.findById(userUuid);
 
-            if (user != null) {
+            if (userOpt.isPresent()) {
+                User user = userOpt.get();
                 wishlist = new Wishlist();
                 wishlist.setUser(user);
                 wishlist = wishlistRepository.save(wishlist);
@@ -58,35 +69,48 @@ public class WishlistService {
         if (product == null) {
             throw new RuntimeException("Product with UUID " + newItem.getProductUuid() + " not found");
         }
-
-        if (newItem.getSelectedColor() != null && !product.getColors().stream().map(ColorDTO::getName).collect(Collectors.toList()).contains(newItem.getSelectedColor())) {
-            throw new RuntimeException("Color " + newItem.getSelectedColor() + " not available for product with UUID " + newItem.getProductUuid());
+    
+        List<Campaign> campaigns = promotionService.getProductCampaigns(product.getUuid());
+    
+        if (newItem.getSelectedColor() != null && !product.getColors().stream().map(ColorDTO::getName)
+                .collect(Collectors.toList()).contains(newItem.getSelectedColor())) {
+            throw new RuntimeException("Color " + newItem.getSelectedColor() + " not available for product with UUID "
+                    + newItem.getProductUuid());
         }
     
         List<WishlistItem> items = wishlist.getItems();
-
         Optional<WishlistItem> existingItemOpt = items.stream()
-            .filter(item -> item.getProductUuid().equals(newItem.getProductUuid()) && item.getSelectedColor().equals(newItem.getSelectedColor()))
-            .findFirst();
+                .filter(item -> item.getProductUuid().equals(newItem.getProductUuid())
+                        && item.getSelectedColor().equals(newItem.getSelectedColor()))
+                .findFirst();
     
         Map<String, String> properties = new HashMap<>();
         properties.put("brand", product.getBrand() != null ? product.getBrand().getName() : "Unknown");
-        properties.put("images", product.getImages() != null && !product.getImages().isEmpty() ? product.getImages().get(0).getUri() : "No image");
+        properties.put("images",
+                product.getImages() != null && !product.getImages().isEmpty() ? product.getImages().get(0).getUri()
+                        : "No image");
     
         if (existingItemOpt.isPresent()) {
             WishlistItem existingItem = existingItemOpt.get();
-            existingItem.setProduct(product);
             existingItem.setQuantity(existingItem.getQuantity() + newItem.getQuantity());
         } else {
             newItem.setWishlist(wishlist);
             newItem.setProduct(product);
+            newItem.setCampaigns(campaigns != null ? campaigns : new ArrayList<>());
             newItem.setProperties(properties);
             items.add(newItem);
         }
-    
+
         wishlist.setItems(items);
-        return wishlistRepository.save(wishlist);
-    }    
+        Wishlist savedWishlist = wishlistRepository.save(wishlist);
+
+        for (WishlistItem item : savedWishlist.getItems()) {
+            ProductDTO itemProduct = catalogueService.getProductById(item.getProductUuid());
+            item.setProduct(itemProduct);
+        }
+    
+        return savedWishlist;
+    }         
 
     public Wishlist removeFromWishlist(UUID userId, UUID productId, Integer quantity) {
         User user = userService.getUserByUuid(userId);

@@ -7,7 +7,9 @@ import org.springframework.stereotype.Repository;
 import com.mobalpa.api.model.CouponCode;
 import com.mobalpa.api.model.User;
 
+import java.util.Optional;
+
 @Repository
 public interface UserCouponRepository extends JpaRepository<UserCoupon, Integer> {
-    UserCoupon findByUserAndCoupon(User user, CouponCode coupon);
+    Optional<UserCoupon> findByUserAndCoupon(User user, CouponCode coupon);
 }

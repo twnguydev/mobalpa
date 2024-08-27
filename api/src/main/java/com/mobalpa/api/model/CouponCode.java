@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -45,6 +46,23 @@ public class CouponCode {
     @OneToMany(mappedBy = "coupon", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<UserCoupon> userCoupons = new HashSet<>();
+
+    @Column(nullable = false)
+    private TargetType targetType;
+
+    @Column(nullable = false)
+    private Integer maxUse;
+
+    @Column(nullable = false)
+    private Integer currentUse = 0;
+
+    private List<String> targetUsers;
+
+    public enum TargetType {
+        ALL_USERS,
+        SPECIFIC_USERS,
+        USER
+    }
 
     public enum DiscountType {
         PERCENTAGE,

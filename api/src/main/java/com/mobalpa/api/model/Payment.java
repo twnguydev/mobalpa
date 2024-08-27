@@ -4,7 +4,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.*;
@@ -23,9 +22,14 @@ public class Payment {
     private UUID uuid;
 
     @ManyToOne
-    @JoinColumn(name = "user_uuid", nullable = false)
-    @JsonIgnore
-    private User user;
+    @JoinColumn(name = "user_uuid", nullable = true)
+    @JsonIgnoreProperties("payments")
+    private User user = null;
+
+    @ManyToOne
+    @JoinColumn(name = "visitor_uuid", nullable = true)
+    @JsonIgnoreProperties("payments")
+    private Visitor visitor = null;
 
     @Column(nullable = true)
     private String cardNumber;

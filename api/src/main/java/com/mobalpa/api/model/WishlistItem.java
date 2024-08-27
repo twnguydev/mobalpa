@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import jakarta.persistence.*;
 import java.util.UUID;
 import java.util.Map;
+import java.util.List;
+import java.util.ArrayList;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -27,6 +29,14 @@ public class WishlistItem {
 
     @Column(nullable = false)
     private UUID productUuid;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "wishlist_item_campaigns",
+        joinColumns = @JoinColumn(name = "wishlist_item_uuid"),
+        inverseJoinColumns = @JoinColumn(name = "campaign_id")
+    )
+    private List<Campaign> campaigns = new ArrayList<>();
 
     @Transient
     private ProductDTO product;
