@@ -6,6 +6,7 @@ import { ProductService } from '@services/product.service';
 import { UserService } from '@services/user.service';
 import { IProduct, ICampaign } from '@interfaces/product.interface';
 import { IWishlistItem } from '@interfaces/wishlist.interface';
+import { IColor } from '@interfaces/product.interface';
 import { Observable } from 'rxjs';
 import { FormsModule, FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
@@ -55,10 +56,13 @@ export class ProductComponent implements OnInit {
   isAdded: boolean = false;
   errorMessage: string = '';
   selectedImage: string | null = null;
+  selectedColor: IColor = {} as IColor;
+  
   selectedColor: string | null = null;
   avisForm!: FormGroup;
   submissionSuccess = false;
   avisList: Avis[] = []
+
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
@@ -86,7 +90,7 @@ export class ProductComponent implements OnInit {
           if (product) {
             this.product = product;
             this.selectedImage = product.images[0]?.uri || null;
-            this.selectedColor = this.product.colors[0]?.name || null;
+            this.selectedColor = product.colors[0] || {} as IColor;
             this.calculateShippingDelay(product.estimatedDelivery);
             this.applyCampaigns(product.campaigns);
             console.log('Produit récupéré', product);
@@ -108,8 +112,8 @@ export class ProductComponent implements OnInit {
     this.selectedImage = imageUri;
   }
 
-  selectColor(colorName: string) {
-    this.selectedColor = colorName;
+  selectColor(color: IColor): void {
+    this.selectedColor = color;
   }
   onavisSubmit() {
     if (this.avisForm.valid) {
@@ -191,14 +195,15 @@ export class ProductComponent implements OnInit {
 
   addToCart() {
     if (this.product && this.selectedColor) {
+      const retrieveImage = this.product.images.find(image => image.color.name === this.selectedColor.name);
       const item: IWishlistItem = {
         productUuid: this.product.uuid,
         product: this.product,
-        selectedColor: this.selectedColor,
+        selectedColor: this.selectedColor.name,
         quantity: this.quantity,
         properties: {
           brand: this.product.brand.name,
-          images: this.product.images[0].uri
+          images: retrieveImage ? retrieveImage.uri : ''
         }
       };
 

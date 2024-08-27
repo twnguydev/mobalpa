@@ -3,6 +3,7 @@ import { IUser } from './user.interface';
 
 export interface IOrder {
   uuid?: string | undefined;
+  orderUuid?: string | undefined;
   userUuid: string | undefined;
   items: IOrderItem[];
   deliveryMethod?: string;

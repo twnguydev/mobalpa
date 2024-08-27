@@ -25,6 +25,12 @@ export class OrderService {
     return this.http.post<IOrder>(this.orderUrl, order, { headers });
   }
 
+  completeOrder(orderUuid: string): Observable<IOrder> {
+    const headers: HttpHeaders | null = this.authService.getAuthHeaders() ?? this.authService.getXApiKeyHeaders();
+    if (!headers) return new Observable<IOrder>();
+    return this.http.post<IOrder>(`${this.orderUrl}/${orderUuid}/payment`, {}, { headers });
+  }
+
   getOrders(): Observable<IOrder[]> {
     const headers: HttpHeaders | null = this.authService.getAuthHeaders();
     if (!headers) return new Observable<IOrder[]>();

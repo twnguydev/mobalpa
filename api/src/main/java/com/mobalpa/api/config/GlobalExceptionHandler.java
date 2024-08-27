@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.io.IOException;
 
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -90,5 +91,14 @@ public class GlobalExceptionHandler {
     body.put("message", "An unexpected error occurred: " + ex.getMessage());
 
     return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
+  }
+
+  @ExceptionHandler(ExpiredJwtException.class)
+  public ResponseEntity<Object> handleExpiredJwtException(ExpiredJwtException ex, WebRequest request) {
+    Map<String, Object> body = new LinkedHashMap<>();
+    body.put("status", HttpStatus.UNAUTHORIZED.value());
+    body.put("message", "Token has expired: " + ex.getMessage());
+
+    return new ResponseEntity<>(body, HttpStatus.UNAUTHORIZED);
   }
 }
