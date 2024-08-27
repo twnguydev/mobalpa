@@ -74,8 +74,6 @@ export class SupportComponent implements OnInit {
       issue: this.supForm.get('requestContent')?.value,
     };
 
-    console.log("ticket:" + ticketRequest.userUuid + "token:" );
-
     this.ticketService.createTicket(ticketRequest).subscribe(
       response => {
         console.log('Ticket créé avec succès:', response);
