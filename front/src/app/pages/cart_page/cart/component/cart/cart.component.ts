@@ -36,20 +36,24 @@ export class CartComponent {
 
   ngOnInit(): void {
     this.cart = this.userService.getCartFromLocalstorage();
-    // console.log('Cart loaded', this.cart);
-
+  
     this.cart.forEach(item => {
       item.product.oldPrice = item.product?.price;
-      const maxDiscountRate = this.getMaxDiscountRate(item);
+      const maxDiscountRate = this.getMaxDiscountRate(item) ?? 0;
       item.product.discountRate = maxDiscountRate;
       item.product.newPrice = this.getDiscountedPrice(item.product?.price, maxDiscountRate);
     });
+  
+    console.log('Cart updated with prices', this.cart);
   }
 
   getMaxDiscountRate(item: IWishlistItem): number {
-    return item.product?.campaigns.reduce((maxRate: number, campaign: any) => {
-      return campaign.discountRate > maxRate ? campaign.discountRate : maxRate;
-    }, 0);
+    if (item.product?.campaigns && item.product.campaigns.length > 0) {
+      return item.product.campaigns.reduce((maxRate: number, campaign: any) => {
+        return campaign.discountRate > maxRate ? campaign.discountRate : maxRate;
+      }, 0);
+    }
+    return 0;
   }
 
   getDiscountedPrice(price: number | null, discountRate: number): number {
@@ -160,16 +164,20 @@ export class CartComponent {
     this.userService.modifyCartFromLocalstorage('remove', item);
     this.cart = this.cart.filter(cartItem => cartItem.productUuid !== item.productUuid);
   }
-
-  proceedToPayment(): void {
-
+  
+  confirmOrder(): void {
+    if (this.cart.length === 0) {
+      this.router.navigate(['/panier']);
+      return;
+    }
 
     const order: IOrder = {
       uuid: '',
-      userId: this.authService.user?.uuid ?? '',
+      userUuid: this.authService.user?.uuid ?? '',
       items: this.cart.map(item => ({
         productUuid: item.productUuid,
-        quantity: item.quantity
+        quantity: item.quantity,
+        product: item.product,
       })),
       vat: this.calculateVAT(),
       reduction: this.calculateSavings(),
@@ -181,6 +189,6 @@ export class CartComponent {
     };
 
     this.orderService.saveTempOrder(order);
-    this.router.navigate(['/commande/livraison']);
+    this.router.navigate(['/commande/confirmation']);
   }
 }

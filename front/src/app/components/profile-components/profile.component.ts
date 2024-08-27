@@ -74,6 +74,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.userService.getPayments(uuid).subscribe(
       payments => {
         this.payments = payments;
+        console.log('Méthodes de paiement chargées:', payments);
       },
       error => {
         console.error('Erreur lors du chargement des méthodes de paiement:', error);
@@ -113,7 +114,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     );
   }
 
-  downloadInvoice(orderUuid: string): void {
+  downloadInvoice(orderUuid: string | undefined): void {
+    if (!orderUuid) return;
     this.orderService.getInvoiceByOrderUuid(orderUuid).subscribe(
       (blob: Blob) => {
         const url = window.URL.createObjectURL(blob);
@@ -232,5 +234,22 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   togglePaymentForm(): void {
     this.isPaymentFormVisible = !this.isPaymentFormVisible;
+  }
+
+  resetPaymentForm(): void {
+    this.newPayment = {
+      paymentMethod: this.newPayment.paymentMethod,
+      cardHolder: '',
+      cardNumber: '',
+      expirationDate: '',
+      cvv: '',
+      paypalEmail: ''
+    } as IPayment;
+    this.successMessage = null;
+    this.errorMessage = null;
+  }
+
+  changePaymentMethod(): void {
+    this.resetPaymentForm();
   }
 }

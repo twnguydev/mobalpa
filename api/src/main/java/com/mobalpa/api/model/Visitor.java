@@ -15,7 +15,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "visitor")
 @Data
-public class Visitor {
+public class Visitor implements Person {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -50,8 +50,6 @@ public class Visitor {
 
   @OneToMany(mappedBy = "visitor", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Order> orders = new ArrayList<>();
-
-
 
   @Column(nullable = false, updatable = false)
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")

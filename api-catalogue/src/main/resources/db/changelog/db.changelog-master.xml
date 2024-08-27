@@ -13,7 +13,7 @@
 
     <include file="src/main/resources/db/changelog/inc/createCuisinesSubcategories.yaml" />
     <include file="src/main/resources/db/changelog/inc/createGrandElectromenagerSubcategories.yaml" />
-    <!-- <include file="src/main/resources/db/changelog/inc/createPetitElectromenagerSubCategories.yaml" /> -->
+    <include file="src/main/resources/db/changelog/inc/createPetitElectromenagerSubcategories.yaml" />
     <include file="src/main/resources/db/changelog/inc/createSalleDeBainSubcategories.yaml" />
     <include file="src/main/resources/db/changelog/inc/createAccessoiresSubcategories.yaml" />
 

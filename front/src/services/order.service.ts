@@ -19,8 +19,8 @@ export class OrderService {
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
-  createOrder(order: Omit<IOrder, 'orderId'>): Observable<IOrder> {
-    const headers: HttpHeaders | null = this.authService.getAuthHeaders();
+  createOrder(order: IOrder): Observable<IOrder> {
+    const headers: HttpHeaders | null = this.authService.getAuthHeaders() ?? this.authService.getXApiKeyHeaders();
     if (!headers) return new Observable<IOrder>();
     return this.http.post<IOrder>(this.orderUrl, order, { headers });
   }
@@ -37,7 +37,8 @@ export class OrderService {
     return this.http.get<IOrder>(`${this.orderUrl}/${orderId}`, { headers });
   }
 
-  getInvoiceByOrderUuid(orderUuid: string): Observable<Blob> {
+  getInvoiceByOrderUuid(orderUuid: string | undefined): Observable<Blob> {
+    if (!orderUuid) return new Observable<Blob>();
     const headers: HttpHeaders | null = this.authService.getAuthHeaders();
     if (!headers) return new Observable<Blob>();
     return this.http.get(`${this.orderUrl}/${orderUuid}/invoice`, {
@@ -53,7 +54,7 @@ export class OrderService {
       'couponCode': code
     }, { headers });
   }
-
+  
   saveTempOrder(order: IOrder): void {
     this.tempOrder = order;
     localStorage.setItem('tempOrder', JSON.stringify(order));
@@ -67,6 +68,12 @@ export class OrderService {
       }
     }
     return this.tempOrder;
+  }
+
+  clearTempOrder(): void {
+    this.tempOrder = null;
+    localStorage.removeItem('tempOrder');
+    localStorage.removeItem('cart');
   }
 
   updateTempOrder(updatedFields: Partial<IOrder>): void {

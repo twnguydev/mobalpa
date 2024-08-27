@@ -320,13 +320,283 @@ databaseChangeLog:
                   "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "b1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
                   "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
                   "colors": [
-                    {"$ref": "colors", "$id": {"$binary": {"base64": "LUSI2mi0zpRNFJTZbEQOgg==", "subType": "03"}}}
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
                   ],
                   "images": [
                     {
                       "_id": {"$binary": {"base64": "rUVkFX29i1Wb/7CZ04pZuQ==", "subType": "03"}},
-                      "uri": "/images/kitchen-ecommerce/escapade-blue.png",
-                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "LUSI2mi0zpRNFJTZbEQOgg==", "subType": "03"}}}
+                      "uri": "/images/gem/cuisiniere-gaz.webp",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "A1d2ZZjt28B9whsacnLikQ==", "subType": "03"}},
+                  "name": "Cuisinière Électrique",
+                  "description": "Cuisinière électrique avec 4 plaques de cuisson.",
+                  "price": 349.99,
+                  "stock": 15,
+                  "estimatedDelivery": {"$date": "2024-09-10T08:00:00.000Z"},
+                  "weight": 28.0,
+                  "height": 85.0,
+                  "width": 60.0,
+                  "uri": "grand-electromenager/cuisiniere/cuisiniere-electrique",
+                  "createdAt": {"$date": "2024-08-12T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "b1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "sUVkFX29j2Xa/8CZ04pZuQ==", "subType": "03"}},
+                      "uri": "/images/gem/cuisiniere-electrique.jpeg",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "B2e3ZZjt27C9whsacnLikA==", "subType": "03"}},
+                  "name": "Cuisinière à Induction",
+                  "description": "Cuisinière avec plaques à induction pour une cuisson rapide.",
+                  "price": 499.99,
+                  "stock": 12,
+                  "estimatedDelivery": {"$date": "2024-09-15T08:00:00.000Z"},
+                  "weight": 30.0,
+                  "height": 85.0,
+                  "width": 60.0,
+                  "uri": "grand-electromenager/cuisiniere/cuisiniere-induction",
+                  "createdAt": {"$date": "2024-08-13T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "b1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "tUVkFX29j3Xa/8DZ04pZuQ==", "subType": "03"}},
+                      "uri": "/images/gem/cuisiniere-induction.png",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "C3f4ZZjt28D9whsacnLikA==", "subType": "03"}},
+                  "name": "Cuisinière à Bois",
+                  "description": "Cuisinière traditionnelle à bois pour une cuisine rustique.",
+                  "price": 699.99,
+                  "stock": 8,
+                  "estimatedDelivery": {"$date": "2024-09-20T08:00:00.000Z"},
+                  "weight": 50.0,
+                  "height": 85.0,
+                  "width": 65.0,
+                  "uri": "grand-electromenager/cuisiniere/cuisiniere-a-bois",
+                  "createdAt": {"$date": "2024-08-14T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "b1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "uUVkFX29j4Xa/8DZ04pZuQ==", "subType": "03"}},
+                      "uri": "/images/gem/cuisiniere-bois.png",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "D4g5ZZjt27C9whsacnLikA==", "subType": "03"}},
+                  "name": "Cuisinière Mixte",
+                  "description": "Cuisinière mixte avec plaques à gaz et électriques.",
+                  "price": 549.99,
+                  "stock": 10,
+                  "estimatedDelivery": {"$date": "2024-09-25T08:00:00.000Z"},
+                  "weight": 32.0,
+                  "height": 85.0,
+                  "width": 60.0,
+                  "uri": "grand-electromenager/cuisiniere/cuisiniere-mixte",
+                  "createdAt": {"$date": "2024-08-15T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "b1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "vUVkFX29j5Xa/8DZ04pZuQ==", "subType": "03"}},
+                      "uri": "/images/gem/cuisiniere-mixte.jpeg",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "E5h6ZZjt28D9whsacnLikA==", "subType": "03"}},
+                  "name": "Cuisinière à Gaz 5 Feux",
+                  "description": "Cuisinière à gaz avec 5 feux pour les grands repas.",
+                  "price": 599.99,
+                  "stock": 7,
+                  "estimatedDelivery": {"$date": "2024-09-30T08:00:00.000Z"},
+                  "weight": 35.0,
+                  "height": 85.0,
+                  "width": 70.0,
+                  "uri": "grand-electromenager/cuisiniere/cuisiniere-a-gaz-5-feux",
+                  "createdAt": {"$date": "2024-08-16T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "b1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "Gx+KvG6zSbeY6kI5C1z5YA==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "wUVkFX29j6Xa/8DZ04pZuQ==", "subType": "03"}},
+                      "uri": "/images/gem/cuisiniere-a-gaz-5-feux.webp",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "Gx+KvG6zSbeY6kI5C1z5YA==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "F6i7ZZjt27E9whsacnLikA==", "subType": "03"}},
+                  "name": "Cuisinière Multifonction",
+                  "description": "Cuisinière multifonction avec four à chaleur tournante.",
+                  "price": 649.99,
+                  "stock": 11,
+                  "estimatedDelivery": {"$date": "2024-10-05T08:00:00.000Z"},
+                  "weight": 38.0,
+                  "height": 85.0,
+                  "width": 65.0,
+                  "uri": "grand-electromenager/cuisiniere/cuisiniere-multifonction",
+                  "createdAt": {"$date": "2024-08-17T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "b1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "xUVkFX29j7Xa/8DZ04pZuQ==", "subType": "03"}},
+                      "uri": "/images/gem/cuisiniere-multifonction.jpg",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "G7j8ZZjt28F9whsacnLikA==", "subType": "03"}},
+                  "name": "Cuisinière Vitrocéramique",
+                  "description": "Cuisinière avec plaques vitrocéramiques et four grill.",
+                  "price": 449.99,
+                  "stock": 14,
+                  "estimatedDelivery": {"$date": "2024-10-10T08:00:00.000Z"},
+                  "weight": 29.0,
+                  "height": 85.0,
+                  "width": 60.0,
+                  "uri": "grand-electromenager/cuisiniere/cuisiniere-vitroceramique",
+                  "createdAt": {"$date": "2024-08-18T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "b1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "Gx+KvG6zSbeY6kI5C1z5YA==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "yUVkFX29j8Xa/8DZ04pZuQ==", "subType": "03"}},
+                      "uri": "/images/gem/cuisiniere-vitroceramique.png",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "H8k9ZZjt27G9whsacnLikA==", "subType": "03"}},
+                  "name": "Cuisinière Compacte",
+                  "description": "Cuisinière compacte idéale pour les petits espaces.",
+                  "price": 299.99,
+                  "stock": 18,
+                  "estimatedDelivery": {"$date": "2024-10-15T08:00:00.000Z"},
+                  "weight": 25.0,
+                  "height": 85.0,
+                  "width": 50.0,
+                  "uri": "grand-electromenager/cuisiniere/cuisiniere-compacte",
+                  "createdAt": {"$date": "2024-08-19T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "b1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "zUVkFX29j9Xa/8DZ04pZuQ==", "subType": "03"}},
+                      "uri": "/images/gem/cuisiniere-compacte.jpeg",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "I9l0ZZjt28G9whsacnLikA==", "subType": "03"}},
+                  "name": "Cuisinière Professionnelle",
+                  "description": "Cuisinière professionnelle pour les passionnés de cuisine.",
+                  "price": 999.99,
+                  "stock": 5,
+                  "estimatedDelivery": {"$date": "2024-10-20T08:00:00.000Z"},
+                  "weight": 70.0,
+                  "height": 85.0,
+                  "width": 90.0,
+                  "uri": "grand-electromenager/cuisiniere/cuisiniere-professionnelle",
+                  "createdAt": {"$date": "2024-08-20T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "b1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "aUVkFX29k0Xa/8DZ04pZuQ==", "subType": "03"}},
+                      "uri": "/images/gem/cuisiniere-professionnelle.jpeg",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "J0m1ZZjt27H9whsacnLikA==", "subType": "03"}},
+                  "name": "Cuisinière Inox",
+                  "description": "Cuisinière en inox avec finitions modernes et robustes.",
+                  "price": 799.99,
+                  "stock": 9,
+                  "estimatedDelivery": {"$date": "2024-10-25T08:00:00.000Z"},
+                  "weight": 45.0,
+                  "height": 85.0,
+                  "width": 60.0,
+                  "uri": "grand-electromenager/cuisiniere/cuisiniere-inox",
+                  "createdAt": {"$date": "2024-08-21T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "b1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "bUVkFX29k1Xa/8DZ04pZuQ==", "subType": "03"}},
+                      "uri": "/images/gem/cuisiniere-inox.jpg",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
                     }
                   ],
                   "_class": "com.mobalpa.catalogue.model.Product"

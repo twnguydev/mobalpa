@@ -1,0 +1,288 @@
+<div class="container mx-auto px-4 py-8 min-h-screen h-auto">
+  <h1 class="text-3xl md:text-4xl font-bold mb-8 text-mobalpa-green">Confirmation de la commande</h1>
+
+  <div class="flex flex-col items-center md:flex-row md:justify-center mb-10 py-4 space-y-4 md:space-y-0 md:space-x-6">
+    <div class="flex items-center">
+      <a href="/panier" class="text-mobalpa-green-alternate flex items-center">
+        <div class="w-6 h-6 rounded-full bg-mobalpa-green-alternate text-white flex items-center justify-center">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+        </div>
+        <span class="ml-2">Confirmation du panier</span>
+      </a>
+    </div>
+    <div class="flex-auto border-t border-gray-300"></div>
+    <div class="flex items-center">
+      <div class="w-6 h-6 rounded-full bg-mobalpa-green-alternate text-white flex items-center justify-center">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+        </svg>
+      </div>
+      <span class="ml-2">Confirmation de la commande</span>
+    </div>
+    <div class="flex-auto border-t border-gray-300"></div>
+    <div class="flex items-center">
+      <div class="w-6 h-6 rounded-full bg-gray-300 text-gray-600 flex items-center justify-center">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+        </svg>
+      </div>
+      <span class="ml-2 text-gray-500">Récapitulatif de la commande</span>
+    </div>
+  </div>
+
+  <div class="flex flex-col md:flex-row md:justify-between">
+    <div class="w-full md:w-2/3">
+      <div *ngIf="getDeliveryKeys().length === 0" class="space-y-3 mb-16">
+        <p class="font-gotham text-2xl">Aucune option de livraison disponible pour le moment.</p>
+      </div>
+      <div *ngIf="getDeliveryKeys().length > 0" class="space-y-3 mb-16">
+        <div class="w-full">
+          <div
+            class="bg-gray-100 px-6 md:px-10 py-4 md:py-6 rounded-3xl flex items-center justify-between gap-4 m-2 mt-0 ml-0">
+            <p class="font-gotham text-sm md:text-base">Sélectionnez un mode de livraison :</p>
+            <select class="font-gotham text-lg px-4 py-2 bg-white rounded-lg" [(ngModel)]="selectedOption">
+              <option *ngFor="let key of getDeliveryKeys()" [value]="key">
+                {{ key }} - {{ deliveryOptions[key].price | number:'1.2-2' }} €
+              </option>
+            </select>
+          </div>
+          <div class="gap-4">
+            <div class="bg-gray-100 px-5 py-4 rounded-3xl m-2 ml-0 space-y-4">
+              <h3 class="text-xl font-bold">Articles</h3>
+              <div *ngFor="let item of order?.items" class="grid grid-cols-2 md:grid-cols-4 gap-4 items-center">
+                <div>
+                  <img [src]="item.product?.images?.[0]?.uri" alt="{{ item.product?.name }}"
+                    class="w-20 h-20 object-cover rounded-3xl">
+                </div>
+                <div>
+                  <p class="font-gotham text-lg">{{ item.product?.name }}</p>
+                  <p class="font-gotham text-sm text-gray-500">Quantité : {{ item.quantity }}</p>
+                  <p class="font-gotham text-sm text-gray-500">Prix unitaire : {{ item.product?.price | number:'1.2-2'
+                    }} €</p>
+                </div>
+                <div class="text-right flex items-center justify-end col-span-2">
+                  <p class="font-gotham text-lg">Montant total : {{ (item.product?.price ?? 0) * (item.quantity) |
+                    number:'1.2-2' }} €</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div *ngIf="isUserLoggedIn" class="bg-gray-100 px-5 py-4 rounded-3xl m-2 ml-0">
+                <h3 class="text-xl font-semibold mb-2">Adresse de livraison</h3>
+                <div *ngIf="successMessage?.address" class="alert alert-success text-green-500 mb-2">{{ successMessage?.address }}</div>
+                <div *ngIf="errorMessage?.address" class="alert alert-danger text-red-500 mb-2">{{ errorMessage?.address }}</div>
+                <div *ngIf="!userAddress?.line1 || !userAddress?.city || !userAddress?.postalCode" class="text-center text-gray-500 mb-5">
+                    <p>Aucune adresse de livraison et de facturation enregistrée.</p>
+                </div>
+                <p *ngIf="user && user.address && user.city && user.zipcode" class="my-5">
+                    {{ user.address }}, {{ user.zipcode }} {{ user.city }}
+                </p>
+                <button (click)="toggleAddressForm()"
+                    class="bg-mobalpa-green hover:bg-emerald-green text-white p-2 rounded-lg w-full">
+                    Modifier mon adresse de livraison
+                </button>
+                <div *ngIf="isAddressFormVisible">
+                    <h3 class="text-lg font-semibold my-4 text-mobalpa-green">Ajouter une nouvelle adresse de livraison</h3>
+                    <form *ngIf="user" (ngSubmit)="addAddress()" class="space-y-4">
+                        <div>
+                            <label for="address" class="block text-sm font-medium text-gray-700">Adresse</label>
+                            <input type="text" [(ngModel)]="newAddress.line1" name="address"
+                                class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-mobalpa-green"
+                                placeholder="Votre adresse">
+                        </div>
+                        <div>
+                            <label for="city" class="block text-sm font-medium text-gray-700">Ville</label>
+                            <input type="text" [(ngModel)]="newAddress.city" name="city"
+                                class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-mobalpa-green"
+                                placeholder="Votre ville">
+                        </div>
+                        <div>
+                            <label for="zip" class="block text-sm font-medium text-gray-700">Code postal</label>
+                            <input type="text" [(ngModel)]="newAddress.postalCode" name="zipcode"
+                                class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-mobalpa-green"
+                                placeholder="Votre code postal">
+                        </div>
+                        <button type="submit"
+                            class="bg-mobalpa-green text-white p-2 rounded-lg hover:bg-emerald-green w-full">Enregistrer les
+                            modifications</button>
+                    </form>
+                </div>
+            </div>       
+
+            <div *ngIf="isUserLoggedIn && !selectedPaymentMethod" class="bg-gray-100 px-5 py-4 rounded-3xl m-2 ml-0">
+              <h3 class="text-xl font-bold mb-4">Moyen de paiement</h3>
+              <div *ngIf="successMessage" class="alert alert-success text-green-500 mb-2">{{ successMessage.payment }}</div>
+              <div *ngIf="errorMessage" class="alert alert-danger text-red-500 mb-2">{{ errorMessage.payment }}</div>
+              <div *ngIf="userPaymentMethods.length === 0" class="text-center text-gray-500 mb-5">
+                <p>Aucune méthode de paiement trouvée.</p>
+              </div>
+              <div class="space-y-4" *ngIf="!selectedPaymentMethod">
+                <div *ngFor="let payment of userPaymentMethods"
+                  class="border p-2 rounded-lg flex justify-between items-center">
+                  <span *ngIf="payment.cardHolder && payment.cardNumber" class="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
+                      stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M2 7h20M2 7v10c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7m-2 5H4m6 4h4" />
+                    </svg>
+                    {{ payment.cardHolder }} **** {{ payment.cardNumber.slice(-4) }}
+                  </span>
+                  <span *ngIf="payment.paypalEmail" class="flex items-center">
+                    <img class="h-4 w-4 mr-3" alt="PayPal Logo Icon 2014"
+                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/PayPal_Logo_Icon_2014.svg/256px-PayPal_Logo_Icon_2014.svg.png?20230314143227">
+                    {{ payment.paypalEmail }}
+                  </span>
+                  <button (click)="choosePayment(payment.uuid)" class="text-mobalpa-green hover:underline">
+                    Sélectionner
+                  </button>
+                </div>
+                <button (click)="togglePaymentForm()"
+                  class="bg-mobalpa-green hover:bg-emerald-green text-white p-2 rounded-lg w-full">
+                  Ajouter une nouvelle méthode de paiement
+                </button>
+                </div>
+
+                <div *ngIf="isPaymentFormVisible">
+                  <h3 class="text-lg font-semibold my-4 text-mobalpa-green">Ajouter une nouvelle méthode de paiement
+                  </h3>
+                  <form (ngSubmit)="addPayment()" class="space-y-4">
+                    <div>
+                      <label for="paymentMethod" class="block text-sm font-medium text-gray-700">Méthode de
+                        paiement</label>
+                      <select [(ngModel)]="newPayment.paymentMethod" name="paymentMethod"
+                        class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-mobalpa-green"
+                        (change)="changePaymentMethod()">
+                        <option value="CREDIT_CARD">Carte de crédit</option>
+                        <option value="PAYPAL">Paypal</option>
+                      </select>
+                    </div>
+                    <div *ngIf="newPayment.paymentMethod === 'CREDIT_CARD' || newPayment.paymentMethod === 'PAYPAL'">
+                      <label for="cardHolder" class="block text-sm font-medium text-gray-700">Titulaire de la
+                        carte</label>
+                      <input type="text" [(ngModel)]="newPayment.cardHolder" name="cardHolder"
+                        class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-mobalpa-green"
+                        placeholder="Nom du titulaire">
+                    </div>
+                    <div *ngIf="newPayment.paymentMethod === 'CREDIT_CARD'">
+                      <label for="cardNumber" class="block text-sm font-medium text-gray-700">Numéro de
+                        carte</label>
+                      <input type="text" [(ngModel)]="newPayment.cardNumber" name="cardNumber"
+                        class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-mobalpa-green"
+                        placeholder="Votre numéro de carte">
+                    </div>
+                    <div *ngIf="newPayment.paymentMethod === 'CREDIT_CARD'">
+                      <label for="expirationDate" class="block text-sm font-medium text-gray-700">Date
+                        d'expiration</label>
+                      <input type="month" [(ngModel)]="newPayment.expirationDate" name="expirationDate"
+                        class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-mobalpa-green">
+                    </div>
+                    <div *ngIf="newPayment.paymentMethod === 'CREDIT_CARD'">
+                      <label for="cvv" class="block text-sm font-medium text-gray-700">CVV</label>
+                      <input type="text" [(ngModel)]="newPayment.cvv" name="cvv"
+                        class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-mobalpa-green"
+                        placeholder="Votre CVV">
+                    </div>
+                    <div *ngIf="newPayment.paymentMethod === 'PAYPAL'">
+                      <label for="paypalEmail" class="block text-sm font-medium text-gray-700">Email
+                        Paypal</label>
+                      <input type="email" [(ngModel)]="newPayment.paypalEmail" name="paypalEmail"
+                        class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-mobalpa-green"
+                        placeholder="Votre email Paypal">
+                    </div>
+                    <button type="submit"
+                      class="bg-mobalpa-green text-white p-2 rounded-lg hover:bg-emerald-green w-full">Ajouter le
+                      mode de paiement</button>
+                  </form>
+                </div>
+              </div>
+              <div *ngIf="selectedPaymentMethod" class="bg-gray-100 px-5 py-4 rounded-3xl m-2 ml-0">
+                <h3 class="text-xl font-bold mb-4">Méthode de paiement sélectionnée</h3>
+                <div *ngIf="selectedPaymentMethod.cardHolder && selectedPaymentMethod.cardNumber" class="flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M2 7h20M2 7v10c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7m-2 5H4m6 4h4" />
+                  </svg>
+                  {{ selectedPaymentMethod.cardHolder }} **** {{ selectedPaymentMethod.cardNumber.slice(-4) }}
+                </div>
+                <div *ngIf="selectedPaymentMethod.paypalEmail" class="flex items-center">
+                  <img class="h-4 w-4 mr-3" alt="PayPal Logo Icon 2014"
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/PayPal_Logo_Icon_2014.svg/256px-PayPal_Logo_Icon_2014.svg.png?20230314143227">
+                  {{ selectedPaymentMethod.paypalEmail }}
+                </div>
+            </div>
+
+            <div *ngIf="!isUserLoggedIn">
+              <div class="bg-gray-100 px-5 py-4 rounded-3xl m-2 ml-0">
+                <h3 class="text-xl font-bold mb-4">Adresse de livraison</h3>
+                <input type="text" placeholder="Nom" [(ngModel)]="tempVisitor.lastname"
+                  class="font-gotham text-lg px-4 py-2 bg-white rounded-lg w-full mb-4">
+                <input type="text" placeholder="Prénom" [(ngModel)]="tempVisitor.firstname"
+                  class="font-gotham text-lg px-4 py-2 bg-white rounded-lg w-full mb-4">
+                <input type="text" placeholder="Adresse e-mail" [(ngModel)]="tempVisitor.email"
+                  class="font-gotham text-lg px-4 py-2 bg-white rounded-lg w-full mb-4">
+                <input type="text" placeholder="Numéro de téléphone" [(ngModel)]="tempVisitor.phoneNumber"
+                  class="font-gotham text-lg px-4 py-2 bg-white rounded-lg w-full mb-4">
+                <input type="text" placeholder="Adresse de livraison" [(ngModel)]="tempAddress.line1"
+                  class="font-gotham text-lg px-4 py-2 bg-white rounded-lg w-full mb-4">
+                <input type="text" placeholder="Ville" [(ngModel)]="tempAddress.city"
+                  class="font-gotham text-lg px-4 py-2 bg-white rounded-lg w-full mb-4">
+                <input type="text" placeholder="Code postal" [(ngModel)]="tempAddress.postalCode"
+                  class="font-gotham text-lg px-4 py-2 bg-white rounded-lg w-full">
+              </div>
+
+              <div class="bg-gray-100 px-5 py-4 rounded-3xl m-2 ml-0">
+                <h3 class="text-xl font-bold mb-4">Moyen de paiement</h3>
+                <input type="text" placeholder="Numéro de carte" [(ngModel)]="tempPaymentMethod.cardNumber"
+                  class="font-gotham text-lg px-4 py-2 bg-white rounded-lg w-full mb-4">
+                <input type="month" placeholder="Date d'expiration" [(ngModel)]="tempPaymentMethod.expirationDate"
+                  class="font-gotham text-lg px-4 py-2 bg-white rounded-lg w-full mb-4">
+                <input type="text" placeholder="Code CVC" [(ngModel)]="tempPaymentMethod.cvv"
+                  class="font-gotham text-lg px-4 py-2 bg-white rounded-lg w-full">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="w-full md:w-1/3 mt-4 md:mt-0">
+      <div class="bg-gray-100 rounded-3xl p-5">
+        <p class="text-2xl mb-5 text-center">Récapitulatif de la commande</p>
+        <div class="flex justify-between my-2">
+          <span class="text-lg">Montant HT</span>
+          <span class="text-lg">{{ order?.totalHt | number:'1.2-2' }} €</span>
+        </div>
+        <div *ngIf="order && order.reduction > 0" class="flex justify-between my-2">
+          <span class="text-lg">Réduction</span>
+          <span class="text-lg">{{ order.reduction | number:'1.2-2' }} €</span>
+        </div>
+        <div *ngIf="selectedOption" class="flex justify-between my-2">
+          <span class="text-lg">Frais de livraison</span>
+          <span class="text-lg">{{ deliveryOptions[selectedOption].price | number:'1.2-2' }} €</span>
+        </div>
+        <div class="flex justify-between my-2">
+          <span class="text-lg">TVA</span>
+          <span class="text-lg">{{ order?.vat | number:'1.2-2' }} €</span>
+        </div>
+        <div class="flex justify-between items-center my-2">
+          <span class="text-lg">Montant total</span>
+          <span *ngIf="!selectedOption" class="font-gotham text-mobalpa-green text-xl md:text-3xl">
+            {{ order?.totalTtc | number:'1.2-2' }} €
+          </span>
+          <span *ngIf="selectedOption && order && order.totalTtc" class="font-gotham text-mobalpa-green text-xl md:text-3xl">
+            {{ (order.totalTtc + (deliveryOptions[selectedOption].price || 0)) | number:'1.2-2' }} €
+          </span>
+        </div>        
+        <button (click)="processOrder()" class="w-full bg-mobalpa-green-alternate text-white p-2 rounded-lg mt-5">
+          Procéder au paiement
+        </button>
+        <p *ngIf="errorMessage?.order" class="text-xs text-custom-orange mt-3">{{ errorMessage?.order }}</p>
+      </div>
+    </div>
+  </div>
+</div>
