@@ -5,6 +5,7 @@ import com.mobalpa.api.model.Satisfaction;
 import com.mobalpa.api.service.SatisfactionService;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,6 +46,16 @@ public class SatisfactionController {
     public ResponseEntity<?> getHomeSatisfaction() {
         try {
             List<Satisfaction> satisfactions = satisfactionService.getFirstThreeSatisfactions();
+            return ResponseEntity.ok(satisfactions);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while fetching the satisfaction entries.");
+        }
+    }
+
+    @GetMapping("/product/{uuid}")
+    public ResponseEntity<?> getProductSatisfaction(@PathVariable("uuid") UUID productUuid) {
+        try {
+            List<Satisfaction> satisfactions = satisfactionService.getProductSatisfaction(productUuid);
             return ResponseEntity.ok(satisfactions);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while fetching the satisfaction entries.");
