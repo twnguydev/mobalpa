@@ -110,7 +110,8 @@ export class SupportComponent implements OnInit {
       targetType: "MAIN",
       targetUuid: null,
       rating: this.feedForm.get('rating')?.value,
-      comment: this.feedForm.get('comment')?.value
+      comment: this.feedForm.get('comment')?.value,
+      createdAt: 1
     };
 
     this.satisfactionService.createSatisfaction(satisfactionRequest).subscribe(

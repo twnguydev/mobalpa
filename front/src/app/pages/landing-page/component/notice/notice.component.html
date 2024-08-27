@@ -1,24 +1,15 @@
 <h1 class="px-4 mx-4 mt-20 text-4xl text-emerald-green font-aquawax lg:px-24">Ce que nos clients en pensent</h1>
 
-<div class="mx-4 mt-4 mb-20 lg:mx-24 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    <div class="border border-gray-300 bg-white rounded-2xl shadow-lg p-6 flex flex-col justify-between">
-        <p class="font-semibold text-lg">Marie VIGNALI</p>
+<div class="mx-4 mt-4 mb-20 lg:mx-24 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" *ngIf="satisfactions.length > 0">
+    <div class="border border-gray-300 bg-white rounded-2xl shadow-lg p-6 flex flex-col justify-between" *ngFor="let satisfaction of satisfactions">
+        <p class="font-semibold text-lg">{{satisfaction.userUuid.firstname}} {{satisfaction.userUuid.lastname}}</p>
+        <p class="">{{ satisfaction.rating }}</p>
         <p class="text-lime-500 font-medium">ACHAT VERIFIÉ</p>
-        <p class="text-sm text-gray-500 mb-4">Dépot de l'avis le 21 août 2024</p>
-        <p class="text-gray-700">Je suis extrêmement satisfaite de mon achat ! La qualité est exceptionnelle et la livraison a été rapide. Je recommande vivement ce site.</p>
+        <p class="text-sm text-gray-500 mb-4">Dépot de l'avis le {{satisfaction.createdAt}}</p>
+        <p class="text-gray-700">{{ satisfaction.comment }}</p>
     </div>
+</div>
 
-    <div class="border border-gray-300 bg-white rounded-2xl shadow-lg p-6 flex flex-col justify-between">
-        <p class="font-semibold text-lg">Vincent VIGNALI</p>
-        <p class="text-lime-500 font-medium">ACHAT VERIFIÉ</p>
-        <p class="text-sm text-gray-500 mb-4">Dépot de l'avis le 01 août 2024</p>
-        <p class="text-gray-700">Service client au top ! Ils ont répondu à toutes mes questions et m'ont aidé à choisir le produit parfait. Je suis très content de mon achat.</p>
-    </div>
-
-    <div class="border border-gray-300 bg-white rounded-2xl shadow-lg p-6 flex flex-col justify-between">
-        <p class="font-semibold text-lg">Elisa WANG</p>
-        <p class="text-lime-500 font-medium">ACHAT VERIFIÉ</p>
-        <p class="text-sm text-gray-500 mb-4">Dépot de l'avis le 26 juillet 2024</p>
-        <p class="text-gray-700">Produit conforme à la description, de très bonne qualité et à un prix compétitif. Je suis ravie de mon achat et je reviendrai sans hésiter.</p>
-    </div>
+<div *ngIf="satisfactions.length === 0">
+    <p>Aucun avis disponible.</p>
 </div>
