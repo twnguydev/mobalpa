@@ -218,12 +218,12 @@ export class EspaceAdminComponent implements OnInit {
 
   filterOrders(): void {
     const filtered = this.orders.filter(order =>
-      order.uuid.toLowerCase().includes(this.searchTermOrders.toLowerCase()) ||
+      order.uuid?.toLowerCase().includes(this.searchTermOrders.toLowerCase()) ||
       order.user?.firstname.toLowerCase().includes(this.searchTermOrders.toLowerCase()) ||
       order.user?.lastname.toLowerCase().includes(this.searchTermOrders.toLowerCase()) ||
-      order.totalTtc.toString().toLowerCase().includes(this.searchTermOrders.toLowerCase()) ||
+      order.totalTtc?.toString().toLowerCase().includes(this.searchTermOrders.toLowerCase()) ||
       order.deliveryAddress.toLowerCase().includes(this.searchTermOrders.toLowerCase()) ||
-      order.status.toLowerCase().includes(this.searchTermOrders.toLowerCase())  ||
+      order.status?.toLowerCase().includes(this.searchTermOrders.toLowerCase())  ||
       order.createdAt?.toLowerCase().includes(this.searchTermOrders.toLowerCase())
     );
 
