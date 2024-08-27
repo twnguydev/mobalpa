@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '@services/product.service';
-import { IProduct } from '@interfaces/product.interface';
+import { IProduct, IColor } from '@interfaces/product.interface';
 import { ISubcategory } from '@interfaces/category.interface';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -38,6 +38,7 @@ export class CategoryComponent implements OnInit {
   subcategory: ISubcategory | null = null;
   productAdded: { [key: string]: boolean } = {};
   productAddedOnCart: { [key: string]: boolean } = {};
+  selectedProductColor: { [key: string]: IColor } = {};
 
   isUserAuthenticated: boolean = false;
 
@@ -217,6 +218,10 @@ export class CategoryComponent implements OnInit {
     }
   }
 
+  selectColor(product: IProduct, color: IColor): void {
+    this.selectedProductColor[product.uuid] = color;
+  }
+
   getColorHex(colorName: string): string {
     return this.colorMap[colorName] || '#CCCCCC';
   }
@@ -261,14 +266,18 @@ export class CategoryComponent implements OnInit {
   }
 
   addToCart(product: IProduct): void {
+    if (this.selectedProductColor[product.uuid] === undefined) {
+      this.selectedProductColor[product.uuid] = product.colors[0];
+    }
+    const retrieveImage = product.images.find(image => image.color.name === this.selectedProductColor[product.uuid].name);
     const item = {
       productUuid: product.uuid,
       product: product,
-      selectedColor: product.colors[0].name,
+      selectedColor: this.selectedProductColor[product.uuid].name,
       quantity: 1,
       properties: {
         brand: product.brand.name,
-        images: product.images[0].uri
+        images: retrieveImage ? retrieveImage.uri : ''
       }
     };
     this.userService.modifyCartFromLocalstorage('add', item);
