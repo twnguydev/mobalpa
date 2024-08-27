@@ -57,4 +57,8 @@ public class SatisfactionService {
     public List<Satisfaction> getAllSatisfaction() {
         return satisfactionRepository.findAll();
     }
+
+    public List<Satisfaction> getFirstThreeSatisfactions() {
+        return satisfactionRepository.findTop3ByOrderByCreatedAtDesc();
+    }
 }

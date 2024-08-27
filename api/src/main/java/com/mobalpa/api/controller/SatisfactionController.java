@@ -40,4 +40,14 @@ public class SatisfactionController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while fetching the satisfaction entries.");
         }
     }
+
+    @GetMapping("/home")
+    public ResponseEntity<?> getHomeSatisfaction() {
+        try {
+            List<Satisfaction> satisfactions = satisfactionService.getFirstThreeSatisfactions();
+            return ResponseEntity.ok(satisfactions);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while fetching the satisfaction entries.");
+        }
+    }
 }
