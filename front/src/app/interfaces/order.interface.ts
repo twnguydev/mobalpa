@@ -1,4 +1,5 @@
 import { IProduct } from './product.interface';
+import { IUser } from './user.interface';
 
 export interface IOrder {
   uuid?: string | undefined;
@@ -17,6 +18,7 @@ export interface IOrder {
   deliveryAddress: string;
   paymentUuid?: string;
   invoice?: Blob | null;
+  user?: IUser;
 }
 
 export interface IOrderItem {
