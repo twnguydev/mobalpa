@@ -4,6 +4,7 @@ import com.mobalpa.api.model.User;
 import com.mobalpa.api.model.Role;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -37,7 +38,16 @@ public class JwtUtil {
     }
 
     public Claims extractAllClaims(String token) {
-        return Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token).getBody();
+        try {
+            return Jwts.parserBuilder()
+                .setSigningKey(getSigningKey())
+                .setAllowedClockSkewSeconds(60)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+        } catch (ExpiredJwtException e) {
+            return e.getClaims();
+        }
     }
 
     public boolean validateToken(String token, String email) {

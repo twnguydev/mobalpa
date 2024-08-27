@@ -1,4 +1,4 @@
-<div *ngIf="products.length > 0" class="p-4 grid grid-cols-1 lg:grid-cols-2 gap-4 my-10 mx-4 lg:mx-20">
+<div *ngIf="products.length > 0" class="p-4 grid grid-cols-1 lg:grid-cols-2 gap-4 my-10 mx-4 lg:mx-10">
     <!-- Carte de gauche (doit occuper toute la hauteur des deux cartes à droite) -->
     <div
         class="w-full bg-emerald-green flex flex-col md:gap-5 md:flex-row justify-between items-center p-4 rounded-lg shadow-lg lg:h-full">
@@ -8,7 +8,9 @@
             </p>
             <p class="text-lg md:text-xl text-white">{{ products[0].product.description }}</p>
             <p class="text-white mt-2 uppercase">Offre limitée !</p>
-            <div class="flex bg-white p-2 rounded-lg justify-between items-center mt-4 md:space-y-0 md:space-x-2">
+            <p class="bg-red-600 w-1/2 text-white text-center mt-4 rounded">BON PLAN -{{
+                products[0].campaigns[0].discountRate }}%</p>
+            <div class="flex bg-white p-2 rounded-lg justify-between items-center md:space-y-0 md:space-x-2">
                 <p class="text-red-600 font-bold text-xl md:text-2xl">{{ products[0].discountedPrice | number:'1.2-2' }}
                     €</p>
                 <p class="text-red-600 line-through text-sm md:text-lg px-2">{{ products[0].originalPrice }} €</p>
@@ -28,7 +30,9 @@
             <div class="w-full flex flex-col justify-center md:ml-5">
                 <p class="text-xl md:text-2xl lg:text-3xl font-bold text-white">{{ products[1].product.name }}</p>
                 <p class="text-lg md:text-xl text-white">{{ products[1].product.description }}</p>
-                <div class="flex bg-white p-2 rounded-lg justify-between items-center mt-4 md:space-y-0 md:space-x-2">
+                <p class="bg-red-600 w-1/2 text-white text-center my-4 rounded">BON PLAN -{{
+                    products[1].campaigns[0].discountRate }}%</p>
+                <div class="flex bg-white p-2 rounded-lg justify-between items-center md:space-y-0 md:space-x-2">
                     <p class="text-red-600 font-bold text-xl md:text-2xl">{{ products[1].discountedPrice |
                         number:'1.2-2' }} €</p>
                     <p class="text-red-600 line-through text-sm md:text-lg px-2">{{ products[1].originalPrice }} €</p>
@@ -46,7 +50,9 @@
             <div class="w-full flex flex-col justify-center md:ml-5">
                 <p class="text-xl md:text-2xl lg:text-3xl font-bold text-white">{{ products[2].product.name }}</p>
                 <p class="text-lg md:text-xl text-white">{{ products[2].product.description }}</p>
-                <div class="flex bg-white p-2 rounded-lg justify-between items-center mt-4 md:space-y-0 md:space-x-2">
+                <p class="bg-red-600 w-1/2 text-white text-center my-4 rounded">BON PLAN -{{
+                    products[2].campaigns[0].discountRate }}%</p>
+                <div class="flex bg-white p-2 rounded-lg justify-between items-center md:space-y-0 md:space-x-2">
                     <p class="text-red-600 font-bold text-xl md:text-2xl">{{ products[2].discountedPrice |
                         number:'1.2-2' }} €</p>
                     <p class="text-red-600 line-through text-sm md:text-lg px-2">{{ products[2].originalPrice }} €</p>

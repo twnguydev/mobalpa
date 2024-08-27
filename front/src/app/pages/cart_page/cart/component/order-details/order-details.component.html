@@ -1,7 +1,7 @@
 <div class="container mx-auto px-4 py-8 min-h-screen h-auto">
   <h1 class="text-3xl md:text-4xl font-bold mb-8 text-mobalpa-green">Récapitulatif de la commande</h1>
 
-  <div class="flex flex-col items-center md:flex-row md:justify-center mb-10 py-4 space-y-4 md:space-y-0 md:space-x-6">
+  <div class="md:mx-20 mb-10 flex flex-col justify-center md:items-center space-y-4 py-4 md:flex-row md:justify-center md:space-x-6 md:space-y-0">
     <div class="flex items-center">
       <div class="w-6 h-6 rounded-full bg-mobalpa-green-alternate text-white flex items-center justify-center">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -33,13 +33,13 @@
   <div class="flex flex-col gap-4 md:flex-row md:justify-between">
     <div class="w-full">
       <div *ngIf="order" class="bg-gray-100 rounded-3xl p-5">
-        <p class="text-2xl mb-10 text-center">Merci pour votre commande, {{ order.recipientName }} !</p>
+        <p class="text-2xl mb-10 text-center">Merci pour votre commande, {{ order.user.firstname }} {{ order.user.lastname }} !</p>
         <p class="text-lg mb-10">Toute l'équipe de Mobalpa vous remercie pour votre confiance. Vous allez recevoir un email de confirmation de commande dans quelques instants.</p>
-        <p class="text-lg mb-2">Numéro de commande : <strong>{{ order.orderUuid }}</strong></p>
-        <p class="text-lg mb-2">Numéro de livraison : <strong>{{ order.shipment.deliveryNumber }}</strong>
-        <p class="text-lg mb-2">Méthode d'expédition : <strong>{{ order.shippingMethodCheckoutName }}</strong></p>
+        <p class="text-lg mb-2">Numéro de commande : <strong>{{ order.uuid }}</strong></p>
+        <p class="text-lg mb-2">Numéro de livraison : <strong>{{ deliveryNumbersString }}</strong></p>
+        <p class="text-lg mb-2">Méthode d'expédition : <strong>{{ order.deliveryMethod }}</strong></p>
         <p class="text-lg mb-2">Adresse de livraison :</p>
-        <p class="ml-4">{{ order.recipientAddress }}</p>
+        <p class="ml-4">{{ order.deliveryAddress }}</p>
         <p class="text-lg mt-4">Nous vous remercions d'avoir passé commande chez nous et espérons vous revoir bientôt !</p>
       </div>
     </div>

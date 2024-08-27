@@ -6,12 +6,20 @@ import { ProductService } from '@services/product.service';
 import { UserService } from '@services/user.service';
 import { IProduct, ICampaign } from '@interfaces/product.interface';
 import { IWishlistItem } from '@interfaces/wishlist.interface';
+import { IColor } from '@interfaces/product.interface';
 import { Observable } from 'rxjs';
+import { FormsModule, FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+
+interface Avis {
+  rating: number;
+  comment: string;
+  date: string;
+}
 
 @Component({
   selector: 'app-product',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.css'],
   providers: [DatePipe]
@@ -34,7 +42,11 @@ export class ProductComponent implements OnInit {
     'Vert': '#3CB371',
     Violet: '#8A2BE2'
   };
-
+  ratings: number[] = [1, 2, 3, 4, 5];
+  feedback = {
+    rating: 0,
+    comment: ''
+  };
   selectedTab: number = 0;
   quantity: number = 1;
   product: IProduct | null = null;
@@ -44,19 +56,32 @@ export class ProductComponent implements OnInit {
   isAdded: boolean = false;
   errorMessage: string = '';
   selectedImage: string | null = null;
-  selectedColor: string | null = null;
+  selectedColor: IColor = {} as IColor;
+  
+  avisForm!: FormGroup;
+  submissionSuccess = false;
+  avisList: Avis[] = []
 
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
     private userService: UserService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private fb: FormBuilder
   ) { }
 
   ngOnInit(): void {
     const categoryUri: string | null = this.route.snapshot.paramMap.get('categoryUri');
     const subcategoryUri: string | null = this.route.snapshot.paramMap.get('subcategoryUri');
     const productUri: string | null = this.route.snapshot.paramMap.get('productUri');
+    console.log("jhgf :" + this.product)
+
+
+    this.avisForm = this.fb.group({
+      rating: ['', Validators.required],
+      comment: ['', [Validators.required]]
+    });
+
 
     if (categoryUri && subcategoryUri && productUri) {
       this.productService.getProductByUri(categoryUri, subcategoryUri, productUri).subscribe(
@@ -64,7 +89,7 @@ export class ProductComponent implements OnInit {
           if (product) {
             this.product = product;
             this.selectedImage = product.images[0]?.uri || null;
-            this.selectedColor = this.product.colors[0]?.name || null;
+            this.selectedColor = product.colors[0] || {} as IColor;
             this.calculateShippingDelay(product.estimatedDelivery);
             this.applyCampaigns(product.campaigns);
             console.log('Produit récupéré', product);
@@ -86,10 +111,29 @@ export class ProductComponent implements OnInit {
     this.selectedImage = imageUri;
   }
 
-  selectColor(colorName: string) {
-    this.selectedColor = colorName;
+  selectColor(color: IColor): void {
+    this.selectedColor = color;
   }
+  onavisSubmit() {
+    if (this.avisForm.valid) {
+      const newAvis: Avis = {
+        rating: this.avisForm.value.rating,
+        comment: this.avisForm.value.comment,
+        date: new Date().toLocaleDateString(),
+      };
 
+      this.avisList.push(newAvis); 
+      this.submissionSuccess = true;
+      this.avisForm.reset();
+
+      setTimeout(() => {
+        this.submissionSuccess = false;
+      }, 3000);
+    }
+  }
+  getStars(rating: number): any[] {
+    return new Array(rating);
+  }
   private applyCampaigns(campaigns: ICampaign[]): void {
     if (campaigns.length > 0) {
       const maxDiscount = Math.max(...campaigns.map(campaign => campaign.discountRate));
@@ -150,14 +194,15 @@ export class ProductComponent implements OnInit {
 
   addToCart() {
     if (this.product && this.selectedColor) {
+      const retrieveImage = this.product.images.find(image => image.color.name === this.selectedColor.name);
       const item: IWishlistItem = {
         productUuid: this.product.uuid,
         product: this.product,
-        selectedColor: this.selectedColor,
+        selectedColor: this.selectedColor.name,
         quantity: this.quantity,
         properties: {
           brand: this.product.brand.name,
-          images: this.product.images[0].uri
+          images: retrieveImage ? retrieveImage.uri : ''
         }
       };
 

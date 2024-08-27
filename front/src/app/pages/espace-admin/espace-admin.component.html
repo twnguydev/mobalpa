@@ -41,6 +41,7 @@
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.address }}</td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.city }}</td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.zipcode }}</td>
+
             </tr>
           </tbody>
         </table>
@@ -195,6 +196,7 @@
                placeholder="Rechercher par numéro, client, etc."
                [(ngModel)]="searchTermOrders" (input)="filterOrders()" />
 
+
         <table class="min-w-full divide-y divide-gray-200">
           <thead class="bg-gray-50">
             <tr>
@@ -216,6 +218,7 @@
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.totalTtc }} €</td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.createdAt | date }}</td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.status }}</td>
+
             </tr>
           </tbody>
         </table>
@@ -226,6 +229,7 @@
           [itemsPerPage]="itemsPerPageOrders"
           [totalItems]="orders.length"
           (pageChange)="onPageChangeOrders($event)"
+
           class="mt-4"
         ></app-pagination>
       </div>
@@ -323,6 +327,7 @@
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ codePromo.discountRate }}%</td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ codePromo.dateStart }}</td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ codePromo.dateEnd }}</td>
+
             </tr>
           </tbody>
         </table>
@@ -333,6 +338,7 @@
           [itemsPerPage]="itemsPerPageCodePromos"
           [totalItems]="codePromos.length"
           (pageChange)="onPageChangeCodePromos($event)"
+
           class="mt-4"
         ></app-pagination>
       </div>
@@ -396,6 +402,7 @@
                placeholder="Rechercher par titre, description, etc."
                [(ngModel)]="searchTermTickets" (input)="filterTickets()" />
 
+
         <table class="min-w-full divide-y divide-gray-200">
           <thead class="bg-gray-50">
             <tr>
@@ -423,6 +430,7 @@
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ ticket.closedAt }}</td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ ticket.responder }}</td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ ticket.resolution }}</td>
+
             </tr>
           </tbody>
         </table>
@@ -433,17 +441,20 @@
           [itemsPerPage]="itemsPerPageSupportTickets"
           [totalItems]="supportTickets.length"
           (pageChange)="onPageChangeSupportTickets($event)"
+
           class="mt-4"
         ></app-pagination>
       </div>
 
       <ng-template #noTickets>
         <p>Aucun Ticket trouvé.</p>
+
       </ng-template>
     </div>
 
     <!-- Statistiques Tab -->
     <div *ngIf="selectedTab === 8" class="min-w-full">
+
       <div *ngIf="statistics.length > 0; else noStatistique">
         <!-- Contenu statistique à ajouter ici -->
       </div>
