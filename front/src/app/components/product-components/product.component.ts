@@ -7,11 +7,18 @@ import { UserService } from '@services/user.service';
 import { IProduct, ICampaign } from '@interfaces/product.interface';
 import { IWishlistItem } from '@interfaces/wishlist.interface';
 import { Observable } from 'rxjs';
+import { FormsModule, FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+
+interface Avis {
+  rating: number;
+  comment: string;
+  date: string;
+}
 
 @Component({
   selector: 'app-product',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.css'],
   providers: [DatePipe]
@@ -34,7 +41,11 @@ export class ProductComponent implements OnInit {
     'Vert': '#3CB371',
     Violet: '#8A2BE2'
   };
-
+  ratings: number[] = [1, 2, 3, 4, 5];
+  feedback = {
+    rating: 0,
+    comment: ''
+  };
   selectedTab: number = 0;
   quantity: number = 1;
   product: IProduct | null = null;
@@ -45,12 +56,15 @@ export class ProductComponent implements OnInit {
   errorMessage: string = '';
   selectedImage: string | null = null;
   selectedColor: string | null = null;
-
+  avisForm!: FormGroup;
+  submissionSuccess = false;
+  avisList: Avis[] = []
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
     private userService: UserService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private fb: FormBuilder
   ) { }
 
   ngOnInit(): void {
@@ -58,6 +72,13 @@ export class ProductComponent implements OnInit {
     const subcategoryUri: string | null = this.route.snapshot.paramMap.get('subcategoryUri');
     const productUri: string | null = this.route.snapshot.paramMap.get('productUri');
     console.log("jhgf :" + this.product)
+
+
+    this.avisForm = this.fb.group({
+      rating: ['', Validators.required],
+      comment: ['', [Validators.required]]
+    });
+
 
     if (categoryUri && subcategoryUri && productUri) {
       this.productService.getProductByUri(categoryUri, subcategoryUri, productUri).subscribe(
@@ -90,7 +111,26 @@ export class ProductComponent implements OnInit {
   selectColor(colorName: string) {
     this.selectedColor = colorName;
   }
+  onavisSubmit() {
+    if (this.avisForm.valid) {
+      const newAvis: Avis = {
+        rating: this.avisForm.value.rating,
+        comment: this.avisForm.value.comment,
+        date: new Date().toLocaleDateString(),
+      };
 
+      this.avisList.push(newAvis); 
+      this.submissionSuccess = true;
+      this.avisForm.reset();
+
+      setTimeout(() => {
+        this.submissionSuccess = false;
+      }, 3000);
+    }
+  }
+  getStars(rating: number): any[] {
+    return new Array(rating);
+  }
   private applyCampaigns(campaigns: ICampaign[]): void {
     if (campaigns.length > 0) {
       const maxDiscount = Math.max(...campaigns.map(campaign => campaign.discountRate));
