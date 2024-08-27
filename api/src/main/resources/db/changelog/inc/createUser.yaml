@@ -1,7 +1,7 @@
 databaseChangeLog:
     - changeSet:
         id: 1
-        author: qofudsfhjksdpofisudiyghfjsvbndfjkjh
+        author: Saskoue
         changes:
             - insert:
                 tableName: "user"

@@ -11,8 +11,7 @@ import { SupportPageComponent } from '@pages/support-page/support-page.component
 import { SubcategoriePageComponent } from '@pages/subcategorie-page/subcategorie-page.component';
 import { ProductComponent } from '@components/product-components/product.component';
 import { ConfirmOrderComponent } from '@pages/cart_page/cart/component/confirm-order/confirm-order.component';
-// import { PaymentComponent } from '@pages/cart_page/cart/component/payment/payment.component';
-// import { OrderDetailsComponent } from '@pages/cart_page/cart/component/order-details/order-details.component';
+import { OrderDetailsComponent } from '@pages/cart_page/cart/component/order-details/order-details.component';
 import { HomeComponent } from '@components/home-components/home.component';
 import { LoginComponent } from '@components/login-components/login.component';
 import { RegisterComponent } from '@components/register-components/register.component';
@@ -43,8 +42,7 @@ export const routes: Routes = [
     { path: '', component: LandingPageComponent },
     { path: 'panier', component: CartPageComponent },
     { path: 'commande/confirmation', component: ConfirmOrderComponent },
-    // { path: 'commande/paiement', component: PaymentComponent },
-    // { path: 'commande/details', component: OrderDetailsComponent },
+    { path: 'commande/details', component: OrderDetailsComponent },
     { path: 'liste-de-souhaits', component: Wishlist_PageComponent, canActivate: [AuthGuard] },
     { path: 'support', component: SupportPageComponent },
     { path: 'info', component: HomeComponent },

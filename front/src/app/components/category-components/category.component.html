@@ -1,7 +1,7 @@
-<div class="container mx-auto py-8 min-h-screen h-auto">
-    <h1 class="text-4xl font-bold mb-8 text-mobalpa-green">{{ subcategory?.name }}</h1>
+<div class="mx-5 py-8 min-h-screen h-auto">
+    <h1 class="text-3xl sm:text-4xl font-bold mb-6 sm:mb-8 text-mobalpa-green">{{ subcategory?.name }}</h1>
 
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <select class="border border-gray-300 p-2 rounded-lg" (change)="onBrandChange($event)" name="brandName">
             <option value="">Marque</option>
             <option *ngFor="let brand of brands" [value]="brand">{{ brand }}</option>
@@ -13,7 +13,7 @@
         <div class="border border-gray-300 p-2 rounded-lg">
             <input *ngIf="minPrice !== null && maxPrice !== null" type="range" class="w-full accent-indigo-600" name="maxPrice"
                 [min]="minPrice" [max]="maxPrice" [(ngModel)]="selectedPrice" (input)="updateSelectedPrice($event)" />
-            <div class="flex justify-between text-gray-500 mt-2">
+            <div class="flex justify-between text-gray-500 mt-2 text-xs sm:text-sm">
                 <span>{{ minPrice }} €</span>
                 <span>{{ selectedPrice }} €</span>
                 <span>{{ maxPrice }} €</span>
@@ -21,12 +21,9 @@
         </div>
     </div>
 
-    <div class="flex justify-between items-center mb-4">
-        <span class="text-gray-700">{{ filteredProducts.length }} article<span
-                *ngIf="filteredProducts.length > 1">s</span>
-            trouvé<span
-            *ngIf="filteredProducts.length > 1">s</span></span>
-        <div class="flex items-center space-x-2">
+    <div class="flex flex-col sm:flex-row justify-between items-center mb-4">
+        <span class="text-gray-700">{{ filteredProducts.length }} article<span *ngIf="filteredProducts.length > 1">s</span> trouvé<span *ngIf="filteredProducts.length > 1">s</span></span>
+        <div class="flex items-center space-x-2 mt-2 sm:mt-0">
             <span class="text-gray-500">Trier par:</span>
             <select class="border border-gray-300 p-2 rounded-lg" (change)="onSortChange($event)" name="sort">
                 <option value="relevance">Pertinence</option>
@@ -36,7 +33,7 @@
         </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 mb-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 mb-8">
         <div *ngFor="let product of paginatedProducts" class="border p-4 rounded-lg flex flex-col">
             <a href="/categories/{{ product.uri }}" class="flex items-center space-x-1">
                 <span class="text-sm text-custom-blue ml-1">{{ product.category.name }}</span>
@@ -45,7 +42,9 @@
                 <div class="flex items-center justify-center">
                     <img [src]="product.images[0].uri" alt="{{ product.name }}" class="w-40 h-auto object-cover mb-4">
                 </div>
-                <h2 class="flex items-center justify-start gap-x-4 text-lg font-bold mb-2">{{ product.name }} <span *ngIf="discountRate(product) !== null" class="text-xl font-semibold text-red-600">&mdash; {{ discountRate(product) | number: '1.0' }}%</span></h2>
+                <h2 class="flex items-center justify-start gap-x-4 text-lg font-bold mb-2">{{ product.name }}
+                    <span *ngIf="discountRate(product) !== null" class="text-xl font-semibold text-red-600">&mdash; {{ discountRate(product) | number: '1.0' }}%</span>
+                </h2>
                 <p class="text-sm text-gray-500">{{ product.description }}</p>
                 <div class="flex items-center justify-between mt-4">
                     <div class="flex items-center space-x-2">
