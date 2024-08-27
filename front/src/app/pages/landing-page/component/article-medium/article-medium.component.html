@@ -24,16 +24,11 @@
             </div>
         </a>
         <button *ngIf="!productAddedOnCart[product.product.uuid]" (click)="addToCart(product.product)"
-            class="text-white bg-red-600 mt-4 flex w-full h-9 justify-center items-center rounded-lg gap-x-2">
+            class="text-white bg-mobalpa-green-alternate mt-4 flex w-full h-9 justify-center items-center rounded-lg gap-x-2">
             Ajouter au panier
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                class="w-7 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M3 3h2l.91 4.79M7 13h10l4-8H5.21M7 13l-2 9h12l-2-9m-2 5H9m0-4h6" />
-            </svg>
         </button>
         <button *ngIf="productAddedOnCart[product.product.uuid]"
-            class="text-red-600 mt-4 flex w-full h-9 justify-center items-center rounded-lg gap-x-2">
+            class="text-mobalpa-green-alternate mt-4 flex w-full h-9 justify-center items-center rounded-lg gap-x-2">
             Ajouté au panier
         </button>
     </div>
