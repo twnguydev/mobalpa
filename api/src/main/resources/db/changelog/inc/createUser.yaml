@@ -1,7 +1,11 @@
 databaseChangeLog:
     - changeSet:
         id: 1
+<<<<<<< HEAD
+        author: Saskoue
+=======
         author: qofudsfhjksdpofisudiyghfjsvbndfjkjh
+>>>>>>> ad6bf11a9fb9dc504f95b429c2ff5ad217acf009
         changes:
             - insert:
                 tableName: "user"
