@@ -114,7 +114,11 @@ export class UserService {
       );
       
       if (existingProduct) {
-        existingProduct.quantity += item.quantity;
+        if (item.selectedColor && item.selectedColor !== existingProduct.selectedColor) {
+          cart.push(item);
+        } else {
+          existingProduct.quantity += item.quantity;
+        }
       } else {
         cart.push(item);
       }
