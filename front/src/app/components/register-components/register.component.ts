@@ -18,6 +18,8 @@ export class RegisterComponent implements OnInit {
   errorMessage: string = '';
   errors: string[] = [];
   formSubmitted: boolean = false;
+  showPassword = false;
+
 
   constructor(
     private fb: FormBuilder,
@@ -76,5 +78,17 @@ export class RegisterComponent implements OnInit {
         console.log(`Control ${controlName} has errors:`, control.errors);
       }
     });
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+    const passwordField: HTMLInputElement = document.getElementById('password') as HTMLInputElement;
+    passwordField.type = this.showPassword ? 'text' : 'password';
+  }
+
+  toggleConfirmPasswordVisibility() {
+    this.showPassword = !this.showPassword;
+    const passwordField: HTMLInputElement = document.getElementById('confirmPassword') as HTMLInputElement;
+    passwordField.type = this.showPassword ? 'text' : 'confirmPassword';
   }
 }
