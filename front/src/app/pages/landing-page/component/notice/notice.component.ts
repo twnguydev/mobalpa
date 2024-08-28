@@ -23,7 +23,6 @@ export class NoticeComponent implements OnInit {
           satisfaction.createdAt = this.formatDate(satisfaction.createdAt);
           return satisfaction;
         });
-        console.log('Avis récupérés :', this.satisfactions);
       },
       (error) => {
         console.error('Erreur lors de la récupération des avis :', error);

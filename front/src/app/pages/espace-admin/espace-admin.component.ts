@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from '@services/admin.service';
 import { IUser } from '@interfaces/user.interface';
-import { IProduct } from '@interfaces/product.interface';
+import { ICampaign, IProduct } from '@interfaces/product.interface';
 import { ICategory, ISubcategory } from '@interfaces/category.interface';
 import { IOrder } from '@interfaces/order.interface';
+import { ICoupon } from '@interfaces/coupon.interface';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PaginationComponent } from '@components/pagination/pagination.component';
@@ -23,9 +24,12 @@ export class EspaceAdminComponent implements OnInit {
     { title: 'Sous-Catégorie' },
     { title: 'Commande' },
     { title: 'Code Promo' },
+    { title: 'Campagne Promo' },
+    { title: 'Ticket Support' },
     { title: 'Statistique' },
   ];
   selectedTab: number = 0;
+  isFormVisible = false;
 
   // Variables pour les utilisateurs
   users: IUser[] = [];
@@ -75,6 +79,19 @@ export class EspaceAdminComponent implements OnInit {
   itemsPerPageCodePromos: number = 10;
   totalPagesCodePromos: number = 1;
 
+  // Déclaration de la variable coupon
+  newCoupon: ICoupon = {
+    code: '',
+    name: '',
+    discountRate: 0,
+    discountType: 'PERCENTAGE',
+    dateStart: '',
+    dateEnd: '',
+    targetType: 'ALL_USERS',
+    targetUsers: [],
+    maxUse: 1
+  };
+
   // Variables pour les statistiques
   statistics: any[] = [];
   filteredStatistics: any[] = [];
@@ -83,12 +100,31 @@ export class EspaceAdminComponent implements OnInit {
   itemsPerPageStatistics: number = 10;
   totalPagesStatistics: number = 1;
 
+  // Variables pour les campagnes
+  campaigns: ICampaign[] = [];
+  filteredCampaigns: any[] = [];
+  searchTermCampaigns: string = '';
+  currentPageCampaigns: number = 1;
+  itemsPerPageCampaigns: number = 10;
+  totalPagesCampaigns: number = 1;
+
+
+  // Variables pour les tickets de support
+  supportTickets: any[] = [];
+  filteredTickets: any[] = [];
+  searchTermTickets: string = '';
+  currentPageSupportTickets: number = 1;
+  itemsPerPageSupportTickets: number = 10;
+  totalPagesSupportTickets: number = 1;
+
+
+
   constructor(private adminService: AdminService) { }
 
   ngOnInit(): void {
     this.loadUsers();
   }
-
+  // Fonction pour changer de tab
   selectTab(index: number) {
     this.selectedTab = index;
     switch (index) {
@@ -98,10 +134,14 @@ export class EspaceAdminComponent implements OnInit {
       case 3: this.loadSubcategories(); break;
       case 4: this.loadOrders(); break;
       case 5: this.loadCodePromos(); break;
-      case 6: this.loadStatistics(); break;
+      case 6: this.loadCampaigns(); break;
+      case 7: this.loadSupportTickets(); break;
+      case 8: this.loadStatistics(); break;
+
     }
   }
 
+  // Users
   loadUsers(): void {
     this.adminService.getAllUsers().subscribe(users => {
       this.users = users;
@@ -130,12 +170,15 @@ export class EspaceAdminComponent implements OnInit {
     this.filterUsers();
   }
 
+  // Products
+
   loadProducts(): void {
     this.adminService.getAllProducts().subscribe(products => {
       this.products = products;
       this.filterProducts();
     });
   }
+
 
   filterProducts(): void {
     const filtered = this.products.filter(product =>
@@ -163,6 +206,7 @@ export class EspaceAdminComponent implements OnInit {
     this.filterProducts();
   }
 
+  // Categories
   loadCategories(): void {
     this.adminService.getAllCategories().subscribe(categories => {
       this.categories = categories;
@@ -185,6 +229,8 @@ export class EspaceAdminComponent implements OnInit {
     this.currentPageCategories = page;
     this.filterCategories();
   }
+
+  // Subcategories
 
   loadSubcategories(): void {
     this.adminService.getAllSubcategories().subscribe(subcategories => {
@@ -209,6 +255,8 @@ export class EspaceAdminComponent implements OnInit {
     this.filterSubcategories();
   }
 
+  // Orders
+
   loadOrders(): void {
     this.adminService.getAllOrders().subscribe(orders => {
       this.orders = orders;
@@ -222,7 +270,8 @@ export class EspaceAdminComponent implements OnInit {
       order.user?.firstname.toLowerCase().includes(this.searchTermOrders.toLowerCase()) ||
       order.user?.lastname.toLowerCase().includes(this.searchTermOrders.toLowerCase()) ||
       order.totalTtc?.toString().toLowerCase().includes(this.searchTermOrders.toLowerCase()) ||
-      order.deliveryAddress.toLowerCase().includes(this.searchTermOrders.toLowerCase()) ||
+      order.deliveryAddress?.toLowerCase().includes(this.searchTermOrders.toLowerCase()) ||
+
       order.status?.toLowerCase().includes(this.searchTermOrders.toLowerCase())  ||
       order.createdAt?.toLowerCase().includes(this.searchTermOrders.toLowerCase())
     );
@@ -237,17 +286,20 @@ export class EspaceAdminComponent implements OnInit {
     this.filterOrders();
   }
 
+  // Code Promos
   loadCodePromos(): void {
-    // this.adminService.getAllCodePromos().subscribe(codePromos => {
-    //   this.codePromos = codePromos;
-    //   this.filterCodePromos();
-    // });
+    this.adminService.getAllCoupons().subscribe(codePromos => {
+      this.codePromos = codePromos;
+      this.filterCodePromos();
+    });
+
   }
 
   filterCodePromos(): void {
     const filtered = this.codePromos.filter(codePromo =>
-      codePromo.code.toLowerCase().includes(this.searchTermCodePromos.toLowerCase()) ||
-      codePromo.description.toLowerCase().includes(this.searchTermCodePromos.toLowerCase())
+      (codePromo.code?.toLowerCase() || '').includes(this.searchTermCodePromos.toLowerCase()) ||
+      (codePromo.description?.toLowerCase() || '').includes(this.searchTermCodePromos.toLowerCase())
+
     );
 
     this.totalPagesCodePromos = Math.ceil(filtered.length / this.itemsPerPageCodePromos);
@@ -259,6 +311,46 @@ export class EspaceAdminComponent implements OnInit {
     this.currentPageCodePromos = page;
     this.filterCodePromos();
   }
+
+  // Campaign
+  loadCampaigns(): void {
+    this.adminService.getAllCampaigns().subscribe(campaigns => {
+      this.campaigns = campaigns;
+      this.filterCampaigns();
+    });
+  }
+  filterCampaigns(): void {
+    const filtered = this.campaigns;
+    this.totalPagesCampaigns = Math.ceil(filtered.length / this.itemsPerPageCampaigns);
+    this.currentPageCampaigns = Math.min(this.currentPageCampaigns, this.totalPagesCampaigns);
+    this.filteredCampaigns = filtered.slice((this.currentPageCampaigns - 1) * this.itemsPerPageCampaigns, this.currentPageCampaigns * this.itemsPerPageCampaigns);
+  }
+  onPageChangeCampaigns(page: number): void {
+    this.currentPageCampaigns = page;
+    this.filterCampaigns();
+  }
+
+  // Support Tickets
+  loadSupportTickets(): void {
+    this.adminService.getAllTickets().subscribe(supportTickets => {
+      this.supportTickets = supportTickets;
+      this.filterTickets();
+    });
+  }
+
+  filterTickets(): void {
+    const filtered = this.supportTickets;
+    this.totalPagesSupportTickets = Math.ceil(filtered.length / this.itemsPerPageSupportTickets);
+    this.currentPageSupportTickets = Math.min(this.currentPageSupportTickets, this.totalPagesSupportTickets);
+    this.filteredTickets = filtered.slice((this.currentPageSupportTickets - 1) * this.itemsPerPageSupportTickets, this.currentPageSupportTickets * this.itemsPerPageSupportTickets);
+  }
+
+  onPageChangeSupportTickets(page: number): void {
+    this.currentPageSupportTickets = page;
+    this.filterTickets();
+  }
+
+  // Statistics
 
   loadStatistics(): void {
     // this.adminService.getAllStatistics().subscribe(statistics => {
@@ -279,6 +371,8 @@ export class EspaceAdminComponent implements OnInit {
     this.currentPageStatistics = page;
     this.filterStatistics();
   }
+
+  // Search
 
   onSearchTermChangeUsers(newSearchTerm: string): void {
     this.searchTermUsers = newSearchTerm;
@@ -316,9 +410,55 @@ export class EspaceAdminComponent implements OnInit {
     this.filterCodePromos();
   }
 
+  onSearchTermChangeCampaigns(newSearchTerm: string): void {
+    this.searchTermCampaigns = newSearchTerm;
+    this.currentPageCampaigns = 1;
+    this.filterCampaigns();
+  }
+
+  onSearchTermChangeSupportTickets(newSearchTerm: string): void {
+    this.searchTermTickets = newSearchTerm;
+    this.currentPageSupportTickets = 1;
+    this.filterTickets();
+  }
+
   onSearchTermChangeStatistics(newSearchTerm: string): void {
     this.searchTermStatistics = newSearchTerm;
     this.currentPageStatistics = 1;
     this.filterStatistics();
   }
+
+  // creation code promos
+  createCoupon(): void {
+    this.adminService.createCoupon(this.newCoupon).subscribe(() => {
+      this.loadCodePromos();
+      if (!this.newCoupon.dateStart.includes(':10')) {
+        this.newCoupon.dateStart += ':10';
+      }
+
+      if (!this.newCoupon.dateEnd.includes(':10')) {
+        this.newCoupon.dateEnd += ':10';
+      }
+      this.newCoupon = {
+        code: '',
+        name: '',
+        discountRate: 0,
+        discountType: 'PERCENTAGE',
+        dateStart: '',
+        dateEnd: '',
+        targetType: 'ALL_USERS',
+        targetUsers: [],
+        maxUse: 1
+      };
+      this.isFormVisible = false;
+
+    });
+  }
+  toggleFormVisibility() {
+    this.isFormVisible = !this.isFormVisible;
+
+  }
 }
+
+
+
