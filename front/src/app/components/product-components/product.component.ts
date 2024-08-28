@@ -7,7 +7,6 @@ import { UserService } from '@services/user.service';
 import { IProduct, ICampaign } from '@interfaces/product.interface';
 import { IWishlistItem } from '@interfaces/wishlist.interface';
 import { IColor } from '@interfaces/product.interface';
-import { Observable } from 'rxjs';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { SatisfactionService, SatisfactionRequestDTO } from '@services/satisfaction.service';
 import { AuthService } from '@services/auth.service';

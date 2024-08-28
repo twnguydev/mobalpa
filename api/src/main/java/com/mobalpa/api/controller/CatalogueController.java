@@ -36,6 +36,11 @@ public class CatalogueController {
     return ResponseEntity.ok(catalogueService.getBestSellers());
   }
 
+  @GetMapping("/coupons")
+  public ResponseEntity<?> getAllCoupons() {
+    return ResponseEntity.ok(promotionService.getAllCoupons());
+  }
+  
   @GetMapping("/campaigns")
   public ResponseEntity<?> getAllCampaigns() {
     return ResponseEntity.ok(promotionService.getAllCampaigns());
