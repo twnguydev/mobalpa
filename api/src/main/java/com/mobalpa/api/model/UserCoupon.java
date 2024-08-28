@@ -21,8 +21,8 @@ public class UserCoupon {
     @JoinColumn(name = "user_uuid", referencedColumnName = "uuid")
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "coupon_id", referencedColumnName = "id")
+    @ManyToOne(cascade = CascadeType.REMOVE) 
+    @JoinColumn(name = "coupon_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FKrjgyjb2su0t4uj1pq82g6k9rx"))
     private CouponCode coupon;
 
     @Column(nullable = false)

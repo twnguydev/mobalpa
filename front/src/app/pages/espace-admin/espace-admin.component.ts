@@ -30,6 +30,8 @@ export class EspaceAdminComponent implements OnInit {
   ];
   selectedTab: number = 0;
   isFormVisible = false;
+  showAllUsers : Boolean = false;
+
   // Variables pour les utilisateurs
   users: IUser[] = [];
   filteredUsers: IUser[] = [];
@@ -287,6 +289,15 @@ export class EspaceAdminComponent implements OnInit {
     });
   }
 
+  deleteCoupon(id: string): void {
+    if (confirm('Voulez-vous vraiment supprimer ce code promo ?')) {
+      this.adminService.deleteCoupon(id).subscribe(() => {
+        this.loadCodePromos();
+      });
+    }
+  }
+
+
   filterCodePromos(): void {
     const filtered = this.codePromos.filter(codePromo =>
       (codePromo.code?.toLowerCase() || '').includes(this.searchTermCodePromos.toLowerCase()) ||
@@ -420,15 +431,14 @@ export class EspaceAdminComponent implements OnInit {
 
   // creation code promos
   createCoupon(): void {
+    if (typeof this.newCoupon.targetUsers === 'string') {
+      this.newCoupon.targetUsers = (this.newCoupon.targetUsers as string).split(',').map(id => id.trim());
+    }
     this.adminService.createCoupon(this.newCoupon).subscribe(() => {
-      this.loadCodePromos();
-      if (!this.newCoupon.dateStart.includes(':10')) {
-        this.newCoupon.dateStart += ':10';
-      }
+      console.log(this.newCoupon);
 
-      if (!this.newCoupon.dateEnd.includes(':10')) {
-        this.newCoupon.dateEnd += ':10';
-      }
+      this.loadCodePromos();
+
       this.newCoupon = {
         code: '',
         name: '',
@@ -446,6 +456,10 @@ export class EspaceAdminComponent implements OnInit {
   }
   toggleFormVisibility() {
     this.isFormVisible = !this.isFormVisible;
+  }
+
+  toggleShowAllUsers() {
+    this.showAllUsers = !this.showAllUsers;
   }
 }
 
