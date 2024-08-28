@@ -15,6 +15,20 @@ services:
     networks:
       - mobalpa-network
 
+  api-delivery:
+    build:
+      context: ./api-delivery
+      dockerfile: Dockerfile
+    container_name: api-delivery
+    ports:
+      - "8082:8082"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://host.docker.internal:8889/mobalpa_delivery?useSSL=false&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    networks:
+      - mobalpa-network
+
   api:
     build:
       context: ./api
@@ -27,8 +41,11 @@ services:
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
       CATALOGUE_BASE_URL: http://api-catalogue:8081/api/catalogue/
+      DELIVERY_BASE_URL: http://api-delivery:8082/api/delivery/
     depends_on:
       api-catalogue:
+        condition: service_started
+      api-delivery:
         condition: service_started
     networks:
       - mobalpa-network
