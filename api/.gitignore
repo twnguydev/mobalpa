@@ -4,6 +4,8 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 **/resources/db/changelog/scripts
+**/resources/application.properties
+**/resources/liquibase.properties
 
 ### STS ###
 .apt_generated

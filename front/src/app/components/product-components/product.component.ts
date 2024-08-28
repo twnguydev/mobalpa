@@ -7,15 +7,9 @@ import { UserService } from '@services/user.service';
 import { IProduct, ICampaign } from '@interfaces/product.interface';
 import { IWishlistItem } from '@interfaces/wishlist.interface';
 import { IColor } from '@interfaces/product.interface';
-import { Observable } from 'rxjs';
-import { FormsModule, FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-
-interface Avis {
-  rating: number;
-  comment: string;
-  date: string;
-}
-
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { SatisfactionService, SatisfactionRequestDTO } from '@services/satisfaction.service';
+import { AuthService } from '@services/auth.service';
 @Component({
   selector: 'app-product',
   standalone: true,
@@ -60,13 +54,14 @@ export class ProductComponent implements OnInit {
   
   avisForm!: FormGroup;
   submissionSuccess = false;
-  avisList: Avis[] = []
+  reviewsList: any[] = []
 
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
     private userService: UserService,
-    private datePipe: DatePipe,
+    private satisfactionService: SatisfactionService,
+    private authService: AuthService,
     private fb: FormBuilder
   ) { }
 
@@ -74,8 +69,6 @@ export class ProductComponent implements OnInit {
     const categoryUri: string | null = this.route.snapshot.paramMap.get('categoryUri');
     const subcategoryUri: string | null = this.route.snapshot.paramMap.get('subcategoryUri');
     const productUri: string | null = this.route.snapshot.paramMap.get('productUri');
-    console.log("jhgf :" + this.product)
-
 
     this.avisForm = this.fb.group({
       rating: ['', Validators.required],
@@ -92,7 +85,7 @@ export class ProductComponent implements OnInit {
             this.selectedColor = product.colors[0] || {} as IColor;
             this.calculateShippingDelay(product.estimatedDelivery);
             this.applyCampaigns(product.campaigns);
-            console.log('Produit récupéré', product);
+            this.fetchProductReviews(product.uuid);
           } else {
             this.errorMessage = 'Produit non trouvé.';
           }
@@ -114,26 +107,45 @@ export class ProductComponent implements OnInit {
   selectColor(color: IColor): void {
     this.selectedColor = color;
   }
-  onavisSubmit() {
-    if (this.avisForm.valid) {
-      const newAvis: Avis = {
-        rating: this.avisForm.value.rating,
-        comment: this.avisForm.value.comment,
-        date: new Date().toLocaleDateString(),
-      };
 
-      this.avisList.push(newAvis); 
-      this.submissionSuccess = true;
-      this.avisForm.reset();
+  fetchProductReviews(productUuid: string): void {
+    this.satisfactionService.getProductSatisfactions(productUuid).subscribe(
+        (reviews: any[]) => {
+            this.reviewsList = reviews.map(review => {
+                review.createdAt = this.formatDate(review.createdAt);
+                return review;
+            });
+        },
+        error => {
+            console.error('Erreur lors de la récupération des avis :', error);
+        }
+    );
+  }
 
-      setTimeout(() => {
-        this.submissionSuccess = false;
-      }, 3000);
+  formatDate(dateArray: number[]): string {
+    if (dateArray.length < 3) {
+        return 'Invalid Date';
     }
+
+    const year = dateArray[0];
+    const month = dateArray[1] - 1;
+    const day = dateArray[2];
+
+    const date = new Date(year, month, day);
+
+    const dayFormatted = date.getDate();
+    const monthFormatted = date.toLocaleString('default', { month: 'long' });
+    const yearFormatted = date.getFullYear();
+
+    return `${dayFormatted} ${monthFormatted} ${yearFormatted}`;
   }
-  getStars(rating: number): any[] {
-    return new Array(rating);
+
+  getStars(rating: number): number[] {
+      const filledStars = Array(rating).fill(1);
+      const emptyStars = Array(5 - rating).fill(0);
+      return filledStars.concat(emptyStars);
   }
+
   private applyCampaigns(campaigns: ICampaign[]): void {
     if (campaigns.length > 0) {
       const maxDiscount = Math.max(...campaigns.map(campaign => campaign.discountRate));
@@ -217,7 +229,58 @@ export class ProductComponent implements OnInit {
     }
   }
 
-  onSubmit() {
-    // Code pour gérer l'ajout au panier
+  calculateAverageRating(): number {
+    if (this.reviewsList.length === 0) {
+        return 0;
+    }
+    const sum = this.reviewsList.reduce((acc, review) => acc + review.rating, 0);
+    return sum / this.reviewsList.length;
+  }
+
+  getStarRating(averageRating: number): string {
+    const fullStars = Math.floor(averageRating);
+    const halfStar = averageRating % 1 >= 0.5 ? 1 : 0;
+    const emptyStars = 5 - fullStars - halfStar;
+
+    return '★'.repeat(fullStars) + (halfStar ? '★' : '') + '☆'.repeat(emptyStars);
+  }
+
+  onavisSubmit() {
+    this.avisForm.markAllAsTouched();
+    if (this.avisForm.invalid) {
+      return;
+    }
+
+    const userUuid = this.authService.user?.uuid;
+
+    if (!userUuid) {
+      console.error('User UUID not found');
+      return;
+    }
+
+    const satisfactionRequest: SatisfactionRequestDTO = {
+      userUuid: userUuid,
+      targetType: 'PRODUCT',
+      targetUuid: this.product?.uuid || null,
+      rating: this.avisForm.get('rating')?.value,
+      comment: this.avisForm.get('comment')?.value,
+      createdAt: new Date().getTime()
+    };
+
+    this.satisfactionService.createSatisfaction(satisfactionRequest).subscribe(
+      response => {
+        console.log('Satisfaction créée avec succès:', response);
+        this.submissionSuccess = true;
+        this.avisForm.reset();
+        this.fetchProductReviews(this.product?.uuid || '');
+
+        setTimeout(() => {
+          this.submissionSuccess = false;
+        }, 5000);
+      },
+      error => {
+        console.error('Erreur lors de la création de la satisfaction:', error);
+      }
+    );
   }
 }
