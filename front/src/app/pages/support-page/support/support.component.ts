@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule, FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { FaqComponent } from './faq/faq.component';
 import { TicketService, TicketRequestDTO } from '@services/ticket.service';
+import { SatisfactionService, SatisfactionRequestDTO } from '@services/satisfaction.service';
 import { AuthService } from '@services/auth.service';
 
 @Component({
@@ -19,7 +20,7 @@ export class SupportComponent implements OnInit {
   feedForm!: FormGroup;
   submissionSuccess = false;
 
-  constructor(private fb: FormBuilder, private ticketService: TicketService, private authService: AuthService) { }
+  constructor(private fb: FormBuilder, private ticketService: TicketService, private authService: AuthService, private satisfactionService: SatisfactionService, ) { }
 
   ngOnInit() {
     this.supForm = this.fb.group({
@@ -73,8 +74,6 @@ export class SupportComponent implements OnInit {
       issue: this.supForm.get('requestContent')?.value,
     };
 
-    console.log("ticket:" + ticketRequest.userUuid + "token:" );
-
     this.ticketService.createTicket(ticketRequest).subscribe(
       response => {
         console.log('Ticket créé avec succès:', response);
@@ -97,12 +96,35 @@ export class SupportComponent implements OnInit {
       return;
     }
 
-    console.log(this.feedForm.value);
-    this.feedForm.reset();
-    this.submissionSuccess = true;
+    const userUuid = this.authService.user?.uuid;
 
-    setTimeout(() => {
-      this.submissionSuccess = false;
-    }, 5000);
+    if (!userUuid) {
+      console.error('User UUID not found');
+      return;
+    }
+
+    const satisfactionRequest: SatisfactionRequestDTO = {
+      userUuid: userUuid,
+      targetType: "MAIN",
+      targetUuid: null,
+      rating: this.feedForm.get('rating')?.value,
+      comment: this.feedForm.get('comment')?.value,
+      createdAt: 1
+    };
+
+    this.satisfactionService.createSatisfaction(satisfactionRequest).subscribe(
+      response => {
+        console.log('Satisfaction créée avec succès:', response);
+        this.submissionSuccess = true;
+        this.feedForm.reset();
+
+        setTimeout(() => {
+          this.submissionSuccess = false;
+        }, 5000);
+      },
+      error => {
+        console.error('Erreur lors de la création de la satisfaction:', error);
+      }
+    );
   }
 }

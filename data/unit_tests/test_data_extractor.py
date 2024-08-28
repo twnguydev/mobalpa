@@ -58,6 +58,12 @@ class TestDataExtractor(unittest.TestCase):
             'quantity': [2]
         })
         
+        print("Generated product_data:")
+        print(product_data)
+
+        print("Expected product_data:")
+        print(expected_product_data)
+        
         pd.testing.assert_frame_equal(sales_data, expected_sales_data)
         pd.testing.assert_frame_equal(product_data, expected_product_data)
         mock_read_sql.assert_called_once()
@@ -97,7 +103,7 @@ class TestDataExtractor(unittest.TestCase):
         result = extractor.fetch_product_details('1')
         
         self.assertEqual(result, {'id': '1', 'name': 'Test Product'})
-        mock_get.assert_called_once_with(f"{os.getenv('API_URL')}/products/1", headers={'X-API-KEY': os.getenv('API_KEY')})
+        mock_get.assert_called_once_with(f"{os.getenv('API_URL')}/api/catalogue/products/1", headers={'X-API-KEY': os.getenv('API_KEY')})
 
 if __name__ == '__main__':
     unittest.main()

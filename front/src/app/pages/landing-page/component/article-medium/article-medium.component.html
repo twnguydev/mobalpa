@@ -1,30 +1,35 @@
 <div class="flex justify-center">
     <div class="h-auto w-auto bg-white rounded-lg shadow-lg p-4">
-        <img src="assets/grille-pain-avec-2-fentes-toasteo-de-kitchencook.jpg" alt=""
-            class="w-full h-40 object-cover rounded-lg">
-        <p class="text-xs font-gotham mt-2">Grille Pain</p>
-        <p class="text-base font-bold font-gotham mt-1">Micro-ondes monofonction Samsung MS23K3515AK</p>
-        <div class="flex text-lg mt-2">
-            <div class="text-yellow-400 flex">
-                <p>&#9733;</p>
-                <p>&#9733;</p>
-                <p>&#9733;</p>
-                <p>&#9733;</p>
-                <p>&#9733;</p>
-            </div>
-            <p class="text-base ml-2">(21)</p>
-        </div>
-        <p class="bg-red-600 w-1/2 text-white text-center mt-2 rounded">BON PLAN -50%</p>
-        <div class="flex justify-between items-center mt-2">
-            <p class="text-3xl font-gotham ">9,99€</p>
-            <button>
-                <div class="bg-red-600 flex w-24 h-9 justify-center items-center rounded-lg">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-7 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.91 4.79M7 13h10l4-8H5.21M7 13l-2 9h12l-2-9m-2 5H9m0-4h6" />
-                    </svg>
+        <a href="/categories/{{ product.product.uri }}">
+            <img [src]="product.product.images[0].uri" alt="{{ product.product.name }}"
+                class="w-full h-40 object-cover rounded-lg">
+            <p class="text-xs font-gotham mt-2">{{ product.product.subcategory.name }}</p>
+            <p class="text-base font-bold font-gotham mt-1">{{ product.product.name }}</p>
+            <div class="flex text-lg mt-2">
+                <div class="text-yellow-400 flex">
+                    <p>&#9733;</p>
+                    <p>&#9733;</p>
+                    <p>&#9733;</p>
+                    <p>&#9733;</p>
+                    <p>&#9733;</p>
                 </div>
-            </button>
-        </div>
-        <p class="line-through text-gray-600 mt-2">19,99€</p>
+                <p class="text-base ml-2">(21)</p>
+            </div>
+            <p class="bg-red-600 w-1/2 text-white text-center mt-2 rounded">BON PLAN -{{
+                product.campaigns[0].discountRate }}%</p>
+            <div class="flex justify-between items-center mt-2">
+                <p class="text-3xl font-gotham">{{ (product.product.price * (1 - product.campaigns[0].discountRate /
+                    100)) | number: '1.2-2' }}€</p>
+                <p class="line-through text-gray-600 mt-2">{{ product.product.price | number: '1.2-2' }}€</p>
+            </div>
+        </a>
+        <button *ngIf="!productAddedOnCart[product.product.uuid]" (click)="addToCart(product.product)"
+            class="text-white bg-mobalpa-green-alternate mt-4 flex w-full h-9 justify-center items-center rounded-lg gap-x-2">
+            Ajouter au panier
+        </button>
+        <button *ngIf="productAddedOnCart[product.product.uuid]"
+            class="text-mobalpa-green-alternate mt-4 flex w-full h-9 justify-center items-center rounded-lg gap-x-2">
+            Ajouté au panier
+        </button>
     </div>
 </div>

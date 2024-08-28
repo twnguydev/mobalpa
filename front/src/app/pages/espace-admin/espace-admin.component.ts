@@ -138,6 +138,7 @@ export class EspaceAdminComponent implements OnInit {
       case 6: this.loadCampaigns(); break;
       case 7: this.loadSupportTickets(); break;
       case 8: this.loadStatistics(); break;
+
     }
   }
 
@@ -171,12 +172,14 @@ export class EspaceAdminComponent implements OnInit {
   }
 
   // Products
+
   loadProducts(): void {
     this.adminService.getAllProducts().subscribe(products => {
       this.products = products;
       this.filterProducts();
     });
   }
+
 
   filterProducts(): void {
     const filtered = this.products.filter(product =>
@@ -229,6 +232,7 @@ export class EspaceAdminComponent implements OnInit {
   }
 
   // Subcategories
+
   loadSubcategories(): void {
     this.adminService.getAllSubcategories().subscribe(subcategories => {
       this.subcategories = subcategories;
@@ -253,6 +257,7 @@ export class EspaceAdminComponent implements OnInit {
   }
 
   // Orders
+
   loadOrders(): void {
     this.adminService.getAllOrders().subscribe(orders => {
       this.orders = orders;
@@ -267,6 +272,7 @@ export class EspaceAdminComponent implements OnInit {
       order.user?.lastname.toLowerCase().includes(this.searchTermOrders.toLowerCase()) ||
       order.totalTtc?.toString().toLowerCase().includes(this.searchTermOrders.toLowerCase()) ||
       order.deliveryAddress?.toLowerCase().includes(this.searchTermOrders.toLowerCase()) ||
+
       order.status?.toLowerCase().includes(this.searchTermOrders.toLowerCase())  ||
       order.createdAt?.toLowerCase().includes(this.searchTermOrders.toLowerCase())
     );
@@ -287,6 +293,7 @@ export class EspaceAdminComponent implements OnInit {
       this.codePromos = codePromos;
       this.filterCodePromos();
     });
+
   }
 
   deleteCoupon(id: string): void {
@@ -302,13 +309,13 @@ export class EspaceAdminComponent implements OnInit {
     const filtered = this.codePromos.filter(codePromo =>
       (codePromo.code?.toLowerCase() || '').includes(this.searchTermCodePromos.toLowerCase()) ||
       (codePromo.description?.toLowerCase() || '').includes(this.searchTermCodePromos.toLowerCase())
+
     );
 
     this.totalPagesCodePromos = Math.ceil(filtered.length / this.itemsPerPageCodePromos);
     this.currentPageCodePromos = Math.min(this.currentPageCodePromos, this.totalPagesCodePromos);
     this.filteredCodePromos = filtered.slice((this.currentPageCodePromos - 1) * this.itemsPerPageCodePromos, this.currentPageCodePromos * this.itemsPerPageCodePromos);
   }
-
 
   onPageChangeCodePromos(page: number): void {
     this.currentPageCodePromos = page;
@@ -354,6 +361,7 @@ export class EspaceAdminComponent implements OnInit {
   }
 
   // Statistics
+
   loadStatistics(): void {
     // this.adminService.getAllStatistics().subscribe(statistics => {
     //   this.statistics = statistics;
@@ -375,6 +383,7 @@ export class EspaceAdminComponent implements OnInit {
   }
 
   // Search
+
   onSearchTermChangeUsers(newSearchTerm: string): void {
     this.searchTermUsers = newSearchTerm;
     this.currentPageUsers = 1;
@@ -456,6 +465,7 @@ export class EspaceAdminComponent implements OnInit {
   }
   toggleFormVisibility() {
     this.isFormVisible = !this.isFormVisible;
+
   }
 
   toggleShowAllUsers() {

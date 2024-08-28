@@ -11,13 +11,15 @@ import { IOrder } from '@interfaces/order.interface';
   templateUrl: './order-details.component.html',
 })
 export class OrderDetailsComponent {
-[x: string]: any;
+  [x: string]: any;
   order: any | null = null;
+  deliveryNumbersString: string = '';
 
   constructor(private orderService: OrderService) { }
 
   ngOnInit(): void {
     this.order = this.orderService.getTempOrder();
+    this.deliveryNumbersString = this.order.deliveryNumbers.join(', ');
     this.orderService.clearTempOrder();
   }
 }
