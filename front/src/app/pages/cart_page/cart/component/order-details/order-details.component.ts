@@ -20,11 +20,6 @@ export class OrderDetailsComponent {
   ngOnInit(): void {
     this.order = this.orderService.getTempOrder();
     this.deliveryNumbersString = this.order.deliveryNumbers.join(', ');
-
-    console.log(this.order);
-
-    setTimeout(() => {
-      this.orderService.clearTempOrder();
-    }, 15000);
+    this.orderService.clearTempOrder();
   }
 }

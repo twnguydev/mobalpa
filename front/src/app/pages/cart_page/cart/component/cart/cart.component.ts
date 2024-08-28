@@ -94,7 +94,7 @@ export class CartComponent {
     }
     
     savings += this.calculateShippingSavings();
-    
+
     const cartSavings = this.cart.reduce((acc, item) => {
       const oldPrice = item.product?.oldPrice ?? item.product?.price ?? 0;
       const newPrice = item.product?.newPrice ?? item.product?.price ?? 0;
