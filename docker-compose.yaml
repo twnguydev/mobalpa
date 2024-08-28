@@ -12,6 +12,30 @@ services:
       SPRING_DATA_MONGODB_URI: mongodb://host.docker.internal:27042/mobalpa_catalogue
     volumes:
       - ./api-catalogue/target/mobalpa-0.0.1-SNAPSHOT.jar:/app/api-catalogue.jar
+    networks:
+      - mobalpa-network
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: api
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://host.docker.internal:8889/mobalpa?useSSL=false&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      CATALOGUE_BASE_URL: http://api-catalogue:8081/api/catalogue/
+    depends_on:
+      api-catalogue:
+        condition: service_started
+    networks:
+      - mobalpa-network
+
+networks:
+  mobalpa-network:
+    driver: bridge
 
 volumes:
   mongo-data:
