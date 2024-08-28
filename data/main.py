@@ -1,5 +1,6 @@
 import schedule
 import time
+import pandas as pd
 from datetime import datetime
 from DataExtractor import DataExtractor
 from SalesAnalyzer import SalesAnalyzer
@@ -39,38 +40,76 @@ def automate_sales_report(report_type):
     try:
         extractor = DataExtractor(engine, API_URL, API_KEY)
         sales_data, product_data = extractor.extract_sales_data()
-        
-        analyzer = SalesAnalyzer(sales_data)
+
+        analyzer = SalesAnalyzer(sales_data, extractor.fetch_product_details)
         analyzer.preprocess_data()
+        analyzer.train_model()
         
         if report_type == 'weekly':
             sales = analyzer.aggregate_sales(freq='W')
             predictions = analyzer.predict_sales(2, freq='W')
-            filename = 'weekly_sales_report.csv'
+            
+            summary_report = analyzer.create_summary_report()
+            predictions_report = analyzer.create_predictions_report(predictions)
+
+            sales_filename = 'weekly_sales_data.csv'
+            summary_report_filename = 'weekly_summary_report.csv'
+            predictions_report_filename = 'weekly_predictions_report.csv'
+        
             subject = 'Weekly Sales Report'
-            body = 'Please find attached the weekly sales report.'
+            body = 'Please find attached the weekly sales report and predictions.'
         
         elif report_type == 'monthly':
             sales = analyzer.aggregate_sales(freq='M')
             predictions = analyzer.predict_sales(2, freq='M')
-            filename = 'monthly_sales_report.csv'
+            
+            sales_filename = 'monthly_sales_data.csv'
+            summary_report = analyzer.create_summary_report()
+            predictions_report = analyzer.create_predictions_report(predictions)
+            
+            summary_report_filename = 'monthly_summary_report.csv'
+            predictions_report_filename = 'monthly_predictions_report.csv'
+            
             subject = 'Monthly Sales Report'
-            body = 'Please find attached the monthly sales report.'
-        
+            body = 'Please find attached the monthly sales report and predictions.'
+            
         elif report_type == 'yearly':
             sales = analyzer.aggregate_sales(freq='Y')
             predictions = analyzer.predict_sales(2, freq='Y')
-            filename = 'yearly_sales_report.csv'
+            
+            summary_report = analyzer.create_summary_report()
+            predictions_report = analyzer.create_predictions_report(predictions)
+            
+            sales_filename = 'yearly_sales_data.csv'
+            summary_report_filename = 'yearly_summary_report.csv'
+            predictions_report_filename = 'yearly_predictions_report.csv'
+            
             subject = 'Yearly Sales Report'
-            body = 'Please find attached the yearly sales report.'
+            body = 'Please find attached the yearly sales report and predictions.'
+            
+        else:
+            raise ValueError("Type de rapport non pris en charge.")
         
-        csv_generator = CSVGenerator(sales, predictions, filename)
-        csv_generator.generate_csv()
+        sales.to_csv(sales_filename, index=False)
+        summary_report.to_csv(summary_report_filename, index=False)
+        predictions_report.to_csv(predictions_report_filename, index=False)
+        
+        sales_csv_generator = CSVGenerator(sales, pd.DataFrame(), sales_filename)
+        summary_csv_generator = CSVGenerator(summary_report, pd.DataFrame(), summary_report_filename)
+        predictions_csv_generator = CSVGenerator(pd.DataFrame(), predictions_report, predictions_report_filename)
+        sales_csv_generator.generate_csv()
+        summary_csv_generator.generate_csv()
+        predictions_csv_generator.generate_csv()
         
         admin_users = extractor.extract_admin_users()
+        print(f"Admin users: {admin_users}")
         
         email_sender = EmailSender(SMTP_HOST, SMTP_PORT, SMTP_USERNAME, SMTP_PASSWORD)
-        email_sender.send_email(admin_users, subject, body, filename)
+        email_sender.send_email_with_attachments(admin_users, subject, body, [sales_filename, summary_report_filename, predictions_report_filename])
+        
+        # os.remove(summary_report_filename)
+        # os.remove(predictions_report_filename)
+        
     except Exception as e:
         print(f"An error occurred: {str(e)}")
 
@@ -97,6 +136,12 @@ def main_loop(iterations=None):
             count += 1
             if count >= iterations:
                 break
+            
+def run_reports():
+    automate_sales_report(report_type='weekly')
+    # automate_sales_report(report_type='monthly')
+    # automate_sales_report(report_type='yearly')
 
 if __name__ == "__main__":
-    main_loop()
+    # main_loop()
+    run_reports()

@@ -146,7 +146,7 @@ export class ProductService {
                 parentCategoryName: categoryResponse.name,
                 subcategories: categoryResponse.subcategories.map(subcategory => ({
                   ...subcategory,
-                  campaigns: campaigns.filter(campaign => campaign.targetUuid === subcategory.uuid || campaign.targetUuid === subcategory.category.uuid)
+                  campaigns: campaigns.filter(campaign => campaign.targetUuid === subcategory.uuid || campaign.targetUuid === categoryResponse.uuid)
                 }))
               }))
             );

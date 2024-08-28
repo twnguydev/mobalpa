@@ -21,6 +21,7 @@ export class ConfirmOrderComponent implements OnInit {
   selectedOption: string | null = null;
   selectedDelivery: IDeliveryMethod | null = null;
   order: IOrder | null = null;
+  completedOrder: IOrder | null = null;
   user: IUser | null = null;
 
   successMessage: { payment: string, address: string, order: string } | null = null;
@@ -242,8 +243,7 @@ export class ConfirmOrderComponent implements OnInit {
     this.orderService.createOrder(orderDetails).subscribe(
       (order) => {
         this.orderService.saveTempOrder(order);
-        console.log('Order created:', order);
-        this.router.navigate(['/commande/details']);
+        this.completeOrder(order.orderUuid || '');
       },
       (error) => {
         console.error('Failed to create order:', error);
@@ -254,6 +254,24 @@ export class ConfirmOrderComponent implements OnInit {
         };
       }
     );
+  }
+
+  completeOrder(orderUuid: string): void {
+    this.orderService.completeOrder(orderUuid).subscribe(
+      (order) => {
+        console.log('Order completed:', order);
+        this.orderService.saveTempOrder(order);
+        this.router.navigate(['/commande/details']);
+      },
+      (error) => {
+        console.error('Failed to complete order:', error);
+        this.errorMessage = {
+          payment: '',
+          address: '',
+          order: 'Erreur lors de la finalisation de la commande.'
+        };
+      }
+    )
   }
 
   addPayment(): void {

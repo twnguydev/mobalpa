@@ -66,6 +66,7 @@ export const routes: Routes = [
     { path: 'categories/:categoryUri', component: SubcategoriePageComponent },
     { path: 'categories/:categoryUri/:subcategoryUri', component: CategoryComponent },
     { path: 'categories/:categoryUri/:subcategoryUri/:productUri', component: ProductComponent },
+
     { path: 'profil', component: ProfileComponent, canActivate: [AuthGuard] },
 
     { path: 'mentions-legales', component: LegalNoticeComponent },
