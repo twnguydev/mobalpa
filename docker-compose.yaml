@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  api-catalogue:
+    image: api-catalogue
+    build:
+      context: ./api-catalogue
+      dockerfile: Dockerfile
+    container_name: api-catalogue
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://host.docker.internal:27042/mobalpa_catalogue
+    volumes:
+      - ./api-catalogue/target/mobalpa-0.0.1-SNAPSHOT.jar:/app/api-catalogue.jar
+
+volumes:
+  mongo-data:
