@@ -68,4 +68,15 @@ public class CouponCode {
         PERCENTAGE,
         AMOUNT
     }
+
+    @Transient
+    private List<User> enrichedTargetUsers;
+
+    public void setEnrichedTargetUsers(List<User> users) {
+        this.enrichedTargetUsers = users;
+    }
+
+    public List<User> getEnrichedTargetUsers() {
+        return enrichedTargetUsers;
+    }
 }
