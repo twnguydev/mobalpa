@@ -50,6 +50,16 @@ services:
     networks:
       - mobalpa-network
 
+  front:
+    build:
+      context: ./front
+      dockerfile: Dockerfile
+    container_name: angular_front
+    ports:
+      - "4200:4200"
+    networks:
+      - mobalpa-network
+
 networks:
   mobalpa-network:
     driver: bridge
