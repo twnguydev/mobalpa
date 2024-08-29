@@ -111,11 +111,23 @@ class SalesAnalyzer:
 
 
     def create_predictions_report(self, predictions, end_date, extractor):
-        predictions_report = predictions.copy()
+        end_date = pd.Timestamp(end_date)
+    
+        # Calculer la date de début de la période de prédiction "P+1"
+        start_date = end_date + pd.Timedelta(days=1)
+        prediction_end_date = start_date + pd.Timedelta(days=6)  # Fin de la semaine P+1
 
+        # Filtrer les prévisions pour la période "P+1"
+        filtered_predictions = predictions[(predictions['date'] >= start_date) & 
+                                        (predictions['date'] <= prediction_end_date)].copy()
+        predictions_report = predictions.copy()
+        
         end_date = pd.Timestamp(end_date)
 
-        filtered_predictions = predictions_report[predictions_report['date'] <= end_date].copy()
+        start_date = end_date + pd.Timedelta(days=1)
+        end_of_period = start_date + pd.Timedelta(days=6)
+
+        filtered_predictions = predictions_report[(predictions_report['date'] >= start_date) & (predictions_report['date'] <= end_of_period)].copy()
         
         print(f"end_date: {end_date}")
         print(f"filtered_predictions: {filtered_predictions}")

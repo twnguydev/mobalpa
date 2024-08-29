@@ -73,7 +73,7 @@ export const routes: Routes = [
     { path: 'politique-de-confidentialite', component: PrivacyPolicyComponent },
     { path: 'conditions-generales-de-vente', component: TermsAndConditionsComponent },
     { path: 'conditions-generales-utilisation', component: TermsOfUseComponent },
-    { path: 'à-propos-de', component: AboutAsComponent },
+    { path: 'qui-sommes-nous', component: AboutAsComponent },
     { path: 'admin', component: EspaceAdminComponent, canActivate: [AdminGuard] },
     { path: 'contactez-nous', component: ContactPageComponent },
     { path: 'livraison', component: LivraisonComponent },

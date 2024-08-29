@@ -52,29 +52,24 @@ def automate_sales_report(report_type):
         end_date = datetime.now().date()
         
         if report_type == 'weekly':
-            end_of_last_week = end_date - timedelta(days=end_date.weekday() + 1)
-            start_of_last_week = end_of_last_week - timedelta(days=6)
-            start_date = start_of_last_week
-            end_date = end_of_last_week
+            start_date = end_date + timedelta(days=(7 - end_date.weekday()))
+            end_date = start_date + timedelta(days=6)
             freq = 'D'
             sales = analyzer.aggregate_sales(freq='W')
             sales_filename = 'weekly_sales_data.csv'
             subject = 'Weekly Sales Report'
             body = 'Please find attached the weekly sales report and predictions.'
         elif report_type == 'monthly':
-            first_day_of_current_month = end_date.replace(day=1)
-            last_day_of_last_month = first_day_of_current_month - timedelta(days=1)
-            first_day_of_last_month = last_day_of_last_month.replace(day=1)
-            start_date = first_day_of_last_month
-            end_date = last_day_of_last_month
+            start_date = (end_date.replace(day=1) + timedelta(days=31)).replace(day=1)
+            end_date = (start_date + pd.DateOffset(months=1) - timedelta(days=1)).date()
             freq = 'D'
             sales = analyzer.aggregate_sales(freq='M')
             sales_filename = 'monthly_sales_data.csv'
             subject = 'Monthly Sales Report'
             body = 'Please find attached the monthly sales report and predictions.'
         elif report_type == 'yearly':
-            start_date = datetime(end_date.year - 1, 1, 1).date()
-            end_date = datetime(end_date.year - 1, 12, 31).date()
+            start_date = datetime(end_date.year + 1, 1, 1).date()
+            end_date = datetime(end_date.year + 1, 12, 31).date()
             freq = 'W-MON'
             sales = analyzer.aggregate_sales(freq='Y')
             sales_filename = 'yearly_sales_data.csv'
@@ -95,10 +90,10 @@ def automate_sales_report(report_type):
         admin_users = extractor.extract_admin_users()
         logging.info(f"Admin users: {admin_users}")
 
-        # email_sender = EmailSender(SMTP_HOST, SMTP_PORT, SMTP_USERNAME, SMTP_PASSWORD)
-        # email_sender.send_email_with_attachments(admin_users, subject, body, [sales_filename])
+        email_sender = EmailSender(SMTP_HOST, SMTP_PORT, SMTP_USERNAME, SMTP_PASSWORD)
+        email_sender.send_email_with_attachments(admin_users, subject, body, [sales_filename])
 
-        # os.remove(sales_filename)
+        os.remove(sales_filename)
         logging.info(f"{report_type.capitalize()} report generated and sent successfully.")
 
     except Exception as e:
@@ -131,11 +126,11 @@ def main_loop(iterations=None):
 
 def run_reports():
     automate_sales_report(report_type='weekly')
-    # automate_sales_report(report_type='monthly')
-    # automate_sales_report(report_type='yearly')
+    automate_sales_report(report_type='monthly')
+    automate_sales_report(report_type='yearly')
 
 if __name__ == "__main__":
     check_database_connection()
-    # schedule_tasks()
-    # main_loop()
-    run_reports()
+    schedule_tasks()
+    main_loop()
+    # run_reports()
