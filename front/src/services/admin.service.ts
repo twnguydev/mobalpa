@@ -46,16 +46,23 @@ export class AdminService {
     return this.http.get<IOrder[]>(`${this.apiUrl}/orders`, { headers });
   }
 
+
+  getAllCoupons(): Observable<any> {
+    const headers: HttpHeaders | null = this.authService.getAuthHeaders();
+    if (!headers) return new Observable<any>();
+    return this.http.get<any>(`${this.apiUrl}/coupons`, { headers });
+  }
+
   createCoupon(coupon: any): Observable<any> {
     const headers: HttpHeaders | null = this.authService.getAuthHeaders();
     if (!headers) return new Observable<any>();
     return this.http.post<any>(`${this.apiUrl}/coupons`, coupon, { headers });
   }
 
-  getAllCoupons(): Observable<any> {
+  deleteCoupon(id: string): Observable<any> {
     const headers: HttpHeaders | null = this.authService.getAuthHeaders();
     if (!headers) return new Observable<any>();
-    return this.http.get<any>(`${this.apiUrl}/coupons`, { headers });
+    return this.http.delete<any>(`${this.apiUrl}/coupons/${id}`, { headers });
   }
 
   getAllCampaigns(): Observable<any> {

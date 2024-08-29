@@ -241,93 +241,123 @@
 
     <!-- Code Promo Tab -->
     <div *ngIf="selectedTab === 5" class="min-w-full">
+      <button (click)="toggleFormVisibility()"
+      class="mb-4 bg-mobalpa-green text-white p-2 rounded hover:bg-emerald-green focus:outline-none">
+{{ isFormVisible ? 'Annuler' : 'Créer un Coupon' }}
+</button>
+
+<!-- Formulaire compact pour créer un coupon -->
+<form *ngIf="isFormVisible" (ngSubmit)="createCoupon()" #couponForm="ngForm" class="bg-white p-4 rounded-lg shadow-md space-y-4 mb-4 border border-mobalpa-green">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="flex flex-col">
+ <label for="name" class="text-xs font-medium text-gray-700">Nom du Coupon</label>
+ <input type="text" id="name" [(ngModel)]="newCoupon.name" name="name" required class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+</div>
+
+<div class="flex flex-col">
+ <label for="discountRate" class="text-xs font-medium text-gray-700">Taux de Réduction (%) ou Montant</label>
+ <input type="number" id="discountRate" [(ngModel)]="newCoupon.discountRate" name="discountRate" required class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+</div>
+
+<div class="flex flex-col">
+ <label for="discountType" class="text-xs font-medium text-gray-700">Type de Réduction</label>
+ <select id="discountType" [(ngModel)]="newCoupon.discountType" name="discountType" required class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+   <option value="PERCENTAGE">Pourcentage</option>
+   <option value="AMOUNT">Montant</option>
+ </select>
+</div>
+
+<div class="flex flex-col">
+ <label for="dateStart" class="text-xs font-medium text-gray-700">Date de Début</label>
+ <input type="datetime-local" id="dateStart" [(ngModel)]="newCoupon.dateStart" name="dateStart" required step="1" class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+</div>
+
+<div class="flex flex-col">
+ <label for="dateEnd" class="text-xs font-medium text-gray-700">Date de Fin</label>
+ <input type="datetime-local" id="dateEnd" [(ngModel)]="newCoupon.dateEnd" name="dateEnd" required step="1" class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+</div>
+
+<div class="flex flex-col">
+ <label for="targetType" class="text-xs font-medium text-gray-700">Type de Cible</label>
+ <select id="targetType" [(ngModel)]="newCoupon.targetType" name="targetType" required class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+   <option value="ALL_USERS">Tous les utilisateurs</option>
+   <option value="SPECIFIC_USERS">Utilisateurs spécifiques</option>
+ </select>
+</div>
+
+<div class="flex flex-col" *ngIf="newCoupon.targetType === 'SPECIFIC_USERS'">
+ <label for="targetUsers" class="text-xs font-medium text-gray-700">UUID des Utilisateurs Ciblés</label>
+ <input type="text" id="targetUsers" [(ngModel)]="newCoupon.targetUsers" name="targetUsers" placeholder="Séparez les UUID par des virgules" class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+</div>
+
+<div class="flex flex-col">
+ <label for="maxUse" class="text-xs font-medium text-gray-700">Nombre d'Utilisations Max</label>
+ <input type="number" id="maxUse" [(ngModel)]="newCoupon.maxUse" name="maxUse" required class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+</div>
+</div>
+
+<button type="submit" class="w-1/3 bg-emerald-green  text-white py-2 rounded-md hover:bg-mobalpa-green focus:outline-none focus:bg-blue-600 transition-colors">
+Créer Coupon
+</button>
+</form>
       <div *ngIf="codePromos.length > 0; else noCodepromo">
         <!-- Barre de Recherche -->
         <input type="text" class="mb-4 p-2 border border-gray-300 rounded w-full"
                placeholder="Rechercher par code, description, etc."
                [(ngModel)]="searchTermCodePromos" (input)="filterCodePromos()" />
 
-               <button (click)="toggleFormVisibility()"
-               class="mb-4 bg-mobalpa-green text-white p-2 rounded hover:bg-emerald-green focus:outline-none">
-         {{ isFormVisible ? 'Annuler' : 'Créer un Coupon' }}
-       </button>
-
-    <!-- Formulaire compact pour créer un coupon -->
-    <form *ngIf="isFormVisible" (ngSubmit)="createCoupon()" #couponForm="ngForm" class="bg-white p-4 rounded-lg shadow-md space-y-4 mb-4 border border-mobalpa-green">
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div class="flex flex-col">
-          <label for="name" class="text-xs font-medium text-gray-700">Nom du Coupon</label>
-          <input type="text" id="name" [(ngModel)]="newCoupon.name" name="name" required class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
-        </div>
-
-        <div class="flex flex-col">
-          <label for="discountRate" class="text-xs font-medium text-gray-700">Taux de Réduction (%)</label>
-          <input type="number" id="discountRate" [(ngModel)]="newCoupon.discountRate" name="discountRate" required class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
-        </div>
-
-        <div class="flex flex-col">
-          <label for="discountType" class="text-xs font-medium text-gray-700">Type de Réduction</label>
-          <select id="discountType" [(ngModel)]="newCoupon.discountType" name="discountType" required class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-            <option value="PERCENTAGE">Pourcentage</option>
-            <option value="AMOUNT">Montant</option>
-          </select>
-        </div>
-
-        <div class="flex flex-col">
-          <label for="dateStart" class="text-xs font-medium text-gray-700">Date de Début</label>
-          <input type="datetime-local" id="dateStart" [(ngModel)]="newCoupon.dateStart" name="dateStart" required step="1" class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
-        </div>
-
-        <div class="flex flex-col">
-          <label for="dateEnd" class="text-xs font-medium text-gray-700">Date de Fin</label>
-          <input type="datetime-local" id="dateEnd" [(ngModel)]="newCoupon.dateEnd" name="dateEnd" required step="1" class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
-        </div>
-
-        <div class="flex flex-col">
-          <label for="targetType" class="text-xs font-medium text-gray-700">Type de Cible</label>
-          <select id="targetType" [(ngModel)]="newCoupon.targetType" name="targetType" required class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-            <option value="ALL_USERS">Tous les utilisateurs</option>
-            <option value="SPECIFIC_USERS">Utilisateurs spécifiques</option>
-          </select>
-        </div>
-
-        <div class="flex flex-col" *ngIf="newCoupon.targetType === 'SPECIFIC_USERS'">
-          <label for="targetUsers" class="text-xs font-medium text-gray-700">UUID des Utilisateurs Ciblés</label>
-          <input type="text" id="targetUsers" [(ngModel)]="newCoupon.targetUsers" name="targetUsers" placeholder="Séparez les UUID par des virgules" class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
-        </div>
-
-        <div class="flex flex-col">
-          <label for="maxUse" class="text-xs font-medium text-gray-700">Nombre d'Utilisations Max</label>
-          <input type="number" id="maxUse" [(ngModel)]="newCoupon.maxUse" name="maxUse" required class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
-        </div>
-      </div>
-
-      <button type="submit" class="w-1/3 bg-emerald-green  text-white py-2 rounded-md hover:bg-mobalpa-green focus:outline-none focus:bg-blue-600 transition-colors">
-        Créer Coupon
-      </button>
-    </form>
-
-
-
-
         <table class="min-w-full divide-y divide-gray-200">
           <thead class="bg-gray-50">
             <tr>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Code</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Id</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nom</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Réduction</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cible</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date de Début</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date de Fin</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
             <tr *ngFor="let codePromo of codePromos">
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ codePromo.id }}</td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ codePromo.name }}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ codePromo.discountRate }}%</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                {{ codePromo.discountRate }}{{ codePromo.discountType === 'PERCENTAGE' ? '%' : '€' }}
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <ng-container *ngIf="codePromo.targetType === 'ALL_USERS'; else userList">
+                  Tous les utilisateurs
+                </ng-container>
+
+                <ng-template #userList>
+                  <ng-container *ngIf="codePromo.enrichedTargetUsers?.length > 0; else noUsers">
+                    <ng-container *ngIf="!showAllUsers && codePromo.enrichedTargetUsers.length > 2; else showAllUsersList">
+                      <ng-container *ngFor="let user of codePromo.enrichedTargetUsers.slice(0, 2); let last = last">
+                        {{ user.firstname }} {{ user.lastname }}<ng-container *ngIf="!last">, </ng-container>
+                      </ng-container>
+                      <button (click)="toggleShowAllUsers()"  class="text-blue-500 underline">
+                        Voir plus
+                      </button>
+                    </ng-container>
+
+                    <ng-template #showAllUsersList>
+                      <ng-container *ngFor="let user of codePromo.enrichedTargetUsers; let last = last">
+                        {{ user.firstname }} {{ user.lastname }}<ng-container *ngIf="!last">, </ng-container>
+                      </ng-container>
+                    </ng-template>
+                  </ng-container>
+
+                  <ng-template #noUsers>
+                    Aucun utilisateur spécifié
+                  </ng-template>
+                </ng-template>
+              </td>
+
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ codePromo.dateStart }}</td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ codePromo.dateEnd }}</td>
-
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <button (click)="deleteCoupon(codePromo.id)" class="text-red-500 underline">Supprimer</button>
             </tr>
           </tbody>
         </table>
