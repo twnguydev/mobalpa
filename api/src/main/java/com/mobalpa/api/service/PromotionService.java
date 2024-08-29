@@ -273,7 +273,9 @@ public class PromotionService {
         return couponCodeRepository.save(coupon);
     }
 
+    @Transactional
     public void deleteCoupon(Integer id) {
+        userCouponRepository.deleteByCouponId(id);
         couponCodeRepository.deleteById(id);
     }
 

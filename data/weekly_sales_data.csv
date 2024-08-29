@@ -4,63 +4,62 @@ Semaine,2024-08-19,2024-08-25,0,0,0.0,0.0,0.0,0.0,0.0
 
 Détails des ventes
 Date de début,Frais de livraison,Réduction,Total HT,Total TTC,TVA,Quantité d'éléments
-2024-09-01,74.2,1009.97,11482.47,12843.19,2296.49,35
+2024-09-01,114.8,1439.96,14452.28,16017.58,2890.46,54
 
 Prédictions
-Nom du produit,Date de prédiction de vente,Total TTC,Quantité de prédiction
-Eveil,2024-08-19,149.99,1
-Mixeur Eco Plus,2024-08-19,99.99,1
-Escapade,2024-08-19,99.99,1
-Rive,2024-08-19,90.0,1
-Grille pain Deluxe,2024-08-19,49.99,1
-Expressive,2024-08-19,249.99,1
-Friteuse Pro,2024-08-19,79.99,1
-Cuisinière à Gaz 5 Feux,2024-08-19,599.99,1
-Friteuse Pro,2024-08-20,79.99,1
-Grille pain Deluxe,2024-08-20,49.99,1
-Mixeur Eco Plus,2024-08-20,99.99,1
-Cuisinière à Gaz 5 Feux,2024-08-20,599.99,1
-Expressive,2024-08-20,249.99,1
-Escapade,2024-08-20,99.99,1
-Eveil,2024-08-20,149.99,1
-Rive,2024-08-20,90.0,1
-Mixeur Eco Plus,2024-08-21,99.99,1
-Cuisinière à Gaz 5 Feux,2024-08-21,599.99,1
-Escapade,2024-08-21,99.99,1
-Rive,2024-08-21,90.0,1
-Friteuse Pro,2024-08-21,79.99,1
-Eveil,2024-08-21,149.99,1
-Grille pain Deluxe,2024-08-21,49.99,1
-Expressive,2024-08-21,249.99,1
-Grille pain Deluxe,2024-08-22,49.99,1
-Escapade,2024-08-22,99.99,1
-Friteuse Pro,2024-08-22,79.99,1
-Eveil,2024-08-22,149.99,1
-Rive,2024-08-22,90.0,1
-Mixeur Eco Plus,2024-08-22,99.99,1
-Cuisinière à Gaz 5 Feux,2024-08-22,599.99,1
-Expressive,2024-08-22,249.99,1
-Grille pain Deluxe,2024-08-23,49.99,1
-Eveil,2024-08-23,149.99,1
-Cuisinière à Gaz 5 Feux,2024-08-23,599.99,1
-Rive,2024-08-23,90.0,1
-Expressive,2024-08-23,249.99,1
-Mixeur Eco Plus,2024-08-23,99.99,1
-Friteuse Pro,2024-08-23,79.99,1
-Escapade,2024-08-23,99.99,1
-Mixeur Eco Plus,2024-08-24,99.99,1
-Expressive,2024-08-24,249.99,1
-Cuisinière à Gaz 5 Feux,2024-08-24,599.99,1
-Eveil,2024-08-24,149.99,1
-Rive,2024-08-24,90.0,1
-Friteuse Pro,2024-08-24,79.99,1
-Grille pain Deluxe,2024-08-24,49.99,1
-Escapade,2024-08-24,99.99,1
-Friteuse Pro,2024-08-25,79.99,1
-Cuisinière à Gaz 5 Feux,2024-08-25,599.99,1
-Mixeur Eco Plus,2024-08-25,99.99,1
-Grille pain Deluxe,2024-08-25,49.99,1
-Expressive,2024-08-25,249.99,1
-Eveil,2024-08-25,149.99,1
-Escapade,2024-08-25,99.99,1
-Rive,2024-08-25,90.0,1
+Nom du produit,Date de prédiction de vente,Total TTC,Quantité de prédiction,Fiabilité (%)
+Eveil,2024-08-26,299.98,2,98.67
+Grille pain Deluxe,2024-08-26,49.99,1,100.0
+Mixeur Eco Plus,2024-08-26,99.99,1,100.0
+Friteuse Pro,2024-08-26,79.99,1,100.0
+Expressive,2024-08-26,249.99,1,100.0
+Cuisinière à Gaz 5 Feux,2024-08-26,599.99,1,100.0
+Rive,2024-08-26,90.0,1,100.0
+Escapade,2024-08-26,99.99,1,99.19
+Cuisinière à Gaz 5 Feux,2024-08-27,599.99,1,100.0
+Expressive,2024-08-27,249.99,1,100.0
+Rive,2024-08-27,90.0,1,100.0
+Mixeur Eco Plus,2024-08-27,99.99,1,100.0
+Escapade,2024-08-27,99.99,1,99.19
+Eveil,2024-08-27,299.98,2,98.67
+Grille pain Deluxe,2024-08-27,49.99,1,100.0
+Friteuse Pro,2024-08-27,79.99,1,100.0
+Mixeur Eco Plus,2024-08-28,99.99,1,100.0
+Cuisinière à Gaz 5 Feux,2024-08-28,599.99,1,100.0
+Rive,2024-08-28,90.0,1,100.0
+Friteuse Pro,2024-08-28,79.99,1,100.0
+Grille pain Deluxe,2024-08-28,49.99,1,100.0
+Expressive,2024-08-28,249.99,1,100.0
+Eveil,2024-08-28,299.98,2,98.67
+Eveil,2024-08-29,299.98,2,98.67
+Grille pain Deluxe,2024-08-29,49.99,1,100.0
+Friteuse Pro,2024-08-29,79.99,1,100.0
+Escapade,2024-08-29,99.99,1,99.19
+Rive,2024-08-29,90.0,1,100.0
+Cuisinière à Gaz 5 Feux,2024-08-29,599.99,1,100.0
+Expressive,2024-08-29,249.99,1,100.0
+Mixeur Eco Plus,2024-08-29,99.99,1,100.0
+Rive,2024-08-30,90.0,1,100.0
+Eveil,2024-08-30,299.98,2,98.67
+Grille pain Deluxe,2024-08-30,49.99,1,100.0
+Expressive,2024-08-30,249.99,1,100.0
+Friteuse Pro,2024-08-30,79.99,1,100.0
+Escapade,2024-08-30,99.99,1,99.19
+Mixeur Eco Plus,2024-08-30,99.99,1,100.0
+Cuisinière à Gaz 5 Feux,2024-08-30,599.99,1,100.0
+Cuisinière à Gaz 5 Feux,2024-08-31,599.99,1,100.0
+Mixeur Eco Plus,2024-08-31,99.99,1,100.0
+Grille pain Deluxe,2024-08-31,49.99,1,100.0
+Expressive,2024-08-31,249.99,1,100.0
+Rive,2024-08-31,90.0,1,100.0
+Friteuse Pro,2024-08-31,79.99,1,100.0
+Eveil,2024-08-31,299.98,2,98.67
+Escapade,2024-08-31,99.99,1,99.19
+Friteuse Pro,2024-09-01,79.99,1,100.0
+Cuisinière à Gaz 5 Feux,2024-09-01,599.99,1,100.0
+Mixeur Eco Plus,2024-09-01,99.99,1,100.0
+Grille pain Deluxe,2024-09-01,49.99,1,100.0
+Expressive,2024-09-01,249.99,1,100.0
+Eveil,2024-09-01,299.98,2,98.67
+Escapade,2024-09-01,199.98,2,99.19
+Rive,2024-09-01,90.0,1,100.0
