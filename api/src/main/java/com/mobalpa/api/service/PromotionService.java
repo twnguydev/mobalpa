@@ -278,7 +278,7 @@ public class PromotionService {
         userCouponRepository.deleteByCouponId(id);
         couponCodeRepository.deleteById(id);
     }
-
+    
     @Transactional
     public Map<String, Object> claimCoupon(User user, CouponCode couponCode) {
         LocalDateTime now = LocalDateTime.now();

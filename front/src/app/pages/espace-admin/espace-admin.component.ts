@@ -31,6 +31,9 @@ export class EspaceAdminComponent implements OnInit {
   selectedTab: number = 0;
   isFormVisible = false;
   showAllUsers : Boolean = false;
+  successMessage: string = '';
+  errorMessage: string = '';
+  showDropdown: boolean = false;
 
   // Variables pour les utilisateurs
   users: IUser[] = [];
@@ -39,6 +42,9 @@ export class EspaceAdminComponent implements OnInit {
   currentPageUsers: number = 1;
   itemsPerPageUsers: number = 10;
   totalPagesUsers: number = 1;
+  selectedUsers: IUser[] = [];
+  searchTerm: string = '';
+
 
   // Variables pour les produits
   products: IProduct[] = [];
@@ -79,8 +85,6 @@ export class EspaceAdminComponent implements OnInit {
   currentPageCodePromos: number = 1;
   itemsPerPageCodePromos: number = 10;
   totalPagesCodePromos: number = 1;
-
-  // Déclaration de la variable coupon
   newCoupon: ICoupon = {
     code: '',
     name: '',
@@ -108,6 +112,16 @@ export class EspaceAdminComponent implements OnInit {
   currentPageCampaigns: number = 1;
   itemsPerPageCampaigns: number = 10;
   totalPagesCampaigns: number = 1;
+  newCampaign: ICampaign = {
+    id: '',
+    name: '',
+    description: '',
+    discountRate: 0,
+    dateStart: new Date(),
+    dateEnd: new Date(),
+    targetUuid: '',
+    type: 'PRODUCT'
+  };
 
 
   // Variables pour les tickets de support
@@ -166,20 +180,51 @@ export class EspaceAdminComponent implements OnInit {
     this.filteredUsers = filtered.slice((this.currentPageUsers - 1) * this.itemsPerPageUsers, this.currentPageUsers * this.itemsPerPageUsers);
   }
 
+  onSearchTermChangeUsers(newSearchTerm: string): void {
+    this.searchTermUsers = newSearchTerm;
+    this.currentPageUsers = 1;
+    this.filterUsers();
+    this.showDropdown = this.filteredUsers.length > 0;
+
+  }
+
   onPageChangeUsers(page: number): void {
     this.currentPageUsers = page;
     this.filterUsers();
   }
+  selectUser(user: IUser): void {
+    if (!this.selectedUsers.some(u => u.uuid === user.uuid)) {
+      this.selectedUsers.push(user);
+      this.newCoupon.targetUsers?.push(user.uuid);
+    }
+    this.searchTermUsers = '';
+    this.showDropdown = false;
+    this.filterUsers();
+  }
+  removeUser(user: IUser): void {
+    this.selectedUsers = this.selectedUsers.filter(u => u.uuid !== user.uuid);
+    this.newCoupon.targetUsers = this.newCoupon.targetUsers?.filter(uuid => uuid !== user.uuid);
+    this.filterUsers();
+  }
+  onInputFocus(): void {
+    this.showDropdown = this.filteredUsers.length > 0;
+  }
+  onInputBlur(): void {
+    setTimeout(() => {
+      this.showDropdown = false;
+    }, 200);
+  }
+  toggleDropdown(): void {
+    this.showDropdown = !this.showDropdown;
+  }
 
   // Products
-
   loadProducts(): void {
     this.adminService.getAllProducts().subscribe(products => {
       this.products = products;
       this.filterProducts();
     });
   }
-
 
   filterProducts(): void {
     const filtered = this.products.filter(product =>
@@ -200,6 +245,12 @@ export class EspaceAdminComponent implements OnInit {
     this.totalPagesProducts = Math.ceil(filtered.length / this.itemsPerPageProducts);
     this.currentPageProducts = Math.min(this.currentPageProducts, this.totalPagesProducts);
     this.filteredProducts = filtered.slice((this.currentPageProducts - 1) * this.itemsPerPageProducts, this.currentPageProducts * this.itemsPerPageProducts);
+  }
+
+  onSearchTermChangeProducts(newSearchTerm: string): void {
+    this.searchTermProducts = newSearchTerm;
+    this.currentPageProducts = 1;
+    this.filterProducts();
   }
 
   onPageChangeProducts(page: number): void {
@@ -226,13 +277,18 @@ export class EspaceAdminComponent implements OnInit {
     this.filteredCategories = filtered.slice((this.currentPageCategories - 1) * this.itemsPerPageCategories, this.currentPageCategories * this.itemsPerPageCategories);
   }
 
+  onSearchTermChangeCategories(newSearchTerm: string): void {
+    this.searchTermCategories = newSearchTerm;
+    this.currentPageCategories = 1;
+    this.filterCategories();
+  }
+
   onPageChangeCategories(page: number): void {
     this.currentPageCategories = page;
     this.filterCategories();
   }
 
   // Subcategories
-
   loadSubcategories(): void {
     this.adminService.getAllSubcategories().subscribe(subcategories => {
       this.subcategories = subcategories;
@@ -251,13 +307,18 @@ export class EspaceAdminComponent implements OnInit {
     this.filteredSubcategories = filtered.slice((this.currentPageSubcategories - 1) * this.itemsPerPageSubcategories, this.currentPageSubcategories * this.itemsPerPageSubcategories);
   }
 
+  onSearchTermChangeSubcategories(newSearchTerm: string): void {
+    this.searchTermSubcategories = newSearchTerm;
+    this.currentPageSubcategories = 1;
+    this.filterSubcategories();
+  }
+
   onPageChangeSubcategories(page: number): void {
     this.currentPageSubcategories = page;
     this.filterSubcategories();
   }
 
   // Orders
-
   loadOrders(): void {
     this.adminService.getAllOrders().subscribe(orders => {
       this.orders = orders;
@@ -282,6 +343,13 @@ export class EspaceAdminComponent implements OnInit {
     this.filteredOrders = filtered.slice((this.currentPageOrders - 1) * this.itemsPerPageOrders, this.currentPageOrders * this.itemsPerPageOrders);
   }
 
+  onSearchTermChangeOrders(newSearchTerm: string): void {
+    this.searchTermOrders = newSearchTerm;
+    this.currentPageOrders = 1;
+    this.filterOrders();
+  }
+
+
   onPageChangeOrders(page: number): void {
     this.currentPageOrders = page;
     this.filterOrders();
@@ -298,12 +366,72 @@ export class EspaceAdminComponent implements OnInit {
 
   deleteCoupon(id: string): void {
     if (confirm('Voulez-vous vraiment supprimer ce code promo ?')) {
-      this.adminService.deleteCoupon(id).subscribe(() => {
-        this.loadCodePromos();
-      });
+      const couponToDelete = this.codePromos.find(coupon => coupon.id === id);
+
+      if (couponToDelete) {
+        const couponName = couponToDelete.name || couponToDelete.code;
+
+        this.adminService.deleteCoupon(id).subscribe({
+          next: () => {
+            this.successMessage = `Le coupon "${couponName}" a été supprimé avec succès.`;
+            this.loadCodePromos();
+
+            setTimeout(() => {
+              this.successMessage = '';
+            }, 3000);
+          },
+          error: (error) => {
+            this.errorMessage = `Erreur lors de la suppression du coupon "${couponName}".`;
+
+            setTimeout(() => {
+              this.errorMessage = '';
+            }, 3000);
+          }
+        });
+      }
     }
   }
 
+
+  createCoupon(): void {
+    if (typeof this.newCoupon.targetUsers === 'string') {
+        this.newCoupon.targetUsers = (this.newCoupon.targetUsers as string)
+            .split(',')
+            .map(id => id.trim());
+    }
+
+    this.adminService.createCoupon(this.newCoupon).subscribe({
+        next: () => {
+            this.successMessage = 'Coupon créé avec succès';
+            this.loadCodePromos();
+
+            setTimeout(() => {
+              this.successMessage = '';
+            }, 3000);
+
+            this.newCoupon = {
+                code: '',
+                name: '',
+                discountRate: 0,
+                discountType: 'PERCENTAGE',
+                dateStart: '',
+                dateEnd: '',
+                targetType: 'ALL_USERS',
+                targetUsers: [],
+                maxUse: 1
+            };
+            this.selectedUsers = [];
+            this.isFormVisible = false;
+        },
+        error: (error: any) => {
+            this.errorMessage = `Erreur lors de la création du coupon.`;
+
+            setTimeout(() => {
+              this.errorMessage = '';
+            }, 3000);
+        }
+    });
+}
 
   filterCodePromos(): void {
     const filtered = this.codePromos.filter(codePromo =>
@@ -321,6 +449,12 @@ export class EspaceAdminComponent implements OnInit {
     this.currentPageCodePromos = page;
     this.filterCodePromos();
   }
+  onSearchTermChangeCodePromos(newSearchTerm: string): void {
+    this.searchTermCodePromos = newSearchTerm;
+    this.currentPageCodePromos = 1;
+    this.filterCodePromos();
+  }
+
 
   // Campaign
   loadCampaigns(): void {
@@ -329,12 +463,81 @@ export class EspaceAdminComponent implements OnInit {
       this.filterCampaigns();
     });
   }
+
+  createCampaign(): void {
+    this.adminService.createCampaign(this.newCampaign).subscribe({
+      next: () => {
+        console.log('Campagne créée avec succès');
+        this.successMessage = 'Campagne créée avec succès';
+        this.loadCampaigns();
+
+        setTimeout(() => {
+          this.successMessage = '';
+        }, 3000);
+
+        this.newCampaign = {
+          id: '',
+          name: '',
+          description: '',
+          discountRate: 0,
+          dateStart: new Date(),
+          dateEnd: new Date(),
+          targetUuid: '',
+          type: 'PRODUCT'
+        };
+        this.isFormVisible = false;
+      },
+      error: (error: any) => {
+        this.errorMessage = `Erreur lors de la création de la campagne.`;
+
+        setTimeout(() => {
+          this.errorMessage = '';
+        }, 3000);
+      }
+    });
+  }
+
+  deleteCampaign(id: string): void {
+    if (confirm('Voulez-vous vraiment supprimer cette campagne ?')) {
+      const campaignToDelete = this.campaigns.find(campaign => campaign.id === id);
+
+      if (campaignToDelete) {
+        const campaignName = campaignToDelete.name;
+
+        this.adminService.deleteCampaign(id).subscribe({
+          next: () => {
+            this.successMessage = `La campagne "${campaignName}" a été supprimée avec succès.`;
+            this.loadCampaigns();
+
+            setTimeout(() => {
+              this.successMessage = '';
+            }, 3000);
+          },
+          error: (error) => {
+            this.errorMessage = `Erreur lors de la suppression de la campagne "${campaignName}".`;
+
+            setTimeout(() => {
+              this.errorMessage = '';
+            }, 3000);
+          }
+        });
+      }
+    }
+  }
+
   filterCampaigns(): void {
     const filtered = this.campaigns;
     this.totalPagesCampaigns = Math.ceil(filtered.length / this.itemsPerPageCampaigns);
     this.currentPageCampaigns = Math.min(this.currentPageCampaigns, this.totalPagesCampaigns);
     this.filteredCampaigns = filtered.slice((this.currentPageCampaigns - 1) * this.itemsPerPageCampaigns, this.currentPageCampaigns * this.itemsPerPageCampaigns);
   }
+
+  onSearchTermChangeCampaigns(newSearchTerm: string): void {
+    this.searchTermCampaigns = newSearchTerm;
+    this.currentPageCampaigns = 1;
+    this.filterCampaigns();
+  }
+
   onPageChangeCampaigns(page: number): void {
     this.currentPageCampaigns = page;
     this.filterCampaigns();
@@ -355,13 +558,18 @@ export class EspaceAdminComponent implements OnInit {
     this.filteredTickets = filtered.slice((this.currentPageSupportTickets - 1) * this.itemsPerPageSupportTickets, this.currentPageSupportTickets * this.itemsPerPageSupportTickets);
   }
 
+  onSearchTermChangeSupportTickets(newSearchTerm: string): void {
+    this.searchTermTickets = newSearchTerm;
+    this.currentPageSupportTickets = 1;
+    this.filterTickets();
+  }
+
   onPageChangeSupportTickets(page: number): void {
     this.currentPageSupportTickets = page;
     this.filterTickets();
   }
 
   // Statistics
-
   loadStatistics(): void {
     // this.adminService.getAllStatistics().subscribe(statistics => {
     //   this.statistics = statistics;
@@ -377,92 +585,19 @@ export class EspaceAdminComponent implements OnInit {
     this.filteredStatistics = filtered.slice((this.currentPageStatistics - 1) * this.itemsPerPageStatistics, this.currentPageStatistics * this.itemsPerPageStatistics);
   }
 
-  onPageChangeStatistics(page: number): void {
-    this.currentPageStatistics = page;
-    this.filterStatistics();
-  }
-
-  // Search
-
-  onSearchTermChangeUsers(newSearchTerm: string): void {
-    this.searchTermUsers = newSearchTerm;
-    this.currentPageUsers = 1;
-    this.filterUsers();
-  }
-
-  onSearchTermChangeProducts(newSearchTerm: string): void {
-    this.searchTermProducts = newSearchTerm;
-    this.currentPageProducts = 1;
-    this.filterProducts();
-  }
-
-  onSearchTermChangeCategories(newSearchTerm: string): void {
-    this.searchTermCategories = newSearchTerm;
-    this.currentPageCategories = 1;
-    this.filterCategories();
-  }
-
-  onSearchTermChangeSubcategories(newSearchTerm: string): void {
-    this.searchTermSubcategories = newSearchTerm;
-    this.currentPageSubcategories = 1;
-    this.filterSubcategories();
-  }
-
-  onSearchTermChangeOrders(newSearchTerm: string): void {
-    this.searchTermOrders = newSearchTerm;
-    this.currentPageOrders = 1;
-    this.filterOrders();
-  }
-
-  onSearchTermChangeCodePromos(newSearchTerm: string): void {
-    this.searchTermCodePromos = newSearchTerm;
-    this.currentPageCodePromos = 1;
-    this.filterCodePromos();
-  }
-
-  onSearchTermChangeCampaigns(newSearchTerm: string): void {
-    this.searchTermCampaigns = newSearchTerm;
-    this.currentPageCampaigns = 1;
-    this.filterCampaigns();
-  }
-
-  onSearchTermChangeSupportTickets(newSearchTerm: string): void {
-    this.searchTermTickets = newSearchTerm;
-    this.currentPageSupportTickets = 1;
-    this.filterTickets();
-  }
-
   onSearchTermChangeStatistics(newSearchTerm: string): void {
     this.searchTermStatistics = newSearchTerm;
     this.currentPageStatistics = 1;
     this.filterStatistics();
   }
 
-  // creation code promos
-  createCoupon(): void {
-    if (typeof this.newCoupon.targetUsers === 'string') {
-      this.newCoupon.targetUsers = (this.newCoupon.targetUsers as string).split(',').map(id => id.trim());
-    }
-    this.adminService.createCoupon(this.newCoupon).subscribe(() => {
-      console.log(this.newCoupon);
 
-      this.loadCodePromos();
-
-      this.newCoupon = {
-        code: '',
-        name: '',
-        discountRate: 0,
-        discountType: 'PERCENTAGE',
-        dateStart: '',
-        dateEnd: '',
-        targetType: 'ALL_USERS',
-        targetUsers: [],
-        maxUse: 1
-      };
-      this.isFormVisible = false;
-
-    });
+  onPageChangeStatistics(page: number): void {
+    this.currentPageStatistics = page;
+    this.filterStatistics();
   }
+
+  // Toggle
   toggleFormVisibility() {
     this.isFormVisible = !this.isFormVisible;
 
