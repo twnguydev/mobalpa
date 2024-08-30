@@ -2,7 +2,6 @@ package com.mobalpa.catalogue.controller;
 
 import com.mobalpa.catalogue.model.Product;
 import com.mobalpa.catalogue.service.ProductService;
-import com.mobalpa.catalogue.model.Store;
 import com.mobalpa.catalogue.service.CatalogueService;
 import com.mobalpa.catalogue.mapper.Mapper;
 import com.mobalpa.catalogue.dto.ProductDTO;
@@ -19,17 +18,20 @@ import java.util.UUID;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/api/catalogue/products")
+@Tag(name = "Product", description = "APIs for managing products")
 public class ProductController {
 
     @Autowired
     private ProductService productService;
 
-    @Autowired
-    private CatalogueService catalogueService;
-
     @GetMapping
+    @Operation(summary = "Get all products", description = "Fetches all products.", security = @SecurityRequirement(name = "apiKey"))
     public ResponseEntity<?> getAllProducts(
             @RequestParam(value = "maxPrice", required = false) Double maxPrice,
             @RequestParam(value = "minPrice", required = false) Double minPrice,
@@ -52,6 +54,7 @@ public class ProductController {
     }
 
     @GetMapping("/store/{id}")
+    @Operation(summary = "Get products by store ID", description = "Fetches all products by store ID.", security = @SecurityRequirement(name = "apiKey"))
     public ResponseEntity<?> getProductsByStoreId(@PathVariable UUID id) {
         List<Product> products = productService.getProductsByCategoryId(id).orElseThrow(() -> new RuntimeException("No products found for this subcategory"));
         if (products != null && !products.isEmpty()) {
@@ -63,6 +66,7 @@ public class ProductController {
     }
 
     @GetMapping("/category/{id}")
+    @Operation(summary = "Get products by category ID", description = "Fetches all products by category UUID.", security = @SecurityRequirement(name = "apiKey"))
     public ResponseEntity<?> getProductsByCategoryId(@PathVariable UUID id) {
         List<Product> products = productService.getProductsByCategoryId(id).orElseThrow(() -> new RuntimeException("No products found for this subcategory"));
         if (products != null && !products.isEmpty()) {
@@ -74,6 +78,7 @@ public class ProductController {
     }
 
     @GetMapping("/sub/{id}")
+    @Operation(summary = "Get products by subcategory ID", description = "Fetches all products by subcategory UUID.", security = @SecurityRequirement(name = "apiKey"))
     public ResponseEntity<?> getProductsBySubcategoryId(@PathVariable UUID id) {
         List<Product> products = productService.getProductsBySubcategoryId(id).orElseThrow(() -> new RuntimeException("No products found for this subcategory"));
         if (products != null && !products.isEmpty()) {
@@ -85,6 +90,7 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Get product by UUID", description = "Fetches a product by its unique identifier.", security = @SecurityRequirement(name = "apiKey"))
     public ResponseEntity<?> getProductById(@PathVariable UUID id) {
         Optional<Product> product = productService.getProductById(id);
         if (product.isPresent() && product.get() != null) {
@@ -95,6 +101,7 @@ public class ProductController {
     }
 
     @PostMapping
+    @Operation(summary = "Create product", description = "Creates a new product.", security = @SecurityRequirement(name = "apiKey"))
     public ResponseEntity<?> createProduct(@RequestBody Product product) {
         try {
             Product createdProduct = productService.createProduct(product);
@@ -105,6 +112,7 @@ public class ProductController {
     }
 
     @PatchMapping("/{id}")
+    @Operation(summary = "Update product", description = "Updates an existing product.", security = @SecurityRequirement(name = "apiKey"))
     public ResponseEntity<?> updateProduct(@PathVariable UUID id, @RequestBody Product product) {
         try {
             Product updatedProduct = productService.updateProduct(id, product);
@@ -115,6 +123,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Delete product", description = "Deletes a product.", security = @SecurityRequirement(name = "apiKey"))
     public ResponseEntity<Void> deleteProduct(@PathVariable UUID id) {
         productService.deleteProduct(id);
         return ResponseEntity.noContent().build();

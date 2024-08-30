@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
@@ -24,7 +25,7 @@ public class SatisfactionController {
     private SatisfactionService satisfactionService;
 
     @PostMapping("/create")
-    @Operation(summary = "Create satisfaction entry", description = "Creates a new satisfaction entry.")
+    @Operation(summary = "Create satisfaction entry", description = "Creates a new satisfaction entry.", security = @SecurityRequirement(name = "bearerAuth"))
     public ResponseEntity<?> createSatisfaction(@RequestBody SatisfactionRequestDTO satisfactionRequest) {
         try {
             Satisfaction createdSatisfaction = satisfactionService.createSatisfaction(satisfactionRequest);
@@ -37,7 +38,7 @@ public class SatisfactionController {
     }
 
     @GetMapping
-    @Operation(summary = "Get all satisfaction entries", description = "Fetches all satisfaction entries.")
+    @Operation(summary = "Get all satisfaction entries", description = "Fetches all satisfaction entries.", security = @SecurityRequirement(name = "bearerAuth"))
     public ResponseEntity<?> getAllSatisfaction() {
         try {
             List<Satisfaction> satisfactions = satisfactionService.getAllSatisfaction();
@@ -48,7 +49,7 @@ public class SatisfactionController {
     }
 
     @GetMapping("/home")
-    @Operation(summary = "Get home satisfaction entries", description = "Fetches the first three satisfaction entries.")
+    @Operation(summary = "Get home satisfaction entries", description = "Fetches the first three satisfaction entries.", security = @SecurityRequirement(name = "bearerAuth"))
     public ResponseEntity<?> getHomeSatisfaction() {
         try {
             List<Satisfaction> satisfactions = satisfactionService.getFirstThreeSatisfactions();
@@ -59,7 +60,7 @@ public class SatisfactionController {
     }
 
     @GetMapping("/product/{uuid}")
-    @Operation(summary = "Get product satisfaction entries", description = "Fetches all satisfaction entries for a product.")
+    @Operation(summary = "Get product satisfaction entries", description = "Fetches all satisfaction entries for a product.", security = @SecurityRequirement(name = "bearerAuth"))
     public ResponseEntity<?> getProductSatisfaction(@PathVariable("uuid") UUID productUuid) {
         try {
             List<Satisfaction> satisfactions = satisfactionService.getProductSatisfaction(productUuid);

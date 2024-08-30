@@ -1,4 +1,4 @@
-package com.mobalpa.api.config;
+package com.mobalpa.catalogue.config;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
@@ -13,9 +13,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @OpenAPIDefinition(
     info = @Info(
-        title = "Archideco E-commerce API",
+        title = "Archideco Catalogue API",
         version = "1.0",
-        description = "Welcome to the Archideco E-commerce API. This API allows you to manage users, orders, forecasts, and more. Feel free to explore the API and test the endpoints.",
+        description = "Welcome to the Archideco Catalogue API. This API allows you to manage products, categories, and more. Feel free to explore the API and test the endpoints.",
         contact = @Contact(
             name = "Web@cademie Epitech Marseille",
             email = "tanguy.gibrat@epitech.eu",
@@ -30,12 +30,6 @@ import org.springframework.context.annotation.Configuration;
         @SecurityRequirement(name = "bearerAuth"),
         @SecurityRequirement(name = "apiKey")
     }
-)
-@SecurityScheme(
-    name = "bearerAuth",
-    type = SecuritySchemeType.HTTP,
-    scheme = "bearer",
-    bearerFormat = "JWT"
 )
 @SecurityScheme(
     name = "apiKey",

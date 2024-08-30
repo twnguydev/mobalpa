@@ -23,6 +23,7 @@ import java.util.UUID;
 import java.util.Map;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
@@ -46,26 +47,26 @@ public class OrderController {
     private InvoiceService invoiceService;
 
     @PostMapping
-    @Operation(summary = "Create order", description = "Creates a new order.")
+    @Operation(summary = "Create order", description = "Creates a new order.", security = @SecurityRequirement(name = "bearerAuth"))
     public ResponseEntity<?> createOrder(@RequestBody OrderRequestDTO orderRequest) {
         ParcelDTO createdOrder = orderService.processOrder(orderRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdOrder);
     }
 
     @GetMapping
-    @Operation(summary = "Get all orders", description = "Fetches all orders.")
+    @Operation(summary = "Get all orders", description = "Fetches all orders.", security = @SecurityRequirement(name = "bearerAuth"))
     public ResponseEntity<?> getAllOrders() {
         return ResponseEntity.ok(orderService.getAllOrders());
     }
 
     @GetMapping("/{uuid}")
-    @Operation(summary = "Get order by UUID", description = "Fetches an order by its unique identifier.")
+    @Operation(summary = "Get order by UUID", description = "Fetches an order by its unique identifier.", security = @SecurityRequirement(name = "bearerAuth"))
     public ResponseEntity<?> getOrder(@PathVariable UUID uuid) {
         return ResponseEntity.ok(orderService.getOrderByUuid(uuid));
     }
 
     @PostMapping("/{uuid}/payment")
-    @Operation(summary = "Process payment", description = "Processes payment for an order.")
+    @Operation(summary = "Process payment", description = "Processes payment for an order.", security = @SecurityRequirement(name = "bearerAuth"))
     public ResponseEntity<?> completeOrder(@PathVariable UUID uuid) {
         Order order = orderService.getOrderByUuid(uuid);
         orderService.completeOrder(order);
@@ -73,7 +74,7 @@ public class OrderController {
     }
 
     @PostMapping("/{userUuid}/apply-coupon")
-    @Operation(summary = "Apply coupon", description = "Applies a coupon to a user's account.")
+    @Operation(summary = "Apply coupon", description = "Applies a coupon to a user's account.", security = @SecurityRequirement(name = "bearerAuth"))
     public ResponseEntity<?> applyCoupon(@PathVariable UUID userUuid, @RequestBody CouponRequestDTO couponRequest) {
         User user = userService.getUserByUuid(userUuid);
         CouponCode coupon = promotionService.getCouponByName(couponRequest.getCouponCode().trim());
@@ -89,7 +90,7 @@ public class OrderController {
     }
 
     @PostMapping("/apply-coupon")
-    @Operation(summary = "Apply coupon", description = "Applies a coupon to an order.")
+    @Operation(summary = "Apply coupon", description = "Applies a coupon to an order.", security = @SecurityRequirement(name = "bearerAuth"))
     public ResponseEntity<?> applyCoupon(@RequestBody CouponRequestDTO couponRequest) {
         CouponCode coupon = promotionService.getCouponByName(couponRequest.getCouponCode().trim());
         if (coupon == null) {
@@ -111,7 +112,7 @@ public class OrderController {
     // }
 
     @GetMapping("/delivery-prices")
-    @Operation(summary = "Get delivery prices", description = "Fetches delivery prices.")
+    @Operation(summary = "Get delivery prices", description = "Fetches delivery prices.", security = @SecurityRequirement(name = "bearerAuth"))
     public ResponseEntity<?> getDeliveryPrices() {
         try {
             Map<String,DepotRequest> deliveryPrices = deliveryService.getDeliveryPrices();
@@ -122,7 +123,7 @@ public class OrderController {
     }
 
     @GetMapping("/{orderUuid}/invoice")
-    @Operation(summary = "Download invoice", description = "Downloads an invoice for an order.")
+    @Operation(summary = "Download invoice", description = "Downloads an invoice for an order.", security = @SecurityRequirement(name = "bearerAuth"))
     public ResponseEntity<byte[]> downloadInvoice(@PathVariable UUID orderUuid) {
         Invoice invoice = invoiceService.getInvoiceByOrderUuid(orderUuid);
         if (invoice != null) {

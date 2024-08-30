@@ -15,14 +15,20 @@ import java.util.UUID;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/api/catalogue/subcategories")
+@Tag(name = "Subcategory", description = "APIs for managing subcategories")
 public class SubcategoryController {
 
   @Autowired
   private SubcategoryService subcategoryService;
 
   @GetMapping
+  @Operation(summary = "Get all subcategories", description = "Fetches all subcategories.", security = @SecurityRequirement(name = "apiKey"))
   public ResponseEntity<?> getAllSubcategories() {
     List<Subcategory> subcategories = subcategoryService.getAllSubcategories().orElseThrow(() -> new RuntimeException("No subcategories found"));
     if (subcategories != null && !subcategories.isEmpty()) {
@@ -34,6 +40,7 @@ public class SubcategoryController {
   }
 
   @GetMapping("/{id}")
+  @Operation(summary = "Get subcategory by ID", description = "Fetches a subcategory by its unique identifier.", security = @SecurityRequirement(name = "apiKey"))
   public ResponseEntity<?> getSubcategoryById(@PathVariable UUID id) {
     Optional<Subcategory> subcategory = subcategoryService.getSubcategoryById(id);
     if (subcategory.isPresent() && subcategory.get() != null) {
@@ -44,6 +51,7 @@ public class SubcategoryController {
   }
 
   @PostMapping
+  @Operation(summary = "Create subcategory", description = "Creates a new subcategory.", security = @SecurityRequirement(name = "apiKey"))
   public ResponseEntity<?> createSubcategory(@RequestBody Subcategory subcategory) {
     try {
       Subcategory createdSubcategory = subcategoryService.createSubcategory(subcategory);
@@ -54,6 +62,7 @@ public class SubcategoryController {
   }
 
   @PatchMapping("/{id}")
+  @Operation(summary = "Update subcategory", description = "Updates a subcategory.", security = @SecurityRequirement(name = "apiKey"))
   public ResponseEntity<?> updateSubcategory(@PathVariable UUID id, @RequestBody Subcategory subcategory) {
     try {
       Subcategory updatedSubcategory = subcategoryService.updateSubcategory(id, subcategory);
@@ -64,6 +73,7 @@ public class SubcategoryController {
   }
 
   @GetMapping("/{id}/products")
+  @Operation(summary = "Get products by subcategory ID", description = "Fetches all products by subcategory UUID.", security = @SecurityRequirement(name = "apiKey"))
   public ResponseEntity<?> getProductsBySubcategoryId(@PathVariable UUID id) {
     Optional<Optional<Subcategory>> subcategories = Optional.of(subcategoryService.getSubcategoryById(id));
     if (subcategories.isPresent() && !subcategories.get().isEmpty()) {
@@ -74,6 +84,7 @@ public class SubcategoryController {
   }
 
   @DeleteMapping("/{id}")
+  @Operation(summary = "Delete subcategory", description = "Deletes a subcategory.", security = @SecurityRequirement(name = "apiKey"))
   public ResponseEntity<Void> deleteSubcategory(@PathVariable UUID id) {
     subcategoryService.deleteSubcategory(id);
     return ResponseEntity.noContent().build();
