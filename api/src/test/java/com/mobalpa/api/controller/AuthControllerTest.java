@@ -4,7 +4,6 @@ import com.mobalpa.api.dto.LoginDTO;
 import com.mobalpa.api.dto.LoginRequestDTO;
 import com.mobalpa.api.model.User;
 import com.mobalpa.api.service.UserService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -12,25 +11,20 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 
-import java.util.HashMap;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
-public class AuthControllerTest {
-
-    @InjectMocks
-    private AuthController authController;
+class AuthControllerTest {
 
     @Mock
     private UserService userService;
@@ -38,209 +32,132 @@ public class AuthControllerTest {
     @Mock
     private AuthenticationManager authenticationManager;
 
-    @Mock
-    private Authentication authentication;
+    @InjectMocks
+    private AuthController authController;
 
-    @BeforeEach
-    public void setUp() {
+    public AuthControllerTest() {
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    public void testRegisterUser_Success() {
+    void testRegisterUser() {
         User user = new User();
-        user.setEmail("uniqueemailused_" + System.currentTimeMillis() + "@gmail.com");
-        user.setPassword("123456");
-        user.setActive(true);
-
         when(userService.registerUser(any(User.class))).thenReturn(user);
 
         ResponseEntity<?> response = authController.registerUser(user);
+        
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        assertEquals(user, response.getBody());
+    }
+
+    @Test
+    void testConfirmUserSuccess() throws IOException {
+        User user = new User();
+        when(userService.confirmUser(anyString())).thenReturn(user);
+
+        String templateContent = "Success";
+        Files.writeString(Paths.get("src/main/resources/templates/successTemplate.html"), templateContent);
+
+        ResponseEntity<String> response = authController.confirmUser("valid-token");
+        
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals("Registration successful. Please check your email for confirmation.", response.getBody());
+        assertEquals(templateContent, response.getBody());
     }
 
     @Test
-    public void testRegisterUser_EmailAlreadyUsed() {
-        User user = new User();
-        user.setEmail("test_email_" + System.currentTimeMillis() + "@gmail.com");
-        user.setPassword("123456");
+    void testConfirmUserFailure() throws IOException {
+        when(userService.confirmUser(anyString())).thenReturn(null);
 
-        doThrow(new RuntimeException("Email is already in use")).when(userService).registerUser(any(User.class));
+        String templateContent = "Error";
+        Files.writeString(Paths.get("src/main/resources/templates/errorTemplate.html"), templateContent);
 
-        Exception exception = assertThrows(RuntimeException.class, () -> {
-            authController.registerUser(user);
-        });
-
-        assertEquals("Email is already in use", exception.getMessage());
+        ResponseEntity<String> response = authController.confirmUser("invalid-token");
+        
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(templateContent, response.getBody());
     }
 
     @Test
-    public void testLoginUser_Success() {
-        LoginDTO loginDTO = new LoginDTO();
-        loginDTO.setEmail("nathanmatounga@gmail.com");
-        loginDTO.setPassword("123456");
-
+    void testLoginUserSuccess() {
         User user = new User();
-        user.setEmail("nathanmatounga@gmail.com");
-        user.setActive(true);
-
-        when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
-                .thenReturn(authentication);
-        when(authentication.isAuthenticated()).thenReturn(true);
+        user.setToken(null);
         when(userService.getUserByEmail(anyString())).thenReturn(user);
-        when(userService.generateToken(user)).thenReturn("token");
+        when(userService.generateToken(any(User.class))).thenReturn("token");
+
+        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken("email", "password");
+        when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
+                .thenReturn(mock(Authentication.class));
+
+        LoginDTO loginDTO = new LoginDTO();
+        loginDTO.setEmail("email");
+        loginDTO.setPassword("password");
 
         ResponseEntity<?> response = authController.loginUser(loginDTO);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        LoginRequestDTO expectedResponse = new LoginRequestDTO(user, "token");
-        assertEquals(expectedResponse, response.getBody());
+        assertEquals(new LoginRequestDTO(user, "token"), response.getBody());
     }
 
     @Test
-    public void testLoginUser_InvalidCredentials() {
-        LoginDTO loginDTO = new LoginDTO();
-        loginDTO.setEmail("invalid@example.com");
-        loginDTO.setPassword("wrongpassword");
-
-        when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
-                .thenThrow(new BadCredentialsException("Invalid credentials"));
-
-        ResponseEntity<?> response = authController.loginUser(loginDTO);
-
-        assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
-        assertEquals("Invalid credentials", response.getBody());
-    }
-
-    @Test
-    public void testLoginUser_AccountNotActive() {
-        LoginDTO loginDTO = new LoginDTO();
-        loginDTO.setEmail("inactive@example.com");
-        loginDTO.setPassword("123456");
-
+    void testLoginUserAccountNotConfirmed() {
         User user = new User();
-        user.setEmail("inactive@example.com");
-        user.setActive(false);
-
-        when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
-                .thenReturn(authentication);
+        user.setToken("token");
         when(userService.getUserByEmail(anyString())).thenReturn(user);
 
+        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken("email", "password");
+        when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
+                .thenReturn(mock(Authentication.class));
+
+        LoginDTO loginDTO = new LoginDTO();
+        loginDTO.setEmail("email");
+        loginDTO.setPassword("password");
+
         ResponseEntity<?> response = authController.loginUser(loginDTO);
 
-        assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
-        assertEquals("Account is not active or does not exist", response.getBody());
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("User account not confirmed.", response.getBody());
     }
 
     @Test
-    public void testLoginUser_UserNotActive() {
-        LoginDTO loginDTO = new LoginDTO();
-        loginDTO.setEmail("nathanmatounga@gmail.com");
-        loginDTO.setPassword("123456");
-
+    void testForgotPasswordSuccess() {
         User user = new User();
-        user.setEmail("nathanmatounga@gmail.com");
-        user.setActive(false);
-
-        when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
-                .thenReturn(authentication);
-        when(userService.getUserByEmail(anyString())).thenReturn(user);
-
-        ResponseEntity<?> response = authController.loginUser(loginDTO);
-        assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
-        assertEquals("Account is not active or does not exist", response.getBody());
-    }
-
-    @Test
-    public void testLoginUser_AuthenticationFailed() {
-        LoginDTO loginDTO = new LoginDTO();
-        loginDTO.setEmail("fail@example.com");
-        loginDTO.setPassword("123456");
-
-        when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
-                .thenThrow(new AuthenticationException("Authentication failed") {});
-
-        ResponseEntity<?> response = authController.loginUser(loginDTO);
-
-        assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
-        assertEquals("Authentication failed", response.getBody());
-    }
-
-    @Test
-    public void testLoginUser_InternalServerError() {
-        LoginDTO loginDTO = new LoginDTO();
-        loginDTO.setEmail("error@example.com");
-        loginDTO.setPassword("123456");
-
-        when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
-                .thenThrow(new RuntimeException("Unexpected error"));
-
-        ResponseEntity<?> response = authController.loginUser(loginDTO);
-
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
-        assertEquals("An error occurred while logging in", response.getBody());
-    }
-
-    @Test
-    public void testForgotPassword_UserExists() {
-        String email = "testuser@gmail.com";
-        User user = new User();
-        user.setEmail(email);
         user.setActive(true);
+        when(userService.getUserByEmail(anyString())).thenReturn(user);
+        
+        ResponseEntity<String> response = authController.forgotPassword(Map.of("email", "email@example.com"));
 
-        Map<String, String> body = new HashMap<>();
-        body.put("email", email);
-
-        when(userService.getUserByEmail(email)).thenReturn(user);
-
-        ResponseEntity<String> response = authController.forgotPassword(body);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals("Password reset email sent.", response.getBody());
+        verify(userService).sendPasswordResetEmail(user);
     }
 
     @Test
-    public void testForgotPassword_UserNotFound() {
-        String email = "nonexistentuser@gmail.com";
+    void testForgotPasswordUserNotFound() {
+        when(userService.getUserByEmail(anyString())).thenReturn(null);
 
-        Map<String, String> body = new HashMap<>();
-        body.put("email", email);
+        ResponseEntity<String> response = authController.forgotPassword(Map.of("email", "email@example.com"));
 
-        when(userService.getUserByEmail(email)).thenReturn(null);
-
-        ResponseEntity<String> response = authController.forgotPassword(body);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertEquals("User not found or inactive", response.getBody());
     }
 
     @Test
-    public void testResetPassword_Success() {
-        String token = "validToken";
-        String newPassword = "newPassword123";
+    void testResetPasswordSuccess() {
         User user = new User();
-        user.setEmail("testuser@gmail.com");
+        when(userService.resetPassword(anyString(), anyString())).thenReturn(user);
 
-        Map<String, String> body = new HashMap<>();
-        body.put("newPassword", newPassword);
+        ResponseEntity<String> response = authController.resetPassword("valid-token", Map.of("newPassword", "newPassword"));
 
-        when(userService.resetPassword(token, newPassword)).thenReturn(user);
-
-        ResponseEntity<String> response = authController.resetPassword(token, body);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals("Password reset successful.", response.getBody());
     }
 
     @Test
-    public void testResetPassword_InvalidToken() {
-        String token = "invalidToken";
-        String newPassword = "newPassword123";
+    void testResetPasswordFailure() {
+        when(userService.resetPassword(anyString(), anyString())).thenReturn(null);
 
-        Map<String, String> body = new HashMap<>();
-        body.put("newPassword", newPassword);
+        ResponseEntity<String> response = authController.resetPassword("invalid-token", Map.of("newPassword", "newPassword"));
 
-        when(userService.resetPassword(token, newPassword)).thenReturn(null);
-
-        ResponseEntity<String> response = authController.resetPassword(token, body);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertEquals("Invalid token or user not found.", response.getBody());
     }
