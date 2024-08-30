@@ -201,6 +201,7 @@
           <thead class="bg-gray-50">
             <tr>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Numéro de Commande</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Numéro de de Livraison</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Client</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Réduction</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Montant Total</th>
@@ -211,12 +212,13 @@
           <tbody class="bg-white divide-y divide-gray-200">
             <tr *ngFor="let order of filteredOrders">
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.uuid }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.deliveryNumbers }}</td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                 {{ order.user?.firstname }} {{ order.user?.lastname }}
               </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.reduction }}%</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.totalTtc }} €</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.createdAt | date }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.reduction }}€</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.totalTtc | number:'1.2-2' }} €</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.createdAt | date:'dd/MM/yyyy' }}</td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.status }}</td>
 
             </tr>
@@ -245,6 +247,13 @@
       class="mb-4 bg-mobalpa-green text-white p-2 rounded hover:bg-emerald-green focus:outline-none">
 {{ isFormVisible ? 'Annuler' : 'Créer un Coupon' }}
 </button>
+<div *ngIf="errorMessage" class="text-red-500 mb-4">
+  {{ errorMessage }}
+</div>
+
+<div  *ngIf="successMessage" class="text-green-500 mb-4">
+  {{ successMessage }}
+</div>
 
 <!-- Formulaire compact pour créer un coupon -->
 <form *ngIf="isFormVisible" (ngSubmit)="createCoupon()" #couponForm="ngForm" class="bg-white p-4 rounded-lg shadow-md space-y-4 mb-4 border border-mobalpa-green">
@@ -286,8 +295,34 @@
 </div>
 
 <div class="flex flex-col" *ngIf="newCoupon.targetType === 'SPECIFIC_USERS'">
- <label for="targetUsers" class="text-xs font-medium text-gray-700">UUID des Utilisateurs Ciblés</label>
- <input type="text" id="targetUsers" [(ngModel)]="newCoupon.targetUsers" name="targetUsers" placeholder="Séparez les UUID par des virgules" class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+  <label for="targetUsers" class="text-xs font-medium text-gray-700">Utilisateurs Ciblés</label>
+  <div class="relative">
+    <input type="text"
+           [(ngModel)]="searchTerm"
+           (ngModelChange)="onSearchTermChangeUsers($event)"
+           (focus)="onInputFocus()"
+           (blur)="onInputBlur()"
+           placeholder="Rechercher des utilisateurs..."
+           class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full" />
+    <button type="button" (click)="toggleDropdown()" class="absolute right-2 top-1/2 transform -translate-y-1/2">
+      <span class="text-gray-400">&#9660;</span>
+    </button>
+    <ul *ngIf="showDropdown && filteredUsers.length > 0"
+        class="absolute z-10 w-full bg-white border border-gray-300 rounded-md shadow-lg mt-1 max-h-60 overflow-y-auto">
+      <li *ngFor="let user of filteredUsers"
+          (mousedown)="selectUser(user)"
+          class="px-3 py-2 hover:bg-gray-100 cursor-pointer">
+        {{ user.firstname }} {{ user.lastname }}
+      </li>
+    </ul>
+  </div>
+  <div class="mt-2 flex flex-wrap gap-2">
+    <span *ngFor="let user of selectedUsers"
+          class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-sm flex items-center">
+      {{ user.firstname }} {{ user.lastname }}
+      <button (click)="removeUser(user)" class="ml-1 text-blue-600 hover:text-blue-800">&times;</button>
+    </span>
+  </div>
 </div>
 
 <div class="flex flex-col">
@@ -300,6 +335,7 @@
 Créer Coupon
 </button>
 </form>
+
       <div *ngIf="codePromos.length > 0; else noCodepromo">
         <!-- Barre de Recherche -->
         <input type="text" class="mb-4 p-2 border border-gray-300 rounded w-full"
@@ -309,7 +345,6 @@ Créer Coupon
         <table class="min-w-full divide-y divide-gray-200">
           <thead class="bg-gray-50">
             <tr>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Id</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nom</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Réduction</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cible</th>
@@ -320,7 +355,6 @@ Créer Coupon
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
             <tr *ngFor="let codePromo of codePromos">
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ codePromo.id }}</td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ codePromo.name }}</td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                 {{ codePromo.discountRate }}{{ codePromo.discountType === 'PERCENTAGE' ? '%' : '€' }}
@@ -354,10 +388,12 @@ Créer Coupon
                 </ng-template>
               </td>
 
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ codePromo.dateStart }}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ codePromo.dateEnd }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ codePromo.dateStart | date:'dd/MM/yyyy HH:mm:ss' }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ codePromo.dateEnd | date:'dd/MM/yyyy HH:mm:ss' }}</td>
+
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                <button (click)="deleteCoupon(codePromo.id)" class="text-red-500 underline">Supprimer</button>
+                <button (click)="deleteCoupon(codePromo.id)" class="text-white bg-red-500 p-2 rounded hover:bg-red-600">Supprimer</button>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -381,6 +417,62 @@ Créer Coupon
 
     <!-- Campaigns Tab -->
     <div *ngIf="selectedTab === 6" class="min-w-full">
+
+      <button (click)="toggleFormVisibility()"
+      class="mb-4 bg-mobalpa-green text-white p-2 rounded hover:bg-emerald-green focus:outline-none">
+      {{ isFormVisible ? 'Annuler' : 'Créer une Campagne' }}
+      </button>
+      <div *ngIf="errorMessage" class="text-red-500 mb-4">
+        {{ errorMessage }}
+      </div>
+
+      <div  *ngIf="successMessage" class="text-green-500 mb-4">
+        {{ successMessage }}
+      </div>
+
+      <!-- Formulaire compact pour créer une campagne -->
+      <form *ngIf="isFormVisible" (ngSubmit)="createCampaign()" #campaignForm="ngForm" class="bg-white p-4 rounded-lg shadow-md space-y-4 mb-4 border border-mobalpa-green">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="flex flex-col">
+            <label for="name" class="text-xs font-medium text-gray-700">Nom de la Campagne</label>
+            <input type="text" id="name" [(ngModel)]="newCampaign.name" name="name" required class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          </div>
+
+          <div class="flex flex-col">
+            <label for="type" class="text-xs font-medium text-gray-700">Type de Campagne</label>
+            <select id="type" [(ngModel)]="newCampaign.type" name="type" required class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <option value="CATEGORY">Categorie</option>
+              <option value="SUBCATEGORY">Sous-Catégorie</option>
+              <option value="PRODUCT">Produit</option>
+            </select>
+          </div>
+
+          <div class="flex flex-col">
+            <label for="discountRate" class="text-xs font-medium text-gray-700">Taux de Réduction (%)</label>
+            <input type="number" id="discountRate" [(ngModel)]="newCampaign.discountRate" name="discountRate" required class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          </div>
+
+          <div class="flex flex-col">
+            <label for="dateStart" class="text-xs font-medium text-gray-700">Date de Début</label>
+            <input type="datetime-local" id="dateStart" [(ngModel)]="newCampaign.dateStart" name="dateStart" required step="1" class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+          </div>
+
+          <div class="flex flex-col">
+            <label for="dateEnd" class="text-xs font-medium text-gray-700">Date de Fin</label>
+            <input type="datetime-local" id="dateEnd" [(ngModel)]="newCampaign.dateEnd" name="dateEnd" required step="1" class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+          </div>
+
+          <div class="flex flex-col">
+            <label for="targetUuid" class="text-xs font-medium text-gray-700">UUID de la Cible</label>
+            <input type="text" id="targetUuid" [(ngModel)]="newCampaign.targetUuid" name="targetUuid" required class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+          </div>
+        </div>
+
+        <button type="submit" class="w-1/3 bg-emerald-green  text-white py-2 rounded-md hover:bg-mobalpa-green focus:outline-none focus:bg-blue-600 transition-colors">
+          Créer Campagne
+        </button>
+      </form>
+
       <div *ngIf="campaigns.length > 0; else noCampaigns">
         <!-- Barre de Recherche -->
         <input type="text" class="mb-4 p-2 border border-gray-300 rounded w-full"
