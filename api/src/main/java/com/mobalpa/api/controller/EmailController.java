@@ -12,14 +12,19 @@ import com.mobalpa.api.service.EmailService;
 import java.util.Optional;
 import java.util.UUID;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/api/emails")
+@Tag(name = "Email", description = "APIs for managing emails")
 public class EmailController {
 
     @Autowired
     private EmailService emailService;
 
     @PostMapping("/send")
+    @Operation(summary = "Send email", description = "Sends an email.")
     public ResponseEntity<String> sendEmail(@RequestBody Emailing emailing) {
         try {
             emailService.sendEmail(emailing);
@@ -30,6 +35,7 @@ public class EmailController {
     }
 
     @PostMapping("/newsletter")
+    @Operation(summary = "Send newsletter", description = "Sends a newsletter.")
     public ResponseEntity<String> sendNewsletter(@RequestBody Newsletter newsletter) {
         try {
             emailService.sendNewsletter(newsletter);
@@ -41,12 +47,14 @@ public class EmailController {
 
     
     @DeleteMapping("/newsletter")
+    @Operation(summary = "Delete newsletter", description = "Deletes a newsletter.")
     public ResponseEntity<String> deleteNewsletter(@RequestParam UUID newsletterId) {
         emailService.deleteNewsletter(newsletterId);
         return ResponseEntity.status(HttpStatus.OK).body("Newsletter deleted");
     }
 
     @GetMapping("/{uuid}/status")
+    @Operation(summary = "Get email status", description = "Fetches the status of an email.")
     public ResponseEntity<String> getEmailStatus(@PathVariable UUID uuid) {
         Optional<Emailing> emailing = emailService.getEmailByUuid(uuid);
         return emailing

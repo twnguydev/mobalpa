@@ -11,21 +11,27 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController("adminUserController")
 @RequestMapping("/api/admin/users")
 @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_STORE_MANAGER')")
+@Tag(name = "User management for admin users", description = "APIs for managing users for admin users")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
     @GetMapping
+    @Operation(summary = "Get all users", description = "Fetches all users.")
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> users = userService.getAllUsers();
         return ResponseEntity.ok(users);
     }
 
     @GetMapping("/{uuid}")
+    @Operation(summary = "Get user by UUID", description = "Fetches a user by their unique identifier.")
     public ResponseEntity<User> getUserById(@PathVariable UUID uuid) {
         try {
             User user = userService.getUserByUuid(uuid);
@@ -36,6 +42,7 @@ public class UserController {
     }
 
     @PostMapping
+    @Operation(summary = "Create user", description = "Creates a new user.")
     public ResponseEntity<User> createUser(@RequestBody User user) {
         try {
             User createdUser = userService.createUser(user);
@@ -46,6 +53,7 @@ public class UserController {
     }
 
     @PutMapping("/{uuid}")
+    @Operation(summary = "Update user", description = "Updates a user.")
     public ResponseEntity<User> updateUser(@PathVariable UUID uuid, @RequestBody User user) {
         try {
             User updatedUser = userService.updateUser(uuid, user);
@@ -58,6 +66,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{uuid}")
+    @Operation(summary = "Delete user", description = "Deletes a user.")
     public ResponseEntity<Void> deleteUser(@PathVariable UUID uuid) {
         try {
             userService.deleteUser(uuid);
