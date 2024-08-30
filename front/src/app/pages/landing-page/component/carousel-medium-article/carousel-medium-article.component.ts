@@ -95,4 +95,8 @@ export class CarouselMediumArticleComponent {
       container.scrollLeft = this.currentIndex * itemWidth;
     }
   }
+
+  testLink() {
+    console.log('test link clicked');
+  }
 }

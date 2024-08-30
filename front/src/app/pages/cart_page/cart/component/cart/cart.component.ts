@@ -64,6 +64,9 @@ export class CartComponent {
     if (item.quantity > 1) {
       item.quantity--;
       this.userService.modifyCartFromLocalstorage('remove', item);
+    } else if (item.quantity === 1) {
+      
+      this.removeFromCart(item);
     }
   }
 

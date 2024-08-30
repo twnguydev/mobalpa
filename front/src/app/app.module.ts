@@ -14,7 +14,7 @@ registerLocaleData(localeFr);
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    AppComponent
+    AppComponent,
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'fr-FR' }],
   bootstrap: []

@@ -8,6 +8,6 @@ import { WishlistComponent } from './component/wishlist/wishlist.component';
   templateUrl: './wishlist-page.component.html',
   styleUrl: './wishlist-page.component.css'
 })
-export class Wishlist_PageComponent {
+export class WishlistPageComponent {
 
 }
