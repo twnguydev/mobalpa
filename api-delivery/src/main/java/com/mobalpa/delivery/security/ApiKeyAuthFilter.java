@@ -26,6 +26,12 @@ public class ApiKeyAuthFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
+        String path = request.getRequestURI();
+        if (path.startsWith("/v3/api-docs") || path.startsWith("/swagger-ui") || path.startsWith("/public")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         String requestApiKey = request.getHeader("X-API-KEY");
 
         if (apiKey.equals(requestApiKey)) {

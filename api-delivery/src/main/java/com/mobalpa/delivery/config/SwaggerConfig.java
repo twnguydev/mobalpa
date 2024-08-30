@@ -1,4 +1,4 @@
-package com.mobalpa.catalogue.config;
+package com.mobalpa.delivery.config;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
@@ -13,9 +13,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @OpenAPIDefinition(
     info = @Info(
-        title = "Archideco Catalogue API",
+        title = "Archideco Delivery API",
         version = "1.0",
-        description = "Welcome to the Archideco Catalogue API. This API allows you to manage products, categories, and more. Feel free to explore the API and test the endpoints.",
+        description = "Welcome to the Archideco Delivery API. This API permits you to deliver orders, manage parcels, and more. Feel free to explore the API and test the endpoints.",
         contact = @Contact(
             name = "Web@cademie Epitech Marseille",
             email = "tanguy.gibrat@epitech.eu",
