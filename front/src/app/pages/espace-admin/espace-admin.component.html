@@ -419,56 +419,72 @@
       </div>
 
       <!-- Formulaire compact pour créer une campagne -->
-      <form *ngIf="isFormVisible" (ngSubmit)="createCampaign()" #campaignForm="ngForm"
-        class="bg-white p-4 rounded-lg shadow-md space-y-4 mb-4 border border-mobalpa-green">
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div class="flex flex-col">
-            <label for="name" class="text-xs font-medium text-gray-700">Nom de la Campagne</label>
-            <input type="text" id="name" [(ngModel)]="newCampaign.name" name="name" required
-              class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
-          </div>
+<form *ngIf="isFormVisible" (ngSubmit)="createCampaign()" #campaignForm="ngForm" class="bg-white p-4 rounded-lg shadow-md space-y-4 mb-4 border border-mobalpa-green">
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div class="flex flex-col">
+      <label for="name" class="text-xs font-medium text-gray-700">Nom de la Campagne</label>
+      <input type="text" id="name" [(ngModel)]="newCampaign.name" name="name" required class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+    </div>
 
-          <div class="flex flex-col">
-            <label for="type" class="text-xs font-medium text-gray-700">Type de Campagne</label>
-            <select id="type" [(ngModel)]="newCampaign.type" name="type" required
-              class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-              <option value="CATEGORY">Categorie</option>
-              <option value="SUBCATEGORY">Sous-Catégorie</option>
-              <option value="PRODUCT">Produit</option>
-            </select>
-          </div>
+    <div class="flex flex-col">
+      <label for="type" class="text-xs font-medium text-gray-700">Type de Campagne</label>
+      <select id="type" [(ngModel)]="newCampaign.type" name="type" required (change)="onCampaignTypeChange()" class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <option value="CATEGORY">Catégorie</option>
+        <option value="SUBCATEGORY">Sous-Catégorie</option>
+        <option value="PRODUCT">Produit</option>
+      </select>
+    </div>
 
-          <div class="flex flex-col">
-            <label for="discountRate" class="text-xs font-medium text-gray-700">Taux de Réduction (%)</label>
-            <input type="number" id="discountRate" [(ngModel)]="newCampaign.discountRate" name="discountRate" required
-              class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
-          </div>
+    <div class="flex flex-col">
+      <label for="discountRate" class="text-xs font-medium text-gray-700">Taux de Réduction (%)</label>
+      <input type="number" id="discountRate" [(ngModel)]="newCampaign.discountRate" name="discountRate" required class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+    </div>
 
-          <div class="flex flex-col">
-            <label for="dateStart" class="text-xs font-medium text-gray-700">Date de Début</label>
-            <input type="datetime-local" id="dateStart" [(ngModel)]="newCampaign.dateStart" name="dateStart" required
-              step="1"
-              class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
-          </div>
+    <div class="flex flex-col">
+      <label for="dateStart" class="text-xs font-medium text-gray-700">Date de Début</label>
+      <input type="datetime-local" id="dateStart" [(ngModel)]="newCampaign.dateStart" name="dateStart" required step="1" class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+    </div>
 
-          <div class="flex flex-col">
-            <label for="dateEnd" class="text-xs font-medium text-gray-700">Date de Fin</label>
-            <input type="datetime-local" id="dateEnd" [(ngModel)]="newCampaign.dateEnd" name="dateEnd" required step="1"
-              class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
-          </div>
+    <div class="flex flex-col">
+      <label for="dateEnd" class="text-xs font-medium text-gray-700">Date de Fin</label>
+      <input type="datetime-local" id="dateEnd" [(ngModel)]="newCampaign.dateEnd" name="dateEnd" required step="1" class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+    </div>
 
-          <div class="flex flex-col">
-            <label for="targetUuid" class="text-xs font-medium text-gray-700">UUID de la Cible</label>
-            <input type="text" id="targetUuid" [(ngModel)]="newCampaign.targetUuid" name="targetUuid" required
-              class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
-          </div>
-        </div>
+    <div class="flex flex-col relative">
+      <label for="targetUuid" class="text-xs font-medium text-gray-700">Cible de la Campagne</label>
+      <input
+      type="text"
+      [(ngModel)]="searchTermCampaignTarget"
+      name="searchTerm"
+      (input)="onCampaignTargetSearchTermChange($event)"
+      (focus)="showCampaignTargetDropdown = true"
+      (blur)="onInputBlur2()"
+      [placeholder]="'Rechercher ' + newCampaign.type.toLowerCase()"
+      class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
 
-        <button type="submit"
-          class="w-1/3 bg-emerald-green  text-white py-2 rounded-md hover:bg-mobalpa-green focus:outline-none focus:bg-blue-600 transition-colors">
-          Créer Campagne
-        </button>
-      </form>
+
+      <ul *ngIf="showCampaignTargetDropdown" class="absolute z-10 w-full mt-16 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-auto">
+        <li *ngFor="let target of filteredCampaignTargets"
+            (mousedown)="selectCampaignTarget(target)"
+            class="px-3 py-2 hover:bg-gray-100 cursor-pointer">
+          {{ target.name }}
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div *ngIf="selectedCampaignTarget" class="mt-2">
+    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">
+      {{ selectedCampaignTarget.name }}
+      <button type="button" (click)="removeCampaignTarget()" class="ml-2 text-blue-600 hover:text-blue-800">&times;</button>
+    </span>
+  </div>
+
+  <button type="submit" class="w-1/3 bg-emerald-green text-white py-2 rounded-md hover:bg-mobalpa-green focus:outline-none focus:bg-blue-600 transition-colors">
+    Créer Campagne
+  </button>
+</form>
 
       <div *ngIf="campaigns.length > 0; else noCampaigns">
         <!-- Barre de Recherche -->
@@ -476,29 +492,31 @@
           placeholder="Rechercher par nom, description, etc." [(ngModel)]="searchTermCampaigns"
           (input)="filterCampaigns()" />
         <table class="min-w-full divide-y divide-gray-200">
-          <thead>
-            <tr>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nom</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Réduction</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date de Début
-              </th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date de Fin
-              </th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Id Cible</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let campaign of campaigns">
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ campaign.name }}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ campaign.type }}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ campaign.discountRate}}%</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ campaign.dateStart | date }}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ campaign.dateEnd | date }}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ campaign.targetUuid }}</td>
-            </tr>
-          </tbody>
-        </table>
+            <thead>
+              <tr>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nom</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Réduction</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date de Début</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date de Fin</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Id Cible</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let campaign of campaigns">
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ campaign.name }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ campaign.type }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ campaign.discountRate}}%</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ campaign.dateStart | date:'dd/MM/yyyy' }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ campaign.dateEnd | date:'dd/MM/yyyy' }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ campaign.targetUuid }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <button (click)="deleteCampaign(campaign.id)" class="text-white bg-red-500 p-2 rounded hover:bg-red-600">Supprimer</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         <!-- Pagination -->
 
         <app-pagination [currentPage]="currentPageCampaigns" [itemsPerPage]="itemsPerPageCampaigns"
