@@ -132,5 +132,58 @@ export class AdminService {
     return this.http.put<any>(`${this.apiUrl}/ticket/${ticket.id}`, ticket, { headers });
   }
 
+  // Forecast
+  getForecast(csv: boolean | string, reportType: string): Observable<any> {
+    const headers: HttpHeaders | null = this.authService.getAuthHeaders();
+    if (!headers) return new Observable<any>();
 
+    let response;
+    
+    if (csv) {
+      response = this.http.get(`${this.apiUrl}/forecast/csv?reportType=${reportType}`, {
+        headers,
+        responseType: 'blob'
+      });
+    } else {
+      response = this.http.get<any>(`${this.apiUrl}/forecast?reportType=${reportType}`, { headers });
+    }
+
+    return response;
+  }
+
+  getSummary(csv: boolean | string, reportType: string): Observable<any> {
+    const headers: HttpHeaders | null = this.authService.getAuthHeaders();
+    if (!headers) return new Observable<any>();
+
+    let response;
+    
+    if (csv) {
+      response = this.http.get(`${this.apiUrl}/summary/csv?reportType=${reportType}`, {
+        headers,
+        responseType: 'blob'
+      });
+    } else {
+      response = this.http.get<any>(`${this.apiUrl}/summary?reportType=${reportType}`, { headers });
+    }
+
+    return response;
+  }
+
+  getSales(csv: boolean | string, startDate: string, endDate: string): Observable<any> {
+    const headers: HttpHeaders | null = this.authService.getAuthHeaders();
+    if (!headers) return new Observable<any>();
+
+    let response;
+    
+    if (csv) {
+      response = this.http.get(`${this.apiUrl}/sales/csv?startDate=${startDate}&endDate=${endDate}`, {
+        headers,
+        responseType: 'blob'
+      });
+    } else {
+      response = this.http.get<any>(`${this.apiUrl}/sales?startDate=${startDate}&endDate=${endDate}`, { headers });
+    }
+
+    return response;
+  }
 }

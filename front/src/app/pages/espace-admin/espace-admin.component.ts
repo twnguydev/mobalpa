@@ -26,7 +26,7 @@ export class EspaceAdminComponent implements OnInit {
     { title: 'Code Promo' },
     { title: 'Campagne Promo' },
     { title: 'Ticket Support' },
-    { title: 'Statistique' },
+    { title: 'Forecast' },
   ];
   selectedTab: number = 0;
   isFormVisible = false;
@@ -98,12 +98,17 @@ export class EspaceAdminComponent implements OnInit {
   };
 
   // Variables pour les statistiques
-  statistics: any[] = [];
-  filteredStatistics: any[] = [];
-  searchTermStatistics: string = '';
-  currentPageStatistics: number = 1;
-  itemsPerPageStatistics: number = 10;
-  totalPagesStatistics: number = 1;
+  forecast: any[] = [];
+  summary: any[] = [];
+  sales: any[] = [];
+  reportType = 'weekly';
+  endDate: string = new Date().toISOString().split('T')[0];
+  startDate: string = new Date(new Date().setDate(new Date().getDate() - 7)).toISOString().split('T')[0];
+  filteredForecast: any[] = [];
+  searchTermForecast: string = '';
+  currentPageForecast: number = 1;
+  itemsPerPageForecast: number = 10;
+  totalPagesForecast: number = 1;
 
   // Variables pour les campagnes
   campaigns: ICampaign[] = [];
@@ -151,7 +156,7 @@ export class EspaceAdminComponent implements OnInit {
       case 5: this.loadCodePromos(); break;
       case 6: this.loadCampaigns(); break;
       case 7: this.loadSupportTickets(); break;
-      case 8: this.loadStatistics(); break;
+      case 8: this.loadForecast(); this.loadSummary(); this.loadSales(); break;
 
     }
   }
@@ -569,32 +574,118 @@ export class EspaceAdminComponent implements OnInit {
     this.filterTickets();
   }
 
-  // Statistics
-  loadStatistics(): void {
-    // this.adminService.getAllStatistics().subscribe(statistics => {
-    //   this.statistics = statistics;
-    //   this.filterStatistics();
-    // });
+  // Forecast
+  loadForecast(): void {
+    this.adminService.getForecast(false, this.reportType).subscribe(forecast => {
+      this.forecast = forecast;
+
+      if (this.currentPageForecast < 1) {
+        this.currentPageForecast = 1;
+      }
+      
+      this.filterForecast();
+      console.log('Forecast', forecast);
+    });
   }
 
-  filterStatistics(): void {
-    const filtered = this.statistics;
-
-    this.totalPagesStatistics = Math.ceil(filtered.length / this.itemsPerPageStatistics);
-    this.currentPageStatistics = Math.min(this.currentPageStatistics, this.totalPagesStatistics);
-    this.filteredStatistics = filtered.slice((this.currentPageStatistics - 1) * this.itemsPerPageStatistics, this.currentPageStatistics * this.itemsPerPageStatistics);
+  loadSummary(): void {
+    this.adminService.getSummary(false, this.reportType).subscribe(summary => {
+      this.summary = summary;
+      console.log('Summary', summary);
+    });
   }
 
-  onSearchTermChangeStatistics(newSearchTerm: string): void {
-    this.searchTermStatistics = newSearchTerm;
-    this.currentPageStatistics = 1;
-    this.filterStatistics();
+  loadSales(): void {
+    this.adminService.getSales(false, this.startDate, this.endDate).subscribe(sales => {
+      this.sales = sales;
+      console.log('Sales', sales);
+    });
   }
 
+  filterForecast(): void {
+    const filtered = this.forecast.slice();
+    this.totalPagesForecast = Math.ceil(filtered.length / this.itemsPerPageForecast);
 
-  onPageChangeStatistics(page: number): void {
-    this.currentPageStatistics = page;
-    this.filterStatistics();
+    if (this.currentPageForecast < 1 && this.totalPagesForecast > 0) {
+      this.currentPageForecast = 1;
+    }
+
+    this.filteredForecast = filtered.slice(
+      (this.currentPageForecast - 1) * this.itemsPerPageForecast,
+      this.currentPageForecast * this.itemsPerPageForecast
+    );
+  }
+
+  onReportTypeChange(): void {
+    switch (this.reportType) {
+      case 'weekly':
+        const lastWeek = new Date(new Date().setDate(new Date().getDate() - 7));
+        this.endDate = lastWeek.toISOString().split('T')[0];
+        this.startDate = new Date(new Date().setDate(lastWeek.getDate() - 7)).toISOString().split('T')[0];
+        break;
+      case 'monthly':
+        const lastMonth = new Date(new Date().setMonth(new Date().getMonth() - 1));
+        this.endDate = lastMonth.toISOString().split('T')[0];
+        this.startDate = new Date(new Date().setMonth(lastMonth.getMonth() - 1)).toISOString().split('T')[0];
+        break;
+      case 'yearly':
+        const lastYear = new Date(new Date().setFullYear(new Date().getFullYear() - 1));
+        this.endDate = lastYear.toISOString().split('T')[0];
+        this.startDate = new Date(new Date().setFullYear(lastYear.getFullYear() - 1)).toISOString().split('T')[0];
+        break;
+    }
+  
+    this.loadForecast();
+    this.loadSummary();
+    this.loadSales();
+  }
+
+  // onSearchTermChangeStatistics(newSearchTerm: string): void {
+  //   this.searchTermStatistics = newSearchTerm;
+  //   this.currentPageStatistics = 1;
+  //   this.filterStatistics();
+  // }
+
+
+  onPageChangeForecast(page: number): void {
+    this.currentPageForecast = page;
+    this.filterForecast();
+  }
+
+  downloadCsvSummary(): void {
+    this.adminService.getSummary(true, this.reportType).subscribe((response: any) => {
+      const blob = new Blob([response], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `summary-${this.reportType}.csv`;
+      a.click();
+      window.URL.revokeObjectURL(url);
+    });
+  }
+
+  downloadCsvForecast(): void {
+    this.adminService.getForecast(true, this.reportType).subscribe((response: any) => {
+      const blob = new Blob([response], { type: 'text/csv'});
+      const url: string = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `forecast-${this.reportType}.csv`;
+      a.click();
+      window.URL.revokeObjectURL(url);
+    });
+  }
+
+  downloadCsvSales(): void {
+    this.adminService.getSales(true, this.startDate, this.endDate).subscribe((response: any) => {
+      const blob = new Blob([response], { type: 'text/csv'});
+      const url: string = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `sales-${this.startDate}-${this.endDate}.csv`;
+      a.click();
+      window.URL.revokeObjectURL(url);
+    });
   }
 
   // Toggle
