@@ -125,9 +125,13 @@ export class EspaceAdminComponent implements OnInit {
     dateStart: new Date(),
     dateEnd: new Date(),
     targetUuid: '',
-    type: 'PRODUCT'
+    type: 'CATEGORY'
   };
-
+  campaignTargets: (IProduct | ICategory | ISubcategory)[] = [];
+  filteredCampaignTargets: (IProduct | ICategory | ISubcategory)[] = [];
+  searchTermCampaignTarget: string = '';
+  showCampaignTargetDropdown: boolean = false;
+  selectedCampaignTarget: IProduct | ICategory | ISubcategory | null = null;
 
   // Variables pour les tickets de support
   supportTickets: any[] = [];
@@ -143,6 +147,7 @@ export class EspaceAdminComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadUsers();
+    this.loadCampaignTargets();
   }
   // Fonction pour changer de tab
   selectTab(index: number) {
@@ -168,7 +173,6 @@ export class EspaceAdminComponent implements OnInit {
       this.filterUsers();
     });
   }
-
   filterUsers(): void {
     const filtered = this.users.filter(user =>
       user.firstname.toLowerCase().includes(this.searchTermUsers.toLowerCase()) ||
@@ -184,7 +188,6 @@ export class EspaceAdminComponent implements OnInit {
     this.currentPageUsers = Math.min(this.currentPageUsers, this.totalPagesUsers);
     this.filteredUsers = filtered.slice((this.currentPageUsers - 1) * this.itemsPerPageUsers, this.currentPageUsers * this.itemsPerPageUsers);
   }
-
   onSearchTermChangeUsers(newSearchTerm: string): void {
     this.searchTermUsers = newSearchTerm;
     this.currentPageUsers = 1;
@@ -192,7 +195,6 @@ export class EspaceAdminComponent implements OnInit {
     this.showDropdown = this.filteredUsers.length > 0;
 
   }
-
   onPageChangeUsers(page: number): void {
     this.currentPageUsers = page;
     this.filterUsers();
@@ -251,13 +253,11 @@ export class EspaceAdminComponent implements OnInit {
     this.currentPageProducts = Math.min(this.currentPageProducts, this.totalPagesProducts);
     this.filteredProducts = filtered.slice((this.currentPageProducts - 1) * this.itemsPerPageProducts, this.currentPageProducts * this.itemsPerPageProducts);
   }
-
   onSearchTermChangeProducts(newSearchTerm: string): void {
     this.searchTermProducts = newSearchTerm;
     this.currentPageProducts = 1;
     this.filterProducts();
   }
-
   onPageChangeProducts(page: number): void {
     this.currentPageProducts = page;
     this.filterProducts();
@@ -270,7 +270,6 @@ export class EspaceAdminComponent implements OnInit {
       this.filterCategories();
     });
   }
-
   filterCategories(): void {
     const filtered = this.categories.filter(category =>
       category.name.toLowerCase().includes(this.searchTermCategories.toLowerCase()) ||
@@ -281,13 +280,11 @@ export class EspaceAdminComponent implements OnInit {
     this.currentPageCategories = Math.min(this.currentPageCategories, this.totalPagesCategories);
     this.filteredCategories = filtered.slice((this.currentPageCategories - 1) * this.itemsPerPageCategories, this.currentPageCategories * this.itemsPerPageCategories);
   }
-
   onSearchTermChangeCategories(newSearchTerm: string): void {
     this.searchTermCategories = newSearchTerm;
     this.currentPageCategories = 1;
     this.filterCategories();
   }
-
   onPageChangeCategories(page: number): void {
     this.currentPageCategories = page;
     this.filterCategories();
@@ -300,7 +297,6 @@ export class EspaceAdminComponent implements OnInit {
       this.filterSubcategories();
     });
   }
-
   filterSubcategories(): void {
     const filtered = this.subcategories.filter(subcategory =>
       subcategory.name.toLowerCase().includes(this.searchTermSubcategories.toLowerCase()) ||
@@ -311,13 +307,11 @@ export class EspaceAdminComponent implements OnInit {
     this.currentPageSubcategories = Math.min(this.currentPageSubcategories, this.totalPagesSubcategories);
     this.filteredSubcategories = filtered.slice((this.currentPageSubcategories - 1) * this.itemsPerPageSubcategories, this.currentPageSubcategories * this.itemsPerPageSubcategories);
   }
-
   onSearchTermChangeSubcategories(newSearchTerm: string): void {
     this.searchTermSubcategories = newSearchTerm;
     this.currentPageSubcategories = 1;
     this.filterSubcategories();
   }
-
   onPageChangeSubcategories(page: number): void {
     this.currentPageSubcategories = page;
     this.filterSubcategories();
@@ -330,7 +324,6 @@ export class EspaceAdminComponent implements OnInit {
       this.filterOrders();
     });
   }
-
   filterOrders(): void {
     const filtered = this.orders.filter(order =>
       order.uuid?.toLowerCase().includes(this.searchTermOrders.toLowerCase()) ||
@@ -347,14 +340,11 @@ export class EspaceAdminComponent implements OnInit {
     this.currentPageOrders = Math.min(this.currentPageOrders, this.totalPagesOrders);
     this.filteredOrders = filtered.slice((this.currentPageOrders - 1) * this.itemsPerPageOrders, this.currentPageOrders * this.itemsPerPageOrders);
   }
-
   onSearchTermChangeOrders(newSearchTerm: string): void {
     this.searchTermOrders = newSearchTerm;
     this.currentPageOrders = 1;
     this.filterOrders();
   }
-
-
   onPageChangeOrders(page: number): void {
     this.currentPageOrders = page;
     this.filterOrders();
@@ -368,7 +358,6 @@ export class EspaceAdminComponent implements OnInit {
     });
 
   }
-
   deleteCoupon(id: string): void {
     if (confirm('Voulez-vous vraiment supprimer ce code promo ?')) {
       const couponToDelete = this.codePromos.find(coupon => coupon.id === id);
@@ -396,8 +385,6 @@ export class EspaceAdminComponent implements OnInit {
       }
     }
   }
-
-
   createCoupon(): void {
     if (typeof this.newCoupon.targetUsers === 'string') {
         this.newCoupon.targetUsers = (this.newCoupon.targetUsers as string)
@@ -436,8 +423,7 @@ export class EspaceAdminComponent implements OnInit {
             }, 3000);
         }
     });
-}
-
+  }
   filterCodePromos(): void {
     const filtered = this.codePromos.filter(codePromo =>
       (codePromo.code?.toLowerCase() || '').includes(this.searchTermCodePromos.toLowerCase()) ||
@@ -449,7 +435,6 @@ export class EspaceAdminComponent implements OnInit {
     this.currentPageCodePromos = Math.min(this.currentPageCodePromos, this.totalPagesCodePromos);
     this.filteredCodePromos = filtered.slice((this.currentPageCodePromos - 1) * this.itemsPerPageCodePromos, this.currentPageCodePromos * this.itemsPerPageCodePromos);
   }
-
   onPageChangeCodePromos(page: number): void {
     this.currentPageCodePromos = page;
     this.filterCodePromos();
@@ -529,6 +514,79 @@ export class EspaceAdminComponent implements OnInit {
       }
     }
   }
+  loadCampaignTargets(): void {
+    switch (this.newCampaign.type) {
+      case 'PRODUCT':
+        this.adminService.getAllProducts().subscribe(products => {
+          this.campaignTargets = products;
+          this.filterCampaignTargets();
+        });
+        break;
+      case 'CATEGORY':
+        this.adminService.getAllCategories().subscribe(categories => {
+          this.campaignTargets = categories;
+          this.filterCampaignTargets();
+        });
+        break;
+      case 'SUBCATEGORY':
+        this.adminService.getAllSubcategories().subscribe(subcategories => {
+          this.campaignTargets = subcategories;
+          this.filterCampaignTargets();
+        });
+        break;
+    }
+  }
+
+
+  filterCampaignTargets(): void {
+    if (!this.searchTermCampaignTarget) {
+      this.filteredCampaignTargets = this.campaignTargets;
+    } else {
+      const lowerSearchTerm = this.searchTermCampaignTarget.toLowerCase();
+      this.filteredCampaignTargets = this.campaignTargets.filter(target =>
+        target.name.toLowerCase().includes(lowerSearchTerm)
+      ).sort((a, b) => {
+        const aName = a.name.toLowerCase();
+        const bName = b.name.toLowerCase();
+        return aName.localeCompare(bName);
+      });
+    }
+  }
+
+
+  onCampaignTargetSearchTermChange(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    this.searchTermCampaignTarget = inputElement.value;
+    this.filterCampaignTargets();
+  }
+
+  onInputBlur2(): void {
+    setTimeout(() => {
+      this.showCampaignTargetDropdown = false;
+    }, 200);
+  }
+  selectCampaignTarget(target: IProduct | ICategory | ISubcategory): void {
+    this.selectedCampaignTarget = target;
+    this.newCampaign.targetUuid = target.uuid;
+    this.searchTermCampaignTarget = '';
+    this.showCampaignTargetDropdown = false;
+  }
+
+  removeCampaignTarget(): void {
+    this.selectedCampaignTarget = null;
+    this.newCampaign.targetUuid = '';
+  }
+
+  onCampaignTypeChange(): void {
+    this.selectedCampaignTarget = null;
+    this.newCampaign.targetUuid = '';
+    this.loadCampaignTargets();
+  }
+
+
+
+
+
 
   filterCampaigns(): void {
     const filtered = this.campaigns;
