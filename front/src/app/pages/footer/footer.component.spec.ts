@@ -17,7 +17,10 @@ describe('FooterComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('Verifie les liens cliquables', () => {
+    spyOn(component, 'testLink')
+    let link = fixture.nativeElement.querySelector('a');
+    link.click();
     expect(component).toBeTruthy();
   });
 });

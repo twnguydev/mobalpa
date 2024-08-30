@@ -21,6 +21,8 @@ export interface IProduct {
   oldPrice?: number;
   newPrice?: number;
   discountRate?: number;
+  createdAt?: Date;
+
 }
 
 export interface IBrand {
