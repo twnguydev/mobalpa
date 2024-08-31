@@ -53,7 +53,7 @@
                 </div>
             </div>
         </a>
-        <!-- <div class="flex items-center justify-between my-2">
+        <div class="flex items-center justify-between my-2">
             <div class="flex items-center space-x-2">
                 <span *ngFor="let color of product.colors" [style.background-color]="getColorHex(color.name)" [ngClass]="{
                                           'w-6 h-6 rounded-full cursor-pointer transition': true,
@@ -62,7 +62,7 @@
                                       }" (click)="selectColor(product, color)">
                 </span>
             </div>
-        </div> -->
+        </div>
         <p class="text-xl font-semibold mb-2">
             <span *ngIf="discountedPrice(product) else noDiscount">
                 <span>{{ discountedPrice(product) | number: '1.2-2' }} €</span>
