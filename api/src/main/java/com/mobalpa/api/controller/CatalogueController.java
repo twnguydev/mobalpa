@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.UUID;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
@@ -31,31 +32,31 @@ public class CatalogueController {
   private PromotionService promotionService;
 
   @GetMapping("/categories")
-  @Operation(summary = "Get all categories", description = "Fetches all categories.")
+  @Operation(summary = "Get all categories", description = "Fetches all categories.", security = @SecurityRequirement(name = "bearerAuth"))
   public ResponseEntity<?> getAllCategories() {
     return ResponseEntity.ok(catalogueService.getAllCategories());
   }
 
   @GetMapping("/best-sellers")
-  @Operation(summary = "Get best sellers", description = "Fetches the best selling products.")
+  @Operation(summary = "Get best sellers", description = "Fetches the best selling products.", security = @SecurityRequirement(name = "bearerAuth"))
   public ResponseEntity<?> getBestSellers() {
     return ResponseEntity.ok(catalogueService.getBestSellers());
   }
 
   @GetMapping("/coupons")
-  @Operation(summary = "Get all coupons", description = "Fetches all coupons.")
+  @Operation(summary = "Get all coupons", description = "Fetches all coupons.", security = @SecurityRequirement(name = "bearerAuth"))
   public ResponseEntity<?> getAllCoupons() {
     return ResponseEntity.ok(promotionService.getAllCoupons());
   }
   
   @GetMapping("/campaigns")
-  @Operation(summary = "Get all campaigns", description = "Fetches all campaigns.")
+  @Operation(summary = "Get all campaigns", description = "Fetches all campaigns.", security = @SecurityRequirement(name = "bearerAuth"))
   public ResponseEntity<?> getAllCampaigns() {
     return ResponseEntity.ok(promotionService.getAllCampaigns());
   }
 
   @GetMapping("/products")
-  @Operation(summary = "Get all products", description = "Fetches all products.")
+  @Operation(summary = "Get all products", description = "Fetches all products.", security = @SecurityRequirement(name = "bearerAuth"))
   public ResponseEntity<?> getAllProducts(
       @RequestParam(required = false) String color,
       @RequestParam(required = false) Double minPrice,
@@ -76,13 +77,13 @@ public class CatalogueController {
   }
 
   @GetMapping("/products/{productUuid}/campaigns")
-  @Operation(summary = "Get product campaigns", description = "Fetches the campaigns for a product.")
+  @Operation(summary = "Get product campaigns", description = "Fetches the campaigns for a product.", security = @SecurityRequirement(name = "bearerAuth"))
   public ResponseEntity<?> getProductCampaigns(@PathVariable UUID productUuid) {
     return ResponseEntity.ok(promotionService.getProductCampaigns(productUuid));
   }
 
   @GetMapping("/products-with-campaigns")
-  @Operation(summary = "Get all products with campaigns", description = "Fetches all products with campaigns.")
+  @Operation(summary = "Get all products with campaigns", description = "Fetches all products with campaigns.", security = @SecurityRequirement(name = "bearerAuth"))
   public ResponseEntity<?> getAllProductsWithCampaigns() {
     try {
       ProductFilter productFilter = new ProductFilter();
@@ -94,7 +95,7 @@ public class CatalogueController {
   }
 
   @GetMapping("/subcategories-with-campaigns")
-  @Operation(summary = "Get all subcategories with campaigns", description = "Fetches all subcategories with campaigns.")
+  @Operation(summary = "Get all subcategories with campaigns", description = "Fetches all subcategories with campaigns.", security = @SecurityRequirement(name = "bearerAuth"))
   public ResponseEntity<?> getAllSubcategoriesWithCampaigns() {
     try {
       List<SubcategoryWithCampaignDTO> subcategoriesWithCampaigns = catalogueService.getAllSubcategoriesWithCampaign();
@@ -105,7 +106,7 @@ public class CatalogueController {
   }
 
   @GetMapping("/categories-with-campaigns")
-  @Operation(summary = "Get all categories with campaigns", description = "Fetches all categories with campaigns.")
+  @Operation(summary = "Get all categories with campaigns", description = "Fetches all categories with campaigns.", security = @SecurityRequirement(name = "bearerAuth"))
   public ResponseEntity<?> getAllCategoriesWithCampaigns() {
     try {
       List<CategoryWithCampaignDTO> categoriesWithCampaigns = catalogueService.getAllCategoriesWithCampaign();

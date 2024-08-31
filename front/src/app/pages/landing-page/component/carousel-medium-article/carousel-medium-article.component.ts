@@ -96,7 +96,7 @@ export class CarouselMediumArticleComponent {
     }
   }
 
-  testLink() {
-    console.log('test link clicked');
+  testLink(): void {
+    console.log('Test link');
   }
 }

@@ -61,8 +61,8 @@
                     <span *ngFor="let color of product.colors" [style.background-color]="getColorHex(color.name)"
                         [ngClass]="{
                             'w-6 h-6 rounded-full cursor-pointer transition': true,
-                            'border-2 border-black': selectedProductColor[product.uuid]?.name === color.name,
-                            'border-transparent': selectedProductColor[product.uuid]?.name !== color.name
+                            'border-2 border-black': selectedProductColor[product.uuid].name === color.name,
+                            'border-transparent': selectedProductColor[product.uuid].name !== color.name
                         }" (click)="selectColor(product, color)">
                     </span>
                 </div>
