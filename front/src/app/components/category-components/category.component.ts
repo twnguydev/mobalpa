@@ -113,6 +113,7 @@ export class CategoryComponent implements OnInit {
           this.extractFilterData();
           this.updateSelectorsFromUrl();
           this.applyFilters();
+          console.log('Products loaded', this.allProducts);
         }
       },
       error: (error) => {
