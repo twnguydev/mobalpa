@@ -27,6 +27,7 @@ export class EspaceAdminComponent implements OnInit {
     { title: 'Campagne Promo' },
     { title: 'Ticket Support' },
     { title: 'Forecast' },
+    { title: 'Abonnée Newsletter' },
   ];
   selectedTab: number = 0;
   isFormVisible = false;
@@ -140,6 +141,14 @@ export class EspaceAdminComponent implements OnInit {
   currentPageSupportTickets: number = 1;
   itemsPerPageSupportTickets: number = 10;
   totalPagesSupportTickets: number = 1;
+
+  // Variables pour les abonnées newsletter
+  subscribers: any[] = [];
+  filteredSubscribers: any[] = [];
+  searchTermSubscribers: string = '';
+  currentPageSubscribers: number = 1;
+  itemsPerPageSubscribers: number = 10;
+  totalPagesSubscribers: number = 1;
 
 
 
@@ -640,7 +649,7 @@ export class EspaceAdminComponent implements OnInit {
       if (this.currentPageForecast < 1) {
         this.currentPageForecast = 1;
       }
-      
+
       this.filterForecast();
       console.log('Forecast', forecast);
     });
@@ -692,7 +701,7 @@ export class EspaceAdminComponent implements OnInit {
         this.startDate = new Date(new Date().setFullYear(lastYear.getFullYear() - 1)).toISOString().split('T')[0];
         break;
     }
-  
+
     this.loadForecast();
     this.loadSummary();
     this.loadSales();
