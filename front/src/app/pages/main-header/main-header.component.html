@@ -18,7 +18,8 @@
 
       <nav class="hidden lg:flex space-x-6">
         <button (click)="toggleSousMenu()" class="text-white font-gotham hover:text-emerald-green">Nos produits</button>
-        <a href="/nouveaute" class="text-white font-gotham hover:text-emerald-green">Nouveautés</a>
+        <a href="/promotions" class="text-white font-gotham hover:text-emerald-green">Promotions</a>
+        <a href="/nouveautes" class="text-white font-gotham hover:text-emerald-green">Derniers arrivages</a>
         <ng-container *ngIf="isLoggedIn">
           <a *ngIf="isAdmin" href="/admin" class="text-white font-gotham hover:text-emerald-green">Administration</a>
         </ng-container>

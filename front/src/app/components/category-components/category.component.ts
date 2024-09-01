@@ -219,8 +219,16 @@ export class CategoryComponent implements OnInit {
     }
   }
 
-  selectColor(product: IProduct, color: IColor): void {
+  selectColor(product: IProduct, color: IColor) {
+    if (!this.selectedProductColor[product.uuid]) {
+      this.selectedProductColor[product.uuid] = { uuid: '', name: '' };
+    }
+
     this.selectedProductColor[product.uuid] = color;
+    
+    console.log('Selected Product:', product);
+    console.log('Selected Color:', color);
+    console.log('Current Selection:', this.selectedProductColor[product.uuid]);
   }
 
   getColorHex(colorName: string): string {

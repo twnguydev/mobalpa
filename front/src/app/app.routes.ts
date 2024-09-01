@@ -85,8 +85,8 @@ export const routes: Routes = [
     { path: 'livraison/quelle-sont-les-frais-de-livraison', component: QuelleSontLesFraisDeLivraisonComponent },
     { path: 'cooperation', component: CooperationComponent },
     { path: 'fournisseur', component: FournisseurComponent },
-    { path: 'nouveaute', component: NouveauteComponent },
-    { path: 'promo', component: PromoPageComponent },
+    { path: 'nouveautes', component: NouveauteComponent },
+    { path: 'promotions', component: PromoPageComponent },
 
 
 
