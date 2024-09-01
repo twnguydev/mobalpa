@@ -6,7 +6,7 @@ import { AdminGuard } from './admin.guard';
 
 import { LandingPageComponent } from '@pages/landing-page/landing-page.component';
 import { CartPageComponent } from '@pages/cart_page/cart-page.component';
-import { Wishlist_PageComponent } from '@pages/wishlist-page/wishlist-page.component';
+import { WishlistPageComponent } from '@pages/wishlist-page/wishlist-page.component';
 import { SupportPageComponent } from '@pages/support-page/support-page.component';
 import { SubcategoriePageComponent } from '@pages/subcategorie-page/subcategorie-page.component';
 import { ProductComponent } from '@components/product-components/product.component';
@@ -57,7 +57,7 @@ export const routes: Routes = [
     { path: 'panier', component: CartPageComponent },
     { path: 'commande/confirmation', component: ConfirmOrderComponent },
     { path: 'commande/details', component: OrderDetailsComponent },
-    { path: 'liste-de-souhaits', component: Wishlist_PageComponent, canActivate: [AuthGuard] },
+    { path: 'liste-de-souhaits', component: WishlistPageComponent, canActivate: [AuthGuard] },
     { path: 'support', component: SupportPageComponent },
     { path: 'info', component: HomeComponent },
     { path: 'auth/connexion', component: LoginComponent, canActivate: [NoAuthGuard] },
