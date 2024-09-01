@@ -37,6 +37,8 @@ export class PromoPageComponent implements OnInit {
   selectedColor: string | null = null;
   colors: string[] = [];
   brands: string[] = [];
+  oldPrice: number =0;
+  newPrice: number = 0;
 
   colorMap: { [key: string]: string } = {
     Rouge: '#FF0000',
@@ -65,28 +67,14 @@ export class PromoPageComponent implements OnInit {
   loadProducts(): void {
     this.productService.getProducts().subscribe(
       (products: IProduct[]) => {
-        const currentDate = new Date();
-
-        const startOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
-
-        const endOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
-
         this.products = products.filter(product => {
-          if (!product.createdAt) {
-            return false;
-          }
-          const productDate = new Date(product.createdAt);
-          return productDate >= startOfMonth && productDate <= endOfMonth;
-        });
-
-        this.products.sort((a, b) => {
-          const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
-          const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
-          return dateB - dateA;
+          const discountRate = product.discountRate ?? 0;
+          const newPrice = product.newPrice ?? product.price;
+          const oldPrice = product.oldPrice ?? product.price;
+          return discountRate > 0 || (newPrice < oldPrice);
         });
 
         this.filteredProducts = [...this.products];
-
         this.paginateProducts();
       },
       (error) => {
@@ -95,6 +83,8 @@ export class PromoPageComponent implements OnInit {
       }
     );
   }
+
+
 
 
 
