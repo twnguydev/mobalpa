@@ -17,4 +17,6 @@ public class Newsletter {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_uuid", nullable = false)
     private User user;
+
+    
 }

@@ -138,7 +138,7 @@ export class AdminService {
     if (!headers) return new Observable<any>();
 
     let response;
-    
+
     if (csv) {
       response = this.http.get(`${this.apiUrl}/forecast/csv?reportType=${reportType}`, {
         headers,
@@ -156,7 +156,7 @@ export class AdminService {
     if (!headers) return new Observable<any>();
 
     let response;
-    
+
     if (csv) {
       response = this.http.get(`${this.apiUrl}/summary/csv?reportType=${reportType}`, {
         headers,
@@ -174,7 +174,7 @@ export class AdminService {
     if (!headers) return new Observable<any>();
 
     let response;
-    
+
     if (csv) {
       response = this.http.get(`${this.apiUrl}/sales/csv?startDate=${startDate}&endDate=${endDate}`, {
         headers,
@@ -186,4 +186,20 @@ export class AdminService {
 
     return response;
   }
+
+  getAllNewsletters(): Observable<any> {
+    const headers: HttpHeaders | null = this.authService.getAuthHeaders();
+    if (!headers) return new Observable<any>();
+    return this.http.get<any>(`${this.apiUrl}/newsletters`, { headers });
+  }
+
+  deleteNewsletter(uuid: string): Observable<string> {
+    const headers: HttpHeaders | null = this.authService.getAuthHeaders();
+    if (!headers) return new Observable<string>();
+
+    return this.http.delete(`${this.apiUrl}/newsletter/${uuid}`, {
+        headers,
+        responseType: 'text'
+    });
+}
 }

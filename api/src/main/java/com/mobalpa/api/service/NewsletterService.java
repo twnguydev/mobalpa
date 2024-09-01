@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
+import java.util.List;
 
 @Service
 public class NewsletterService {
@@ -21,5 +22,10 @@ public class NewsletterService {
     @Transactional
     public void deleteNewsletterByUuid(UUID uuid) {
         newsletterRepository.deleteById(uuid);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Newsletter> getAllNewsletters() {
+        return newsletterRepository.findAllWithUsers();
     }
 }
