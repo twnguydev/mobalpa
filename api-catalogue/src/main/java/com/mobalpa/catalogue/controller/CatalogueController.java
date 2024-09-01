@@ -44,7 +44,7 @@ public class CatalogueController {
           "    \"products\": []\n" +
           "  }\n" +
           "]"))),
-      @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Unauthorized\"")))
+      @ApiResponse(responseCode = "403", description = "Unauthorized", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Unauthorized\"")))
   })
   public ResponseEntity<?> getAllStores() {
     return ResponseEntity.ok(catalogueService.getAllStores());
@@ -90,7 +90,7 @@ public class CatalogueController {
           "]"))),
       @ApiResponse(responseCode = "404", description = "Store not found or no products found for the store", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Store not found\""))),
       @ApiResponse(responseCode = "404", description = "No products found for store", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"No products found for store\""))),
-      @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Unauthorized\"")))
+      @ApiResponse(responseCode = "403", description = "Unauthorized", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Unauthorized\"")))
   })
   public ResponseEntity<?> getProductsByStoreId(@PathVariable UUID storeId) {
     Optional<Store> store = catalogueService.getStoreById(storeId);
@@ -118,7 +118,7 @@ public class CatalogueController {
           "  \"products\": []\n" +
           "}"))),
       @ApiResponse(responseCode = "400", description = "Bad request due to invalid input or store already exists", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Store with name Archidéco Aubagne already exists\""))),
-      @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Unauthorized\"")))
+      @ApiResponse(responseCode = "403", description = "Unauthorized", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Unauthorized\"")))
   })
   public ResponseEntity<?> createStore(@RequestBody Store store) {
     try {

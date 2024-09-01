@@ -81,7 +81,7 @@ public class CategoryController {
           "    }\n" +
           "]"))),
       @ApiResponse(responseCode = "404", description = "No categories found", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"No categories found\""))),
-      @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Unauthorized\"")))
+      @ApiResponse(responseCode = "403", description = "Unauthorized", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Unauthorized\"")))
   })
   public ResponseEntity<?> getAllCategories() {
     List<Category> categories = categoryService.getAllCategories()
@@ -127,7 +127,7 @@ public class CategoryController {
           "    ]\n" +
           "}"))),
       @ApiResponse(responseCode = "404", description = "Category not found", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Category not found\""))),
-      @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Unauthorized\"")))
+      @ApiResponse(responseCode = "403", description = "Unauthorized", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Unauthorized\"")))
   })
   public ResponseEntity<?> getCategoryById(@PathVariable UUID uuid) {
     Optional<Category> category = categoryService.getCategoryById(uuid);
@@ -155,7 +155,7 @@ public class CategoryController {
           "    }\n" +
           "]"))),
       @ApiResponse(responseCode = "404", description = "No subcategories found for this category", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"No subcategories found for this category\""))),
-      @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Unauthorized\"")))
+      @ApiResponse(responseCode = "403", description = "Unauthorized", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Unauthorized\"")))
   })
   public ResponseEntity<?> getSubcategoriesByCategoryId(@PathVariable UUID id) {
     Optional<List<Subcategory>> subcategories = Optional.of(categoryService.getSubcategoriesByCategoryId(id));
@@ -219,7 +219,7 @@ public class CategoryController {
           "    }\n" +
           "]"))),
       @ApiResponse(responseCode = "404", description = "No products found for this category", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"No products found for this category\""))),
-      @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Unauthorized\"")))
+      @ApiResponse(responseCode = "403", description = "Unauthorized", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Unauthorized\"")))
   })
   public ResponseEntity<?> getProductsByCategoryId(@PathVariable UUID id) {
     Optional<List<Subcategory>> subcategories = Optional.of(categoryService.getSubcategoriesByCategoryId(id));
@@ -232,39 +232,25 @@ public class CategoryController {
   }
 
   @PostMapping
-  @Operation(summary = "Create category", 
-             description = "Creates a new category.", 
-             security = @SecurityRequirement(name = "apiKey"))
+  @Operation(summary = "Create category", description = "Creates a new category.", security = @SecurityRequirement(name = "apiKey"))
   @ApiResponses(value = {
-      @ApiResponse(responseCode = "201", 
-                   description = "Category successfully created", 
-                   content = @Content(mediaType = "application/json", 
-                   examples = @ExampleObject(value = "{\n" +
-                      "    \"uuid\": \"64d4ce7c-d754-4934-9e3e-78fb5d613f9c\",\n" +
-                      "    \"name\": \"Gros électroménager\",\n" +
-                      "    \"description\": \"Catégorie de meubles\",\n" +
-                      "    \"uri\": \"gros-electromenager\",\n" +
-                      "    \"images\": [\n" +
-                      "        {\n" +
-                      "            \"uuid\": \"image-uuid\",\n" +
-                      "            \"uri\": \"https://example.com/image.jpg\",\n" +
-                      "            \"color\": null\n" +
-                      "        }\n" +
-                      "    ],\n" +
-                      "    \"subcategories\": []\n" +
-                      "}"
-                   ))
-      ),
-      @ApiResponse(responseCode = "400", 
-                   description = "Invalid category data provided", 
-                   content = @Content(mediaType = "application/json", 
-                   examples = @ExampleObject(value = "\"Invalid category data provided\""))
-      ),
-      @ApiResponse(responseCode = "401", 
-                   description = "Unauthorized", 
-                   content = @Content(mediaType = "application/json", 
-                   examples = @ExampleObject(value = "\"Unauthorized\""))
-      )
+      @ApiResponse(responseCode = "201", description = "Category successfully created", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "{\n"
+          +
+          "    \"uuid\": \"64d4ce7c-d754-4934-9e3e-78fb5d613f9c\",\n" +
+          "    \"name\": \"Gros électroménager\",\n" +
+          "    \"description\": \"Catégorie de meubles\",\n" +
+          "    \"uri\": \"gros-electromenager\",\n" +
+          "    \"images\": [\n" +
+          "        {\n" +
+          "            \"uuid\": \"image-uuid\",\n" +
+          "            \"uri\": \"https://example.com/image.jpg\",\n" +
+          "            \"color\": null\n" +
+          "        }\n" +
+          "    ],\n" +
+          "    \"subcategories\": []\n" +
+          "}"))),
+      @ApiResponse(responseCode = "400", description = "Invalid category data provided", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Invalid category data provided\""))),
+      @ApiResponse(responseCode = "403", description = "Unauthorized", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Unauthorized\"")))
   })
   public ResponseEntity<?> createCategory(@RequestBody Category category) {
     try {
@@ -301,7 +287,7 @@ public class CategoryController {
           "}"))),
       @ApiResponse(responseCode = "400", description = "Invalid category data provided", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Invalid category data provided\""))),
       @ApiResponse(responseCode = "404", description = "Category not found", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Category not found\""))),
-      @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Unauthorized\"")))
+      @ApiResponse(responseCode = "403", description = "Unauthorized", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Unauthorized\"")))
   })
   public ResponseEntity<Category> updateCategory(@PathVariable UUID id, @RequestBody Category category) {
     return ResponseEntity.ok(categoryService.updateCategory(id, category));
@@ -312,7 +298,7 @@ public class CategoryController {
   @ApiResponses(value = {
       @ApiResponse(responseCode = "204", description = "Category successfully deleted"),
       @ApiResponse(responseCode = "404", description = "Category not found", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Category not found\""))),
-      @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Unauthorized\"")))
+      @ApiResponse(responseCode = "403", description = "Unauthorized", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Unauthorized\"")))
   })
   public ResponseEntity<Void> deleteCategory(@PathVariable UUID id) {
     categoryService.deleteCategory(id);
