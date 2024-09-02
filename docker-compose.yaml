@@ -42,11 +42,24 @@ services:
       SPRING_DATASOURCE_PASSWORD: root
       CATALOGUE_BASE_URL: http://api-catalogue:8081/api/catalogue/
       DELIVERY_BASE_URL: http://api-delivery:8082/api/delivery/
+      FORECAST_BASE_URL: http://api-forecast:8083/api/
     depends_on:
       api-catalogue:
         condition: service_started
       api-delivery:
         condition: service_started
+      api-forecast:
+        condition: service_started
+    networks:
+      - mobalpa-network
+
+  api-forecast:
+    build:
+      context: ./data
+      dockerfile: Dockerfile
+    container_name: api-forecast
+    ports:
+      - "8083:8083"
     networks:
       - mobalpa-network
 
