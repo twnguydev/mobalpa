@@ -8,6 +8,8 @@ import java.util.UUID;
 import java.util.Optional;
 import java.util.List;
 import java.time.LocalDate;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, UUID> {
@@ -15,4 +17,6 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     User findByEmail(String email);
     Optional<User> findByUuid(UUID uuid);
     List<User> findAllByBirthdate(LocalDate birthdate);
+    @Query("SELECT u FROM User u LEFT JOIN FETCH u.orders LEFT JOIN FETCH u.tickets WHERE u.uuid = :userUuid")
+    Optional<User> findByIdWithDetails(@Param("userUuid") UUID userUuid);
 }

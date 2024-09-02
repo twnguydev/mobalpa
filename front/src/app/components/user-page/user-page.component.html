@@ -1,95 +1,192 @@
-<div *ngIf="user; else loading" class="p-6 max-w-4xl mx-auto bg-white shadow-md rounded-lg">
+<div *ngIf="user; else loading" class="p-6 max-w-full mx-auto bg-white shadow-md rounded-lg">
+  <!-- Détails de l'utilisateur -->
   <h2 class="text-2xl font-bold mb-4">Détails de l'utilisateur</h2>
-
   <div class="overflow-x-auto">
     <table class="min-w-full divide-y divide-gray-200">
       <thead>
         <tr class="bg-gray-50">
           <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            Attribut
+            Attribut 1
+          </th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-r border-gray-200">
+            Valeur 1
           </th>
           <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            Valeur
+            Attribut 2
+          </th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Valeur 2
           </th>
         </tr>
       </thead>
       <tbody class="bg-white divide-y divide-gray-200">
+        <!-- Première colonne -->
         <tr>
           <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">UUID</td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.uuid || 'Non renseigné' }}</td>
-        </tr>
-        <tr>
-          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Prénom</td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.firstname || 'Non renseigné' }}</td>
-        </tr>
-        <tr>
-          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Nom</td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.lastname || 'Non renseigné' }}</td>
-        </tr>
-        <tr>
-          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Email</td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.email || 'Non renseigné' }}</td>
-        </tr>
-        <tr>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 border-r border-gray-200">{{ user.uuid || 'Non renseigné' }}</td>
           <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Téléphone</td>
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.phoneNumber || 'Non renseigné' }}</td>
         </tr>
         <tr>
+          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Prénom</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 border-r border-gray-200">{{ user.firstname || 'Non renseigné' }}</td>
           <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Adresse</td>
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.address || 'Non renseigné' }}</td>
         </tr>
         <tr>
+          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Nom</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 border-r border-gray-200">{{ user.lastname || 'Non renseigné' }}</td>
           <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Ville</td>
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.city || 'Non renseigné' }}</td>
         </tr>
         <tr>
+          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Email</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 border-r border-gray-200">{{ user.email || 'Non renseigné' }}</td>
           <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Code Postal</td>
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.zipcode || 'Non renseigné' }}</td>
         </tr>
+        <!-- Deuxième colonne -->
         <tr>
           <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Date de création</td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.createdAt | date:'dd/MM/yyyy' || 'Non renseigné' }}</td>
-        </tr>
-        <tr>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 border-r border-gray-200">{{ user.createdAt | date:'dd/MM/yyyy' || 'Non renseigné' }}</td>
           <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Date de mise à jour</td>
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.updatedAt | date:'dd/MM/yyyy' || 'Non renseigné' }}</td>
         </tr>
         <tr>
           <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Date de naissance</td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.birthdate | date:'dd/MM/yyyy' || 'Non renseigné' }}</td>
-        </tr>
-
-
-        <tr>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 border-r border-gray-200">{{ user.birthdate | date:'dd/MM/yyyy' || 'Non renseigné' }}</td>
           <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Actif</td>
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.active ? 'Oui' : 'Non' }}</td>
         </tr>
-
-
         <tr>
           <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Rôles</td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-              <span *ngFor="let role of user.roles">
-                  {{ role.name }},<br>
-              </span>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 border-r border-gray-200">
+            <span *ngFor="let role of user.roles">
+              {{ role.name }}<br>
+            </span>
           </td>
-      </tr>
-
-        <tr>
           <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Token</td>
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.token || 'Non renseigné' }}</td>
         </tr>
         <tr>
           <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Nom d'utilisateur</td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.email || 'Non renseigné' }}</td>
-        </tr>
-        <tr>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 border-r border-gray-200">{{ user.email || 'Non renseigné' }}</td>
           <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Mot de passe</td>
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.password ? '****' : 'Non renseigné' }}</td>
         </tr>
       </tbody>
     </table>
   </div>
+
+  <!-- Commandes de l'utilisateur -->
+  <div class="mt-6">
+    <h2 class="text-2xl font-bold mb-4">Commandes de l'utilisateur</h2>
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead>
+          <tr class="bg-gray-50">
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Numéro de
+                Commande
+            </th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Numéro de de
+                Livraison
+            </th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Réduction
+            </th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Montant Total
+            </th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Date de Commande
+            </th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Statut
+            </th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <ng-container *ngIf="user.orders ; else noOrders">
+            <tr *ngFor="let order of user.orders">
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.uuid || 'Non renseigné' }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.deliveryNumbers || 'Non renseigné' }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.reduction || 'Non renseigné' }}€</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.totalTtc | number:'1.2-2' }} €</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.createdAt | date:'dd/MM/yyyy' || 'Non renseigné' }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.status || 'Non renseigné' }}</td>
+            </tr>
+          </ng-container>
+          <ng-template #noOrders>
+            <tr>
+              <td colspan="4" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">Aucune commande trouvée</td>
+            </tr>
+          </ng-template>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+ <!-- Tickets de l'utilisateur -->
+<div class="mt-6">
+  <h2 class="text-2xl font-bold mb-4">Tickets Support de l'utilisateur</h2>
+  <div class="overflow-x-auto">
+    <table class="min-w-full divide-y divide-gray-200">
+      <thead>
+        <tr class="bg-gray-50">
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Id Ticket
+          </th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Type
+          </th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Sujet
+          </th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Problème
+          </th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Date de création
+          </th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Date de mise à jour
+          </th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Date de clôture
+          </th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Traiter par :
+          </th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Réponse
+          </th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-200">
+        <ng-container *ngIf="tickets.length > 0; else noTickets">
+          <tr *ngFor="let ticket of tickets">
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ ticket.uuid || 'Non renseigné' }}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ ticket.type || 'Non renseigné' }}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ ticket.name || 'Non renseigné' }}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ ticket.issue || 'Non renseigné' }}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ ticket.createdAt ? (ticket.createdAt | date:'dd/MM/yyyy') : 'Non renseigné' }}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ ticket.updatedAt || 'Non renseigné' }}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ ticket.closedAt || 'Non renseigné' }}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ ticket.updatedAt || 'Non renseigné' }}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ ticket.responder || 'Non renseigné' }}</td>
+          </tr>
+        </ng-container>
+        <ng-template #noTickets>
+          <tr>
+            <td colspan="4" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">Aucun ticket trouvé</td>
+          </tr>
+        </ng-template>
+      </tbody>
+    </table>
+  </div>
+</div>
 
   <div class="mt-6 flex justify-end">
     <button (click)="goBackToAdminPanel()" class="px-4 py-2 bg-mobalpa-green text-white font-semibold rounded-lg shadow-md hover:bg-emerald-green focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2">

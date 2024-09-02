@@ -78,8 +78,8 @@ public class UserController {
     }
 
     @GetMapping("/details/{uuid}")
-    public ResponseEntity<User> getUserDetails(@PathVariable UUID uuid) {
-        Optional<User> user = userService.getUserDetails(uuid);
+    public ResponseEntity<User> findByIdWithDetails(@PathVariable UUID uuid) {
+        Optional<User> user = userService.findByIdWithDetails(uuid);
         return user.map(ResponseEntity::ok)
                    .orElseGet(() -> ResponseEntity.notFound().build());
     }
