@@ -1,0 +1,6 @@
+{
+	"appId": "com.example.archideco",
+	"appName": "Archidéco",
+	"webDir": "dist/front/browser",
+	"bundledWebRuntime": false
+}
