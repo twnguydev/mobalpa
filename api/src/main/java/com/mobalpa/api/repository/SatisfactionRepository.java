@@ -13,5 +13,5 @@ public interface SatisfactionRepository extends JpaRepository<Satisfaction, UUID
     Optional<Satisfaction> findByUuid(UUID uuid);
     List<Satisfaction> findByTargetUuidAndTargetType(UUID targetUuid, String targetType);
     List<Satisfaction> findByTargetType(String targetType);
-    List<Satisfaction> findTop3ByOrderByCreatedAtAsc();
+    List<Satisfaction> findTop3ByOrderByRatingDesc();
 }

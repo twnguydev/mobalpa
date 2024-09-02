@@ -20,8 +20,6 @@ class DataExtractor:
         try:
             with self.engine.connect() as conn:
                 sales_data = pd.read_sql(query, conn)
-                
-            print(f"Colonnes disponibles après extraction : {sales_data.columns}")
 
             required_columns = ['created_at', 'total_ttc', 'total_ht', 'vat', 'delivery_fees', 'reduction', 'product_uuid', 'quantity']
             missing_columns = [col for col in required_columns if col not in sales_data.columns]
@@ -95,7 +93,7 @@ class DataExtractor:
             response = requests.get(f"{self.api_url}/api/catalogue/products/{product_uuid_str}", headers=headers)
 
             if response.status_code == 200:
-                print(f"Produit {product_uuid_str} trouvé.")
+                # print(f"Produit {product_uuid_str} trouvé.")
                 product_info = response.json()
                 return product_info
             else:

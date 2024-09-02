@@ -3,8 +3,7 @@ FROM python:3.12-slim
 WORKDIR /app
 
 COPY requirements.txt start.sh ./
-
-COPY . .
+COPY api.py main.py ./
 
 RUN pip install --no-cache-dir -r requirements.txt
 

@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 from DataExtractor import DataExtractor
 from SalesAnalyzer import SalesAnalyzer
 from CSVGenerator import CSVGenerator
+from ReportGenerator import ReportGenerator
 from EmailSender import EmailSender
 from dotenv import load_dotenv
 from sqlalchemy import create_engine
@@ -52,42 +53,39 @@ def automate_sales_report(report_type):
         end_date = datetime.now().date()
         
         if report_type == 'weekly':
-            end_of_last_week = end_date - timedelta(days=end_date.weekday() + 1)
-            start_of_last_week = end_of_last_week - timedelta(days=6)
-            start_date = start_of_last_week
-            end_date = end_of_last_week
             freq = 'D'
             sales = analyzer.aggregate_sales(freq='W')
             sales_filename = 'weekly_sales_data.csv'
             subject = 'Weekly Sales Report'
             body = 'Please find attached the weekly sales report and predictions.'
         elif report_type == 'monthly':
-            first_day_of_current_month = end_date.replace(day=1)
-            last_day_of_last_month = first_day_of_current_month - timedelta(days=1)
-            first_day_of_last_month = last_day_of_last_month.replace(day=1)
-            start_date = first_day_of_last_month
-            end_date = last_day_of_last_month
             freq = 'D'
-            sales = analyzer.aggregate_sales(freq='M')
+            sales = analyzer.aggregate_sales(freq='ME')
             sales_filename = 'monthly_sales_data.csv'
             subject = 'Monthly Sales Report'
             body = 'Please find attached the monthly sales report and predictions.'
         elif report_type == 'yearly':
-            start_date = datetime(end_date.year - 1, 1, 1).date()
-            end_date = datetime(end_date.year - 1, 12, 31).date()
-            freq = 'W-MON'
-            sales = analyzer.aggregate_sales(freq='Y')
+            freq = 'D'
+            sales = analyzer.aggregate_sales(freq='YE')
             sales_filename = 'yearly_sales_data.csv'
             subject = 'Yearly Sales Report'
             body = 'Please find attached the yearly sales report and predictions.'
         else:
             raise ValueError("Type de rapport non pris en charge.")
-
-        summary_report = analyzer.create_summary_report(sales, freq=report_type[0].upper())
+        
+        summary_report = analyzer.create_summary_report(freq=report_type[0].upper())
         sales_report = analyzer.create_sales_report(sales)
         
+        p1_start_date = pd.to_datetime(summary_report['Date de début']).iloc[0]
+        p1_end_date = pd.to_datetime(summary_report['Date de fin']).iloc[0]
+
+        p1_duration = p1_end_date - p1_start_date
+        start_date = p1_end_date + pd.Timedelta(days=1)
+        end_date = start_date + p1_duration
+        
         predictions = analyzer.predict_sales(start_date, end_date, freq=freq)
-        predictions_report = analyzer.create_predictions_report(predictions, end_date, extractor)
+        
+        predictions_report = analyzer.create_predictions_report(predictions, start_date, end_date, extractor)
 
         csv_generator = CSVGenerator(summary_report, sales_report, predictions_report, sales_filename)
         csv_generator.generate_csv()
@@ -95,19 +93,19 @@ def automate_sales_report(report_type):
         admin_users = extractor.extract_admin_users()
         logging.info(f"Admin users: {admin_users}")
 
-        # email_sender = EmailSender(SMTP_HOST, SMTP_PORT, SMTP_USERNAME, SMTP_PASSWORD)
-        # email_sender.send_email_with_attachments(admin_users, subject, body, [sales_filename])
+        email_sender = EmailSender(SMTP_HOST, SMTP_PORT, SMTP_USERNAME, SMTP_PASSWORD)
+        email_sender.send_email_with_attachments(admin_users, subject, body, [sales_filename])
 
-        # os.remove(sales_filename)
+        os.remove(sales_filename)
         logging.info(f"{report_type.capitalize()} report generated and sent successfully.")
 
     except Exception as e:
         logging.error(f"An error occurred while generating {report_type} report: {str(e)}")
 
 def schedule_tasks():
-    schedule.every().friday.at("18:00").do(automate_sales_report, report_type='weekly')
-    schedule.every().day.at("18:00").do(check_and_run_monthly_task)
-    schedule.every().day.at("18:00").do(check_and_run_yearly_task)
+    schedule.every().sunday.at("23:42").do(automate_sales_report, report_type='weekly')
+    schedule.every().day.at("23:42").do(check_and_run_monthly_task)
+    schedule.every().day.at("23:42").do(check_and_run_yearly_task)
 
 def check_and_run_monthly_task():
     now = datetime.now()
@@ -131,11 +129,11 @@ def main_loop(iterations=None):
 
 def run_reports():
     automate_sales_report(report_type='weekly')
-    # automate_sales_report(report_type='monthly')
-    # automate_sales_report(report_type='yearly')
+    automate_sales_report(report_type='monthly')
+    automate_sales_report(report_type='yearly')
 
 if __name__ == "__main__":
     check_database_connection()
-    # schedule_tasks()
-    # main_loop()
+    schedule_tasks()
+    main_loop()
     run_reports()

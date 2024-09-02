@@ -59,7 +59,7 @@ public class SatisfactionService {
     }
 
     public List<Satisfaction> getFirstThreeSatisfactions() {
-        return satisfactionRepository.findTop3ByOrderByCreatedAtAsc();
+        return satisfactionRepository.findTop3ByOrderByRatingDesc();
     }
 
     public List<Satisfaction> getProductSatisfaction(UUID productUuid) {
