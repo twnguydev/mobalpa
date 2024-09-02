@@ -8,6 +8,7 @@ import { ICoupon } from '@interfaces/coupon.interface';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PaginationComponent } from '@components/pagination/pagination.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-espace-admin',
@@ -152,7 +153,7 @@ export class EspaceAdminComponent implements OnInit {
 
 
 
-  constructor(private adminService: AdminService) { }
+  constructor(private adminService: AdminService, private router: Router) { }
 
   ngOnInit(): void {
     this.loadUsers();
@@ -823,7 +824,9 @@ export class EspaceAdminComponent implements OnInit {
     }
 }
 
-
+viewUserDetails(uuid: string): void {
+  this.router.navigate([`/details/${uuid}`]);
+}
 
 
   // Toggle

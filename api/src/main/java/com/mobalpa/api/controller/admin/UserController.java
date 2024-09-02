@@ -13,6 +13,7 @@ import java.util.UUID;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.Optional;
 
 @RestController("adminUserController")
 @RequestMapping("/api/admin/users")
@@ -74,5 +75,12 @@ public class UserController {
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+    }
+
+    @GetMapping("/details/{uuid}")
+    public ResponseEntity<User> getUserDetails(@PathVariable UUID uuid) {
+        Optional<User> user = userService.getUserDetails(uuid);
+        return user.map(ResponseEntity::ok)
+                   .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

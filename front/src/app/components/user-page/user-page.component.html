@@ -1,0 +1,101 @@
+<div *ngIf="user; else loading" class="p-6 max-w-4xl mx-auto bg-white shadow-md rounded-lg">
+  <h2 class="text-2xl font-bold mb-4">Détails de l'utilisateur</h2>
+
+  <div class="overflow-x-auto">
+    <table class="min-w-full divide-y divide-gray-200">
+      <thead>
+        <tr class="bg-gray-50">
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Attribut
+          </th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Valeur
+          </th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-200">
+        <tr>
+          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">UUID</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.uuid || 'Non renseigné' }}</td>
+        </tr>
+        <tr>
+          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Prénom</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.firstname || 'Non renseigné' }}</td>
+        </tr>
+        <tr>
+          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Nom</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.lastname || 'Non renseigné' }}</td>
+        </tr>
+        <tr>
+          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Email</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.email || 'Non renseigné' }}</td>
+        </tr>
+        <tr>
+          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Téléphone</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.phoneNumber || 'Non renseigné' }}</td>
+        </tr>
+        <tr>
+          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Adresse</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.address || 'Non renseigné' }}</td>
+        </tr>
+        <tr>
+          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Ville</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.city || 'Non renseigné' }}</td>
+        </tr>
+        <tr>
+          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Code Postal</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.zipcode || 'Non renseigné' }}</td>
+        </tr>
+        <tr>
+          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Date de création</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.createdAt | date: 'medium' || 'Non renseigné' }}</td>
+        </tr>
+        <tr>
+          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Date de mise à jour</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.updatedAt | date: 'medium' || 'Non renseigné' }}</td>
+        </tr>
+        <tr>
+          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Date de naissance</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.birthdate | date: 'medium' || 'Non renseigné' }}</td>
+        </tr>
+
+
+        <tr>
+          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Actif</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.active ? 'Oui' : 'Non' }}</td>
+        </tr>
+
+
+        <tr>
+          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Rôles</td>
+
+        </tr>
+
+        <tr>
+          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Token</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.token || 'Non renseigné' }}</td>
+        </tr>
+        <tr>
+          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Nom d'utilisateur</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.email || 'Non renseigné' }}</td>
+        </tr>
+        <tr>
+          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Mot de passe</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.password ? '****' : 'Non renseigné' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="mt-6 flex justify-end">
+    <button (click)="goBackToAdminPanel()" class="px-4 py-2 bg-mobalpa-green text-white font-semibold rounded-lg shadow-md hover:bg-emerald-green focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2">
+      Retour 
+    </button>
+  </div>
+</div>
+
+<ng-template #loading>
+  <div class="p-6 max-w-4xl mx-auto bg-white shadow-md rounded-lg">
+    <p class="text-lg font-semibold text-gray-900">Chargement des détails de l'utilisateur...</p>
+  </div>
+</ng-template>

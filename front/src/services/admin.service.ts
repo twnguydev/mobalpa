@@ -202,4 +202,10 @@ export class AdminService {
         responseType: 'text'
     });
 }
+
+getUserByUuid(uuid: string): Observable<IUser> {
+  const headers: HttpHeaders | null = this.authService.getAuthHeaders();
+  if (!headers) return new Observable<IUser>();
+  return this.http.get<IUser>(`${this.apiUrl}/users/details/${uuid}`, { headers });
+}
 }
