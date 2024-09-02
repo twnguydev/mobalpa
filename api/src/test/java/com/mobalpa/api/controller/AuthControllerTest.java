@@ -20,6 +20,8 @@ import java.nio.file.Paths;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
@@ -45,9 +47,13 @@ class AuthControllerTest {
         when(userService.registerUser(any(User.class))).thenReturn(user);
 
         ResponseEntity<?> response = authController.registerUser(user);
-        
+
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertEquals(user, response.getBody());
+
+        Map<String, Object> responseBody = (Map<String, Object>) response.getBody();
+        assertNotNull(responseBody);
+        assertEquals("Inscription réussie", responseBody.get("message"));
+        assertNull(responseBody.get("userUuid"));
     }
 
     @Test
