@@ -52,6 +52,7 @@ export class ProductComponent implements OnInit {
   selectedImage: string | null = null;
   selectedColor: IColor = {} as IColor;
   
+  // selectedColor: string | null = null;
   avisForm!: FormGroup;
   submissionSuccess = false;
   reviewsList: any[] = []

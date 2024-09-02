@@ -2,7 +2,6 @@ package com.mobalpa.api.dto.catalogue;
 
 import lombok.Data;
 
-import java.util.List;
 import java.util.UUID;
 
 @Data

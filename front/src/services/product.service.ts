@@ -22,6 +22,7 @@ export class ProductService {
       switchMap(products => {
         return this.http.get<ICampaign[]>(`${this.apiUrl}/campaigns`, { headers }).pipe(
           map(campaigns => {
+
             return products.map(product => ({
               ...product,
               campaigns: campaigns.filter(campaign => campaign.targetUuid === product.uuid || campaign.targetUuid === product.subcategory.uuid)
@@ -206,4 +207,6 @@ export class ProductService {
     const headers: HttpHeaders = this.authService.getAuthHeaders() ?? this.authService.getXApiKeyHeaders();
     return this.http.get<IProduct[]>(`${this.apiUrl}/products-with-campaigns`, { headers });
   }
+
+ 
 }

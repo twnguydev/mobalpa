@@ -18,7 +18,8 @@
 
       <nav class="hidden lg:flex space-x-6">
         <button (click)="toggleSousMenu()" class="text-white font-gotham hover:text-emerald-green">Nos produits</button>
-        <a href="#" class="text-gray-500 font-gotham">Nouveautés</a>
+        <a href="/promotions" class="text-white font-gotham hover:text-emerald-green">Promotions</a>
+        <a href="/nouveautes" class="text-white font-gotham hover:text-emerald-green">Derniers arrivages</a>
         <ng-container *ngIf="isLoggedIn">
           <a *ngIf="isAdmin" href="/admin" class="text-white font-gotham hover:text-emerald-green">Administration</a>
         </ng-container>
@@ -79,8 +80,10 @@
   <div id="menu" class="lg:hidden bg-mobalpa-green text-white font-gotham absolute top-full left-0 right-0 z-50 hidden">
     <div class="flex">
       <div class="w-1/2 flex flex-col items-start">
-        <a href="#"
-          class="block px-6 py-4 hover:bg-mobalpa-green-alternate w-full text-left  text-lg font-bold  cursor-pointer">Nouveautés</a>
+        <a href="/nouveautes"
+           class="block px-6 py-4 hover:bg-mobalpa-green-alternate w-full text-left  text-lg font-bold  cursor-pointer">Derniers arrivages</a>
+        <a href="/promotions"
+           class="block px-6 py-4 hover:bg-mobalpa-green-alternate w-full text-left  text-lg font-bold  cursor-pointer">Promotions</a>
         <ng-container *ngIf="isLoggedIn; else loggedOut2">
           <a href="/liste-de-souhaits"
             class="block px-6 py-4 hover:bg-mobalpa-green-alternate w-full text-left  text-lg font-bold  cursor-pointer">Liste

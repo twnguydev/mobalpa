@@ -90,15 +90,17 @@
                 </div>
 
                 <!-- Quantité Column -->
-                <div *ngIf="item.product" class="flex justify-center md:justify-start items-center col-span-1">
-                    <div class="flex items-center space-x-2">
-                        <button (click)="decreaseQuantity(item)"
-                            class="text-lg px-4 py-1 bg-mobalpa-green-alternate text-white rounded-2xl">-</button>
-                        <p class="font-gotham text-lg">{{ item.quantity }}</p>
-                        <button (click)="increaseQuantity(item)"
-                            class="text-lg px-4 py-1 bg-mobalpa-green-alternate text-white rounded-2xl">+</button>
-                    </div>
+            <div *ngIf="item.product" class="flex justify-center md:justify-start items-center col-span-1">
+                <div class="flex items-center space-x-2">
+                    <button (click)="decreaseQuantity(item)"
+                        class="text-lg px-4 py-1 bg-mobalpa-green-alternate text-white rounded-2xl"
+                        >-</button>
+                    <p class="font-gotham text-lg">{{ item.quantity }}</p>
+                    <button (click)="increaseQuantity(item)"
+                        class="text-lg px-4 py-1 bg-mobalpa-green-alternate text-white rounded-2xl">+</button>
                 </div>
+            </div>
+
 
                 <!-- Prix Column -->
                 <div *ngIf="item.product"
