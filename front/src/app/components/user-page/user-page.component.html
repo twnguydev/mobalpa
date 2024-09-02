@@ -48,15 +48,15 @@
         </tr>
         <tr>
           <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Date de création</td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.createdAt | date: 'medium' || 'Non renseigné' }}</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.createdAt | date:'dd/MM/yyyy' || 'Non renseigné' }}</td>
         </tr>
         <tr>
           <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Date de mise à jour</td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.updatedAt | date: 'medium' || 'Non renseigné' }}</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.updatedAt | date:'dd/MM/yyyy' || 'Non renseigné' }}</td>
         </tr>
         <tr>
           <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Date de naissance</td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.birthdate | date: 'medium' || 'Non renseigné' }}</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.birthdate | date:'dd/MM/yyyy' || 'Non renseigné' }}</td>
         </tr>
 
 
@@ -68,8 +68,12 @@
 
         <tr>
           <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Rôles</td>
-
-        </tr>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              <span *ngFor="let role of user.roles">
+                  {{ role.name }},<br>
+              </span>
+          </td>
+      </tr>
 
         <tr>
           <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Token</td>
@@ -89,7 +93,7 @@
 
   <div class="mt-6 flex justify-end">
     <button (click)="goBackToAdminPanel()" class="px-4 py-2 bg-mobalpa-green text-white font-semibold rounded-lg shadow-md hover:bg-emerald-green focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2">
-      Retour 
+      Retour
     </button>
   </div>
 </div>
