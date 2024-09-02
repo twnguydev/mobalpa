@@ -122,7 +122,6 @@ export class EspaceAdminComponent implements OnInit {
   newCampaign: ICampaign = {
     id: '',
     name: '',
-    description: '',
     discountRate: 0,
     dateStart: new Date(),
     dateEnd: new Date(),
@@ -479,7 +478,6 @@ export class EspaceAdminComponent implements OnInit {
         this.newCampaign = {
           id: '',
           name: '',
-          description: '',
           discountRate: 0,
           dateStart: new Date(),
           dateEnd: new Date(),

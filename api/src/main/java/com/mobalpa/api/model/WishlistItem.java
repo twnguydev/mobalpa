@@ -44,12 +44,6 @@ public class WishlistItem {
     @Column(nullable = false)
     private String selectedColor;
 
-    @ElementCollection
-    @CollectionTable(name = "wishlist_item_properties", joinColumns = @JoinColumn(name = "wishlist_item_uuid"))
-    @MapKeyColumn(name = "property_key")
-    @Column(name = "property_value")
-    private Map<String, String> properties;
-
     @Column(nullable = false)
     private Integer quantity;
 }
