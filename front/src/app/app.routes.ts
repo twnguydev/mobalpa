@@ -32,6 +32,7 @@ import { QuelleSontLesFraisDeLivraisonComponent } from '@pages/livraison/quelle-
 import { CooperationComponent } from '@pages/cooperation/cooperation.component';
 import { FournisseurComponent } from '@pages/fournisseur/fournisseur.component';
 import { NouveauteComponent } from '@pages/nouveaute/nouveaute.component';
+import { UserPageComponent } from '@components/user-page/user-page.component';
 import { PromoPageComponent } from '@pages/promo-page/promo-page.component';
 
 
@@ -70,6 +71,7 @@ export const routes: Routes = [
     { path: 'categories/:categoryUri/:subcategoryUri/:productUri', component: ProductComponent },
 
     { path: 'profil', component: ProfileComponent, canActivate: [AuthGuard] },
+    { path: 'details/:uuid', component: UserPageComponent, canActivate: [AdminGuard] },
 
     { path: 'mentions-legales', component: LegalNoticeComponent },
     { path: 'politique-de-confidentialite', component: PrivacyPolicyComponent },
