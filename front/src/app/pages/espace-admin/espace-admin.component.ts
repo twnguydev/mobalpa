@@ -27,6 +27,7 @@ export class EspaceAdminComponent implements OnInit {
     { title: 'Campagne Promo' },
     { title: 'Ticket Support' },
     { title: 'Forecast' },
+    { title: 'Abonnée Newsletter' },
   ];
   selectedTab: number = 0;
   isFormVisible = false;
@@ -141,6 +142,14 @@ export class EspaceAdminComponent implements OnInit {
   itemsPerPageSupportTickets: number = 10;
   totalPagesSupportTickets: number = 1;
 
+  // Variables pour les abonnées newsletter
+  subscribers: any[] = [];
+  filteredSubscribers: any[] = [];
+  searchTermSubscribers: string = '';
+  currentPageSubscribers: number = 1;
+  itemsPerPageSubscribers: number = 10;
+  totalPagesSubscribers: number = 1;
+
 
 
   constructor(private adminService: AdminService) { }
@@ -162,6 +171,7 @@ export class EspaceAdminComponent implements OnInit {
       case 6: this.loadCampaigns(); break;
       case 7: this.loadSupportTickets(); break;
       case 8: this.loadForecast(); this.loadSummary(); this.loadSales(); break;
+      case 9: this.loadSubscribers(); break;
 
     }
   }
@@ -640,7 +650,7 @@ export class EspaceAdminComponent implements OnInit {
       if (this.currentPageForecast < 1) {
         this.currentPageForecast = 1;
       }
-      
+
       this.filterForecast();
       console.log('Forecast', forecast);
     });
@@ -692,7 +702,7 @@ export class EspaceAdminComponent implements OnInit {
         this.startDate = new Date(new Date().setFullYear(lastYear.getFullYear() - 1)).toISOString().split('T')[0];
         break;
     }
-  
+
     this.loadForecast();
     this.loadSummary();
     this.loadSales();
@@ -745,6 +755,76 @@ export class EspaceAdminComponent implements OnInit {
       window.URL.revokeObjectURL(url);
     });
   }
+
+  // Subscribers
+  loadSubscribers(): void {
+    this.adminService.getAllNewsletters().subscribe({
+      next: (subscribers) => {
+        console.log('Abonnés chargés:', subscribers);
+        this.subscribers = subscribers;
+        this.filteredSubscribers = subscribers;
+      },
+      error: (error) => {
+        console.error('Erreur lors du chargement des abonnés:', error);
+      }
+    });
+  }
+
+
+  filterSubscribers(): void {
+    const filtered = this.subscribers.filter(subscriber =>
+      subscriber.email.toLowerCase().includes(this.searchTermSubscribers.toLowerCase())
+    );
+
+    this.totalPagesSubscribers = Math.ceil(filtered.length / this.itemsPerPageSubscribers);
+    this.currentPageSubscribers = Math.min(this.currentPageSubscribers, this.totalPagesSubscribers);
+    this.filteredSubscribers = filtered.slice((this.currentPageSubscribers - 1) * this.itemsPerPageSubscribers, this.currentPageSubscribers * this.itemsPerPageSubscribers);
+  }
+
+  onSearchTermChangeSubscribers(newSearchTerm: string): void {
+    this.searchTermSubscribers = newSearchTerm;
+    this.currentPageSubscribers = 1;
+    this.filterSubscribers();
+  }
+
+  onPageChangeSubscribers(page: number): void {
+    this.currentPageSubscribers = page;
+    this.filterSubscribers();
+  }
+
+  deleteSubscriber(uuid: string): void {
+    console.log('Tentative de suppression de l\'abonné avec UUID:', uuid);
+
+    if (!uuid) {
+        console.error('UUID est undefined');
+        return;
+    }
+
+    if (confirm('Voulez-vous vraiment supprimer cet abonné ?')) {
+        this.adminService.deleteNewsletter(uuid).subscribe({
+            next: (response) => {
+                console.log('Réponse de la suppression:', response);
+                this.successMessage = `L'abonné avec UUID "${uuid}" a été supprimé avec succès.`;
+                this.loadSubscribers();
+
+                setTimeout(() => {
+                    this.successMessage = '';
+                }, 3000);
+            },
+            error: (error) => {
+                console.error('Erreur lors de la suppression:', error);
+                this.errorMessage = `Erreur lors de la suppression de l'abonné avec UUID "${uuid}".`;
+
+                setTimeout(() => {
+                    this.errorMessage = '';
+                }, 3000);
+            }
+        });
+    }
+}
+
+
+
 
   // Toggle
   toggleFormVisibility() {

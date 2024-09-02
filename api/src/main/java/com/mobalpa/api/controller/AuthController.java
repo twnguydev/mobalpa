@@ -16,6 +16,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.io.IOException;
 import java.util.Map;
+import java.util.HashMap;
+import java.util.List;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -58,8 +60,21 @@ public class AuthController {
             @ApiResponse(responseCode = "403", description = "Unauthorized", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Unauthorized\"")))
     })
     public ResponseEntity<?> registerUser(@RequestBody User user) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.registerUser(user));
+        try {
+            User registeredUser = userService.registerUser(user);
+            
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", "Inscription réussie");
+            response.put("userUuid", registeredUser.getUuid());  
+    
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of(
+                "errors", List.of(e.getMessage())
+            ));
+        }
     }
+    
 
     @GetMapping("/confirm")
     @Operation(summary = "Confirm user", description = "Confirms a user account.", security = @SecurityRequirement(name = "apiKey"))

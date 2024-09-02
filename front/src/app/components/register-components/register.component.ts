@@ -4,6 +4,7 @@ import { AuthService } from './../../../services/auth.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NewsletterService } from '@services/newsletter.service';
 
 @Component({
   selector: 'app-register',
@@ -20,11 +21,11 @@ export class RegisterComponent implements OnInit {
   formSubmitted: boolean = false;
   showPassword = false;
 
-
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private newsletterService: NewsletterService
   ) {
     this.form = this.fb.group({
       lastname: ['', [Validators.required, Validators.minLength(3)]],
@@ -56,6 +57,18 @@ export class RegisterComponent implements OnInit {
           } else {
             this.errors = [];
             this.successMessage = 'Inscription réussie ! Vous allez être redirigé vers la page de connexion';
+
+            if (this.form.get('communications')?.value && response.userUuid) { 
+              this.newsletterService.addNewsletter(response.userUuid).subscribe({
+                next: (newsletterResponse) => {
+                  console.log('Abonnement à la newsletter réussi', newsletterResponse);
+                },
+                error: (err) => {
+                  console.error('Erreur lors de l\'abonnement à la newsletter', err);
+                }
+              });
+            }
+
             setTimeout(() => {
               this.router.navigate(['/auth/connexion']);
             }, 5000);
@@ -70,6 +83,7 @@ export class RegisterComponent implements OnInit {
       this.logFormErrors();
     }
   }
+
 
   logFormErrors() {
     Object.keys(this.form.controls).forEach(controlName => {
