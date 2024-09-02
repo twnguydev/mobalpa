@@ -46,7 +46,7 @@ export class CarouselMediumArticleComponent {
   findPromoSoonToEnd(products: IProduct[]): IProduct[] {
     const now = new Date();
     const threeDaysFromNow = new Date();
-    threeDaysFromNow.setDate(now.getDate() + 3);
+    threeDaysFromNow.setDate(now.getDate() + 5);
 
     const productsWithCampaignSoonToEnd: IProduct[] = products.filter(product => {
       const campaign: ICampaign | undefined = product.campaigns.find(campaign => {

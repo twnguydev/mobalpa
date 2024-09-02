@@ -37,24 +37,30 @@ public class NewsletterController {
             errorResponse.put("message", "Invalid UUID format");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
         }
-    
+
         User user = userService.getUserByUuid(userUuid);
         if (user == null) {
             Map<String, String> errorResponse = new HashMap<>();
             errorResponse.put("message", "User not found");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
         }
-    
+
+        if (newsletterService.isUserSubscribed(userUuid)) {
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("message", "User is already subscribed to the newsletter");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
+        }
+
         Newsletter newsletter = new Newsletter();
         newsletter.setUser(user);
-    
+
         newsletterService.saveNewsletter(newsletter);
-    
+
         Map<String, String> successResponse = new HashMap<>();
         successResponse.put("message", "Newsletter saved");
         return ResponseEntity.status(HttpStatus.CREATED).body(successResponse);
     }
-    
+
     @GetMapping("/newsletters")
     public ResponseEntity<List<NewsletterDTO>> getAllNewsletters() {
         List<Newsletter> newsletters = newsletterService.getAllNewsletters();
@@ -64,16 +70,24 @@ public class NewsletterController {
         return ResponseEntity.ok(newsletterDTOs);
     }
 
-    private NewsletterDTO convertToDTO(Newsletter newsletter) {
-        NewsletterDTO dto = new NewsletterDTO();
-        dto.setId(newsletter.getUuid());
-        dto.setEmail(newsletter.getUser().getEmail());
-        return dto;
+    @GetMapping("/newsletter/is-subscribed/{userUuid}")
+    public ResponseEntity<Map<String, Boolean>> isSubscribed(@PathVariable UUID userUuid) {
+        boolean isSubscribed = newsletterService.isUserSubscribed(userUuid);
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("isSubscribed", isSubscribed);
+        return ResponseEntity.ok(response);
     }
+
     @DeleteMapping("/newsletter/{uuid}")
     public ResponseEntity<String> deleteNewsletter(@PathVariable UUID uuid) {
         newsletterService.deleteNewsletterByUuid(uuid);
         return ResponseEntity.status(HttpStatus.OK).body("Newsletter deleted");
     }
 
+    private NewsletterDTO convertToDTO(Newsletter newsletter) {
+        NewsletterDTO dto = new NewsletterDTO();
+        dto.setId(newsletter.getUuid());
+        dto.setEmail(newsletter.getUser().getEmail());
+        return dto;
+    }
 }
