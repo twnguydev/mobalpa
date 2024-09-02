@@ -28,17 +28,16 @@ describe('ProductComponent', () => {
     height: 10,
     width: 20,
 
-    // Обязательные свойства
     category: {
       uuid: 'category-uuid',
       name: 'Test Category',
       uri: 'category-uri',
       description: 'Category Description',
       images: [
-        { uuid: 'image-uuid-cat', uri: 'category-image.jpg', color: { uuid: 'color-uuid-red', name: 'Red' } }
+      { uuid: 'image-uuid-cat', uri: 'category-image.jpg', color: { uuid: 'color-uuid-red', name: 'Red' } }
       ],
       subcategories: [
-        {
+      {
           uuid: 'subcategory-uuid',
           name: 'Test Subcategory',
           uri: 'subcategory-uri',
@@ -58,7 +57,7 @@ describe('ProductComponent', () => {
       ],
       isOpen: true,
       campaigns: [
-        {
+ {
           id: 'campaign-uuid',
           name: 'Test Campaign',
           description: 'Campaign Description',
@@ -91,27 +90,21 @@ describe('ProductComponent', () => {
       uuid: 'brand-uuid',
       name: 'Test Brand'
     },
-    colors: [
-      { uuid: 'color-uuid-red', name: 'Red' },
-      { uuid: 'color-uuid-blue', name: 'Blue' }
+    colors: [ { uuid: 'color-uuid-red', name: 'Red' }, { uuid: 'color-uuid-blue', name: 'Blue' }
     ],
-    images: [
-      { uuid: 'image-uuid-1', uri: 'test-image-1.jpg', color: { uuid: 'color-uuid-red', name: 'Red' } },
-      { uuid: 'image-uuid-2', uri: 'test-image-2.jpg', color: { uuid: 'color-uuid-blue', name: 'Blue' } }
+    images: [ { uuid: 'image-uuid-1', uri: 'test-image-1.jpg', color: { uuid: 'color-uuid-red', name: 'Red' } }, { uuid: 'image-uuid-2', uri: 'test-image-2.jpg', color: { uuid: 'color-uuid-blue', name: 'Blue' } }
     ],
-    stores: [
-      {
+    stores: [ {
         uuid: 'store-uuid',
         name: 'Test Store',
         address: '123 Test St.',
         phoneNumber: '123-456-7890',
         email: 'store@test.com',
         openingHours: '9 AM - 9 PM',
-        products: [] // Вы можете добавить сюда реальные продукты, если это необходимо
+        products: []
       }
     ],
-    campaigns: [
-      {
+    campaigns: [ {
         id: 'campaign-uuid',
         name: 'Test Campaign',
         description: 'Campaign Description',
@@ -123,15 +116,13 @@ describe('ProductComponent', () => {
       }
     ],
 
-    // Опциональные свойства
     oldPrice: 120,
     newPrice: 90,
     discountRate: 10
   };
 
 
-  const mockReviews = [
-    {
+  const mockReviews = [ {
       userUuid: { firstname: 'John', lastname: 'Doe' },
       createdAt: new Date().toISOString(),
       rating: 4,
@@ -141,7 +132,7 @@ describe('ProductComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      // declarations: [ProductComponent],
+      declarations: [ProductComponent],
       imports: [ReactiveFormsModule],
       providers: [
         ProductService,
@@ -163,7 +154,7 @@ describe('ProductComponent', () => {
     // spyOn(authService, 'user').and.returnValue({ uuid: 'user-uuid' });
     spyOn(satisfactionService, 'createSatisfaction').and.returnValue(of({}));
 
-    fixture.detectChanges(); // Trigger initial data binding
+    fixture.detectChanges();
   });
 
   it('doit créer', () => {
@@ -189,5 +180,4 @@ describe('ProductComponent', () => {
     expect(component.addToCart).toHaveBeenCalled();
   });
 
-  // Add more tests here as needed
 });
