@@ -79,12 +79,6 @@ public class WishlistService {
                         && item.getSelectedColor().equals(newItem.getSelectedColor()))
                 .findFirst();
     
-        Map<String, String> properties = new HashMap<>();
-        properties.put("brand", product.getBrand() != null ? product.getBrand().getName() : "Unknown");
-        properties.put("images",
-                product.getImages() != null && !product.getImages().isEmpty() ? product.getImages().get(0).getUri()
-                        : "No image");
-    
         if (existingItemOpt.isPresent()) {
             WishlistItem existingItem = existingItemOpt.get();
             existingItem.setQuantity(existingItem.getQuantity() + newItem.getQuantity());
@@ -92,7 +86,6 @@ public class WishlistService {
             newItem.setWishlist(wishlist);
             newItem.setProduct(product);
             newItem.setCampaigns(campaigns != null ? campaigns : new ArrayList<>());
-            newItem.setProperties(properties);
             items.add(newItem);
         }
 
