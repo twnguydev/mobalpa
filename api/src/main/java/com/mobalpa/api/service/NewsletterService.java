@@ -28,4 +28,8 @@ public class NewsletterService {
     public List<Newsletter> getAllNewsletters() {
         return newsletterRepository.findAllWithUsers();
     }
+
+    public boolean isUserSubscribed(UUID userUuid) {
+        return newsletterRepository.existsByUser_Uuid(userUuid);
+    }
 }
