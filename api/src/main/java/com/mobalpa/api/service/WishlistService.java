@@ -6,9 +6,7 @@ import com.mobalpa.api.repository.UserRepository;
 import com.mobalpa.api.dto.catalogue.ProductDTO;
 import com.mobalpa.api.model.User;
 import com.mobalpa.api.repository.WishlistRepository;
-import com.mobalpa.api.repository.CampaignRepository;
 import com.mobalpa.api.model.Campaign;
-import com.mobalpa.api.service.PromotionService;
 import com.mobalpa.api.dto.catalogue.ColorDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +31,6 @@ public class WishlistService {
 
     @Autowired
     private PromotionService promotionService;
-
-    @Autowired
-    private CampaignRepository campaignRepository;
 
     @Autowired
     private UserService userService;

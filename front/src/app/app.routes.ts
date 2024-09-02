@@ -33,6 +33,7 @@ import { CooperationComponent } from '@pages/cooperation/cooperation.component';
 import { FournisseurComponent } from '@pages/fournisseur/fournisseur.component';
 import { NouveauteComponent } from '@pages/nouveaute/nouveaute.component';
 import { UserPageComponent } from '@components/user-page/user-page.component';
+import { PromoPageComponent } from '@pages/promo-page/promo-page.component';
 
 
 
@@ -86,7 +87,8 @@ export const routes: Routes = [
     { path: 'livraison/quelle-sont-les-frais-de-livraison', component: QuelleSontLesFraisDeLivraisonComponent },
     { path: 'cooperation', component: CooperationComponent },
     { path: 'fournisseur', component: FournisseurComponent },
-    { path: 'nouveaute', component: NouveauteComponent },
+    { path: 'nouveautes', component: NouveauteComponent },
+    { path: 'promotions', component: PromoPageComponent },
 
 
 

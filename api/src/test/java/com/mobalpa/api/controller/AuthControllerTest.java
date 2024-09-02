@@ -2,6 +2,7 @@ package com.mobalpa.api.controller;
 
 import com.mobalpa.api.dto.LoginDTO;
 import com.mobalpa.api.dto.LoginRequestDTO;
+import com.mobalpa.api.dto.RegisterDTO;
 import com.mobalpa.api.model.User;
 import com.mobalpa.api.service.UserService;
 import org.junit.jupiter.api.Test;
@@ -20,6 +21,8 @@ import java.nio.file.Paths;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
@@ -42,12 +45,17 @@ class AuthControllerTest {
     @Test
     void testRegisterUser() {
         User user = new User();
-        when(userService.registerUser(any(User.class))).thenReturn(user);
+        when(userService.registerUser(any(RegisterDTO.class))).thenReturn(user);
 
-        ResponseEntity<?> response = authController.registerUser(user);
-        
+        RegisterDTO registerDTO = new RegisterDTO();
+        ResponseEntity<?> response = authController.registerUser(registerDTO);
+
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertEquals(user, response.getBody());
+
+        Map<String, Object> responseBody = (Map<String, Object>) response.getBody();
+        assertNotNull(responseBody);
+        assertEquals("Inscription réussie", responseBody.get("message"));
+        assertNull(responseBody.get("userUuid"));
     }
 
     @Test
