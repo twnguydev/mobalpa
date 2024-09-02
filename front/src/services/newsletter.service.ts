@@ -19,4 +19,13 @@ export class NewsletterService {
       }
     });
   }
+
+  isSubscribed(userUuid: string): Observable<{ isSubscribed: boolean }> {
+    return this.http.get<{ isSubscribed: boolean }>(`${this.apiUrl}/is-subscribed/${userUuid}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'X-API-KEY': `${environment.apiKey}`
+      }
+    });
+  }
 }

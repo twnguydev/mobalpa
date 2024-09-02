@@ -10,4 +10,5 @@ import java.util.UUID;
 public interface NewsletterRepository extends JpaRepository<Newsletter, UUID> {
     @Query("SELECT n FROM Newsletter n JOIN FETCH n.user")
     List<Newsletter> findAllWithUsers();
+    boolean existsByUser_Uuid(UUID userUuid);
 }
