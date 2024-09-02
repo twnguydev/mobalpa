@@ -2,7 +2,7 @@ package com.mobalpa.api.controller;
 
 import com.mobalpa.api.dto.LoginDTO;
 import com.mobalpa.api.dto.LoginRequestDTO;
-import com.mobalpa.api.dto.RegisterDTO;
+import com.mobalpa.api.dto.RegisterRequestDTO;
 import com.mobalpa.api.model.User;
 import com.mobalpa.api.service.UserService;
 import org.junit.jupiter.api.Test;
@@ -45,9 +45,9 @@ class AuthControllerTest {
     @Test
     void testRegisterUser() {
         User user = new User();
-        when(userService.registerUser(any(RegisterDTO.class))).thenReturn(user);
+        when(userService.registerUser(any(RegisterRequestDTO.class))).thenReturn(user);
 
-        RegisterDTO registerDTO = new RegisterDTO();
+        RegisterRequestDTO registerDTO = new RegisterRequestDTO();
         ResponseEntity<?> response = authController.registerUser(registerDTO);
 
         assertEquals(HttpStatus.CREATED, response.getStatusCode());

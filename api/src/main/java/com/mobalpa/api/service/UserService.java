@@ -1,5 +1,6 @@
 package com.mobalpa.api.service;
 
+import com.mobalpa.api.dto.RegisterRequestDTO;
 import com.mobalpa.api.model.User;
 import com.mobalpa.api.model.UserCoupon;
 import com.mobalpa.api.repository.RoleRepository;
@@ -91,13 +92,19 @@ public class UserService implements UserDetailsService {
         return userRepository.findById(uuid).orElseThrow(() -> new RuntimeException("User not found"));
     }
 
-    public User registerUser(User user) {
-        Optional<User> existingUser = Optional.ofNullable(userRepository.findByEmail(user.getEmail()));
+    public User registerUser(RegisterRequestDTO registerUser) {
+        Optional<User> existingUser = Optional.ofNullable(userRepository.findByEmail(registerUser.getEmail()));
         if (existingUser.isPresent()) {
-            throw new IllegalArgumentException("User with email " + user.getEmail() + " already exists");
+            throw new IllegalArgumentException("User with email " + registerUser.getEmail() + " already exists");
         }
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        User user = new User();
+        user.setFirstname(registerUser.getFirstname());
+        user.setLastname(registerUser.getLastname());
+        user.setEmail(registerUser.getEmail());
+        user.setPhoneNumber(registerUser.getPhoneNumber());
+        user.setBirthdate(registerUser.getBirthdate());
+        user.setPassword(passwordEncoder.encode(registerUser.getPassword()));
         user.setToken(UUID.randomUUID().toString());
         user.setActive(false);
 
