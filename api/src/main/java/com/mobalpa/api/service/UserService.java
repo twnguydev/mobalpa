@@ -125,6 +125,7 @@ public class UserService implements UserDetailsService {
                     "confirmationEmailTemplate.html",
                     null,
                     null,
+                    null,
                     "${user.firstName}", user.getFirstname(),
                     "${confirmationUrl}", confirmationUrl,
                     "${appName}", "Mobalpa");
@@ -168,6 +169,7 @@ public class UserService implements UserDetailsService {
             emailService.sendHtmlEmail(user.getEmail(),
                     "Réinitialisation du mot de passe",
                     "passwordResetTemplate.html",
+                    null,
                     null,
                     null,
                     "${resetUrlWithToken}", resetUrlWithToken,
@@ -295,6 +297,7 @@ public class UserService implements UserDetailsService {
                     user.getEmail(),
                     "Bon anniversaire, " + user.getFirstname() + " !",
                     "promoBirthdayTemplate.html",
+                    null,
                     null,
                     null,
                     "${user.firstName}", user.getFirstname(),

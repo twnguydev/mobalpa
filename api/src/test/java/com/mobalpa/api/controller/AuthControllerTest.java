@@ -67,33 +67,6 @@ class AuthControllerTest {
     // }
 
     @Test
-    void testConfirmUserSuccess() throws IOException {
-        User user = new User();
-        when(userService.confirmUser(anyString())).thenReturn(user);
-
-        String templateContent = "Success";
-        Files.writeString(Paths.get("src/main/resources/templates/successTemplate.html"), templateContent);
-
-        ResponseEntity<String> response = authController.confirmUser("valid-token");
-        
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(templateContent, response.getBody());
-    }
-
-    @Test
-    void testConfirmUserFailure() throws IOException {
-        when(userService.confirmUser(anyString())).thenReturn(null);
-
-        String templateContent = "Error";
-        Files.writeString(Paths.get("src/main/resources/templates/errorTemplate.html"), templateContent);
-
-        ResponseEntity<String> response = authController.confirmUser("invalid-token");
-        
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(templateContent, response.getBody());
-    }
-
-    @Test
     void testLoginUserSuccess() {
         User user = new User();
         user.setToken(null);

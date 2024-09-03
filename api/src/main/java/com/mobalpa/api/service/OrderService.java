@@ -76,6 +76,7 @@ public class OrderService {
   public List<Order> getAllOrders() {
     List<Order> orders = orderRepository.findAll();
     orders.forEach(order -> order.getItems().size());
+    orders.forEach(order -> order.getDeliveryNumbers().size());
     return orders;
   }
 

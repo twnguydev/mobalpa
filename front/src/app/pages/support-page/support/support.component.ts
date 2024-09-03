@@ -38,7 +38,7 @@ export class SupportComponent implements OnInit {
   tabs = [
     { title: 'FAQ' },
     { title: 'Contact' },
-    { title: 'Votre avis' }
+    { title: 'Laissez-nous un avis' }
   ];
 
   ratings: number[] = [1, 2, 3, 4, 5];
@@ -108,8 +108,7 @@ export class SupportComponent implements OnInit {
       targetType: "MAIN",
       targetUuid: null,
       rating: this.feedForm.get('rating')?.value,
-      comment: this.feedForm.get('comment')?.value,
-      createdAt: 1
+      comment: this.feedForm.get('comment')?.value
     };
 
     this.satisfactionService.createSatisfaction(satisfactionRequest).subscribe(
