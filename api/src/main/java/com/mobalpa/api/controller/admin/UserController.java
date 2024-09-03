@@ -1,7 +1,9 @@
 package com.mobalpa.api.controller.admin;
 
 import com.mobalpa.api.model.User;
+import com.mobalpa.api.model.Payment;
 import com.mobalpa.api.service.UserService;
+import com.mobalpa.api.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private PaymentService paymentService;
 
     @GetMapping
     @Operation(summary = "Get all users", description = "Fetches all users.")
@@ -83,4 +88,14 @@ public class UserController {
         return user.map(ResponseEntity::ok)
                    .orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    @GetMapping("/{uuid}/payments")
+    public ResponseEntity<List<Payment>> getPaymentsByUserUuid(@PathVariable UUID uuid) {
+        List<Payment> payments = paymentService.getPaymentsByUserUuid(uuid);
+        if (payments.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(payments);
+    }
+    
 }

@@ -13,6 +13,7 @@ import java.util.List;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -94,4 +95,12 @@ public class PromotionController {
     promotionService.deleteCoupon(id);
     return ResponseEntity.noContent().build();
   }
+
+  @GetMapping("/users/{userUuid}/coupons")
+  @Operation(summary = "Get user coupons", description = "Fetches all coupons associated with a specific user by their UUID.")
+  public ResponseEntity<List<CouponCode>> getUserCoupons(@PathVariable UUID userUuid) {
+    List<CouponCode> userCoupons = promotionService.getUserCoupons(userUuid);
+    return ResponseEntity.ok(userCoupons);
+}
+
 }

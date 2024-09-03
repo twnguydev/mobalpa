@@ -7,6 +7,7 @@ import { AuthService } from '@services/auth.service';
 import { IProduct } from '@interfaces/product.interface';
 import { ICategory, ISubcategory } from '@interfaces/category.interface';
 import { IOrder } from '@interfaces/order.interface';
+import { IPayment } from '@interfaces/payment.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -29,12 +30,11 @@ export class AdminService {
     return this.http.post<IUser>(`${this.apiUrl}/users`, user, { headers });
   }
 
-  // updateUser(user: IUser): Observable<IUser> {
-  //   const headers: HttpHeaders | null = this.authService.getAuthHeaders();
-  //   if (!headers) return new Observable<IUser>();
-  //   return this.http.put<IUser>(`${this.apiUrl}/users/${user.id}`, user, { headers });
-  // }
-
+  updateUser(userId: string, updatedData: Partial<IUser>): Observable<IUser> {
+    const headers: HttpHeaders | null = this.authService.getAuthHeaders();
+    if (!headers) return new Observable<IUser>();
+    return this.http.patch<IUser>(`http://localhost:8080/api/users/${userId}`, updatedData, { headers });
+  }
   deleteUser(id: string): Observable<IUser> {
     const headers: HttpHeaders | null = this.authService.getAuthHeaders();
     if (!headers) return new Observable<IUser>();
@@ -207,5 +207,17 @@ getUserByUuid(uuid: string): Observable<IUser> {
   const headers: HttpHeaders | null = this.authService.getAuthHeaders();
   if (!headers) return new Observable<IUser>();
   return this.http.get<IUser>(`${this.apiUrl}/users/details/${uuid}`, { headers });
+}
+
+getUserCoupons(userUuid: string): Observable<any[]> {
+  const headers: HttpHeaders | null = this.authService.getAuthHeaders();
+  if (!headers) return new Observable<any[]>();
+  return this.http.get<any[]>(`${this.apiUrl}/users/${userUuid}/coupons`, { headers });
+}
+
+getPaymentsByUserUuid(uuid: string): Observable<any> {
+  const headers: HttpHeaders | null = this.authService.getAuthHeaders();
+  if (!headers) return new Observable<any>();
+  return this.http.get<any>(`${this.apiUrl}/users/${uuid}/payments`, { headers });
 }
 }
