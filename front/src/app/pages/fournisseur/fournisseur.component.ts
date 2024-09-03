@@ -8,7 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './fournisseur.component.css'
 })
 export class FournisseurComponent {
-  testLink() {
-    console.log('test link clicked');
-  }
+  
 }

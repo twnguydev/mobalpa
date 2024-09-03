@@ -14,10 +14,10 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'front' title`, () => {
+  it(`should have the title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('front');
+    expect(app.title).toEqual('Mobalpa & Archidéco - Spécialiste de la cuisine Cuisine et l\'Éctroménager');
   });
 
   it('should render title', () => {

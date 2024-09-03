@@ -7,11 +7,12 @@ import { IWishlist, IWishlistItem } from '@interfaces/wishlist.interface';
 @Component({
   selector: 'app-wishlist',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,WishlistComponent],
   templateUrl: './wishlist.component.html',
   styleUrls: ['./wishlist.component.css']
 })
 export class WishlistComponent {
+  items!: IWishlistItem[];
   wishlist: IWishlist | null = null;
   wishlistNotFound: boolean = false;
   productAdded: { [key: string]: boolean } = {};
