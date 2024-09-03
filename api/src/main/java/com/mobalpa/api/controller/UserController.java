@@ -31,6 +31,7 @@ import org.springframework.http.HttpStatus;
 
 import java.util.UUID;
 import java.util.Optional;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
@@ -544,6 +545,10 @@ public class UserController {
     if (user.getOrders().isEmpty()) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("This user has no orders");
     }
+
+    List<Order> orders = user.getOrders();
+    orders.forEach(order -> order.getItems().size());
+    orders.forEach(order -> order.getDeliveryNumbers().size());
 
     return ResponseEntity.ok(user.getOrders());
   }

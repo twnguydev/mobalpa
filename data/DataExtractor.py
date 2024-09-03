@@ -104,5 +104,5 @@ class DataExtractor:
             print(f"Erreur de conversion UUID pour {product_uuid}: {e}")
             return {}
         except requests.RequestException as e:
-            print(f"Erreur lors de la requête API pour {product_uuid}: {e}")
+            print(f"Erreur lors de la requête API pour {product_uuid} à l'URL {self.api_url} pour le produit {product_uuid}: {e}")
             return {}
