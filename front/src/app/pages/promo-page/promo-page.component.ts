@@ -23,6 +23,7 @@ export class PromoPageComponent implements OnInit {
   products: IProduct[] = [];
   error: string | null = null;
   productAdded: { [key: string]: boolean } = {};
+  isProductsLoading = false;
   isUserAuthenticated: boolean = false;
   productAddedOnCart: { [key: string]: boolean } = {};
   selectedProductColor: { [key: string]: IColor } = {};
@@ -65,6 +66,7 @@ export class PromoPageComponent implements OnInit {
   }
 
   loadProducts(): void {
+    this.isProductsLoading = true;
     this.productService.getProducts().subscribe(
       (products: IProduct[]) => {
         // this.products = products.filter(product => {
@@ -86,9 +88,11 @@ export class PromoPageComponent implements OnInit {
         this.paginateProducts();
 
         console.log('Products loaded', this.allProducts);
+        this.isProductsLoading = false;
       },
       (error) => {
         this.error = 'Failed to load products';
+        this.isProductsLoading = false;
         console.error('Error loading products', error);
       }
     );
@@ -213,6 +217,7 @@ export class PromoPageComponent implements OnInit {
   }
 
   sortProducts(criteria: string): void {
+    this.isProductsLoading = true;
     switch (criteria) {
       case 'price-asc':
         this.filteredProducts.sort((a, b) => a.price - b.price);
@@ -220,10 +225,27 @@ export class PromoPageComponent implements OnInit {
       case 'price-desc':
         this.filteredProducts.sort((a, b) => b.price - a.price);
         break;
+      case 'relevance':
+        this.filteredProducts = this.filteredProducts.sort((a, b) => {
+          const aCampaign = a.campaigns.find(campaign => campaign.type === 'SUBCATEGORY');
+          const bCampaign = b.campaigns.find(campaign => campaign.type === 'SUBCATEGORY');
+
+          if (aCampaign && bCampaign) {
+            return bCampaign.discountRate - aCampaign.discountRate;
+          } else if (aCampaign) {
+            return -1;
+          } else if (bCampaign) {
+            return 1;
+          } else {
+            return 0;
+          }
+        });
+        break;
       default:
         break;
     }
     this.paginateProducts();
+    this.isProductsLoading = false;
   }
 
   updateUrlParams(): void {

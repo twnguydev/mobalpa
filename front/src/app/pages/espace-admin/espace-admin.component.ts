@@ -88,7 +88,6 @@ export class EspaceAdminComponent implements OnInit {
   itemsPerPageCodePromos: number = 10;
   totalPagesCodePromos: number = 1;
   newCoupon: ICoupon = {
-    code: '',
     name: '',
     discountRate: 0,
     discountType: 'PERCENTAGE',
@@ -402,6 +401,9 @@ export class EspaceAdminComponent implements OnInit {
             .map(id => id.trim());
     }
 
+    this.newCoupon.dateStart += ":00";
+    this.newCoupon.dateEnd += ":00";
+
     this.adminService.createCoupon(this.newCoupon).subscribe({
         next: () => {
             this.successMessage = 'Coupon créé avec succès';
@@ -412,7 +414,6 @@ export class EspaceAdminComponent implements OnInit {
             }, 3000);
 
             this.newCoupon = {
-                code: '',
                 name: '',
                 discountRate: 0,
                 discountType: 'PERCENTAGE',
