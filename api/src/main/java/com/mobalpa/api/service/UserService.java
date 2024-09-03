@@ -311,7 +311,7 @@ public class UserService implements UserDetailsService {
         }
     }    
 
-    public Optional<User> getUserDetails(UUID userUuid) {
-        return userRepository.findById(userUuid);
+    public Optional<User> findByIdWithDetails(UUID userUuid) {
+        return userRepository.findByIdWithDetails(userUuid);
     }
 }

@@ -319,4 +319,29 @@ public class PromotionService {
 
         return Map.of("discountRate", couponCode.getDiscountRate(), "discountType", couponCode.getDiscountType());
     }    
+
+
+
+    /**
+     * Récupère tous les coupons d'un utilisateur donné.
+     *
+     * @param userUuid Le UUID de l'utilisateur.
+     * @return La liste des coupons associés à l'utilisateur.
+     */
+    public List<CouponCode> getUserCoupons(UUID userUuid) {
+        // Récupérer l'utilisateur à partir du UUID
+        User user = userRepository.findByUuid(userUuid)
+            .orElseThrow(() -> new RuntimeException("User not found"));
+
+        // Récupérer tous les UserCoupon associés à l'utilisateur
+        List<UserCoupon> userCoupons = userCouponRepository.findByUser(user);
+
+        // Extraire et retourner la liste des CouponCodes
+        List<CouponCode> coupons = new ArrayList<>();
+        for (UserCoupon userCoupon : userCoupons) {
+            coupons.add(userCoupon.getCoupon());
+        }
+
+        return coupons;
+    }
 }
