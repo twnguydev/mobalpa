@@ -41,7 +41,8 @@ export class CategoryComponent implements OnInit {
   selectedProductColor: { [key: string]: IColor } = {};
 
   isUserAuthenticated: boolean = false;
-  isLoading: boolean = false;
+  isSubcategoryLoading = true;
+  isProductsLoading = false;
 
   colorMap: { [key: string]: string } = {
     Rouge: '#FF0000',
@@ -107,7 +108,7 @@ export class CategoryComponent implements OnInit {
   }
 
   loadSubcategoryProducts(categoryUri: string, subcategoryUri: string): void {
-    this.isLoading = true;
+    this.isProductsLoading = true;
     this.productService.getProductsBySubcategoryUri(categoryUri, subcategoryUri).subscribe({
       next: (response) => {
         if (response && response.length > 0) {
@@ -116,7 +117,7 @@ export class CategoryComponent implements OnInit {
           this.updateSelectorsFromUrl();
           this.applyFilters();
           console.log('Products loaded', this.allProducts);
-          this.isLoading = false;
+          this.isProductsLoading = false;
         }
       },
       error: (error) => {
@@ -126,14 +127,13 @@ export class CategoryComponent implements OnInit {
   }
 
   loadSubcategoryDetails(categoryUri: string, subcategoryUri: string): void {
-    this.isLoading = true;
     this.productService.getSubcategoryByUri(categoryUri, subcategoryUri).subscribe({
       next: (subcategory) => {
         if (!subcategory) {
           return;
         }
         this.subcategory = subcategory;
-        this.isLoading = false;
+        this.isSubcategoryLoading = false;
       },
       error: (error) => {
         console.error('Failed to load subcategory details', error);
@@ -159,6 +159,8 @@ export class CategoryComponent implements OnInit {
     this.minPrice = minPrice === Number.MAX_VALUE ? 0 : minPrice;
     this.maxPrice = maxPrice === Number.MIN_VALUE ? 0 : maxPrice;
     this.selectedPrice = this.selectedPrice || this.maxPrice;
+
+    this.isProductsLoading = false;
   }
 
   updateUrlParams(): void {
@@ -187,6 +189,8 @@ export class CategoryComponent implements OnInit {
   }
 
   applyFilters(): void {
+    this.isProductsLoading = true;
+
     this.filteredProducts = this.allProducts.filter(product => {
       return (
         (this.selectedBrand ? product.brand.name === this.selectedBrand : true) &&
@@ -198,6 +202,8 @@ export class CategoryComponent implements OnInit {
     this.sortProducts(this.selectedSort);
     this.currentPage = 1;
     this.paginateProducts();
+
+    this.isProductsLoading = false;
   }
 
   onBrandChange(event: Event): void {
@@ -302,6 +308,7 @@ export class CategoryComponent implements OnInit {
   }
 
   sortProducts(criteria: string): void {
+    this.isProductsLoading = true;
     switch (criteria) {
       case 'price-asc':
         this.filteredProducts.sort((a, b) => a.price - b.price);
@@ -309,10 +316,27 @@ export class CategoryComponent implements OnInit {
       case 'price-desc':
         this.filteredProducts.sort((a, b) => b.price - a.price);
         break;
+        case 'relevance':
+          this.filteredProducts = this.filteredProducts.sort((a, b) => {
+            const aCampaign = a.campaigns.find(campaign => campaign.type === 'SUBCATEGORY');
+            const bCampaign = b.campaigns.find(campaign => campaign.type === 'SUBCATEGORY');
+  
+            if (aCampaign && bCampaign) {
+              return bCampaign.discountRate - aCampaign.discountRate;
+            } else if (aCampaign) {
+              return -1;
+            } else if (bCampaign) {
+              return 1;
+            } else {
+              return 0;
+            }
+          });
+          break;
       default:
         break;
     }
     this.paginateProducts();
+    this.isProductsLoading = false;
   }
 
   onSortChange(event: Event): void {
