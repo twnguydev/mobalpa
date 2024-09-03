@@ -49,6 +49,7 @@ export class ProductComponent implements OnInit {
   shippingDelay: string | null = null;
   isAdded: boolean = false;
   errorMessage: string = '';
+  isLoading: boolean = false;
   selectedImage: string | null = null;
   selectedColor: IColor = {} as IColor;
   
@@ -78,9 +79,11 @@ export class ProductComponent implements OnInit {
 
 
     if (categoryUri && subcategoryUri && productUri) {
+      this.isLoading = true;
       this.productService.getProductByUri(categoryUri, subcategoryUri, productUri).subscribe(
         (product: IProduct | null) => {
           if (product) {
+            this.isLoading = false;
             this.product = product;
             this.selectedImage = product.images[0]?.uri || null;
             this.selectedColor = product.colors[0] || {} as IColor;
@@ -88,6 +91,7 @@ export class ProductComponent implements OnInit {
             this.applyCampaigns(product.campaigns);
             this.fetchProductReviews(product.uuid);
           } else {
+            this.isLoading = false;
             this.errorMessage = 'Produit non trouvé.';
           }
         },
@@ -264,8 +268,7 @@ export class ProductComponent implements OnInit {
       targetType: 'PRODUCT',
       targetUuid: this.product?.uuid || null,
       rating: this.avisForm.get('rating')?.value,
-      comment: this.avisForm.get('comment')?.value,
-      createdAt: new Date().getTime()
+      comment: this.avisForm.get('comment')?.value
     };
 
     this.satisfactionService.createSatisfaction(satisfactionRequest).subscribe(

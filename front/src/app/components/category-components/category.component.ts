@@ -41,6 +41,7 @@ export class CategoryComponent implements OnInit {
   selectedProductColor: { [key: string]: IColor } = {};
 
   isUserAuthenticated: boolean = false;
+  isLoading: boolean = false;
 
   colorMap: { [key: string]: string } = {
     Rouge: '#FF0000',
@@ -106,6 +107,7 @@ export class CategoryComponent implements OnInit {
   }
 
   loadSubcategoryProducts(categoryUri: string, subcategoryUri: string): void {
+    this.isLoading = true;
     this.productService.getProductsBySubcategoryUri(categoryUri, subcategoryUri).subscribe({
       next: (response) => {
         if (response && response.length > 0) {
@@ -114,6 +116,7 @@ export class CategoryComponent implements OnInit {
           this.updateSelectorsFromUrl();
           this.applyFilters();
           console.log('Products loaded', this.allProducts);
+          this.isLoading = false;
         }
       },
       error: (error) => {
@@ -123,12 +126,14 @@ export class CategoryComponent implements OnInit {
   }
 
   loadSubcategoryDetails(categoryUri: string, subcategoryUri: string): void {
+    this.isLoading = true;
     this.productService.getSubcategoryByUri(categoryUri, subcategoryUri).subscribe({
       next: (subcategory) => {
         if (!subcategory) {
           return;
         }
         this.subcategory = subcategory;
+        this.isLoading = false;
       },
       error: (error) => {
         console.error('Failed to load subcategory details', error);

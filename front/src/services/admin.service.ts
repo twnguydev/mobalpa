@@ -7,6 +7,7 @@ import { AuthService } from '@services/auth.service';
 import { IProduct } from '@interfaces/product.interface';
 import { ICategory, ISubcategory } from '@interfaces/category.interface';
 import { IOrder } from '@interfaces/order.interface';
+import { ICoupon } from '@interfaces/coupon.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -76,7 +77,7 @@ export class AdminService {
     return this.http.get<any>(`${this.apiUrl}/coupons`, { headers });
   }
 
-  createCoupon(coupon: any): Observable<any> {
+  createCoupon(coupon: ICoupon): Observable<any> {
     const headers: HttpHeaders | null = this.authService.getAuthHeaders();
     if (!headers) return new Observable<any>();
     return this.http.post<any>(`${this.apiUrl}/coupons`, coupon, { headers });
@@ -198,14 +199,14 @@ export class AdminService {
     if (!headers) return new Observable<string>();
 
     return this.http.delete(`${this.apiUrl}/newsletter/${uuid}`, {
-        headers,
-        responseType: 'text'
+      headers,
+      responseType: 'text'
     });
-}
+  }
 
-getUserByUuid(uuid: string): Observable<IUser> {
-  const headers: HttpHeaders | null = this.authService.getAuthHeaders();
-  if (!headers) return new Observable<IUser>();
-  return this.http.get<IUser>(`${this.apiUrl}/users/details/${uuid}`, { headers });
-}
+  getUserByUuid(uuid: string): Observable<IUser> {
+    const headers: HttpHeaders | null = this.authService.getAuthHeaders();
+    if (!headers) return new Observable<IUser>();
+    return this.http.get<IUser>(`${this.apiUrl}/users/details/${uuid}`, { headers });
+  }
 }

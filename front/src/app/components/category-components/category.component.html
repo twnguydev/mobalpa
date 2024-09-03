@@ -1,5 +1,5 @@
-<div class="mx-5 py-8 min-h-screen h-auto">
-    <h1 class="text-3xl sm:text-4xl font-bold mb-6 sm:mb-8 text-mobalpa-green">{{ subcategory?.name }}</h1>
+<div class="mx-5 py-8 min-h-screen h-auto" *ngIf="!isLoading && subcategory && allProducts">
+    <h1 class="text-3xl sm:text-4xl font-bold mb-6 sm:mb-8 text-mobalpa-green">{{ subcategory.name }}</h1>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <select class="border border-gray-300 p-2 rounded-lg" (change)="onBrandChange($event)" name="brandName">
@@ -123,4 +123,8 @@
             Suivant
         </button>
     </div>
+</div>
+
+<div *ngIf="isLoading" class="min-h-screen flex items-center justify-center">
+    <div class="lds-dual-ring"></div>
 </div>
