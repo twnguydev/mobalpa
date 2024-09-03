@@ -107,26 +107,24 @@ public class NewsletterController {
             Map<String, String> placeholders = new HashMap<>();
 
             placeholders.put("${subject}", newsletterSendDTO.getSubject());
-            placeholders.put("${contentInParagraphStrings}", String.join("\n\n", newsletterSendDTO.getContentInParagraphStrings()));
+            placeholders.put("${contentInParagraphStrings}", String.join("<br><br>", newsletterSendDTO.getContentInParagraphStrings()));
 
             if (newsletterSendDTO.getCampaign() != null) {
-                placeholders.put("${campaign.name}", newsletterSendDTO.getCampaign().getName());
+                placeholders.put("${campaignName}", newsletterSendDTO.getCampaign().getName());
             } else {
-                placeholders.put("${campaign.name}", "");
-            }
-
-            for (int i = 0; i < newsletterSendDTO.getProducts().length; i++) {
-                placeholders.put("${product" + i + ".name}", newsletterSendDTO.getProducts()[i].getName());
-                placeholders.put("${product" + i + ".description}", newsletterSendDTO.getProducts()[i].getDescription());
-                placeholders.put("${product" + i + ".price}", String.format("%.2f€", newsletterSendDTO.getProducts()[i].getPrice()));
+                placeholders.put("${campaignName}", "");
             }
 
             int maxProducts = 5;
-            for (int i = newsletterSendDTO.getProducts().length; i < maxProducts; i++) {
-                placeholders.put("${product" + i + ".name}", "");
-                placeholders.put("${product" + i + ".description}", "");
-                placeholders.put("${product" + i + ".price}", "");
+
+            String productsGrid = "<table>";
+            for (int i = 0; i < Math.min(newsletterSendDTO.getProducts().length, maxProducts); i++) {
+                productsGrid += "<tr><td>" + newsletterSendDTO.getProducts()[i].getName() + "</td><td>" + newsletterSendDTO.getProducts()[i].getDescription() + "</td><td>" + newsletterSendDTO.getProducts()[i].getPrice() + "</td></tr>";
             }
+            productsGrid += "</table>";
+
+            placeholders.put("${productsGrid}", productsGrid);
+            placeholders.put("${appName}", "Mobalpa");
 
             String template = emailService.getTemplate("newsletter_template.html");
 
