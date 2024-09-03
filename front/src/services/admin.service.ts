@@ -8,6 +8,7 @@ import { IProduct } from '@interfaces/product.interface';
 import { ICategory, ISubcategory } from '@interfaces/category.interface';
 import { IOrder } from '@interfaces/order.interface';
 import { ICoupon } from '@interfaces/coupon.interface';
+import { INewsletter, INewsletterSend } from '@interfaces/newsletter.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -188,10 +189,10 @@ export class AdminService {
     return response;
   }
 
-  getAllNewsletters(): Observable<any> {
+  getAllNewsletters(): Observable<INewsletter[]> {
     const headers: HttpHeaders | null = this.authService.getAuthHeaders();
-    if (!headers) return new Observable<any>();
-    return this.http.get<any>(`${this.apiUrl}/newsletters`, { headers });
+    if (!headers) return new Observable<INewsletter[]>();
+    return this.http.get<INewsletter[]>(`${this.apiUrl}/newsletters`, { headers });
   }
 
   deleteNewsletter(uuid: string): Observable<string> {
@@ -202,6 +203,12 @@ export class AdminService {
       headers,
       responseType: 'text'
     });
+  }
+
+  sendNewsletter(newsletterData: INewsletterSend): Observable<{ message: string }> {
+    const headers: HttpHeaders | null = this.authService.getAuthHeaders();
+    if (!headers) return new Observable<{ message: string }>();
+    return this.http.post<{ message: string }>(`${this.apiUrl}/newsletter/send`, newsletterData, { headers });
   }
 
   getUserByUuid(uuid: string): Observable<IUser> {

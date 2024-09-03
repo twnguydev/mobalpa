@@ -319,6 +319,7 @@ public class OrderService {
           person.getEmail(),
           "Confirmation de votre commande - Mobalpa",
           "orderConfirmationTemplate.html",
+          null,
           invoicePdf,
           "invoice_" + invoice.getInvoiceNumber() + ".pdf",
           "${user.firstName}", person.getFirstname(),

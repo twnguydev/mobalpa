@@ -1,0 +1,131 @@
+<div class="container mx-auto p-4 min-h-screen h-auto ">
+  <h1 class="text-2xl font-bold mb-4">Envoyer une newsletter</h1>
+
+  <form (ngSubmit)="onSubmit()">
+    <div class="mb-4">
+      <label class="block text-sm font-medium text-gray-700">Sujet</label>
+      <input type="text" name="subject" class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm p-2"
+        [(ngModel)]="subject"
+        required />
+    </div>
+
+    <div class="mb-4">
+      <label class="block text-sm font-medium text-gray-700">Contenus</label>
+      <div *ngIf="contentInParagraphStrings.length > 0" class="mt-2 mb-10">
+        <div *ngFor="let paragraph of contentInParagraphStrings; let i = index" class="bg-blue-100 w-full h-full flex space-between rounded-lg px-5 py-4 mt-1">
+          <span class="text-blue-800 text-sm">{{ paragraph }}</span>
+          <button type="button" (click)="removeContentParagraph(i)" class="ml-2 text-blue-600 hover:text-blue-800">&times;</button>
+        </div>
+      </div>
+      <textarea [(ngModel)]="newContentParagraph" name="newContent" class="mt-1 block w-full resize-none border border-gray-300 rounded-lg shadow-sm p-2" rows="3" required></textarea>
+      <button
+        class="my-4 bg-mobalpa-green text-white p-2 rounded hover:bg-emerald-green focus:outline-none"
+        (click)="addContentParagraph()">
+        Ajouter
+      </button>
+    </div>    
+
+    <div class="mb-4">
+      <div class="flex flex-col relative">
+        <label for="targetUuid" class="text-xs font-medium text-gray-700">Destinataires</label>
+        <input type="text" [(ngModel)]="searchTermSubscriberTarget" name="searchTerm"
+          (input)="onSubscriberTargetSearchTermChange()" (focus)="showSubscriberTargetDropdown = true"
+          (blur)="onInputBlur('subscriber')" placeholder="Rechercher un abonné cible"
+          class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        
+        <div class="flex items-center space-x-4 my-3">
+          <input type="checkbox" id="sendToAllSubscribers" name="sendToAllSubscribers" [(ngModel)]="sendToAllSubscribers" class="form-checkbox h-5 w-5 text-blue-600" />
+          <label for="sendToAllSubscribers" class="text-xs font-medium text-gray-700">Tous les abonnés</label>
+        </div>
+
+        <ul *ngIf="showSubscriberTargetDropdown"
+          class="absolute z-10 w-full mt-16 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-auto">
+          <li *ngFor="let target of filteredSubscriberTargets" (mousedown)="selectSubscriberTarget(target)"
+            class="px-3 py-2 hover:bg-gray-100 cursor-pointer">
+            {{ target.email }}
+          </li>
+        </ul>
+      </div>
+      <div *ngIf="selectedSubscriberTargets" class="mt-2">
+        <span *ngFor="let subscriber of selectedSubscriberTargets" class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">
+          {{ subscriber.email }}
+          <button type="button" (click)="removeSubscriberTarget(subscriber)"
+            class="ml-2 text-blue-600 hover:text-blue-800">&times;</button>
+        </span>
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <div class="flex flex-col relative">
+        <label for="targetUuid" class="text-xs font-medium text-gray-700">Campagne</label>
+        <input type="text" [(ngModel)]="searchTermCampaignTarget" name="searchTerm"
+          (input)="onCampaignTargetSearchTermChange()" (focus)="showCampaignTargetDropdown = true"
+          (blur)="onInputBlur('campaign')" placeholder="Rechercher une campagne cible"
+          class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+
+
+        <ul *ngIf="showCampaignTargetDropdown"
+          class="absolute z-10 w-full mt-16 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-auto">
+          <li *ngFor="let target of filteredCampaignTargets" (mousedown)="selectCampaignTarget(target)"
+            class="px-3 py-2 hover:bg-gray-100 cursor-pointer">
+            {{ target.name }}
+          </li>
+        </ul>
+      </div>
+      <div *ngIf="selectedCampaignTarget.name" class="mt-2">
+        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">
+          {{ selectedCampaignTarget.name }}
+          <button type="button" (click)="removeCampaignTarget()"
+            class="ml-2 text-blue-600 hover:text-blue-800">&times;</button>
+        </span>
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <div class="flex flex-col relative">
+        <label for="targetUuid" class="text-xs font-medium text-gray-700">Produits</label>
+        <input type="text" [(ngModel)]="searchTermProductTarget" name="searchTerm"
+          (input)="onProductTargetSearchTermChange()" (focus)="showProductTargetDropdown = true"
+          (blur)="onInputBlur('product')" placeholder="Rechercher un produit cible"
+          class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+
+
+        <ul *ngIf="showProductTargetDropdown"
+          class="absolute z-10 w-full mt-16 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-auto">
+          <li *ngFor="let target of filteredProductTargets" (mousedown)="selectProductTarget(target)"
+            class="px-3 py-2 hover:bg-gray-100 cursor-pointer">
+            {{ target.name }}
+          </li>
+        </ul>
+      </div>
+      <div *ngIf="selectedProductTargets" class="mt-2">
+        <span *ngFor="let product of selectedProductTargets" class="bg-blue-100 text-blue-800 px-2 py-1 mr-1 rounded-full text-sm">
+          {{ product.name }}
+          <button type="button" (click)="removeProductTarget(product)"
+            class="ml-2 text-blue-600 hover:text-blue-800">&times;</button>
+        </span>
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <label class="block text-sm font-medium text-gray-700">Date d'envoi</label>
+      <input type="date" name="sendDate" class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm p-2"
+        [(ngModel)]="sendDate"
+        required />
+      <p class="text-xs text-gray-500 mt-2">Laisser vide pour envoyer immédiatement</p>
+    </div>
+
+    <div class="flex space-x-4">
+      <button type="submit" [disabled]="isLoading" class="px-4 py-2 bg-blue-500 text-white rounded-lg">
+        {{ isLoading ? 'Envoi en cours...' : 'Envoyer la newsletter' }}
+      </button>
+      <a href="/admin"
+        class="bg-mobalpa-green text-white p-2 rounded-lg hover:bg-emerald-green focus:outline-none">
+        Retour
+      </a>
+    </div>
+  </form>
+
+  <p class="mt-4 text-green-500" *ngIf="successMessage">{{ successMessage }}</p>
+  <p class="mt-4 text-red-500" *ngIf="errorMessage">{{ errorMessage }}</p>
+</div>
