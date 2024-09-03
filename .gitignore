@@ -2,3 +2,4 @@
 .vscode/
 *.dbdiagram
 *:Zone.Identifier
+node_modules

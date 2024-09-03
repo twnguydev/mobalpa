@@ -1,0 +1,3416 @@
+[
+    {
+        "uuid": "b0dbed68-e512-420c-93e2-72721a1bc23d",
+        "name": "Escapade",
+        "uri": "cuisines/plan-de-travail/escapade",
+        "description": "This is an example product description.",
+        "price": 99.99,
+        "stock": 50,
+        "estimatedDelivery": "2024-08-01T08:00:00",
+        "weight": 1.5,
+        "height": 10.0,
+        "width": 20.0,
+        "createdAt": "2024-08-05T14:24:23",
+        "category": {
+            "uuid": "8493b780-5030-446e-a31c-ca4e6b76af7c",
+            "name": "Cuisines",
+            "uri": "cuisines"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-408d-bc1a-b1ebf7a982b6",
+            "name": "Plan de travail",
+            "uri": "cuisines/plan-de-travail"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "8f864c94-b01e-4f18-a435-ff01e79751f0",
+                "name": "Rouge",
+                "uri": null
+            },
+            {
+                "uuid": "94ceb468-da88-442d-820e-446cd994144d",
+                "name": "Bleu",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "07f59834-1906-4e8c-9c2c-df4219019a69",
+                "uri": "/images/kitchen-ecommerce/escapade-saumon.png",
+                "color": {
+                    "uuid": "8f864c94-b01e-4f18-a435-ff01e79751f0",
+                    "name": "Rouge",
+                    "uri": null
+                }
+            },
+            {
+                "uuid": "558bbd7d-1563-45c1-b959-8ad399b0ff9b",
+                "uri": "/images/kitchen-ecommerce/escapade-turquoise.png",
+                "color": {
+                    "uuid": "94ceb468-da88-442d-820e-446cd994144d",
+                    "name": "Bleu",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "bd5d5362-2d36-6f1c-5efd-f6255fdb288f",
+        "name": "Eveil",
+        "uri": "cuisines/plan-de-travail/eveil",
+        "description": "This is an example product description.",
+        "price": 149.99,
+        "stock": 50,
+        "estimatedDelivery": "2024-08-01T08:00:00",
+        "weight": 1.5,
+        "height": 10.0,
+        "width": 20.0,
+        "createdAt": "2024-08-05T14:24:23",
+        "category": {
+            "uuid": "8493b780-5030-446e-a31c-ca4e6b76af7c",
+            "name": "Cuisines",
+            "uri": "cuisines"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-408d-bc1a-b1ebf7a982b6",
+            "name": "Plan de travail",
+            "uri": "cuisines/plan-de-travail"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                "name": "Noir",
+                "uri": null
+            },
+            {
+                "uuid": "bbee55e4-0b26-6eae-31e8-ae6ef83646b4",
+                "name": "Blanc",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "12857070-4c38-9919-003e-776072ae78d5",
+                "uri": "/images/kitchen-ecommerce/eveil-black.png",
+                "color": {
+                    "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                    "name": "Noir",
+                    "uri": null
+                }
+            },
+            {
+                "uuid": "7b85893a-3745-692b-57af-39662f4d6855",
+                "uri": "/images/kitchen-ecommerce/eveil-blanc.png",
+                "color": {
+                    "uuid": "bbee55e4-0b26-6eae-31e8-ae6ef83646b4",
+                    "name": "Blanc",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "10d95f85-4f74-716c-40ea-c5256fcd956a",
+        "name": "Expressive",
+        "uri": "cuisines/plan-de-travail/expressive",
+        "description": "This is an example product description.",
+        "price": 249.99,
+        "stock": 12,
+        "estimatedDelivery": "2024-08-01T08:00:00",
+        "weight": 3.0,
+        "height": 12.5,
+        "width": 30.0,
+        "createdAt": "2024-08-05T14:24:23",
+        "category": {
+            "uuid": "8493b780-5030-446e-a31c-ca4e6b76af7c",
+            "name": "Cuisines",
+            "uri": "cuisines"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-408d-bc1a-b1ebf7a982b6",
+            "name": "Plan de travail",
+            "uri": "cuisines/plan-de-travail"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                "name": "Noir",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "10d95f85-4f74-716c-40ea-c5256fcd956a",
+                "uri": "/images/kitchen-ecommerce/expressive.png",
+                "color": {
+                    "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                    "name": "Noir",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "94bb7d31-4e60-6e69-c9d9-45366daea469",
+        "name": "Rétro",
+        "uri": "cuisines/plan-de-travail/retro",
+        "description": "This is an example product description.",
+        "price": 70.0,
+        "stock": 12,
+        "estimatedDelivery": "2024-08-01T08:00:00",
+        "weight": 3.0,
+        "height": 12.5,
+        "width": 30.0,
+        "createdAt": "2024-08-05T14:24:23",
+        "category": {
+            "uuid": "8493b780-5030-446e-a31c-ca4e6b76af7c",
+            "name": "Cuisines",
+            "uri": "cuisines"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-408d-bc1a-b1ebf7a982b6",
+            "name": "Plan de travail",
+            "uri": "cuisines/plan-de-travail"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "812f6d92-1f7d-67b9-1df6-a546a98ea5e4",
+                "name": "Jaune",
+                "uri": null
+            },
+            {
+                "uuid": "8f864c94-b01e-4f18-a435-ff01e79751f0",
+                "name": "Rouge",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "a593cc85-bc78-da94-1978-972837dbafd9",
+                "uri": "/images/kitchen-ecommerce/retro-jaune.png",
+                "color": {
+                    "uuid": "812f6d92-1f7d-67b9-1df6-a546a98ea5e4",
+                    "name": "Jaune",
+                    "uri": null
+                }
+            },
+            {
+                "uuid": "c1bf33d3-43fa-f8cc-25fd-7526ed7ea55d",
+                "uri": "/images/kitchen-ecommerce/retro-red.png",
+                "color": {
+                    "uuid": "8f864c94-b01e-4f18-a435-ff01e79751f0",
+                    "name": "Rouge",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "d537e994-0bf8-6a99-1ab9-412ab24dadea",
+        "name": "Rive",
+        "uri": "cuisines/plan-de-travail/rive",
+        "description": "This is an example product description.",
+        "price": 90.0,
+        "stock": 12,
+        "estimatedDelivery": "2024-08-01T08:00:00",
+        "weight": 3.0,
+        "height": 12.5,
+        "width": 30.0,
+        "createdAt": "2024-08-05T14:24:23",
+        "category": {
+            "uuid": "8493b780-5030-446e-a31c-ca4e6b76af7c",
+            "name": "Cuisines",
+            "uri": "cuisines"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-408d-bc1a-b1ebf7a982b6",
+            "name": "Plan de travail",
+            "uri": "cuisines/plan-de-travail"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "653727d3-3b7c-7b79-173c-96366b6e956a",
+                "name": "Bleu ciel",
+                "uri": null
+            },
+            {
+                "uuid": "d5576586-2377-0a75-1976-862ae6bda02a",
+                "name": "Vert",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "643fa3c5-2bfb-7a6c-17fd-a52666ad94fc",
+                "uri": "/images/kitchen-ecommerce/rive-blue.png",
+                "color": {
+                    "uuid": "653727d3-3b7c-7b79-173c-96366b6e956a",
+                    "name": "Bleu ciel",
+                    "uri": null
+                }
+            },
+            {
+                "uuid": "744f27b5-2f39-fc70-1bfb-8532289fa17a",
+                "uri": "/images/kitchen-ecommerce/rive-canard.png",
+                "color": {
+                    "uuid": "d5576586-2377-0a75-1976-862ae6bda02a",
+                    "name": "Vert",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "c5476570-27ba-7a7c-1a7d-452ee77ea5ac",
+        "name": "Serenite",
+        "uri": "cuisines/plan-de-travail/serenite",
+        "description": "This is an example product description.",
+        "price": 139.99,
+        "stock": 12,
+        "estimatedDelivery": "2024-08-01T08:00:00",
+        "weight": 3.0,
+        "height": 12.5,
+        "width": 30.0,
+        "createdAt": "2024-08-05T14:24:23",
+        "category": {
+            "uuid": "8493b780-5030-446e-a31c-ca4e6b76af7c",
+            "name": "Cuisines",
+            "uri": "cuisines"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-408d-bc1a-b1ebf7a982b6",
+            "name": "Plan de travail",
+            "uri": "cuisines/plan-de-travail"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                "name": "Noir",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "c5476570-27ba-7a7c-1a7d-452ee77ea5ac",
+                "uri": "/images/kitchen-ecommerce/serenite.png",
+                "color": {
+                    "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                    "name": "Noir",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "0a4010eb-038b-8fe8-4c2a-904052266582",
+        "name": "Brooklyn",
+        "uri": "cuisines/plan-de-travail/brooklyn",
+        "description": "This is an example product description.",
+        "price": 825.0,
+        "stock": 12,
+        "estimatedDelivery": "2024-08-01T08:00:00",
+        "weight": 3.0,
+        "height": 12.5,
+        "width": 30.0,
+        "createdAt": "2024-08-05T14:24:23",
+        "category": {
+            "uuid": "8493b780-5030-446e-a31c-ca4e6b76af7c",
+            "name": "Cuisines",
+            "uri": "cuisines"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-408d-bc1a-b1ebf7a982b6",
+            "name": "Plan de travail",
+            "uri": "cuisines/plan-de-travail"
+        },
+        "brand": {
+            "uuid": "a81a1260-da01-cb63-ce11-874a0d6bde98",
+            "name": "Mobalpa",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                "name": "Noir",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "dc4cfbc2-bcfa-33dd-b90c-1cbb64f3848a",
+                "uri": "/images/kitchen-ecommerce/brooklyn.png",
+                "color": {
+                    "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                    "name": "Noir",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "2b465a30-c504-4458-4d03-96f49a7a17b2",
+        "name": "Bucolique",
+        "uri": "cuisines/plan-de-travail/bucolique",
+        "description": "This is an example product description.",
+        "price": 449.99,
+        "stock": 12,
+        "estimatedDelivery": "2024-08-01T08:00:00",
+        "weight": 3.0,
+        "height": 12.5,
+        "width": 30.0,
+        "createdAt": "2024-08-05T14:24:23",
+        "category": {
+            "uuid": "8493b780-5030-446e-a31c-ca4e6b76af7c",
+            "name": "Cuisines",
+            "uri": "cuisines"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-408d-bc1a-b1ebf7a982b6",
+            "name": "Plan de travail",
+            "uri": "cuisines/plan-de-travail"
+        },
+        "brand": {
+            "uuid": "a81a1260-da01-cb63-ce11-874a0d6bde98",
+            "name": "Mobalpa",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "812f6d92-1f7d-67b9-1df6-a546a98ea5e4",
+                "name": "Jaune",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "f1452ab3-33c8-7b39-7f23-6b42666f3bbd",
+                "uri": "/images/kitchen-ecommerce/bucolique.png",
+                "color": {
+                    "uuid": "812f6d92-1f7d-67b9-1df6-a546a98ea5e4",
+                    "name": "Jaune",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "7e49b9bc-1a23-2f92-0d02-63479f0c4da1",
+        "name": "Campagne",
+        "uri": "cuisines/plan-de-travail/campagne",
+        "description": "This is an example product description.",
+        "price": 599.99,
+        "stock": 12,
+        "estimatedDelivery": "2024-08-01T08:00:00",
+        "weight": 3.0,
+        "height": 12.5,
+        "width": 30.0,
+        "createdAt": "2024-08-05T14:24:23",
+        "category": {
+            "uuid": "8493b780-5030-446e-a31c-ca4e6b76af7c",
+            "name": "Cuisines",
+            "uri": "cuisines"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-408d-bc1a-b1ebf7a982b6",
+            "name": "Plan de travail",
+            "uri": "cuisines/plan-de-travail"
+        },
+        "brand": {
+            "uuid": "a81a1260-da01-cb63-ce11-874a0d6bde98",
+            "name": "Mobalpa",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "812f6d92-1f7d-67b9-1df6-a546a98ea5e4",
+                "name": "Jaune",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "f1452ab3-33c8-7b39-7f23-6b42666f3bbd",
+                "uri": "/images/kitchen-ecommerce/campagne.png",
+                "color": {
+                    "uuid": "812f6d92-1f7d-67b9-1df6-a546a98ea5e4",
+                    "name": "Jaune",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "9c1c4584-57fb-6a1f-d477-e73adc35effa",
+        "name": "Table de cuisine",
+        "uri": null,
+        "description": "Modern kitchen table with sleek design.",
+        "price": 150.0,
+        "stock": 30,
+        "estimatedDelivery": "2024-08-10T08:00:00",
+        "weight": 20.0,
+        "height": 75.0,
+        "width": 120.0,
+        "createdAt": "2024-08-01T14:24:23",
+        "category": {
+            "uuid": "8493b780-5030-446e-a31c-ca4e6b76af7c",
+            "name": "Cuisines",
+            "uri": "cuisines"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-4091-bc1a-b1ebf7a982b6",
+            "name": "Table",
+            "uri": "cuisines/table"
+        },
+        "brand": {
+            "uuid": "a81a1260-da01-cb63-ce11-874a0d6bde98",
+            "name": "Mobalpa",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "94ceb468-da88-442d-820e-446cd994144d",
+                "name": "Bleu",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "4cf1213f-177c-d78b-94b9-46f766f10d7b",
+                "uri": "/images/kitchen-ecommerce/esthete-blue.png",
+                "color": {
+                    "uuid": "94ceb468-da88-442d-820e-446cd994144d",
+                    "name": "Bleu",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "df5e2f8e-cdfd-5c43-a035-6b1b5ff24221",
+        "name": "Chaise de bureau",
+        "uri": "cuisines/chaise/chaise-de-bureau",
+        "description": "Comfortable office chair with ergonomic design.",
+        "price": 200.0,
+        "stock": 40,
+        "estimatedDelivery": "2024-08-15T08:00:00",
+        "weight": 15.0,
+        "height": 110.0,
+        "width": 50.0,
+        "createdAt": "2024-08-03T14:24:23",
+        "category": {
+            "uuid": "8493b780-5030-446e-a31c-ca4e6b76af7c",
+            "name": "Cuisines",
+            "uri": "cuisines"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-4095-bc1a-b1ebf7a982b6",
+            "name": "Chaise",
+            "uri": "cuisines/chaise"
+        },
+        "brand": {
+            "uuid": "a81a1260-da01-cb63-ce11-874a0d6bde98",
+            "name": "Mobalpa",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "94ceb468-da88-442d-820e-446cd994144d",
+                "name": "Bleu",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "6cd9723f-3f3b-8a9b-94fa-46e761f32d75",
+                "uri": "/images/kitchen-ecommerce/symb-turquoise.png",
+                "color": {
+                    "uuid": "94ceb468-da88-442d-820e-446cd994144d",
+                    "name": "Bleu",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "fe22651d-bdba-7c5b-8c36-7c17eaf34dad",
+        "name": "Meuble TV",
+        "uri": "cuisines/meuble-de-rangement/meuble-tv",
+        "description": "Elegant TV stand with storage compartments.",
+        "price": 250.0,
+        "stock": 20,
+        "estimatedDelivery": "2024-08-20T08:00:00",
+        "weight": 25.0,
+        "height": 60.0,
+        "width": 150.0,
+        "createdAt": "2024-08-05T14:24:23",
+        "category": {
+            "uuid": "8493b780-5030-446e-a31c-ca4e6b76af7c",
+            "name": "Cuisines",
+            "uri": "cuisines"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-4099-bc1a-b1ebf7a982b6",
+            "name": "Décoration",
+            "uri": "cuisines/decoration"
+        },
+        "brand": {
+            "uuid": "a81a1260-da01-cb63-ce11-874a0d6bde98",
+            "name": "Mobalpa",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "8f864c94-b01e-4f18-a435-ff01e79751f0",
+                "name": "Rouge",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "3ce9ee3e-13ba-d793-94bb-47e3e6f20d79",
+                "uri": "/images/kitchen-ecommerce/ressource-rose.png",
+                "color": {
+                    "uuid": "8f864c94-b01e-4f18-a435-ff01e79751f0",
+                    "name": "Rouge",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "fe3aa76d-b5fc-674f-90f9-7b1ba7f32d6b",
+        "name": "Canapé",
+        "uri": "cuisines/chaise/canape",
+        "description": "Luxurious sofa with comfortable cushions.",
+        "price": 500.0,
+        "stock": 15,
+        "estimatedDelivery": "2024-08-25T08:00:00",
+        "weight": 35.0,
+        "height": 90.0,
+        "width": 200.0,
+        "createdAt": "2024-08-07T14:24:23",
+        "category": {
+            "uuid": "8493b780-5030-446e-a31c-ca4e6b76af7c",
+            "name": "Cuisines",
+            "uri": "cuisines"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-409d-bc1a-b1ebf7a982b6",
+            "name": "Meuble de rangement",
+            "uri": "cuisines/meuble-de-rangement"
+        },
+        "brand": {
+            "uuid": "a81a1260-da01-cb63-ce11-874a0d6bde98",
+            "name": "Mobalpa",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "8f864c94-b01e-4f18-a435-ff01e79751f0",
+                "name": "Rouge",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "3cf1ef3e-1b3a-dabb-94bc-47db26031a7a",
+                "uri": "/images/kitchen-ecommerce/chill-saumon.png",
+                "color": {
+                    "uuid": "8f864c94-b01e-4f18-a435-ff01e79751f0",
+                    "name": "Rouge",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "b0dbed98-65bd-4bd5-93e2-72721a1bc23d",
+        "name": "Grille pain Deluxe",
+        "uri": "petit-electromenager/grille-pain/grille-pain-deluxe",
+        "description": "This is an example product description for Grille pain.",
+        "price": 49.99,
+        "stock": 100,
+        "estimatedDelivery": "2024-08-10T08:00:00",
+        "weight": 1.0,
+        "height": 15.0,
+        "width": 25.0,
+        "createdAt": "2024-08-05T14:24:23",
+        "category": {
+            "uuid": "fd731b48-4019-4a13-9885-c35b11c10dbb",
+            "name": "Petit électroménager",
+            "uri": "petit-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-4069-bc1a-b1ebf7a982b6",
+            "name": "Grille pain",
+            "uri": "petit-electromenager/grille-pain"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "8f864c94-b01e-4f18-a435-ff01e79751f0",
+                "name": "Rouge",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "07f59834-1906-4e8c-9c2c-df4219019a69",
+                "uri": "/images/pem/grillepain.png",
+                "color": {
+                    "uuid": "8f864c94-b01e-4f18-a435-ff01e79751f0",
+                    "name": "Rouge",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "b0df2d88-61bb-5bd9-93e2-72721a1bc23d",
+        "name": "Micro-onde Pro",
+        "uri": "petit-electromenager/micro-onde/micro-onde-pro",
+        "description": "This is an example product description for Four à micro-onde.",
+        "price": 89.99,
+        "stock": 75,
+        "estimatedDelivery": "2024-08-12T08:00:00",
+        "weight": 2.0,
+        "height": 20.0,
+        "width": 30.0,
+        "createdAt": "2024-08-05T14:24:23",
+        "category": {
+            "uuid": "fd731b48-4019-4a13-9885-c35b11c10dbb",
+            "name": "Petit électroménager",
+            "uri": "petit-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-406d-bc1a-b1ebf7a982b6",
+            "name": "Four à micro-onde",
+            "uri": "petit-electromenager/four-a-micro-onde"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "8f864c94-b01e-4f18-a435-ff01e79751f0",
+                "name": "Rouge",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "558bbd7d-1563-45c1-b959-8ad399b0ff9b",
+                "uri": "/images/pem/microonde5.png",
+                "color": {
+                    "uuid": "8f864c94-b01e-4f18-a435-ff01e79751f0",
+                    "name": "Rouge",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "b0e3ed88-619a-1d68-93e2-72721a1bc27d",
+        "name": "Micro-ondes Express",
+        "uri": "petit-electromenager/micro-onde/micro-onde-express",
+        "description": "Préparez vos repas en un clin d'œil avec le Micro-ondes Express, parfait pour un usage quotidien rapide et efficace.",
+        "price": 89.99,
+        "stock": 50,
+        "estimatedDelivery": "2024-09-10T08:00:00",
+        "weight": 10.5,
+        "height": 30.0,
+        "width": 50.0,
+        "createdAt": "2024-08-15T10:00:00",
+        "category": {
+            "uuid": "fd731b48-4019-4a13-9885-c35b11c10dbb",
+            "name": "Petit électroménager",
+            "uri": "petit-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-406d-bc1a-b1ebf7a982b6",
+            "name": "Four à micro-onde",
+            "uri": "petit-electromenager/four-a-micro-onde"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                "name": "Noir",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "27f59834-1946-5fc8-9c2c-df4219019a69",
+                "uri": "/images/pem/microonde1.png",
+                "color": {
+                    "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                    "name": "Noir",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "b0e3ed88-61db-2d74-93e2-72721a1bc2bd",
+        "name": "Micro-ondes Gourmet",
+        "uri": "petit-electromenager/micro-onde/micro-onde-gourmet",
+        "description": "Un micro-ondes haut de gamme pour les gourmets exigeants, offrant des performances exceptionnelles pour une cuisson précise.",
+        "price": 149.99,
+        "stock": 40,
+        "estimatedDelivery": "2024-09-12T08:00:00",
+        "weight": 12.0,
+        "height": 35.0,
+        "width": 55.0,
+        "createdAt": "2024-08-16T12:30:00",
+        "category": {
+            "uuid": "fd731b48-4019-4a13-9885-c35b11c10dbb",
+            "name": "Petit électroménager",
+            "uri": "petit-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-406d-bc1a-b1ebf7a982b6",
+            "name": "Four à micro-onde",
+            "uri": "petit-electromenager/four-a-micro-onde"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                "name": "Noir",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "37f59834-19c6-6ec4-9c2c-df4219019a69",
+                "uri": "/images/pem/microonde3.png",
+                "color": {
+                    "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                    "name": "Noir",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "c0e3ed88-611c-5e78-93e2-72721a1bc27d",
+        "name": "Micro-ondes Compact",
+        "uri": "petit-electromenager/micro-onde/micro-onde-compact",
+        "description": "Idéal pour les petits espaces, le Micro-ondes Compact offre toute la puissance nécessaire dans un format réduit.",
+        "price": 79.99,
+        "stock": 70,
+        "estimatedDelivery": "2024-09-15T08:00:00",
+        "weight": 8.5,
+        "height": 25.0,
+        "width": 45.0,
+        "createdAt": "2024-08-18T14:00:00",
+        "category": {
+            "uuid": "fd731b48-4019-4a13-9885-c35b11c10dbb",
+            "name": "Petit électroménager",
+            "uri": "petit-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-406d-bc1a-b1ebf7a982b6",
+            "name": "Four à micro-onde",
+            "uri": "petit-electromenager/four-a-micro-onde"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "bbee55e4-0b26-6eae-31e8-ae6ef83646b4",
+                "name": "Blanc",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "47f59834-1906-7fcc-9c2c-df4219019a69",
+                "uri": "/images/pem/microonde2.png",
+                "color": {
+                    "uuid": "bbee55e4-0b26-6eae-31e8-ae6ef83646b4",
+                    "name": "Blanc",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "d0e3ed88-615d-7e80-93e2-72721a1bc27d",
+        "name": "Micro-ondes Vintage",
+        "uri": "petit-electromenager/micro-onde/micro-onde-vintage",
+        "description": "Alliez style rétro et technologie moderne avec le Micro-ondes Vintage, parfait pour une cuisine à la fois élégante et fonctionnelle.",
+        "price": 129.99,
+        "stock": 60,
+        "estimatedDelivery": "2024-09-18T08:00:00",
+        "weight": 11.0,
+        "height": 32.0,
+        "width": 52.0,
+        "createdAt": "2024-08-20T15:00:00",
+        "category": {
+            "uuid": "fd731b48-4019-4a13-9885-c35b11c10dbb",
+            "name": "Petit électroménager",
+            "uri": "petit-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-406d-bc1a-b1ebf7a982b6",
+            "name": "Four à micro-onde",
+            "uri": "petit-electromenager/four-a-micro-onde"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                "name": "Noir",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "57f59834-1906-9da4-9c2c-df4219019a69",
+                "uri": "/images/pem/microonde4.png",
+                "color": {
+                    "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                    "name": "Noir",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "40e7ed88-619e-9e88-93e2-72721a1bc27d",
+        "name": "Micro-ondes Ultra",
+        "uri": "petit-electromenager/micro-onde/micro-onde-ultra",
+        "description": "Profitez de la technologie de pointe avec le Micro-ondes Ultra, offrant des fonctionnalités avancées pour une cuisson parfaite à chaque fois.",
+        "price": 199.99,
+        "stock": 30,
+        "estimatedDelivery": "2024-09-20T08:00:00",
+        "weight": 14.0,
+        "height": 40.0,
+        "width": 60.0,
+        "createdAt": "2024-08-22T16:00:00",
+        "category": {
+            "uuid": "fd731b48-4019-4a13-9885-c35b11c10dbb",
+            "name": "Petit électroménager",
+            "uri": "petit-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-406d-bc1a-b1ebf7a982b6",
+            "name": "Four à micro-onde",
+            "uri": "petit-electromenager/four-a-micro-onde"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                "name": "Noir",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "67f59834-1946-ada8-9c2c-df4219019a69",
+                "uri": "/images/pem/microonde6.webp",
+                "color": {
+                    "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                    "name": "Noir",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "b0dbed98-65fa-6bdd-93e2-72721a1bc23d",
+        "name": "Mixeur Turbo",
+        "uri": "petit-electromenager/mixeur/mixeur-turbo",
+        "description": "This is an example product description for Mixeur.",
+        "price": 59.99,
+        "stock": 80,
+        "estimatedDelivery": "2024-08-15T08:00:00",
+        "weight": 1.2,
+        "height": 25.0,
+        "width": 15.0,
+        "createdAt": "2024-08-05T14:24:23",
+        "category": {
+            "uuid": "fd731b48-4019-4a13-9885-c35b11c10dbb",
+            "name": "Petit électroménager",
+            "uri": "petit-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-4071-bc1a-b1ebf7a982b6",
+            "name": "Mixeur",
+            "uri": "petit-electromenager/mixeur"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                "name": "Noir",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "07f59834-19c6-4d90-9c2c-df4219019a69",
+                "uri": "/images/pem/mixeur1.png",
+                "color": {
+                    "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                    "name": "Noir",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "c0e36d87-61fa-03d6-93e2-72721a1bc23d",
+        "name": "Mixeur Eco Plus",
+        "uri": "petit-electromenager/mixeur/mixeur-eco-plus",
+        "description": "Un mixeur puissant pour les professionnels et les passionnés de cuisine, conçu pour des performances de pointe dans chaque recette.",
+        "price": 99.99,
+        "stock": 60,
+        "estimatedDelivery": "2024-08-20T08:00:00",
+        "weight": 1.8,
+        "height": 30.0,
+        "width": 18.0,
+        "createdAt": "2024-08-10T10:20:30",
+        "category": {
+            "uuid": "fd731b48-4019-4a13-9885-c35b11c10dbb",
+            "name": "Petit électroménager",
+            "uri": "petit-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-4071-bc1a-b1ebf7a982b6",
+            "name": "Mixeur",
+            "uri": "petit-electromenager/mixeur"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                "name": "Noir",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "17f59854-1806-4e9c-9c2c-df4219019e69",
+                "uri": "/images/pem/mixeur2.jpeg",
+                "color": {
+                    "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                    "name": "Noir",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "b0df6d88-61fc-bcd8-93e2-72725a17c23c",
+        "name": "Mixeur Bouteillé",
+        "uri": "petit-electromenager/mixeur/mixeur-bouteillé",
+        "description": "Mixez vos ingrédients préférés tout en respectant l'environnement avec notre Mixeur Éco, performant et éco-responsable.",
+        "price": 49.99,
+        "stock": 100,
+        "estimatedDelivery": "2024-08-25T08:00:00",
+        "weight": 1.1,
+        "height": 24.0,
+        "width": 14.0,
+        "createdAt": "2024-08-12T11:30:45",
+        "category": {
+            "uuid": "fd731b48-4019-4a13-9885-c35b11c10dbb",
+            "name": "Petit électroménager",
+            "uri": "petit-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-4071-bc1a-b1ebf7a982b6",
+            "name": "Mixeur",
+            "uri": "petit-electromenager/mixeur"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                "name": "Noir",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "27f59844-19c6-5e94-9c2c-df4219019a69",
+                "uri": "/images/pem/mixeur3.jpeg",
+                "color": {
+                    "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                    "name": "Noir",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "c0e3ed98-65bb-fce0-93e2-72725a17c27d",
+        "name": "Mixeur Combo Pack",
+        "uri": "petit-electromenager/mixeur/mixeur-combo-pack",
+        "description": "Mixez vos ingrédients préférés tout en respectant l'environnement avec notre Mixeur Éco, performant et éco-responsable.",
+        "price": 125.0,
+        "stock": 100,
+        "estimatedDelivery": "2024-08-25T08:00:00",
+        "weight": 1.1,
+        "height": 24.0,
+        "width": 14.0,
+        "createdAt": "2024-08-12T11:30:45",
+        "category": {
+            "uuid": "fd731b48-4019-4a13-9885-c35b11c10dbb",
+            "name": "Petit électroménager",
+            "uri": "petit-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-4071-bc1a-b1ebf7a982b6",
+            "name": "Mixeur",
+            "uri": "petit-electromenager/mixeur"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                "name": "Noir",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "27f59844-19c6-5e94-9c2c-df4219019a69",
+                "uri": "/images/pem/mixeur4.jpeg",
+                "color": {
+                    "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                    "name": "Noir",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "b0df2d58-55ba-7ce1-93e2-72721a1bc23d",
+        "name": "Friteuse Pro",
+        "uri": "petit-electromenager/friteuse/friteuse-pro",
+        "description": "This is an example product description for Friteuse.",
+        "price": 79.99,
+        "stock": 90,
+        "estimatedDelivery": "2024-08-18T08:00:00",
+        "weight": 2.5,
+        "height": 20.0,
+        "width": 20.0,
+        "createdAt": "2024-08-05T14:24:23",
+        "category": {
+            "uuid": "fd731b48-4019-4a13-9885-c35b11c10dbb",
+            "name": "Petit électroménager",
+            "uri": "petit-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-4075-bc1a-b1ebf7a982b6",
+            "name": "Friteuse",
+            "uri": "petit-electromenager/friteuse"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "bbee55e4-0b26-6eae-31e8-ae6ef83646b4",
+                "name": "Blanc",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "07f59834-1906-5ea4-9c2c-df4219019a69",
+                "uri": "/images/pem/friteuse.jpeg",
+                "color": {
+                    "uuid": "bbee55e4-0b26-6eae-31e8-ae6ef83646b4",
+                    "name": "Blanc",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "b0e36d88-61fc-9ce5-93e2-72721a1bc23d",
+        "name": "Machine à café Deluxe",
+        "uri": "petit-electromenager/machine-a-cafe/machine-a-cafe-deluxe",
+        "description": "Un must-have pour les amateurs de style et de saveurs authentiques.",
+        "price": 129.99,
+        "stock": 50,
+        "estimatedDelivery": "2024-08-20T08:00:00",
+        "weight": 3.0,
+        "height": 35.0,
+        "width": 20.0,
+        "createdAt": "2024-08-05T14:24:23",
+        "category": {
+            "uuid": "fd731b48-4019-4a13-9885-c35b11c10dbb",
+            "name": "Petit électroménager",
+            "uri": "petit-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-4079-bc1a-b1ebf7a982b6",
+            "name": "Machine à café",
+            "uri": "petit-electromenager/machine-a-cafe"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "bbee55e4-0b26-6eae-31e8-ae6ef83646b4",
+                "name": "Blanc",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "07f59834-1946-6e9c-9c2c-df4219019a69",
+                "uri": "/images/pem/cafe2.png",
+                "color": {
+                    "uuid": "bbee55e4-0b26-6eae-31e8-ae6ef83646b4",
+                    "name": "Blanc",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "8c417b2e-67fd-abcf-605b-6925e04747b4",
+        "name": "Cafetière Premium",
+        "uri": "petit-electromenager/cafetiere/cafetiere-premium",
+        "description": "Commencez votre journée en beauté avec notre Cafetière Premium.",
+        "price": 149.99,
+        "stock": 45,
+        "estimatedDelivery": "2024-09-01T08:00:00",
+        "weight": 4.5,
+        "height": 40.0,
+        "width": 25.0,
+        "createdAt": "2024-08-10T10:20:30",
+        "category": {
+            "uuid": "fd731b48-4019-4a13-9885-c35b11c10dbb",
+            "name": "Petit électroménager",
+            "uri": "petit-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-4079-bc1a-b1ebf7a982b6",
+            "name": "Machine à café",
+            "uri": "petit-electromenager/machine-a-cafe"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                "name": "Noir",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "3046cab6-dee7-c9f6-c7f5-e89d7b630e01",
+                "uri": "/images/pem/cafe-premium.jpeg",
+                "color": {
+                    "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                    "name": "Noir",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "5c4e60a8-11dd-715e-c56d-42abf0fe96b6",
+        "name": "Cafetière Eco Friendly",
+        "uri": "petit-electromenager/cafetiere/cafetiere-eco-friendly",
+        "description": "Savourez un café délicieusement éthique avec notre Cafetière Eco Friendly.",
+        "price": 89.99,
+        "stock": 75,
+        "estimatedDelivery": "2024-09-02T08:00:00",
+        "weight": 3.2,
+        "height": 35.0,
+        "width": 22.0,
+        "createdAt": "2024-08-11T11:30:45",
+        "category": {
+            "uuid": "fd731b48-4019-4a13-9885-c35b11c10dbb",
+            "name": "Petit électroménager",
+            "uri": "petit-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-4079-bc1a-b1ebf7a982b6",
+            "name": "Machine à café",
+            "uri": "petit-electromenager/machine-a-cafe"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "d5576586-2377-0a75-1976-862ae6bda02a",
+                "name": "Vert",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "51430f9e-416d-c7bb-dfa3-569011835db8",
+                "uri": "/images/pem/cafe-eco.webp",
+                "color": {
+                    "uuid": "d5576586-2377-0a75-1976-862ae6bda02a",
+                    "name": "Vert",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "804719e8-2cfe-06b5-a830-24d77e8e55b5",
+        "name": "Cafetière Compact",
+        "uri": "petit-electromenager/cafetiere/cafetiere-compact",
+        "description": "Découvrez la Cafetière Compact, l’alliée parfaite des petits espaces.",
+        "price": 69.99,
+        "stock": 100,
+        "estimatedDelivery": "2024-09-03T08:00:00",
+        "weight": 2.5,
+        "height": 30.0,
+        "width": 20.0,
+        "createdAt": "2024-08-12T12:40:50",
+        "category": {
+            "uuid": "fd731b48-4019-4a13-9885-c35b11c10dbb",
+            "name": "Petit électroménager",
+            "uri": "petit-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-4079-bc1a-b1ebf7a982b6",
+            "name": "Machine à café",
+            "uri": "petit-electromenager/machine-a-cafe"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "bbee55e4-0b26-6eae-31e8-ae6ef83646b4",
+                "name": "Blanc",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "b74c19c8-45f5-f9f4-553d-1385fc8325bd",
+                "uri": "/images/pem/cafe-compact.jpeg",
+                "color": {
+                    "uuid": "bbee55e4-0b26-6eae-31e8-ae6ef83646b4",
+                    "name": "Blanc",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "944c2a9f-467a-4106-320a-61b2453a39b5",
+        "name": "Cafetière Pro",
+        "uri": "petit-electromenager/cafetiere/cafetiere-pro",
+        "description": "Élevez votre expérience café avec la Cafetière Pro. Destinée aux vrais connaisseurs, elle garantit une extraction parfaite pour un café au goût intense.",
+        "price": 199.99,
+        "stock": 30,
+        "estimatedDelivery": "2024-09-04T08:00:00",
+        "weight": 6.0,
+        "height": 45.0,
+        "width": 30.0,
+        "createdAt": "2024-08-13T13:50:55",
+        "category": {
+            "uuid": "fd731b48-4019-4a13-9885-c35b11c10dbb",
+            "name": "Petit électroménager",
+            "uri": "petit-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-4079-bc1a-b1ebf7a982b6",
+            "name": "Machine à café",
+            "uri": "petit-electromenager/machine-a-cafe"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                "name": "Noir",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "9d4d2748-b405-1951-5f07-78930c8f2d83",
+                "uri": "/images/pem/cafe-pro.jpeg",
+                "color": {
+                    "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                    "name": "Noir",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "ac4f647c-1686-8b6c-ad48-84ba4a3a35bd",
+        "name": "Cafetière Vintage",
+        "uri": "petit-electromenager/cafetiere/cafetiere-vintage",
+        "description": "Voyagez dans le temps avec notre Cafetière Vintage. Inspirée des designs rétro, elle apporte une touche d’élégance à votre cuisine.",
+        "price": 119.99,
+        "stock": 60,
+        "estimatedDelivery": "2024-09-05T08:00:00",
+        "weight": 3.5,
+        "height": 35.0,
+        "width": 25.0,
+        "createdAt": "2024-08-14T14:00:00",
+        "category": {
+            "uuid": "fd731b48-4019-4a13-9885-c35b11c10dbb",
+            "name": "Petit électroménager",
+            "uri": "petit-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-4079-bc1a-b1ebf7a982b6",
+            "name": "Machine à café",
+            "uri": "petit-electromenager/machine-a-cafe"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                "name": "Noir",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "e04c5cb8-cf08-99f0-d06b-c12b774a1db9",
+                "uri": "/images/pem/cafe-vintage.webp",
+                "color": {
+                    "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                    "name": "Noir",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "b0dbed98-65b5-5667-93e2-72721a1bc23d",
+        "name": "Four électrique",
+        "uri": "grand-electromenager/four/four-electrique",
+        "description": "Four électrique avec convection",
+        "price": 199.99,
+        "stock": 30,
+        "estimatedDelivery": "2024-09-01T08:00:00",
+        "weight": 15.0,
+        "height": 60.0,
+        "width": 60.0,
+        "createdAt": "2024-08-10T14:24:23",
+        "category": {
+            "uuid": "fd731b48-4019-4a07-9885-c35b11c10dbb",
+            "name": "Grand électroménager",
+            "uri": "grand-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-506b-bc1a-b1ebf7a982b6",
+            "name": "Four",
+            "uri": "grand-electromenager/four"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "8f864c94-b01e-4f18-a435-ff01e79751f0",
+                "name": "Rouge",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "07f59834-1946-4ea0-9c2c-df4219019a69",
+                "uri": "/images/gem/four-electrique.webp",
+                "color": {
+                    "uuid": "8f864c94-b01e-4f18-a435-ff01e79751f0",
+                    "name": "Rouge",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "b740539a-5cf7-5bec-64e9-7d66334143b4",
+        "name": "Four à chaleur tournante",
+        "uri": "grand-electromenager/four/four-chaleur-tournante",
+        "description": "Four à chaleur tournante pour une cuisson homogène.",
+        "price": 249.99,
+        "stock": 40,
+        "estimatedDelivery": "2024-09-02T08:00:00",
+        "weight": 16.0,
+        "height": 60.0,
+        "width": 60.0,
+        "createdAt": "2024-08-11T14:24:23",
+        "category": {
+            "uuid": "fd731b48-4019-4a07-9885-c35b11c10dbb",
+            "name": "Grand électroménager",
+            "uri": "grand-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-506b-bc1a-b1ebf7a982b6",
+            "name": "Four",
+            "uri": "grand-electromenager/four"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                "name": "Noir",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "07f55734-19c5-fe5a-9c2c-df4219019a69",
+                "uri": "/images/gem/four-chaleur-tournante.jpeg",
+                "color": {
+                    "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                    "name": "Noir",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "d7e0298a-61f6-7ba9-93e2-72721abb43bd",
+        "name": "Four multifonction",
+        "uri": "grand-electromenager/four/four-multifonction",
+        "description": "Four multifonction avec grille et rôtissoire intégrées.",
+        "price": 279.99,
+        "stock": 25,
+        "estimatedDelivery": "2024-09-03T08:00:00",
+        "weight": 18.0,
+        "height": 60.0,
+        "width": 60.0,
+        "createdAt": "2024-08-12T14:24:23",
+        "category": {
+            "uuid": "fd731b48-4019-4a07-9885-c35b11c10dbb",
+            "name": "Grand électroménager",
+            "uri": "grand-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-506b-bc1a-b1ebf7a982b6",
+            "name": "Four",
+            "uri": "grand-electromenager/four"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "bbee55e4-0b26-6eae-31e8-ae6ef83646b4",
+                "name": "Blanc",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "07f59834-1946-8ea9-9c2c-df4219019a69",
+                "uri": "/images/gem/four-multifonction.jpeg",
+                "color": {
+                    "uuid": "bbee55e4-0b26-6eae-31e8-ae6ef83646b4",
+                    "name": "Blanc",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "b3d72d58-61fc-dba8-92e2-72721a1baa3d",
+        "name": "Four à pyrolyse",
+        "uri": "grand-electromenager/four/four-pyrolyse",
+        "description": "Four à pyrolyse avec nettoyage automatique.",
+        "price": 329.99,
+        "stock": 20,
+        "estimatedDelivery": "2024-09-04T08:00:00",
+        "weight": 19.0,
+        "height": 60.0,
+        "width": 60.0,
+        "createdAt": "2024-08-13T14:24:23",
+        "category": {
+            "uuid": "fd731b48-4019-4a07-9885-c35b11c10dbb",
+            "name": "Grand électroménager",
+            "uri": "grand-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-506b-bc1a-b1ebf7a982b6",
+            "name": "Four",
+            "uri": "grand-electromenager/four"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                "name": "Noir",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "07f5983c-1906-ffa0-9c2c-df4219019a69",
+                "uri": "/images/gem/four-pyrolyse.jpeg",
+                "color": {
+                    "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                    "name": "Noir",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "07d5f198-60b5-b6bf-93e2-72729a1ac2bd",
+        "name": "Four encastrable",
+        "uri": "grand-electromenager/four/four-encastrable",
+        "description": "Four encastrable pour une intégration parfaite dans votre cuisine.",
+        "price": 219.99,
+        "stock": 35,
+        "estimatedDelivery": "2024-09-05T08:00:00",
+        "weight": 17.0,
+        "height": 60.0,
+        "width": 60.0,
+        "createdAt": "2024-08-14T14:24:23",
+        "category": {
+            "uuid": "fd731b48-4019-4a07-9885-c35b11c10dbb",
+            "name": "Grand électroménager",
+            "uri": "grand-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-506b-bc1a-b1ebf7a982b6",
+            "name": "Four",
+            "uri": "grand-electromenager/four"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                "name": "Noir",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "07f59834-1906-af9c-9c2c-df4219019a69",
+                "uri": "/images/gem/four-encastrable.jpeg",
+                "color": {
+                    "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                    "name": "Noir",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "b0dfed98-65b5-a6a7-93e2-72729a16c27d",
+        "name": "Four vapeur",
+        "uri": "grand-electromenager/four/four-vapeur",
+        "description": "Four vapeur pour des cuissons saines et savoureuses.",
+        "price": 299.99,
+        "stock": 28,
+        "estimatedDelivery": "2024-09-06T08:00:00",
+        "weight": 18.0,
+        "height": 60.0,
+        "width": 60.0,
+        "createdAt": "2024-08-15T14:24:23",
+        "category": {
+            "uuid": "fd731b48-4019-4a07-9885-c35b11c10dbb",
+            "name": "Grand électroménager",
+            "uri": "grand-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-506b-bc1a-b1ebf7a982b6",
+            "name": "Four",
+            "uri": "grand-electromenager/four"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "b749b36e-bc8a-1f1b-60f9-5c0b3942ea98",
+                "name": "Gris anthracite",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "07f59834-1946-ae80-9c2c-df4219019a69",
+                "uri": "/images/gem/four-vapeur.jpeg",
+                "color": {
+                    "uuid": "b749b36e-bc8a-1f1b-60f9-5c0b3942ea98",
+                    "name": "Gris anthracite",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "b0d72d98-64f5-6c9f-93e2-7272da19c23c",
+        "name": "Four combiné micro-ondes",
+        "uri": "grand-electromenager/four/four-combine-micro-ondes",
+        "description": "Four combiné micro-ondes, rapide et polyvalent.",
+        "price": 349.99,
+        "stock": 22,
+        "estimatedDelivery": "2024-09-07T08:00:00",
+        "weight": 20.0,
+        "height": 60.0,
+        "width": 60.0,
+        "createdAt": "2024-08-16T14:24:23",
+        "category": {
+            "uuid": "fd731b48-4019-4a07-9885-c35b11c10dbb",
+            "name": "Grand électroménager",
+            "uri": "grand-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-506b-bc1a-b1ebf7a982b6",
+            "name": "Four",
+            "uri": "grand-electromenager/four"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "bbee55e4-0b26-6eae-31e8-ae6ef83646b4",
+                "name": "Blanc",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "07f55810-1986-6e9c-9c2c-df4219019a69",
+                "uri": "/images/gem/four-micro-ondes.avif",
+                "color": {
+                    "uuid": "bbee55e4-0b26-6eae-31e8-ae6ef83646b4",
+                    "name": "Blanc",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "d4d72d99-60b5-acab-93e2-72721a1bbe3c",
+        "name": "Four à pizza",
+        "uri": "grand-electromenager/four/four-a-pizza",
+        "description": "Four à pizza avec pierre réfractaire intégrée.",
+        "price": 199.99,
+        "stock": 45,
+        "estimatedDelivery": "2024-09-08T08:00:00",
+        "weight": 14.0,
+        "height": 60.0,
+        "width": 60.0,
+        "createdAt": "2024-08-17T14:24:23",
+        "category": {
+            "uuid": "fd731b48-4019-4a07-9885-c35b11c10dbb",
+            "name": "Grand électroménager",
+            "uri": "grand-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-506b-bc1a-b1ebf7a982b6",
+            "name": "Four",
+            "uri": "grand-electromenager/four"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "b749b36e-bc8a-1f1b-60f9-5c0b3942ea98",
+                "name": "Gris anthracite",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "07f59834-1946-7e9c-9c2c-df4219019a69",
+                "uri": "/images/gem/four-pizza.jpeg",
+                "color": {
+                    "uuid": "b749b36e-bc8a-1f1b-60f9-5c0b3942ea98",
+                    "name": "Gris anthracite",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "b3db2d99-60b6-cab7-93e2-72721a1bbe3c",
+        "name": "Four compact",
+        "uri": "grand-electromenager/four/four-compact",
+        "description": "Four compact, idéal pour les petites cuisines.",
+        "price": 179.99,
+        "stock": 50,
+        "estimatedDelivery": "2024-09-09T08:00:00",
+        "weight": 13.0,
+        "height": 60.0,
+        "width": 60.0,
+        "createdAt": "2024-08-18T14:24:23",
+        "category": {
+            "uuid": "fd731b48-4019-4a07-9885-c35b11c10dbb",
+            "name": "Grand électroménager",
+            "uri": "grand-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-506b-bc1a-b1ebf7a982b6",
+            "name": "Four",
+            "uri": "grand-electromenager/four"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                "name": "Noir",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "07f59834-19c6-9e9c-9c2c-df4219019a69",
+                "uri": "/images/gem/four-compact.webp",
+                "color": {
+                    "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                    "name": "Noir",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "c0db2d99-65b6-6abf-93e2-72721a1bc63d",
+        "name": "Four à chaleur pulsée",
+        "uri": "grand-electromenager/four/four-chaleur-pulsee",
+        "description": "Four à chaleur pulsée pour des cuissons rapides et homogènes.",
+        "price": 289.99,
+        "stock": 38,
+        "estimatedDelivery": "2024-09-10T08:00:00",
+        "weight": 18.5,
+        "height": 60.0,
+        "width": 60.0,
+        "createdAt": "2024-08-19T14:24:23",
+        "category": {
+            "uuid": "fd731b48-4019-4a07-9885-c35b11c10dbb",
+            "name": "Grand électroménager",
+            "uri": "grand-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-506b-bc1a-b1ebf7a982b6",
+            "name": "Four",
+            "uri": "grand-electromenager/four"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "b749b36e-bc8a-1f1b-60f9-5c0b3942ea98",
+                "name": "Gris anthracite",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "07f59834-19c6-ae9c-9c2c-df4219019a69",
+                "uri": "/images/gem/four-chaleur-pulsee.webp",
+                "color": {
+                    "uuid": "b749b36e-bc8a-1f1b-60f9-5c0b3942ea98",
+                    "name": "Gris anthracite",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "d0dbed98-65f5-9a93-93e2-72721a1bca3d",
+        "name": "Four à sole",
+        "uri": "grand-electromenager/four/four-a-sole",
+        "description": "Four à sole pour une cuisson traditionnelle.",
+        "price": 189.99,
+        "stock": 32,
+        "estimatedDelivery": "2024-09-11T08:00:00",
+        "weight": 16.0,
+        "height": 60.0,
+        "width": 60.0,
+        "createdAt": "2024-08-20T14:24:23",
+        "category": {
+            "uuid": "fd731b48-4019-4a07-9885-c35b11c10dbb",
+            "name": "Grand électroménager",
+            "uri": "grand-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-506b-bc1a-b1ebf7a982b6",
+            "name": "Four",
+            "uri": "grand-electromenager/four"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "bbee55e4-0b26-6eae-31e8-ae6ef83646b4",
+                "name": "Blanc",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "07f59834-1946-fea0-9c2c-df4219019a69",
+                "uri": "/images/gem/four-a-sole.jpeg",
+                "color": {
+                    "uuid": "bbee55e4-0b26-6eae-31e8-ae6ef83646b4",
+                    "name": "Blanc",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "b0dbed98-65f6-6663-93e2-72721a1bc23d",
+        "name": "Cuisinière à gaz",
+        "uri": "grand-electromenager/cuisiniere/cuisiniere-a-gaz",
+        "description": "Cuisinière à gaz avec four intégré",
+        "price": 299.99,
+        "stock": 20,
+        "estimatedDelivery": "2024-09-05T08:00:00",
+        "weight": 25.0,
+        "height": 85.0,
+        "width": 60.0,
+        "createdAt": "2024-08-11T14:24:23",
+        "category": {
+            "uuid": "fd731b48-4019-4a07-9885-c35b11c10dbb",
+            "name": "Grand électroménager",
+            "uri": "grand-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-506f-bc1a-b1ebf7a982b6",
+            "name": "Cuisinière",
+            "uri": "grand-electromenager/cuisiniere"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                "name": "Noir",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "558bbd7d-1564-45ad-b959-8ad399b0ff9b",
+                "uri": "/images/gem/cuisiniere-gaz.webp",
+                "color": {
+                    "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                    "name": "Noir",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "c0dbed98-6576-5703-91e2-72721a1bc27d",
+        "name": "Cuisinière Électrique",
+        "uri": "grand-electromenager/cuisiniere/cuisiniere-electrique",
+        "description": "Cuisinière électrique avec 4 plaques de cuisson.",
+        "price": 349.99,
+        "stock": 15,
+        "estimatedDelivery": "2024-09-10T08:00:00",
+        "weight": 28.0,
+        "height": 85.0,
+        "width": 60.0,
+        "createdAt": "2024-08-12T14:24:23",
+        "category": {
+            "uuid": "fd731b48-4019-4a07-9885-c35b11c10dbb",
+            "name": "Grand électroménager",
+            "uri": "grand-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-506f-bc1a-b1ebf7a982b6",
+            "name": "Cuisinière",
+            "uri": "grand-electromenager/cuisiniere"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "bbee55e4-0b26-6eae-31e8-ae6ef83646b4",
+                "name": "Blanc",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "658fbd7d-1564-45b1-b959-8ad399c0ffda",
+                "uri": "/images/gem/cuisiniere-electrique.jpeg",
+                "color": {
+                    "uuid": "bbee55e4-0b26-6eae-31e8-ae6ef83646b4",
+                    "name": "Blanc",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "b0dbed98-65b7-6707-90e2-72721a1bc2bd",
+        "name": "Cuisinière à Induction",
+        "uri": "grand-electromenager/cuisiniere/cuisiniere-induction",
+        "description": "Cuisinière avec plaques à induction pour une cuisson rapide.",
+        "price": 499.99,
+        "stock": 12,
+        "estimatedDelivery": "2024-09-15T08:00:00",
+        "weight": 30.0,
+        "height": 85.0,
+        "width": 60.0,
+        "createdAt": "2024-08-13T14:24:23",
+        "category": {
+            "uuid": "fd731b48-4019-4a07-9885-c35b11c10dbb",
+            "name": "Grand électroménager",
+            "uri": "grand-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-506f-bc1a-b1ebf7a982b6",
+            "name": "Cuisinière",
+            "uri": "grand-electromenager/cuisiniere"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                "name": "Noir",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "758fbd7d-1564-45b5-b959-8ad3d9c0ffda",
+                "uri": "/images/gem/cuisiniere-induction.png",
+                "color": {
+                    "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                    "name": "Noir",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "c0dbed98-65f8-770b-90e2-72721a1bc2fd",
+        "name": "Cuisinière à Bois",
+        "uri": "grand-electromenager/cuisiniere/cuisiniere-a-bois",
+        "description": "Cuisinière traditionnelle à bois pour une cuisine rustique.",
+        "price": 699.99,
+        "stock": 8,
+        "estimatedDelivery": "2024-09-20T08:00:00",
+        "weight": 50.0,
+        "height": 85.0,
+        "width": 65.0,
+        "createdAt": "2024-08-14T14:24:23",
+        "category": {
+            "uuid": "fd731b48-4019-4a07-9885-c35b11c10dbb",
+            "name": "Grand électroménager",
+            "uri": "grand-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-506f-bc1a-b1ebf7a982b6",
+            "name": "Cuisinière",
+            "uri": "grand-electromenager/cuisiniere"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                "name": "Noir",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "858fbd7d-1564-45b9-b959-8ad3d9c0ffda",
+                "uri": "/images/gem/cuisiniere-bois.png",
+                "color": {
+                    "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                    "name": "Noir",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "b0dbed98-6539-880f-90e2-72721a1bc2bd",
+        "name": "Cuisinière Mixte",
+        "uri": "grand-electromenager/cuisiniere/cuisiniere-mixte",
+        "description": "Cuisinière mixte avec plaques à gaz et électriques.",
+        "price": 549.99,
+        "stock": 10,
+        "estimatedDelivery": "2024-09-25T08:00:00",
+        "weight": 32.0,
+        "height": 85.0,
+        "width": 60.0,
+        "createdAt": "2024-08-15T14:24:23",
+        "category": {
+            "uuid": "fd731b48-4019-4a07-9885-c35b11c10dbb",
+            "name": "Grand électroménager",
+            "uri": "grand-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-506f-bc1a-b1ebf7a982b6",
+            "name": "Cuisinière",
+            "uri": "grand-electromenager/cuisiniere"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                "name": "Noir",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "958fbd7d-1564-45bd-b959-8ad3d9c0ffda",
+                "uri": "/images/gem/cuisiniere-mixte.jpeg",
+                "color": {
+                    "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                    "name": "Noir",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "c0dbed98-657a-9813-90e2-72721a1bc2fd",
+        "name": "Cuisinière à Gaz 5 Feux",
+        "uri": "grand-electromenager/cuisiniere/cuisiniere-a-gaz-5-feux",
+        "description": "Cuisinière à gaz avec 5 feux pour les grands repas.",
+        "price": 599.99,
+        "stock": 7,
+        "estimatedDelivery": "2024-09-30T08:00:00",
+        "weight": 35.0,
+        "height": 85.0,
+        "width": 70.0,
+        "createdAt": "2024-08-16T14:24:23",
+        "category": {
+            "uuid": "fd731b48-4019-4a07-9885-c35b11c10dbb",
+            "name": "Grand électroménager",
+            "uri": "grand-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-506f-bc1a-b1ebf7a982b6",
+            "name": "Cuisinière",
+            "uri": "grand-electromenager/cuisiniere"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "b749b36e-bc8a-1f1b-60f9-5c0b3942ea98",
+                "name": "Gris anthracite",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "a58fbd7d-1564-45c1-b959-8ad3d9c0ffda",
+                "uri": "/images/gem/cuisiniere-a-gaz-5-feux.webp",
+                "color": {
+                    "uuid": "b749b36e-bc8a-1f1b-60f9-5c0b3942ea98",
+                    "name": "Gris anthracite",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "b1dbed98-65bb-a817-90e2-72721a1bc23d",
+        "name": "Cuisinière Multifonction",
+        "uri": "grand-electromenager/cuisiniere/cuisiniere-multifonction",
+        "description": "Cuisinière multifonction avec four à chaleur tournante.",
+        "price": 649.99,
+        "stock": 11,
+        "estimatedDelivery": "2024-10-05T08:00:00",
+        "weight": 38.0,
+        "height": 85.0,
+        "width": 65.0,
+        "createdAt": "2024-08-17T14:24:23",
+        "category": {
+            "uuid": "fd731b48-4019-4a07-9885-c35b11c10dbb",
+            "name": "Grand électroménager",
+            "uri": "grand-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-506f-bc1a-b1ebf7a982b6",
+            "name": "Cuisinière",
+            "uri": "grand-electromenager/cuisiniere"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                "name": "Noir",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "b58fbd7d-1564-45c5-b959-8ad3d9c0ffda",
+                "uri": "/images/gem/cuisiniere-multifonction.jpg",
+                "color": {
+                    "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                    "name": "Noir",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "c1dbed98-65fc-b81b-90e2-72721a1bc27d",
+        "name": "Cuisinière Vitrocéramique",
+        "uri": "grand-electromenager/cuisiniere/cuisiniere-vitroceramique",
+        "description": "Cuisinière avec plaques vitrocéramiques et four grill.",
+        "price": 449.99,
+        "stock": 14,
+        "estimatedDelivery": "2024-10-10T08:00:00",
+        "weight": 29.0,
+        "height": 85.0,
+        "width": 60.0,
+        "createdAt": "2024-08-18T14:24:23",
+        "category": {
+            "uuid": "fd731b48-4019-4a07-9885-c35b11c10dbb",
+            "name": "Grand électroménager",
+            "uri": "grand-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-506f-bc1a-b1ebf7a982b6",
+            "name": "Cuisinière",
+            "uri": "grand-electromenager/cuisiniere"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "b749b36e-bc8a-1f1b-60f9-5c0b3942ea98",
+                "name": "Gris anthracite",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "c58fbd7d-1564-45c9-b959-8ad3d9c0ffda",
+                "uri": "/images/gem/cuisiniere-vitroceramique.png",
+                "color": {
+                    "uuid": "bbee55e4-0b26-6eae-31e8-ae6ef83646b4",
+                    "name": "Blanc",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "b1dbed98-653d-c91f-90e2-72721a1bc2bd",
+        "name": "Cuisinière Compacte",
+        "uri": "grand-electromenager/cuisiniere/cuisiniere-compacte",
+        "description": "Cuisinière compacte idéale pour les petits espaces.",
+        "price": 299.99,
+        "stock": 18,
+        "estimatedDelivery": "2024-10-15T08:00:00",
+        "weight": 25.0,
+        "height": 85.0,
+        "width": 50.0,
+        "createdAt": "2024-08-19T14:24:23",
+        "category": {
+            "uuid": "fd731b48-4019-4a07-9885-c35b11c10dbb",
+            "name": "Grand électroménager",
+            "uri": "grand-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-506f-bc1a-b1ebf7a982b6",
+            "name": "Cuisinière",
+            "uri": "grand-electromenager/cuisiniere"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "bbee55e4-0b26-6eae-31e8-ae6ef83646b4",
+                "name": "Blanc",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "d58fbd7d-1564-45cd-b959-8ad3d9c0ffda",
+                "uri": "/images/gem/cuisiniere-compacte.jpeg",
+                "color": {
+                    "uuid": "bbee55e4-0b26-6eae-31e8-ae6ef83646b4",
+                    "name": "Blanc",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "c1dbed98-6574-d923-90e2-72721a1bc2bd",
+        "name": "Cuisinière Professionnelle",
+        "uri": "grand-electromenager/cuisiniere/cuisiniere-professionnelle",
+        "description": "Cuisinière professionnelle pour les passionnés de cuisine.",
+        "price": 999.99,
+        "stock": 5,
+        "estimatedDelivery": "2024-10-20T08:00:00",
+        "weight": 70.0,
+        "height": 85.0,
+        "width": 90.0,
+        "createdAt": "2024-08-20T14:24:23",
+        "category": {
+            "uuid": "fd731b48-4019-4a07-9885-c35b11c10dbb",
+            "name": "Grand électroménager",
+            "uri": "grand-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-506f-bc1a-b1ebf7a982b6",
+            "name": "Cuisinière",
+            "uri": "grand-electromenager/cuisiniere"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "bbee55e4-0b26-6eae-31e8-ae6ef83646b4",
+                "name": "Blanc",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "4593bd7d-1564-4569-b959-8ad3d9c0ffda",
+                "uri": "/images/gem/cuisiniere-professionnelle.jpeg",
+                "color": {
+                    "uuid": "bbee55e4-0b26-6eae-31e8-ae6ef83646b4",
+                    "name": "Blanc",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "b1dbed98-65b5-4927-90e2-72721a1bc2fd",
+        "name": "Cuisinière Inox",
+        "uri": "grand-electromenager/cuisiniere/cuisiniere-inox",
+        "description": "Cuisinière en inox avec finitions modernes et robustes.",
+        "price": 799.99,
+        "stock": 9,
+        "estimatedDelivery": "2024-10-25T08:00:00",
+        "weight": 45.0,
+        "height": 85.0,
+        "width": 60.0,
+        "createdAt": "2024-08-21T14:24:23",
+        "category": {
+            "uuid": "fd731b48-4019-4a07-9885-c35b11c10dbb",
+            "name": "Grand électroménager",
+            "uri": "grand-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-506f-bc1a-b1ebf7a982b6",
+            "name": "Cuisinière",
+            "uri": "grand-electromenager/cuisiniere"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "bbee55e4-0b26-6eae-31e8-ae6ef83646b4",
+                "name": "Blanc",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "5593bd7d-1564-456d-b959-8ad3d9c0ffda",
+                "uri": "/images/gem/cuisiniere-inox.jpg",
+                "color": {
+                    "uuid": "bbee55e4-0b26-6eae-31e8-ae6ef83646b4",
+                    "name": "Blanc",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "b0dbed98-6577-775f-93e2-72721a1bc23d",
+        "name": "Machine à laver",
+        "uri": "grand-electromenager/machine-a-laver/machine-a-laver-7kg",
+        "description": "Machine à laver 7kg",
+        "price": 399.99,
+        "stock": 15,
+        "estimatedDelivery": "2024-09-10T08:00:00",
+        "weight": 60.0,
+        "height": 85.0,
+        "width": 60.0,
+        "createdAt": "2024-08-12T14:24:23",
+        "category": {
+            "uuid": "fd731b48-4019-4a07-9885-c35b11c10dbb",
+            "name": "Grand électroménager",
+            "uri": "grand-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-5073-bc1a-b1ebf7a982b6",
+            "name": "Machine à laver",
+            "uri": "grand-electromenager/machine-a-laver"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "bbee55e4-0b26-6eae-31e8-ae6ef83646b4",
+                "name": "Blanc",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "07f59834-19c6-4eb0-9c2c-df4219019a69",
+                "uri": "/images/pem/seche3.png",
+                "color": {
+                    "uuid": "bbee55e4-0b26-6eae-31e8-ae6ef83646b4",
+                    "name": "Blanc",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "b0dbed98-65b8-875b-93e2-72721a1bc23d",
+        "name": "Réfrigérateur",
+        "uri": "grand-electromenager/refrigerateur/refrigerateur-combine-300l",
+        "description": "Réfrigérateur combiné 300L",
+        "price": 499.99,
+        "stock": 10,
+        "estimatedDelivery": "2024-09-15T08:00:00",
+        "weight": 70.0,
+        "height": 185.0,
+        "width": 60.0,
+        "createdAt": "2024-08-13T14:24:23",
+        "category": {
+            "uuid": "fd731b48-4019-4a07-9885-c35b11c10dbb",
+            "name": "Grand électroménager",
+            "uri": "grand-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-5077-bc1a-b1ebf7a982b6",
+            "name": "Réfrigérateur",
+            "uri": "grand-electromenager/refrigerateur"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                "name": "Noir",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "558bbd7d-1566-45bd-b959-8ad399b0ff9b",
+                "uri": "/images/kitchen-ecommerce/retro-wood.png",
+                "color": {
+                    "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                    "name": "Noir",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "b0dbed98-65f9-9757-93e2-72721a1bc23d",
+        "name": "Lave-vaisselle",
+        "uri": "grand-electromenager/lave-vaisselle/lave-vaisselle-12-couverts",
+        "description": "Lave-vaisselle 12 couverts",
+        "price": 399.99,
+        "stock": 25,
+        "estimatedDelivery": "2024-09-20T08:00:00",
+        "weight": 50.0,
+        "height": 85.0,
+        "width": 60.0,
+        "createdAt": "2024-08-14T14:24:23",
+        "category": {
+            "uuid": "fd731b48-4019-4a07-9885-c35b11c10dbb",
+            "name": "Grand électroménager",
+            "uri": "grand-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-507b-bc1a-b1ebf7a982b6",
+            "name": "Lave vaiselle",
+            "uri": "grand-electromenager/lave-vaisselle"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "bbee55e4-0b26-6eae-31e8-ae6ef83646b4",
+                "name": "Blanc",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "558bbd7d-1567-45c5-b959-8ad399b0ff9b",
+                "uri": "/images/gem/lave-vaiselle.jpeg",
+                "color": {
+                    "uuid": "bbee55e4-0b26-6eae-31e8-ae6ef83646b4",
+                    "name": "Blanc",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "b0dbed9a-61f9-b717-90e2-7271db1cc23d",
+        "name": "Lave-vaisselle Eco",
+        "uri": "grand-electromenager/lave-vaisselle/lave-vaisselle-eco",
+        "description": "Lave-vaisselle éco, faible consommation d'eau et d'énergie.",
+        "price": 349.99,
+        "stock": 20,
+        "estimatedDelivery": "2024-09-21T08:00:00",
+        "weight": 45.0,
+        "height": 85.0,
+        "width": 60.0,
+        "createdAt": "2024-08-15T14:24:23",
+        "category": {
+            "uuid": "fd731b48-4019-4a07-9885-c35b11c10dbb",
+            "name": "Grand électroménager",
+            "uri": "grand-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-507b-bc1a-b1ebf7a982b6",
+            "name": "Lave vaiselle",
+            "uri": "grand-electromenager/lave-vaisselle"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "d5576586-2377-0a75-1976-862ae6bda02a",
+                "name": "Vert",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "558fbd9d-1967-c5c4-b959-89d399b0ffda",
+                "uri": "/images/gem/lave-vaiselle-eco.jpeg",
+                "color": {
+                    "uuid": "d5576586-2377-0a75-1976-862ae6bda02a",
+                    "name": "Vert",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "c0dbed96-6179-685f-91e2-7272da1ac23d",
+        "name": "Lave-vaisselle Pro",
+        "uri": "grand-electromenager/lave-vaisselle/lave-vaisselle-pro",
+        "description": "Lave-vaisselle professionnel avec grande capacité.",
+        "price": 599.99,
+        "stock": 15,
+        "estimatedDelivery": "2024-09-22T08:00:00",
+        "weight": 60.0,
+        "height": 90.0,
+        "width": 65.0,
+        "createdAt": "2024-08-16T14:24:23",
+        "category": {
+            "uuid": "fd731b48-4019-4a07-9885-c35b11c10dbb",
+            "name": "Grand électroménager",
+            "uri": "grand-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-507b-bc1a-b1ebf7a982b6",
+            "name": "Lave vaiselle",
+            "uri": "grand-electromenager/lave-vaisselle"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "b749b36e-bc8a-1f1b-60f9-5c0b3942ea98",
+                "name": "Gris anthracite",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "6593bd7d-1d67-d5c8-b999-89d3d9c0ffda",
+                "uri": "/images/gem/lave-vaiselle-pro.jpeg",
+                "color": {
+                    "uuid": "b749b36e-bc8a-1f1b-60f9-5c0b3942ea98",
+                    "name": "Gris anthracite",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "b0dbad99-6539-7843-90e2-72721a1bc27d",
+        "name": "Lave-vaisselle Compact",
+        "uri": "grand-electromenager/lave-vaisselle/lave-vaisselle-compact",
+        "description": "Lave-vaisselle compact pour les petites cuisines.",
+        "price": 299.99,
+        "stock": 30,
+        "estimatedDelivery": "2024-09-23T08:00:00",
+        "weight": 40.0,
+        "height": 75.0,
+        "width": 55.0,
+        "createdAt": "2024-08-17T14:24:23",
+        "category": {
+            "uuid": "fd731b48-4019-4a07-9885-c35b11c10dbb",
+            "name": "Grand électroménager",
+            "uri": "grand-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-507b-bc1a-b1ebf7a982b6",
+            "name": "Lave vaiselle",
+            "uri": "grand-electromenager/lave-vaisselle"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "bbee55e4-0b26-6eae-31e8-ae6ef83646b4",
+                "name": "Blanc",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "7593bd7d-1567-65cd-b9d9-89d399d0ffda",
+                "uri": "/images/gem/lave-vaiselle-compact.jpeg",
+                "color": {
+                    "uuid": "bbee55e4-0b26-6eae-31e8-ae6ef83646b4",
+                    "name": "Blanc",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "c0db2d99-6579-d84f-91e2-72721a1bc67d",
+        "name": "Lave-vaisselle Silence",
+        "uri": "grand-electromenager/lave-vaisselle/lave-vaisselle-silence",
+        "description": "Lave-vaisselle silencieux, idéal pour les cuisines ouvertes.",
+        "price": 449.99,
+        "stock": 18,
+        "estimatedDelivery": "2024-09-24T08:00:00",
+        "weight": 55.0,
+        "height": 85.0,
+        "width": 60.0,
+        "createdAt": "2024-08-18T14:24:23",
+        "category": {
+            "uuid": "fd731b48-4019-4a07-9885-c35b11c10dbb",
+            "name": "Grand électroménager",
+            "uri": "grand-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-507b-bc1a-b1ebf7a982b6",
+            "name": "Lave vaiselle",
+            "uri": "grand-electromenager/lave-vaisselle"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "bbee55e4-0b26-6eae-31e8-ae6ef83646b4",
+                "name": "Blanc",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "858fbd7d-1967-d568-b959-8ad3d9c0ffda",
+                "uri": "/images/gem/lave-vaiselle-silence.jpeg",
+                "color": {
+                    "uuid": "bbee55e4-0b26-6eae-31e8-ae6ef83646b4",
+                    "name": "Blanc",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "b0dbed98-65b9-5857-90e2-72721a1bc2bd",
+        "name": "Lave-vaisselle Familial",
+        "uri": "grand-electromenager/lave-vaisselle/lave-vaisselle-familial",
+        "description": "Lave-vaisselle grande capacité pour les familles nombreuses.",
+        "price": 499.99,
+        "stock": 10,
+        "estimatedDelivery": "2024-09-25T08:00:00",
+        "weight": 65.0,
+        "height": 85.0,
+        "width": 65.0,
+        "createdAt": "2024-08-19T14:24:23",
+        "category": {
+            "uuid": "fd731b48-4019-4a07-9885-c35b11c10dbb",
+            "name": "Grand électroménager",
+            "uri": "grand-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-507b-bc1a-b1ebf7a982b6",
+            "name": "Lave vaiselle",
+            "uri": "grand-electromenager/lave-vaisselle"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "bbee55e4-0b26-6eae-31e8-ae6ef83646b4",
+                "name": "Blanc",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "658fbd7d-1567-d56c-b9d9-89d3d9c0ffda",
+                "uri": "/images/gem/lave-vaiselle-familial.webp",
+                "color": {
+                    "uuid": "bbee55e4-0b26-6eae-31e8-ae6ef83646b4",
+                    "name": "Blanc",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "c0db2d9b-6179-6847-90e2-72721a1bc23d",
+        "name": "Lave-vaisselle Express",
+        "uri": "grand-electromenager/lave-vaisselle/lave-vaisselle-express",
+        "description": "Lave-vaisselle express, idéal pour les repas rapides.",
+        "price": 429.99,
+        "stock": 22,
+        "estimatedDelivery": "2024-09-26T08:00:00",
+        "weight": 52.0,
+        "height": 85.0,
+        "width": 60.0,
+        "createdAt": "2024-08-20T14:24:23",
+        "category": {
+            "uuid": "fd731b48-4019-4a07-9885-c35b11c10dbb",
+            "name": "Grand électroménager",
+            "uri": "grand-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-507b-bc1a-b1ebf7a982b6",
+            "name": "Lave vaiselle",
+            "uri": "grand-electromenager/lave-vaisselle"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "bbee55e4-0b26-6eae-31e8-ae6ef83646b4",
+                "name": "Blanc",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "758fbd7d-1567-d570-b9d9-89d3d9c0ffda",
+                "uri": "/images/gem/lave-vaiselle-express.webp",
+                "color": {
+                    "uuid": "bbee55e4-0b26-6eae-31e8-ae6ef83646b4",
+                    "name": "Blanc",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "b0dbed9a-65b9-7833-90e2-72721a1bc63d",
+        "name": "Lave-vaisselle Smart",
+        "uri": "grand-electromenager/lave-vaisselle/lave-vaisselle-smart",
+        "description": "Lave-vaisselle intelligent avec connectivité Wi-Fi.",
+        "price": 549.99,
+        "stock": 14,
+        "estimatedDelivery": "2024-09-27T08:00:00",
+        "weight": 57.0,
+        "height": 85.0,
+        "width": 60.0,
+        "createdAt": "2024-08-21T14:24:23",
+        "category": {
+            "uuid": "fd731b48-4019-4a07-9885-c35b11c10dbb",
+            "name": "Grand électroménager",
+            "uri": "grand-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-507b-bc1a-b1ebf7a982b6",
+            "name": "Lave vaiselle",
+            "uri": "grand-electromenager/lave-vaisselle"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "bbee55e4-0b26-6eae-31e8-ae6ef83646b4",
+                "name": "Blanc",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "858fbd7d-1567-d574-b9d9-89d3d9c0ffda",
+                "uri": "/images/gem/lave-vaiselle-smart.jpeg",
+                "color": {
+                    "uuid": "bbee55e4-0b26-6eae-31e8-ae6ef83646b4",
+                    "name": "Blanc",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "c0db2d99-6579-783f-91e2-72721a1bc23d",
+        "name": "Lave-vaisselle Luxe",
+        "uri": "grand-electromenager/lave-vaisselle/lave-vaisselle-luxe",
+        "description": "Lave-vaisselle de luxe, finition en acier inoxydable.",
+        "price": 699.99,
+        "stock": 8,
+        "estimatedDelivery": "2024-09-28T08:00:00",
+        "weight": 70.0,
+        "height": 85.0,
+        "width": 60.0,
+        "createdAt": "2024-08-22T14:24:23",
+        "category": {
+            "uuid": "fd731b48-4019-4a07-9885-c35b11c10dbb",
+            "name": "Grand électroménager",
+            "uri": "grand-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-507b-bc1a-b1ebf7a982b6",
+            "name": "Lave vaiselle",
+            "uri": "grand-electromenager/lave-vaisselle"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                "name": "Noir",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "958fbd7d-1567-d578-b9d9-89d3d9c0ffda",
+                "uri": "/images/gem/lave-vaiselle-luxe.jpeg",
+                "color": {
+                    "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                    "name": "Noir",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "b0dbad9b-61b9-783b-90e2-72721a1bc27d",
+        "name": "Lave-vaisselle Inox",
+        "uri": "grand-electromenager/lave-vaisselle/lave-vaisselle-inox",
+        "description": "Lave-vaisselle en acier inoxydable pour une durabilité accrue.",
+        "price": 499.99,
+        "stock": 12,
+        "estimatedDelivery": "2024-09-29T08:00:00",
+        "weight": 65.0,
+        "height": 85.0,
+        "width": 60.0,
+        "createdAt": "2024-08-23T14:24:23",
+        "category": {
+            "uuid": "fd731b48-4019-4a07-9885-c35b11c10dbb",
+            "name": "Grand électroménager",
+            "uri": "grand-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-507b-bc1a-b1ebf7a982b6",
+            "name": "Lave vaiselle",
+            "uri": "grand-electromenager/lave-vaisselle"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "b749b36e-bc8a-1f1b-60f9-5c0b3942ea98",
+                "name": "Gris anthracite",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "a58fbd7d-1967-d57c-b9d9-89d3d9c0ffda",
+                "uri": "/images/gem/lave-vaiselle-inox.jpeg",
+                "color": {
+                    "uuid": "b749b36e-bc8a-1f1b-60f9-5c0b3942ea98",
+                    "name": "Gris anthracite",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "c0db6d99-6579-785b-90e2-72721a1bc23d",
+        "name": "Lave-vaisselle Rapide",
+        "uri": "grand-electromenager/lave-vaisselle/lave-vaisselle-rapide",
+        "description": "Lave-vaisselle avec cycle rapide pour un gain de temps optimal.",
+        "price": 379.99,
+        "stock": 20,
+        "estimatedDelivery": "2024-09-30T08:00:00",
+        "weight": 48.0,
+        "height": 85.0,
+        "width": 60.0,
+        "createdAt": "2024-08-24T14:24:23",
+        "category": {
+            "uuid": "fd731b48-4019-4a07-9885-c35b11c10dbb",
+            "name": "Grand électroménager",
+            "uri": "grand-electromenager"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-507b-bc1a-b1ebf7a982b6",
+            "name": "Lave vaiselle",
+            "uri": "grand-electromenager/lave-vaisselle"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "bbee55e4-0b26-6eae-31e8-ae6ef83646b4",
+                "name": "Blanc",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "b58fbd7d-1567-d580-b9d9-89d3d9c0ffda",
+                "uri": "/images/gem/lave-vaiselle-rapide.jpeg",
+                "color": {
+                    "uuid": "bbee55e4-0b26-6eae-31e8-ae6ef83646b4",
+                    "name": "Blanc",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "b0dbed98-65b5-56cb-93e2-72721a1bc23d",
+        "name": "Douche moderne",
+        "uri": "salle-de-bain/douche/douche-moderne",
+        "description": "Douche moderne avec parois en verre",
+        "price": 499.99,
+        "stock": 15,
+        "estimatedDelivery": "2024-10-01T08:00:00",
+        "weight": 120.0,
+        "height": 210.0,
+        "width": 90.0,
+        "createdAt": "2024-09-01T14:24:23",
+        "category": {
+            "uuid": "fd731b48-4019-4a03-9885-c35b11c10dbb",
+            "name": "Salle de bain",
+            "uri": "salle-de-bain"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-407d-bc1a-b1ebf7a982b6",
+            "name": "Douche",
+            "uri": "salle-de-bain/douche"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "b749b36e-bc8a-1f1b-60f9-5c0b3942ea98",
+                "name": "Gris anthracite",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "07f59834-1946-4dcc-9c2c-df4219019a69",
+                "uri": "/images/bathroom-ecommerce/trendy.png",
+                "color": {
+                    "uuid": "b749b36e-bc8a-1f1b-60f9-5c0b3942ea98",
+                    "name": "Gris anthracite",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "b0dbed98-65f6-66cf-93e2-72721a1bc23d",
+        "name": "Rideau de douche",
+        "uri": "salle-de-bain/rideau/rideau-de-douche",
+        "description": "Rideau de douche étanche et résistant",
+        "price": 19.99,
+        "stock": 50,
+        "estimatedDelivery": "2024-10-05T08:00:00",
+        "weight": 1.0,
+        "height": 200.0,
+        "width": 180.0,
+        "createdAt": "2024-09-02T14:24:23",
+        "category": {
+            "uuid": "fd731b48-4019-4a03-9885-c35b11c10dbb",
+            "name": "Salle de bain",
+            "uri": "salle-de-bain"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-4081-bc1a-b1ebf7a982b6",
+            "name": "Rideau",
+            "uri": "salle-de-bain/rideau"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "cb4ab1af-53a4-ff3e-cdf8-73c73440ee8d",
+                "name": "Violet",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "07f59834-1986-4d6c-9c2c-df4219019a69",
+                "uri": "/images/bathroom-ecommerce/boudoir.png",
+                "color": {
+                    "uuid": "cb4ab1af-53a4-ff3e-cdf8-73c73440ee8d",
+                    "name": "Violet",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "b0dbed98-65f9-975b-93e2-72721a1bc23d",
+        "name": "Lavabo design",
+        "uri": "salle-de-bain/lavabo/lavabo-design",
+        "description": "Lavabo en céramique avec meuble intégré",
+        "price": 249.99,
+        "stock": 20,
+        "estimatedDelivery": "2024-10-10T08:00:00",
+        "weight": 40.0,
+        "height": 85.0,
+        "width": 60.0,
+        "createdAt": "2024-09-03T14:24:23",
+        "category": {
+            "uuid": "fd731b48-4019-4a03-9885-c35b11c10dbb",
+            "name": "Salle de bain",
+            "uri": "salle-de-bain"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-4085-bc1a-b1ebf7a982b6",
+            "name": "Lavabo",
+            "uri": "salle-de-bain/lavabo"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "bbee55e4-0b26-6eae-31e8-ae6ef83646b4",
+                "name": "Blanc",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "07f59834-19c6-4d74-9c2c-df4219019a69",
+                "uri": "/images/bathroom-ecommerce/loft.png",
+                "color": {
+                    "uuid": "bbee55e4-0b26-6eae-31e8-ae6ef83646b4",
+                    "name": "Blanc",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "b0dbed98-653a-a857-93e2-72721a1bc23d",
+        "name": "Meuble de rangement",
+        "uri": "salle-de-bain/meuble-de-rangement/meuble-de-rangement",
+        "description": "Meuble de rangement pour salle de bain",
+        "price": 149.99,
+        "stock": 25,
+        "estimatedDelivery": "2024-10-15T08:00:00",
+        "weight": 35.0,
+        "height": 150.0,
+        "width": 60.0,
+        "createdAt": "2024-09-04T14:24:23",
+        "category": {
+            "uuid": "fd731b48-4019-4a03-9885-c35b11c10dbb",
+            "name": "Salle de bain",
+            "uri": "salle-de-bain"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-4089-bc1a-b1ebf7a982b6",
+            "name": "Meuble de rangement",
+            "uri": "salle-de-bain/meuble-de-rangement"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                "name": "Noir",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "07f59834-1906-4e7c-9c2c-df4219019a69",
+                "uri": "/images/bathroom-ecommerce/evasion.png",
+                "color": {
+                    "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                    "name": "Noir",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "b0dbed18-04b6-06d4-93e2-72721a1bc23d",
+        "name": "Spatule en bois",
+        "uri": null,
+        "description": "Spatule en bois pour cuisine",
+        "price": 9.99,
+        "stock": 200,
+        "estimatedDelivery": "2024-08-15T08:00:00",
+        "weight": 0.2,
+        "height": 30.0,
+        "width": 5.0,
+        "createdAt": "2024-08-01T14:24:23",
+        "category": {
+            "uuid": "fd731b48-4019-4a0b-9885-c35b11c10dbb",
+            "name": "Accessoires",
+            "uri": "accessoires"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-408f-bc1a-b1ebf7a982b6",
+            "name": "Ustensile de cuisine",
+            "uri": "cuisines/ustensile-de-cuisine"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "8f864c94-b01e-4f18-a435-ff01e79751f0",
+                "name": "Rouge",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "07f59834-1946-5ea0-9c2c-df4219019a69",
+                "uri": "/images/pem/spatulerouge.jpeg",
+                "color": {
+                    "uuid": "8f864c94-b01e-4f18-a435-ff01e79751f0",
+                    "name": "Rouge",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "b0dfed28-08f7-16d8-93e2-72721a1bc23d",
+        "name": "Vase en céramique",
+        "uri": null,
+        "description": "Vase en céramique pour décoration intérieure",
+        "price": 29.99,
+        "stock": 150,
+        "estimatedDelivery": "2024-08-20T08:00:00",
+        "weight": 1.5,
+        "height": 25.0,
+        "width": 15.0,
+        "createdAt": "2024-08-01T14:24:23",
+        "category": {
+            "uuid": "fd731b48-4019-4a0b-9885-c35b11c10dbb",
+            "name": "Accessoires",
+            "uri": "accessoires"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-4093-bc1a-b1ebf7a982b6",
+            "name": "Décoration intérieur",
+            "uri": "cuisines/decoration-interieur"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "94ceb468-da88-442d-820e-446cd994144d",
+                "name": "Bleu",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "07f59834-1986-6ea4-9c2c-df4219019a69",
+                "uri": "/images/pem/vasebleu.jpeg",
+                "color": {
+                    "uuid": "94ceb468-da88-442d-820e-446cd994144d",
+                    "name": "Bleu",
+                    "uri": null
+                }
+            }
+        ]
+    },
+    {
+        "uuid": "b0e3ed38-0c38-27dc-93e2-72721a1bc23d",
+        "name": "Lanternes extérieures",
+        "uri": null,
+        "description": "Lanternes pour décoration extérieure",
+        "price": 39.99,
+        "stock": 100,
+        "estimatedDelivery": "2024-08-25T08:00:00",
+        "weight": 2.0,
+        "height": 35.0,
+        "width": 20.0,
+        "createdAt": "2024-08-01T14:24:23",
+        "category": {
+            "uuid": "fd731b48-4019-4a0b-9885-c35b11c10dbb",
+            "name": "Accessoires",
+            "uri": "accessoires"
+        },
+        "subcategory": {
+            "uuid": "1b10f80b-1373-4097-bc1a-b1ebf7a982b6",
+            "name": "Décoration exterieur",
+            "uri": "cuisines/decoration-exterieur"
+        },
+        "brand": {
+            "uuid": "aa00651c-c697-4714-8c13-4e2c0deadd36",
+            "name": "Archideco",
+            "uri": null
+        },
+        "colors": [
+            {
+                "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                "name": "Noir",
+                "uri": null
+            }
+        ],
+        "images": [
+            {
+                "uuid": "07f59834-19c6-7ea8-9c2c-df4219019a69",
+                "uri": "/images/pem/lanterne.jpeg",
+                "color": {
+                    "uuid": "b7457e33-5651-4c53-69b7-d0d5273e8cbc",
+                    "name": "Noir",
+                    "uri": null
+                }
+            }
+        ]
+    }
+]

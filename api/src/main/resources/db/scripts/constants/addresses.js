@@ -1,0 +1,33 @@
+const adresses = [
+    "avenue Saint-Martre", "rue Saint-Antoine", "boulevard de la République", "rue de la Paix",
+    "rue Victor Hugo", "avenue Jean Jaurès", "rue du Général de Gaulle", "rue des Fleurs", "rue de la Gare",
+    "rue de la Montagne", "avenue des Tilleuls", "rue du Château", "rue des Écoles",
+    "rue Pasteur", "rue de la Mairie", "rue du Moulin", "rue de la Poste", "rue de la Place",
+    "rue du Parc", "rue du Soleil", "rue des Jardins", "rue des Lilas", "rue de la Marine",
+    "rue des Rosiers", "avenue du Président Wilson", "rue de la République", "rue de la Gare", "rue de la Marne",
+    "rue des Acacias", "rue des Peupliers", "avenue du Général Leclerc", "rue des Champs",
+    "rue des Bouvreuils", "rue du Port", "rue des Cèdres", "rue des Alouettes", "rue de la Garenne",
+    "rue de la Rivière", "rue du Lac", "rue du Maréchal Foch", "rue de la Butte",
+    "rue des Vignes", "rue des Tilleuls", "rue du Clos", "rue des Marronniers", "rue du Pré",
+    "rue des Primevères", "rue du Colombier", "rue des Amandiers", "rue des Bouleaux", "rue des Pins",
+    "rue du Pont", "rue des Rochers", "rue de la Prairie",
+    "rue des Noyers", "rue du Puits", "rue du Manoir", "rue de la Clairière",
+    "rue du Bocage", "rue du Champ", "rue du Verger", "rue de la Forêt", "rue des Coteaux",
+    "rue du Marché", "rue des Remparts", "rue de la Citadelle", "rue du Printemps",
+    "rue du Stade", "rue des Fougères", "rue des Glycines", "rue des Chênes",
+    "rue du Cèdre", "rue du Tilleul", "rue des Prés", "rue des Vergers", "rue des Bruyères",
+    "rue du Chêne", "rue du Bois", "rue des Platanes", "rue des Aulnes", "rue des Cerisiers",
+    "rue de la Treille", "rue du Chardonnet", "rue du Parc", "rue des Myosotis", "rue des Violettes",
+    "rue du Colisée", "rue des Ombelles", "rue des Capucines", "rue des Hirondelles", "rue du Vallon",
+    "rue des Rossignols", "rue des Mésanges", "rue des Bougainvillées", "rue des Platanes", "rue des Pléiades",
+    "rue des Anémones", "rue des Jardins", "rue de la Bergerie", "rue des Prés Verts", "rue du Moulin Vert",
+    "rue des Ormes", "rue des Sureaux", "rue des Moineaux", "rue des Grives", "rue des Fauvettes",
+    "rue des Aigrettes", "rue des Cigognes", "rue des Goélands", "rue des Mouettes", "rue des Corbeaux",
+    "rue des Flamants", "rue des Oiseaux", "rue des Faucons", "rue des Hirondelles", "rue des Aigles",
+    "rue des Piverts", "rue des Pingouins", "rue des Manchots", "rue des Albatros", "rue des Goélands",
+    "rue des Pélicans", "rue des Grues", "rue des Hérons", "rue des Mouettes", "rue des Oiseaux",
+    "rue des Canards", "rue des Cygnes", "rue des Ibis", "rue des Bécasses", "rue des Bécassines",
+    "rue des Bouvreuils", "rue des Canards Sauvages"
+];
+
+module.exports = adresses;
