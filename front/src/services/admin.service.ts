@@ -227,10 +227,4 @@ export class AdminService {
     if (!headers) return new Observable<{ message: string }>();
     return this.http.post<{ message: string }>(`${this.apiUrl}/newsletter/send`, newsletterData, { headers });
   }
-
-  getUserByUuid(uuid: string): Observable<IUser> {
-    const headers: HttpHeaders | null = this.authService.getAuthHeaders();
-    if (!headers) return new Observable<IUser>();
-    return this.http.get<IUser>(`${this.apiUrl}/users/details/${uuid}`, { headers });
-  }
 }

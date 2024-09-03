@@ -72,7 +72,7 @@ export const routes: Routes = [
     { path: 'categories/:categoryUri/:subcategoryUri/:productUri', component: ProductComponent },
 
     { path: 'profil', component: ProfileComponent, canActivate: [AuthGuard] },
-    { path: 'details/:uuid', component: UserPageComponent, canActivate: [AdminGuard] },
+    { path: 'admin/utilisateur/:uuid', component: UserPageComponent, canActivate: [AdminGuard] },
 
     { path: 'mentions-legales', component: LegalNoticeComponent },
     { path: 'politique-de-confidentialite', component: PrivacyPolicyComponent },

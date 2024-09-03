@@ -50,7 +50,7 @@ export class NouveauteComponent implements OnInit {
     'Vert': '#3CB371',
     Violet: '#8A2BE2'
   };
-  
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -61,7 +61,7 @@ export class NouveauteComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadProducts();
-    
+
   }
 
   loadProducts(): void {
@@ -77,7 +77,7 @@ export class NouveauteComponent implements OnInit {
 
         this.products = products.filter(product => {
           if (!product.createdAt) {
-            return false; 
+            return false;
           }
           const productDate = new Date(product.createdAt);
           return productDate >= startOfMonth && productDate <= endOfMonth;
@@ -167,7 +167,7 @@ export class NouveauteComponent implements OnInit {
     console.log('Selected Product:', product);
     console.log('Selected Color:', color);
     console.log('Current Selection:', this.selectedProductColor[product.uuid]);
-  
+
     if (!this.selectedProductColor[product.uuid]) {
       this.selectedProductColor[product.uuid] = { uuid: '', name: '' };
     }
@@ -230,22 +230,13 @@ export class NouveauteComponent implements OnInit {
       case 'price-desc':
         this.filteredProducts.sort((a, b) => b.price - a.price);
         break;
-        case 'relevance':
-          this.filteredProducts = this.filteredProducts.sort((a, b) => {
-            const aCampaign = a.campaigns.find(campaign => campaign.type === 'SUBCATEGORY');
-            const bCampaign = b.campaigns.find(campaign => campaign.type === 'SUBCATEGORY');
-  
-            if (aCampaign && bCampaign) {
-              return bCampaign.discountRate - aCampaign.discountRate;
-            } else if (aCampaign) {
-              return -1;
-            } else if (bCampaign) {
-              return 1;
-            } else {
-              return 0;
-            }
-          });
-          break;
+      case 'relevance':
+        this.filteredProducts = this.filteredProducts.sort((a, b) => {
+          const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+          const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+          return dateB - dateA;
+        });
+        break;
       default:
         break;
     }
@@ -277,7 +268,7 @@ export class NouveauteComponent implements OnInit {
       queryParams: queryParams,
     });
   }
-  
+
   onSortChange(event: Event): void {
     const value = (event.target as HTMLSelectElement).value;
     this.selectedSort = value;

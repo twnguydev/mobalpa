@@ -1,4 +1,4 @@
-package com.mobalpa.api.controller.admin;
+package com.mobalpa.api.controller;
 
 import com.mobalpa.api.service.VisitorService;
 import com.mobalpa.api.model.Payment;
@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.http.HttpStatus;
 
 import java.util.UUID;
@@ -20,9 +19,8 @@ import java.util.Optional;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-@RestController("AdminVisitorController")
-@RequestMapping("/api/admin/visitors")
-@PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_STORE_MANAGER')")
+@RestController
+@RequestMapping("/api/visitors")
 @Tag(name = "Visitor management for admin users", description = "APIs for managing visitors for admin users")
 public class VisitorController {
 

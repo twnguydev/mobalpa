@@ -824,7 +824,7 @@ export class EspaceAdminComponent implements OnInit {
   }
 
   viewUserDetails(uuid: string): void {
-    this.router.navigate([`/details/${uuid}`]);
+    this.router.navigate([`/admin/utilisateur/${uuid}`]);
   }
 
 
