@@ -9,7 +9,6 @@ module.exports = function (config) {
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
       require('karma-firefox-launcher'),
-
       require('karma-jasmine-html-reporter'),
       require('karma-coverage'),
       require('@angular-devkit/build-angular/plugins/karma')
@@ -24,7 +23,7 @@ module.exports = function (config) {
       clearContext: false // leave Jasmine Spec Runner output visible in browser
     },
     jasmineHtmlReporter: {
-      suppressAll: false // removes the duplicated traces
+      suppressAll: true // removes the duplicated traces
     },
     coverageReporter: {
       dir: require('path').join(__dirname, './coverage/front-angular'),
@@ -32,12 +31,7 @@ module.exports = function (config) {
       reporters: [
         { type: 'html' },
         { type: 'text-summary' }
-      ],
-      files: [
-        'src/**/*.ts',
-        'src/**/*.spec.ts'
-      ],
-
+      ]
     },
     reporters: ['progress', 'kjhtml'],
     browsers: ['Firefox'],

@@ -1,4 +1,6 @@
 import { ICategory, ISubcategory } from '@interfaces/category.interface';
+// import { ICategory } from '@interfaces/category.interface';
+// import { ISubcategory } from '@interfaces/subcategory.interface'
 
 export interface IProduct {
   uuid: string;

@@ -16,20 +16,20 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the title`, () => {
+  it("should have the title", () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('Mobalpa & Archidéco - Spécialiste de la cuisine Cuisine et l\'Éctroménager');
+    expect(app.title).toEqual('Mobalpa & Archidéco - Spécialiste de la cuisine Cuisine et l Éctroménager');
   });
 
 
-  it(`devrait charger les routes`, () => {
+  it("devrait charger les routes", () => {
     const fixture = TestBed.createComponent(AppComponent);
 
     const element5: DebugElement = fixture.debugElement.query(By.css('router-outlet'));
     expect(element5).toBeTruthy();
   });
-  it(`devrait afficher le header et le footer`, () => {
+  it("devrait afficher le header et le footer", () => {
     const fixture = TestBed.createComponent(AppComponent);
 
     const element5: DebugElement = fixture.debugElement.query(By.css('app-main-header'));
