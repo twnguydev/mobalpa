@@ -209,17 +209,23 @@ function generateWishlistItems(wishlist_uuid, products) {
 
 function createOrders(user, products) {
     const orders = [];
-    for (let year = 2017; year <= 2024; year++) {
-        const numOrders = getRandomInt(2, 4);
+    for (let year = 2001; year <= 2024; year++) {
+        const numOrders = getRandomInt(9, 12);
         for (let i = 0; i < numOrders; i++) {
             let total_ht = 0;
             const selectedProducts = [];
-            const numProducts = getRandomInt(1, 5);
+            const numProducts = getRandomInt(12, 15);
 
             for (let j = 0; j < numProducts; j++) {
                 const product = products[getRandomInt(0, products.length)];
-                selectedProducts.push(product);
-                total_ht += product.price;
+                const quantity = getRandomInt(1, 3);
+
+                selectedProducts.push({
+                    product_uuid: product.uuid,
+                    quantity: quantity,
+                    order_item_uuid: generateCode(),
+                });
+                total_ht += product.price * quantity;
             }
 
             const vat = total_ht * 0.2;
@@ -232,6 +238,7 @@ function createOrders(user, products) {
                 total_ht: total_ht.toFixed(2),
                 vat: vat.toFixed(2),
                 total_ttc: total_ttc.toFixed(2),
+                products: selectedProducts
             };
             orders.push(order);
         }
@@ -384,6 +391,12 @@ function generateYAML(users) {
             yaml += `            - sql: |\n`;
             yaml += `                INSERT INTO \`order\` (uuid, created_at, delivery_address, delivery_fees, delivery_method, reduction, status, total_ht, total_ttc, vat, warranty, payment_uuid, user_uuid, visitor_uuid)\n`;
             yaml += `                VALUES ('${order.uuid}', '${order.created_at}', '${user.address + user.zipcode + user.city}', '5.6', 'Chronopost', '10', '${order.status}', '${order.total_ht}', '${order.total_ttc}', '${order.vat}', NULL, '${user.payment_uuid}', '${user.uuid}', NULL);\n`;
+
+            order.products.forEach(product => {
+                yaml += `            - sql: |\n`;
+                yaml += `                INSERT INTO \`order_item\` (uuid, product_uuid, quantity, order_uuid)\n`;
+                yaml += `                VALUES ('${product.order_item_uuid}', UNHEX(REPLACE('${product.product_uuid}', '-', '')), '${product.quantity}', '${order.uuid}');\n`;
+            });
         });
 
         if (user.firstname === 'admin' && user.lastname === 'admin') {
@@ -396,7 +409,7 @@ function generateYAML(users) {
 }
 
 async function main() {
-    const users = await generateUsers(100, products);
+    const users = await generateUsers(500, products);
     const yamlOutput = generateYAML(users);
     fs.writeFileSync('createUser.yaml', yamlOutput);
     console.log('Generated db.changelog-users.yaml with 100 users.');
