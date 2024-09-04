@@ -1,14 +1,19 @@
 package com.mobalpa.api.service;
 
-
 import com.mobalpa.api.dto.TicketRequestDTO;
 import com.mobalpa.api.model.Ticket;
 import com.mobalpa.api.model.User;
 import com.mobalpa.api.repository.TicketRepository;
 import com.mobalpa.api.repository.UserRepository;
+
+import jakarta.mail.MessagingException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -18,11 +23,16 @@ import java.util.UUID;
 @Service
 public class SupportService {
 
+    Logger logger = LoggerFactory.getLogger(OrderService.class);
+
     @Autowired
     private TicketRepository ticketRepository;
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private EmailService emailService;
 
     public Ticket createTicket(TicketRequestDTO ticketRequestDTO) {
         if (ticketRequestDTO.getUserUuid() == null) {
@@ -90,6 +100,36 @@ public class SupportService {
         ticket.setResponder(responder.get());
         ticket.setClosedAt(LocalDateTime.now());
 
-        return ticketRepository.save(ticket);
+        Ticket createdTicket = ticketRepository.save(ticket);
+        if (createdTicket == null) {
+            throw new RuntimeException("Failed to resolve ticket");
+        }
+
+        sendTicketResolvedEmail(createdTicket, createdTicket.getUser());
+
+        return createdTicket;
+    }
+
+    private void sendTicketResolvedEmail(Ticket ticket, User client) {
+        try {
+            emailService.sendHtmlEmail(
+                    client.getEmail(),
+                    "Réponse à votre demande de support",
+                    "ticket-resolution-template.html",
+                    null,
+                    null,
+                    null,
+                    "${fullName}", client.getFirstname() + " " + client.getLastname(),
+                    "${ticketName}", ticket.getName(),
+                    "${issue}", ticket.getIssue(),
+                    "${resolution}", ticket.getResolution(),
+                    "${appName}", "Mobalpa");
+        } catch (MessagingException | IOException e) {
+            logger.error("Failed to send email: ", e);
+            throw new RuntimeException("There was an issue sending the resolution ticket email. Please try again later.");
+        } catch (Exception e) {
+            logger.error("Unexpected error occurred: ", e);
+            throw new RuntimeException("An unexpected error occurred while processing your request.");
+        }
     }
 }

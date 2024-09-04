@@ -5,6 +5,7 @@ import { ICategory } from '@interfaces/category.interface';
 import { AuthService } from '@services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '@components/confirm-dialog/confirm-dialog.component';
+import { environment } from '@env/environment';
 
 @Component({
   selector: 'app-main-header',
@@ -19,6 +20,8 @@ export class MainHeaderComponent implements OnInit {
   isLoggedIn = false;
   isAdmin = false;
   categories: ICategory[] = [];
+
+  safeAreaInsetTop = environment.safeAreaInsetTop;
 
   constructor(
     private productService: ProductService,

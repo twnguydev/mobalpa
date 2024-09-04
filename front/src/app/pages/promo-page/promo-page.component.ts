@@ -23,6 +23,7 @@ export class PromoPageComponent implements OnInit {
   products: IProduct[] = [];
   error: string | null = null;
   productAdded: { [key: string]: boolean } = {};
+  isProductsLoading = false;
   isUserAuthenticated: boolean = false;
   productAddedOnCart: { [key: string]: boolean } = {};
   selectedProductColor: { [key: string]: IColor } = {};
@@ -65,29 +66,37 @@ export class PromoPageComponent implements OnInit {
   }
 
   loadProducts(): void {
+    this.isProductsLoading = true;
     this.productService.getProducts().subscribe(
       (products: IProduct[]) => {
-        this.products = products.filter(product => {
-          const discountRate = product.discountRate ?? 0;
-          const newPrice = product.newPrice ?? product.price;
-          const oldPrice = product.oldPrice ?? product.price;
-          return discountRate > 0 || (newPrice < oldPrice);
+        // this.products = products.filter(product => {
+        //   const discountRate = product.discountRate ?? 0;
+        //   const newPrice = product.newPrice ?? product.price;
+        //   const oldPrice = product.oldPrice ?? product.price;
+        //   return discountRate > 0 || (newPrice < oldPrice);
+        // });
+
+        // this.filteredProducts = [...this.products];
+        // this.paginateProducts();
+
+        this.allProducts = products.filter(product => {
+          const campaign = product.campaigns.find(campaign => campaign.type === 'SUBCATEGORY' || campaign.type === 'PRODUCT');
+          return campaign !== undefined;
         });
 
-        this.filteredProducts = [...this.products];
+        this.filteredProducts = [...this.allProducts];
         this.paginateProducts();
+
+        console.log('Products loaded', this.allProducts);
+        this.isProductsLoading = false;
       },
       (error) => {
         this.error = 'Failed to load products';
+        this.isProductsLoading = false;
         console.error('Error loading products', error);
       }
     );
   }
-
-
-
-
-
 
   addToWishlist(product: IProduct): void {
     if (!this.authService.isAuthenticated()) {
@@ -111,6 +120,7 @@ export class PromoPageComponent implements OnInit {
       }
     });
   }
+
   discountedPrice(product: IProduct): number | null {
     const campaign = product.campaigns.find(campaign => campaign.type === 'SUBCATEGORY');
     if (campaign) {
@@ -126,6 +136,7 @@ export class PromoPageComponent implements OnInit {
     }
     return null;
   }
+
   addToCart(product: IProduct): void {
     if (this.selectedProductColor[product.uuid] === undefined) {
       this.selectedProductColor[product.uuid] = product.colors[0];
@@ -147,12 +158,22 @@ export class PromoPageComponent implements OnInit {
       this.productAddedOnCart[product.uuid] = false;
     }, 5000);
   }
-  selectColor(product: IProduct, color: IColor): void {
+
+  selectColor(product: IProduct, color: IColor) {
+    console.log('Selected Product:', product);
+    console.log('Selected Color:', color);
+    console.log('Current Selection:', this.selectedProductColor[product.uuid]);
+  
+    if (!this.selectedProductColor[product.uuid]) {
+      this.selectedProductColor[product.uuid] = { uuid: '', name: '' };
+    }
     this.selectedProductColor[product.uuid] = color;
   }
+
   getColorHex(colorName: string): string {
     return this.colorMap[colorName] || '#CCCCCC';
   }
+
   paginateProducts(): void {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
@@ -194,7 +215,9 @@ export class PromoPageComponent implements OnInit {
     }
     return pages;
   }
+
   sortProducts(criteria: string): void {
+    this.isProductsLoading = true;
     switch (criteria) {
       case 'price-asc':
         this.filteredProducts.sort((a, b) => a.price - b.price);
@@ -202,11 +225,29 @@ export class PromoPageComponent implements OnInit {
       case 'price-desc':
         this.filteredProducts.sort((a, b) => b.price - a.price);
         break;
+      case 'relevance':
+        this.filteredProducts = this.filteredProducts.sort((a, b) => {
+          const aCampaign = a.campaigns.find(campaign => campaign.type === 'SUBCATEGORY');
+          const bCampaign = b.campaigns.find(campaign => campaign.type === 'SUBCATEGORY');
+
+          if (aCampaign && bCampaign) {
+            return bCampaign.discountRate - aCampaign.discountRate;
+          } else if (aCampaign) {
+            return -1;
+          } else if (bCampaign) {
+            return 1;
+          } else {
+            return 0;
+          }
+        });
+        break;
       default:
         break;
     }
     this.paginateProducts();
+    this.isProductsLoading = false;
   }
+
   updateUrlParams(): void {
     const queryParams: any = {};
 
@@ -238,6 +279,7 @@ export class PromoPageComponent implements OnInit {
     this.updateUrlParams();
     this.sortProducts(value);
   }
+
   updateSelectedPrice(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
     const numericValue = Number(inputElement.value);
@@ -247,6 +289,7 @@ export class PromoPageComponent implements OnInit {
       this.applyFilters();
     }
   }
+
   applyFilters(): void {
     this.filteredProducts = this.allProducts.filter(product => {
       return (
@@ -260,17 +303,18 @@ export class PromoPageComponent implements OnInit {
     this.currentPage = 1;
     this.paginateProducts();
   }
+
   onBrandChange(event: Event): void {
     const value = (event.target as HTMLSelectElement).value;
     this.selectedBrand = value || null;
     this.updateUrlParams();
     this.applyFilters();
   }
+
   onColorChange(event: Event): void {
     const value = (event.target as HTMLSelectElement).value;
     this.selectedColor = value || null;
     this.updateUrlParams();
     this.applyFilters();
   }
-
 }

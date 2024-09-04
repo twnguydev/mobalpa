@@ -52,7 +52,7 @@ public class SubcategoryController {
           "  }\n" +
           "]"))),
       @ApiResponse(responseCode = "404", description = "No subcategories found", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"No subcategories found\""))),
-      @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Unauthorized\"")))
+      @ApiResponse(responseCode = "403", description = "Unauthorized", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Unauthorized\"")))
   })
   public ResponseEntity<?> getAllSubcategories() {
     List<Subcategory> subcategories = subcategoryService.getAllSubcategories()
@@ -84,7 +84,7 @@ public class SubcategoryController {
           "  ]\n" +
           "}"))),
       @ApiResponse(responseCode = "404", description = "Subcategory not found", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Subcategory not found\""))),
-      @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Unauthorized\"")))
+      @ApiResponse(responseCode = "403", description = "Unauthorized", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Unauthorized\"")))
   })
   public ResponseEntity<?> getSubcategoryById(@PathVariable UUID id) {
     Optional<Subcategory> subcategory = subcategoryService.getSubcategoryById(id);
@@ -113,7 +113,7 @@ public class SubcategoryController {
           "  ]\n" +
           "}"))),
       @ApiResponse(responseCode = "400", description = "Bad request due to invalid input", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Invalid input data\""))),
-      @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Unauthorized\"")))
+      @ApiResponse(responseCode = "403", description = "Unauthorized", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Unauthorized\"")))
   })
   public ResponseEntity<?> createSubcategory(@RequestBody @Valid Subcategory subcategory) {
     try {
@@ -143,7 +143,7 @@ public class SubcategoryController {
           "}"))),
       @ApiResponse(responseCode = "400", description = "Bad request due to invalid input", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Invalid input data\""))),
       @ApiResponse(responseCode = "404", description = "Subcategory not found", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Subcategory not found\""))),
-      @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Unauthorized\"")))
+      @ApiResponse(responseCode = "403", description = "Unauthorized", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Unauthorized\"")))
   })
   public ResponseEntity<?> updateSubcategory(@PathVariable UUID id, @RequestBody Subcategory subcategory) {
     try {
@@ -166,7 +166,7 @@ public class SubcategoryController {
           "  }\n" +
           "]"))),
       @ApiResponse(responseCode = "404", description = "No products found for this subcategory", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"No products found for this subcategory\""))),
-      @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Unauthorized\"")))
+      @ApiResponse(responseCode = "403", description = "Unauthorized", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Unauthorized\"")))
   })
   public ResponseEntity<?> getProductsBySubcategoryId(@PathVariable UUID id) {
     Optional<Subcategory> subcategory = subcategoryService.getSubcategoryById(id);
@@ -182,7 +182,7 @@ public class SubcategoryController {
   @ApiResponses(value = {
       @ApiResponse(responseCode = "204", description = "Subcategory successfully deleted"),
       @ApiResponse(responseCode = "404", description = "Subcategory not found", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Subcategory not found\""))),
-      @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Unauthorized\"")))
+      @ApiResponse(responseCode = "403", description = "Unauthorized", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Unauthorized\"")))
   })
   public ResponseEntity<Void> deleteSubcategory(@PathVariable UUID id) {
     subcategoryService.deleteSubcategory(id);

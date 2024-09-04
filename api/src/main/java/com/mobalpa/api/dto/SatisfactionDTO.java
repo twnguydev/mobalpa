@@ -4,7 +4,10 @@ import lombok.Data;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SatisfactionDTO {
     private UUID uuid;
     private UUID userUuid;

@@ -1,5 +1,6 @@
 package com.mobalpa.api.service;
 
+import com.mobalpa.api.dto.RegisterRequestDTO;
 import com.mobalpa.api.model.User;
 import com.mobalpa.api.model.UserCoupon;
 import com.mobalpa.api.repository.RoleRepository;
@@ -33,7 +34,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.List;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -92,13 +92,19 @@ public class UserService implements UserDetailsService {
         return userRepository.findById(uuid).orElseThrow(() -> new RuntimeException("User not found"));
     }
 
-    public User registerUser(User user) {
-        Optional<User> existingUser = Optional.ofNullable(userRepository.findByEmail(user.getEmail()));
+    public User registerUser(RegisterRequestDTO registerUser) {
+        Optional<User> existingUser = Optional.ofNullable(userRepository.findByEmail(registerUser.getEmail()));
         if (existingUser.isPresent()) {
-            throw new IllegalArgumentException("User with email " + user.getEmail() + " already exists");
+            throw new IllegalArgumentException("User with email " + registerUser.getEmail() + " already exists");
         }
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        User user = new User();
+        user.setFirstname(registerUser.getFirstname());
+        user.setLastname(registerUser.getLastname());
+        user.setEmail(registerUser.getEmail());
+        user.setPhoneNumber(registerUser.getPhoneNumber());
+        user.setBirthdate(registerUser.getBirthdate());
+        user.setPassword(passwordEncoder.encode(registerUser.getPassword()));
         user.setToken(UUID.randomUUID().toString());
         user.setActive(false);
 
@@ -117,6 +123,7 @@ public class UserService implements UserDetailsService {
                     user.getEmail(),
                     "Confirmation de l'email",
                     "confirmationEmailTemplate.html",
+                    null,
                     null,
                     null,
                     "${user.firstName}", user.getFirstname(),
@@ -162,6 +169,7 @@ public class UserService implements UserDetailsService {
             emailService.sendHtmlEmail(user.getEmail(),
                     "Réinitialisation du mot de passe",
                     "passwordResetTemplate.html",
+                    null,
                     null,
                     null,
                     "${resetUrlWithToken}", resetUrlWithToken,
@@ -291,6 +299,7 @@ public class UserService implements UserDetailsService {
                     "promoBirthdayTemplate.html",
                     null,
                     null,
+                    null,
                     "${user.firstName}", user.getFirstname(),
                     "${promoCode}", coupon.getName(),
                     "${discountAmount}", coupon.getDiscountRate().toString() + (coupon.getDiscountType() == CouponCode.DiscountType.PERCENTAGE ? "%" : "€"),
@@ -301,4 +310,8 @@ public class UserService implements UserDetailsService {
             e.printStackTrace();
         }
     }    
+
+    public Optional<User> findByIdWithDetails(UUID userUuid) {
+        return userRepository.findByIdWithDetails(userUuid);
+    }
 }
