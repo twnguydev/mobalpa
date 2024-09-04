@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EspaceAdminComponent } from './espace-admin.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('EspaceAdminComponent', () => {
   let component: EspaceAdminComponent;
@@ -8,7 +9,7 @@ describe('EspaceAdminComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [EspaceAdminComponent]
+      imports: [EspaceAdminComponent,HttpClientTestingModule]
     })
     .compileComponents();
 

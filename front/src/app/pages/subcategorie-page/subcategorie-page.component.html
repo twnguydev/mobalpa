@@ -5,7 +5,7 @@
 
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8 lg:grid-cols-3">
         <div *ngFor="let subcategory of subcategories" class="relative group bg-gray-100 p-6 hover:shadow-lg transition-shadow">
-            <a [href]="'/categories/' + subcategory.uri" class="flex items-center justify-between">
+            <a [href]="'/categories/' + subcategory.uri" class="sublink flex items-center justify-between">
                 <p class="font-gotham text-start text-black text-base sm:text-lg md:text-xl lg:text-2xl font-bold">
                     {{ subcategory.name }}
                 </p>
