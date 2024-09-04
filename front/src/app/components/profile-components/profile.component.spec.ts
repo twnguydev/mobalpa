@@ -10,7 +10,7 @@ describe('ProfileComponent', () => {
   let fixture: ComponentFixture<ProfileComponent>;
 
   const mockAuthService = {
-    currentUser$: of({ id: 1, name: 'Test User' }), // Замокируйте currentUser$
+    currentUser$: of({ id: 1, name: 'Test User' }),
     isAuthenticated: jasmine.createSpy('isAuthenticated').and.returnValue(of(true))
   };
 

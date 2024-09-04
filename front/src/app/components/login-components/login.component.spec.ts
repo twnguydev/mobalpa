@@ -12,7 +12,6 @@ describe('LoginComponent', () => {
   let authService: jasmine.SpyObj<AuthService>;
   let router: jasmine.SpyObj<Router>;
 
-  // Замокированный объект localStorage
   const mockLocalStorage = {
     store: {} as { [key: string]: string },
     getItem(key: string): string | null {
@@ -33,7 +32,6 @@ describe('LoginComponent', () => {
     authService = jasmine.createSpyObj('AuthService', ['login', 'forgotPassword']);
     router = jasmine.createSpyObj('Router', ['navigate']);
 
-    // Подменяем поведение window.localStorage
     Object.defineProperty(window, 'localStorage', {
       value: mockLocalStorage
     });
@@ -55,27 +53,23 @@ describe('LoginComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // Тест кликабельности кнопки логина
   it('should call onLoginSubmit when "Se connecter" button is clicked', () => {
-    spyOn(component, 'onLoginSubmit'); // Отслеживаем вызов метода onLoginSubmit
+    spyOn(component, 'onLoginSubmit');
   
     const compiled = fixture.nativeElement as HTMLElement;
-    
-    // Находим кнопку для отправки формы
+
     const loginButton = compiled.querySelector('button[type="submit"]') as HTMLButtonElement;
   
-    expect(loginButton).toBeTruthy(); // Проверяем, что кнопка существует
-  
-    // Эмулируем клик по кнопке
+    expect(loginButton).toBeTruthy();
+
     loginButton.click();
   
-    fixture.detectChanges(); // Обновляем DOM после клика
+    fixture.detectChanges();
   
-    expect(component.onLoginSubmit).toHaveBeenCalled(); // Проверяем, что onLoginSubmit был вызван
+    expect(component.onLoginSubmit).toHaveBeenCalled();
   });
   
 
-  // Тест: проверка, что форма валидная при заполнении правильных данных
   it('should make the form valid when correct email and password are provided', () => {
     component.form.setValue({
       email: 'test@example.com',
@@ -83,10 +77,9 @@ describe('LoginComponent', () => {
       remember: true
     });
 
-    expect(component.form.valid).toBeTrue(); // Проверяем, что форма валидна
+    expect(component.form.valid).toBeTrue();
   });
 
-  // Тест: проверка, что форма невалидная при неправильных данных
   it('should make the form invalid when email is missing', () => {
     component.form.setValue({
       email: '',
@@ -94,10 +87,9 @@ describe('LoginComponent', () => {
       remember: true
     });
 
-    expect(component.form.invalid).toBeTrue(); // Проверяем, что форма невалидна
+    expect(component.form.invalid).toBeTrue();
   });
 
-  // Тест: Успешная отправка формы логина
   it('should navigate to profile on successful login', () => {
     authService.login.and.returnValue(of({ user: { roles: [{ name: 'ROLE_USER' }] } }));
 
@@ -107,13 +99,12 @@ describe('LoginComponent', () => {
       remember: true
     });
 
-    component.onLoginSubmit(); // Отправляем форму
+    component.onLoginSubmit();
 
     expect(authService.login).toHaveBeenCalledWith('test@example.com', 'password123');
     expect(router.navigate).toHaveBeenCalledWith(['/profil']);
   });
 
-  // Тест: Ошибка при логине
   it('should display error message when login fails', () => {
     const mockError = { errors: ['Invalid credentials'] };
     authService.login.and.returnValue(throwError(mockError));
@@ -124,39 +115,34 @@ describe('LoginComponent', () => {
       remember: false
     });
 
-    component.onLoginSubmit(); // Отправляем форму
+    component.onLoginSubmit();
 
-    fixture.detectChanges(); // Обновляем DOM
+    fixture.detectChanges();
 
     const errorElement = fixture.nativeElement.querySelector('.bg-red-100');
-    expect(errorElement).toBeTruthy(); // Проверяем, что ошибка отображается
+    expect(errorElement).toBeTruthy();
     expect(errorElement.textContent).toContain('Invalid credentials');
   });
 
-  // Тест кликабельности кнопки "Mot de passe oublié"
   it('should call showForgotPassword when "Mot de passe oublié" button is clicked', () => {
-    spyOn(component, 'showForgotPassword'); // Отслеживаем вызов метода showForgotPassword
+    spyOn(component, 'showForgotPassword');
   
     const compiled = fixture.nativeElement as HTMLElement;
   
-    // Убедитесь, что кнопка найдена корректно
-    // const forgotPasswordButton = compiled.querySelector('button[text="Mot de passe oublié ?"]') as HTMLButtonElement;
     const forgotPasswordButton = compiled.querySelector('button[type="button"]') as HTMLButtonElement;
 
   
-    expect(forgotPasswordButton).toBeTruthy(); // Проверяем, что кнопка существует
+    expect(forgotPasswordButton).toBeTruthy();
   
-    forgotPasswordButton.click(); // Эмулируем клик
+    forgotPasswordButton.click();
   
-    fixture.detectChanges(); // Обновляем DOM после клика
+    fixture.detectChanges();
   
-    expect(component.showForgotPassword).toHaveBeenCalled(); // Проверяем, что метод showForgotPassword был вызван
+    expect(component.showForgotPassword).toHaveBeenCalled();
   });
   
 
-  // Тест отправки формы восстановления пароля
   it('should send forgot password request and hide form on success', () => {
-    // Исправлено: возвращаем строку вместо объекта
     authService.forgotPassword.and.returnValue(of('Password reset email sent'));
 
     component.showForgotPassword();
@@ -166,13 +152,12 @@ describe('LoginComponent', () => {
       forgotPasswordEmail: 'test@example.com'
     });
 
-    component.onForgotPassword(); // Отправляем форму
+    component.onForgotPassword();
 
     expect(authService.forgotPassword).toHaveBeenCalledWith('test@example.com');
-    expect(component.forgotPasswordVisible).toBeFalse(); // Проверяем, что форма скрыта
+    expect(component.forgotPasswordVisible).toBeFalse();
   });
 
-  // Тест обработки ошибок при восстановлении пароля
   it('should show error message when forgot password fails', () => {
     authService.forgotPassword.and.returnValue(throwError({ error: 'Email not found' }));
 
@@ -183,12 +168,11 @@ describe('LoginComponent', () => {
       forgotPasswordEmail: 'test@example.com'
     });
 
-    component.onForgotPassword(); // Отправляем форму
+    component.onForgotPassword();
 
-    fixture.detectChanges(); // Обновляем DOM
-
+    fixture.detectChanges();
     const errorElement = fixture.nativeElement.querySelector('.text-red-600');
-    expect(errorElement).toBeTruthy(); // Проверяем, что ошибка отображается
+    expect(errorElement).toBeTruthy();
     expect(errorElement.textContent).toContain('Email not found');
   });
 });

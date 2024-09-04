@@ -15,11 +15,11 @@ describe('ConfirmDialogComponent', () => {
   };
 
   const mockMatDialogRef = {
-    close: jasmine.createSpy('close') // Мокируем метод close для закрытия диалога
+    close: jasmine.createSpy('close')
   };
 
   const mockDialogData = {
-    message: 'Are you sure?' // Мокируем данные, передаваемые в диалог
+    message: 'Are you sure?'
   };
 
   beforeEach(async () => {
@@ -46,28 +46,25 @@ describe('ConfirmDialogComponent', () => {
     fixture.detectChanges();
   });
 
-  // Тест на создание компонента
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  // Тест на кликабельность кнопки Annuler и вызов onCancel()
   it('should call onCancel when Annuler button is clicked', () => {
-    spyOn(component, 'onCancel'); // Создаем spy на метод onCancel
+    spyOn(component, 'onCancel');
     const compiled = fixture.nativeElement as HTMLElement;
-    const cancelButton = compiled.querySelector('button.bg-gray-200') as HTMLButtonElement; // Находим кнопку Annuler
-    expect(cancelButton).toBeTruthy(); // Убеждаемся, что кнопка существует
-    cancelButton.click(); // Эмулируем клик
-    expect(component.onCancel).toHaveBeenCalled(); // Проверяем, что onCancel был вызван
+    const cancelButton = compiled.querySelector('button.bg-gray-200') as HTMLButtonElement;
+    expect(cancelButton).toBeTruthy();
+    cancelButton.click();
+    expect(component.onCancel).toHaveBeenCalled();
   });
 
-  // Тест на кликабельность кнопки Confirmer и вызов onConfirm()
   it('should call onConfirm when Confirmer button is clicked', () => {
-    spyOn(component, 'onConfirm'); // Создаем spy на метод onConfirm
+    spyOn(component, 'onConfirm');
     const compiled = fixture.nativeElement as HTMLElement;
-    const confirmButton = compiled.querySelector('button.bg-mobalpa-green') as HTMLButtonElement; // Находим кнопку Confirmer
-    expect(confirmButton).toBeTruthy(); // Убеждаемся, что кнопка существует
-    confirmButton.click(); // Эмулируем клик
-    expect(component.onConfirm).toHaveBeenCalled(); // Проверяем, что onConfirm был вызван
+    const confirmButton = compiled.querySelector('button.bg-mobalpa-green') as HTMLButtonElement;
+    expect(confirmButton).toBeTruthy();
+    confirmButton.click();
+    expect(component.onConfirm).toHaveBeenCalled();
   });
 });

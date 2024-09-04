@@ -41,30 +41,22 @@ describe('RegisterComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // Тест кликабельности кнопки
   it('should call onSubmit when "S\'inscrire" button is clicked', () => {
-    // Отслеживаем вызов метода onSubmit
     spyOn(component, 'onSubmit');
 
-    // Находим кнопку в DOM
     const compiled = fixture.nativeElement as HTMLElement;
     const submitButton = compiled.querySelector('button[type="submit"]') as HTMLButtonElement;
     
-    expect(submitButton).toBeTruthy(); // Проверяем, что кнопка существует
+    expect(submitButton).toBeTruthy();
 
-    // Эмулируем клик по кнопке
     submitButton.click();
-    
-    // Проверяем, что метод onSubmit был вызван
+
     expect(component.onSubmit).toHaveBeenCalled();
   });
 
-  // Тест: Успешная отправка формы
   it('should show success message on successful registration', () => {
-    // Мокаем успешный ответ сервиса
     mockAuthService.signup.and.returnValue(of({}));
 
-    // Заполняем все поля формы
     component.form.setValue({
       lastname: 'Test',
       firstname: 'User',
@@ -77,20 +69,17 @@ describe('RegisterComponent', () => {
       communications: false
     });
 
-    component.onSubmit(); // Отправляем форму
+    component.onSubmit();
 
-    fixture.detectChanges(); // Обновляем DOM после отправки
+    fixture.detectChanges();
 
-    // Проверяем, что signup вызван
     expect(mockAuthService.signup).toHaveBeenCalledWith(component.form.value);
 
-    // Проверяем, что сообщение об успехе отображается
     const compiled = fixture.nativeElement as HTMLElement;
     const successMessage = compiled.querySelector('.text-green-600') as HTMLElement;
-    expect(successMessage).toBeTruthy(); // Проверяем, что сообщение об успехе отображается
+    expect(successMessage).toBeTruthy();
     expect(successMessage.textContent).toContain('Inscription réussie ! Vous allez être redirigé vers la page de connexion');
 
-    // Проверяем, что произошло перенаправление
     setTimeout(() => {
       expect(mockRouter.navigate).toHaveBeenCalledWith(['/auth/connexion']);
     }, 5000);

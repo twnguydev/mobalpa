@@ -151,7 +151,6 @@ describe('ProductComponent', () => {
 
     spyOn(productService, 'getProductByUri').and.returnValue(of(mockProduct));
     spyOn(satisfactionService, 'getProductSatisfactions').and.returnValue(of(mockReviews));
-    // spyOn(authService, 'user').and.returnValue({ uuid: 'user-uuid' });
     spyOn(satisfactionService, 'createSatisfaction').and.returnValue(of({}));
 
     fixture.detectChanges();
