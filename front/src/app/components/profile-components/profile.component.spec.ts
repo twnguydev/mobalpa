@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProfileComponent } from './profile.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-// import { AuthService } from '@services/auth.service';
-import { AuthService } from '../../../services/auth.service';
+import { AuthService } from '@services/auth.service';
+// import { AuthService } from '../../../services/auth.service';
 import { of } from 'rxjs';
 
 describe('ProfileComponent', () => {
