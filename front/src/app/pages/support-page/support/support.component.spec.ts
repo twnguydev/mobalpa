@@ -117,7 +117,7 @@ describe('SupportComponent', () => {
     expect(component.feedForm.get('comment')?.value).toBe('');
   });
 
-  it(' dois rendre l espace de notation requis', () => {
+  it('dois rendre l espace de notation requis', () => {
     const ratingControl = component.feedForm.get('rating');
     ratingControl?.setValue('');
     expect(ratingControl?.valid).toBeFalsy();

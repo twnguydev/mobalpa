@@ -22,7 +22,7 @@ describe('SupportPageComponent', () => {
     fixture.detectChanges();
   });
 
-  it('sverifie si le component "support" est chargée dans le component principale ', () => {
+  it('verifie si le component "support" est chargée dans le component principale ', () => {
     const element: DebugElement = fixture.debugElement.query(By.css('app-support'));
     expect(element).toBeTruthy();
   });
