@@ -12,7 +12,8 @@ describe('ResetPasswordComponent', () => {
 
   const mockAuthService = {
     isAuthenticated: jasmine.createSpy('isAuthenticated').and.returnValue(of(true)),
-    currentUser$: of({ id: 1, name: 'Test User' }) // Замокируйте currentUser$
+    currentUser$: of({ id: 1, name: 'Test User' }),
+    resetPassword: jasmine.createSpy('resetPassword').and.returnValue(of({ message: 'Password reset successful' }))
   };
 
   beforeEach(async () => {
@@ -37,5 +38,31 @@ describe('ResetPasswordComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  // Тест на кликабельность кнопки "Réinitialiser mon mot de passe"
+  it('should call onSubmit when "Réinitialiser mon mot de passe" button is clicked', () => {
+    spyOn(component, 'onSubmit'); // Отслеживаем вызов onSubmit
+    const compiled = fixture.nativeElement as HTMLElement;
+    const submitButton = compiled.querySelector('button[type="submit"]') as HTMLButtonElement;
+    
+    expect(submitButton).toBeTruthy(); // Проверяем, что кнопка существует
+    submitButton.click(); // Кликаем по кнопке
+    expect(component.onSubmit).toHaveBeenCalled(); // Проверяем, что onSubmit был вызван
+  });
+
+  // Тест на отображение ошибки
+  it('should show error message when there is an error', () => {
+    // Симулируем ошибку при сбросе пароля
+    mockAuthService.resetPassword.and.returnValue(of({ error: 'Reset password failed' }));
+    component.errorMessage = 'Reset password failed';
+    
+    fixture.detectChanges(); // Обновляем отображение после установки errorMessage
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const errorMessage = compiled.querySelector('.text-red-600') as HTMLElement;
+
+    expect(errorMessage).toBeTruthy(); // Проверяем, что сообщение об ошибке отображается
+    expect(errorMessage.textContent).toContain('Reset password failed');
   });
 });

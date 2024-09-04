@@ -12,12 +12,19 @@ describe('LoginComponent', () => {
   let router: jasmine.SpyObj<Router>;
 
   beforeEach(async () => {
+    // Создаем мок AuthService с нужными методами
     const authServiceSpy = jasmine.createSpyObj('AuthService', ['login', 'forgotPassword']);
     const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
 
+    // Мокаем поведение login и forgotPassword
+    authServiceSpy.login.and.returnValue(of({}));  // Возвращаем успешный ответ для login
+    authServiceSpy.forgotPassword.and.returnValue(of({}));  // Возвращаем успешный ответ для forgotPassword
+
     await TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule],
-      declarations: [LoginComponent],
+      imports: [
+        LoginComponent, // Standalone компонент
+        ReactiveFormsModule
+      ],
       providers: [
         { provide: AuthService, useValue: authServiceSpy },
         { provide: Router, useValue: routerSpy }
@@ -116,5 +123,18 @@ describe('LoginComponent', () => {
     component.onForgotPassword();
 
     expect(component.errorMessage).toBe('Email not found');
+  });
+
+  // Тест на наличие и кликабельность кнопки "Mot de passe oublié?"
+  it('should show forgot password form when "Mot de passe oublié?" button is clicked', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+    const forgotPasswordButton = compiled.querySelector('button[text="Mot de passe oublié ?"]') as HTMLButtonElement;
+
+    expect(forgotPasswordButton).toBeTruthy(); // Проверяем, что кнопка существует
+
+    spyOn(component, 'showForgotPassword'); // Отслеживаем вызов метода
+    forgotPasswordButton.click(); // Симулируем клик
+
+    expect(component.showForgotPassword).toHaveBeenCalled(); // Проверяем, что метод был вызван
   });
 });
