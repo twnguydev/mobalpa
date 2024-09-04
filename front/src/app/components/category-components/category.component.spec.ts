@@ -44,7 +44,6 @@ describe('CategoryComponent', () => {
     const mockCampaign: ICampaign = {
       id: 'campaign-uuid',
       name: 'Test Campaign',
-      description: 'Campaign description',
       discountRate: 15,
       dateStart: new Date('2023-01-01'),
       dateEnd: new Date('2023-12-31'),

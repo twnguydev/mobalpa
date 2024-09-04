@@ -60,7 +60,6 @@ describe('ProductComponent', () => {
  {
           id: 'campaign-uuid',
           name: 'Test Campaign',
-          description: 'Campaign Description',
           discountRate: 10,
           dateStart: new Date('2024-01-01'),
           dateEnd: new Date('2024-12-31'),
@@ -107,7 +106,6 @@ describe('ProductComponent', () => {
     campaigns: [ {
         id: 'campaign-uuid',
         name: 'Test Campaign',
-        description: 'Campaign Description',
         discountRate: 10,
         dateStart: new Date('2024-01-01'),
         dateEnd: new Date('2024-12-31'),
