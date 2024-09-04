@@ -46,6 +46,15 @@
                         class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-mobalpa-green"
                         placeholder="Votre date de naissance">
                 </div>
+                  <div>
+                    <label>
+                      <input type="checkbox" [(ngModel)]="subscribeNewsletter" name="subscribeNewsletter" [disabled]="isSubscribed">
+                      S'inscrire à la newsletter
+                    </label><br>
+                    <span *ngIf="isSubscribed" class="text-emerald-green">
+                      Vous êtes déjà inscrit à la newsletter
+                    </span>
+                  </div>
 
                 <button type="submit"
                     class="bg-mobalpa-green text-white p-2 rounded-lg hover:bg-emerald-green w-full">Enregistrer les
@@ -218,6 +227,7 @@
                             <p><strong>TVA:</strong> {{ order.vat | number: '1.2-2' }} %</p>
                             <p><strong>Total HT:</strong> {{ order.totalHt | number: '1.2-2' }} €</p>
                             <p><strong>Total TTC:</strong> {{ order.totalTtc | number: '1.2-2' }} €</p>
+                            <p *ngIf="order.deliveryNumbers"><strong>Numéros de livraison:</strong> {{ order.deliveryNumbers.join(', ') }}</p>
                         </div>
 
                         <h4 class="text-md font-semibold mt-4">Articles de la commande:</h4>

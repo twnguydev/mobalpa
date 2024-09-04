@@ -7,6 +7,9 @@ import com.mobalpa.api.model.Payment;
 import com.mobalpa.api.model.Order;
 import com.mobalpa.api.repository.PaymentRepository;
 
+import java.util.List;
+import java.util.UUID;
+
 @Service
 public class PaymentService {
 
@@ -58,5 +61,10 @@ public class PaymentService {
 
   public Payment savePayment(Payment payment) {
     return paymentRepository.save(payment);
+  }
+
+
+  public List<Payment> getPaymentsByUserUuid(UUID userUuid) {
+    return paymentRepository.findByUserUuid(userUuid);
   }
 }

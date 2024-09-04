@@ -6,9 +6,7 @@ import com.mobalpa.api.repository.UserRepository;
 import com.mobalpa.api.dto.catalogue.ProductDTO;
 import com.mobalpa.api.model.User;
 import com.mobalpa.api.repository.WishlistRepository;
-import com.mobalpa.api.repository.CampaignRepository;
 import com.mobalpa.api.model.Campaign;
-import com.mobalpa.api.service.PromotionService;
 import com.mobalpa.api.dto.catalogue.ColorDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +31,6 @@ public class WishlistService {
 
     @Autowired
     private PromotionService promotionService;
-
-    @Autowired
-    private CampaignRepository campaignRepository;
 
     @Autowired
     private UserService userService;
@@ -84,12 +79,6 @@ public class WishlistService {
                         && item.getSelectedColor().equals(newItem.getSelectedColor()))
                 .findFirst();
     
-        Map<String, String> properties = new HashMap<>();
-        properties.put("brand", product.getBrand() != null ? product.getBrand().getName() : "Unknown");
-        properties.put("images",
-                product.getImages() != null && !product.getImages().isEmpty() ? product.getImages().get(0).getUri()
-                        : "No image");
-    
         if (existingItemOpt.isPresent()) {
             WishlistItem existingItem = existingItemOpt.get();
             existingItem.setQuantity(existingItem.getQuantity() + newItem.getQuantity());
@@ -97,7 +86,6 @@ public class WishlistService {
             newItem.setWishlist(wishlist);
             newItem.setProduct(product);
             newItem.setCampaigns(campaigns != null ? campaigns : new ArrayList<>());
-            newItem.setProperties(properties);
             items.add(newItem);
         }
 

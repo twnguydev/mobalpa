@@ -10,7 +10,7 @@ export interface SatisfactionRequestDTO {
     targetUuid: string | null;
     rating: number;
     comment: string;
-    createdAt: number;
+    createdAt?: number | null;
 }
 
 @Injectable({

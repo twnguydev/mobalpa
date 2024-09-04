@@ -24,6 +24,7 @@ export class NouveauteComponent implements OnInit {
   error: string | null = null;
   productAdded: { [key: string]: boolean } = {};
   isUserAuthenticated: boolean = false;
+  isProductsLoading: boolean = false;
   productAddedOnCart: { [key: string]: boolean } = {};
   selectedProductColor: { [key: string]: IColor } = {};
   itemsPerPage: number = 10;
@@ -49,6 +50,7 @@ export class NouveauteComponent implements OnInit {
     'Vert': '#3CB371',
     Violet: '#8A2BE2'
   };
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -59,10 +61,12 @@ export class NouveauteComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadProducts();
-    
+
   }
 
   loadProducts(): void {
+    this.isProductsLoading = true;
+
     this.productService.getProducts().subscribe(
       (products: IProduct[]) => {
         const currentDate = new Date();
@@ -73,7 +77,7 @@ export class NouveauteComponent implements OnInit {
 
         this.products = products.filter(product => {
           if (!product.createdAt) {
-            return false; 
+            return false;
           }
           const productDate = new Date(product.createdAt);
           return productDate >= startOfMonth && productDate <= endOfMonth;
@@ -88,16 +92,15 @@ export class NouveauteComponent implements OnInit {
         this.filteredProducts = [...this.products];
 
         this.paginateProducts();
+        this.isProductsLoading = false;
       },
       (error) => {
         this.error = 'Failed to load products';
+        this.isProductsLoading = false;
         console.error('Error loading products', error);
       }
     );
   }
-
-
-
 
   addToWishlist(product: IProduct): void {
     if (!this.authService.isAuthenticated()) {
@@ -121,6 +124,7 @@ export class NouveauteComponent implements OnInit {
       }
     });
   }
+
   discountedPrice(product: IProduct): number | null {
     const campaign = product.campaigns.find(campaign => campaign.type === 'SUBCATEGORY');
     if (campaign) {
@@ -136,6 +140,7 @@ export class NouveauteComponent implements OnInit {
     }
     return null;
   }
+
   addToCart(product: IProduct): void {
     if (this.selectedProductColor[product.uuid] === undefined) {
       this.selectedProductColor[product.uuid] = product.colors[0];
@@ -157,12 +162,22 @@ export class NouveauteComponent implements OnInit {
       this.productAddedOnCart[product.uuid] = false;
     }, 5000);
   }
-  selectColor(product: IProduct, color: IColor): void {
+
+  selectColor(product: IProduct, color: IColor) {
+    console.log('Selected Product:', product);
+    console.log('Selected Color:', color);
+    console.log('Current Selection:', this.selectedProductColor[product.uuid]);
+
+    if (!this.selectedProductColor[product.uuid]) {
+      this.selectedProductColor[product.uuid] = { uuid: '', name: '' };
+    }
     this.selectedProductColor[product.uuid] = color;
   }
+
   getColorHex(colorName: string): string {
     return this.colorMap[colorName] || '#CCCCCC';
   }
+
   paginateProducts(): void {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
@@ -204,7 +219,10 @@ export class NouveauteComponent implements OnInit {
     }
     return pages;
   }
+
   sortProducts(criteria: string): void {
+    this.isProductsLoading = true;
+
     switch (criteria) {
       case 'price-asc':
         this.filteredProducts.sort((a, b) => a.price - b.price);
@@ -212,11 +230,20 @@ export class NouveauteComponent implements OnInit {
       case 'price-desc':
         this.filteredProducts.sort((a, b) => b.price - a.price);
         break;
+      case 'relevance':
+        this.filteredProducts = this.filteredProducts.sort((a, b) => {
+          const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+          const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+          return dateB - dateA;
+        });
+        break;
       default:
         break;
     }
     this.paginateProducts();
+    this.isProductsLoading = false;
   }
+
   updateUrlParams(): void {
     const queryParams: any = {};
 
@@ -241,13 +268,14 @@ export class NouveauteComponent implements OnInit {
       queryParams: queryParams,
     });
   }
-  
+
   onSortChange(event: Event): void {
     const value = (event.target as HTMLSelectElement).value;
     this.selectedSort = value;
     this.updateUrlParams();
     this.sortProducts(value);
   }
+
   updateSelectedPrice(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
     const numericValue = Number(inputElement.value);
@@ -257,6 +285,7 @@ export class NouveauteComponent implements OnInit {
       this.applyFilters();
     }
   }
+
   applyFilters(): void {
     this.filteredProducts = this.allProducts.filter(product => {
       return (
@@ -270,12 +299,14 @@ export class NouveauteComponent implements OnInit {
     this.currentPage = 1;
     this.paginateProducts();
   }
+
   onBrandChange(event: Event): void {
     const value = (event.target as HTMLSelectElement).value;
     this.selectedBrand = value || null;
     this.updateUrlParams();
     this.applyFilters();
   }
+
   onColorChange(event: Event): void {
     const value = (event.target as HTMLSelectElement).value;
     this.selectedColor = value || null;

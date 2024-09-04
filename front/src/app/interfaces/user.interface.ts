@@ -1,6 +1,7 @@
 import { IOrder } from '@interfaces/order.interface';
 import { IWishlist } from '@interfaces/wishlist.interface';
 import { IPayment } from '@interfaces/payment.interface';
+import { ITicket } from './tickets.interface';
 
 export interface IUser {
   uuid: string;
@@ -22,6 +23,8 @@ export interface IUser {
   wishlist?: IWishlist | null;
   payments?: IPayment[];
   orders?: IOrder[];
+  tickets?: ITicket[];
+
 }
 
 export interface IVisitor {

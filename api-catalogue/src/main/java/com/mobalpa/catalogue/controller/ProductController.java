@@ -105,7 +105,7 @@ public class ProductController {
                     "  }\n" +
                     "]"))),
             @ApiResponse(responseCode = "404", description = "No products found", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"No products found\""))),
-            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Unauthorized\"")))
+            @ApiResponse(responseCode = "403", description = "Unauthorized", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Unauthorized\"")))
     })
     public ResponseEntity<?> getAllProducts(
             @RequestParam(value = "maxPrice", required = false) Double maxPrice,
@@ -196,7 +196,7 @@ public class ProductController {
                     "]"))),
             @ApiResponse(responseCode = "404", description = "Store not found or no products found for the store", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Store not found\""))),
             @ApiResponse(responseCode = "404", description = "No products found for store", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"No products found for store\""))),
-            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Unauthorized\"")))
+            @ApiResponse(responseCode = "403", description = "Unauthorized", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Unauthorized\"")))
     })
     public ResponseEntity<?> getProductsByStoreId(@PathVariable UUID storeId) {
         Optional<Store> store = catalogueService.getStoreById(storeId);
@@ -277,7 +277,7 @@ public class ProductController {
                     "  }\n" +
                     "]"))),
             @ApiResponse(responseCode = "404", description = "No products found for this category", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"No products found for this category\""))),
-            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Unauthorized\"")))
+            @ApiResponse(responseCode = "403", description = "Unauthorized", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Unauthorized\"")))
     })
     public ResponseEntity<?> getProductsByCategoryId(@PathVariable UUID id) {
         List<Product> products = productService.getProductsByCategoryId(id)
@@ -357,7 +357,7 @@ public class ProductController {
                     "  }\n" +
                     "]"))),
             @ApiResponse(responseCode = "404", description = "No products found for this subcategory", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"No products found for this subcategory\""))),
-            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Unauthorized\"")))
+            @ApiResponse(responseCode = "403", description = "Unauthorized", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Unauthorized\"")))
     })
     public ResponseEntity<?> getProductsBySubcategoryId(@PathVariable UUID id) {
         List<Product> products = productService.getProductsBySubcategoryId(id)
@@ -435,7 +435,7 @@ public class ProductController {
                     "  ]\n" +
                     "}"))),
             @ApiResponse(responseCode = "404", description = "Product not found", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Product not found\""))),
-            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Unauthorized\"")))
+            @ApiResponse(responseCode = "403", description = "Unauthorized", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Unauthorized\"")))
     })
     public ResponseEntity<?> getProductById(@PathVariable UUID id) {
         Optional<Product> product = productService.getProductById(id);
@@ -497,7 +497,7 @@ public class ProductController {
                     "  ]\n" +
                     "}"))),
             @ApiResponse(responseCode = "400", description = "Invalid input data", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Invalid input data\""))),
-            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Unauthorized\"")))
+            @ApiResponse(responseCode = "403", description = "Unauthorized", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Unauthorized\"")))
     })
     public ResponseEntity<?> createProduct(@RequestBody Product product) {
         try {
@@ -559,7 +559,7 @@ public class ProductController {
                     "  ]\n" +
                     "}"))),
             @ApiResponse(responseCode = "400", description = "Invalid input data", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Invalid input data\""))),
-            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Unauthorized\"")))
+            @ApiResponse(responseCode = "403", description = "Unauthorized", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Unauthorized\"")))
     })
     public ResponseEntity<?> updateProduct(@PathVariable UUID id, @RequestBody Product product) {
         try {
@@ -575,7 +575,7 @@ public class ProductController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Product successfully deleted", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = ""))),
             @ApiResponse(responseCode = "404", description = "Product not found", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Product not found\""))),
-            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Unauthorized\"")))
+            @ApiResponse(responseCode = "403", description = "Unauthorized", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Unauthorized\"")))
     })
     public ResponseEntity<Void> deleteProduct(@PathVariable UUID id) {
         productService.deleteProduct(id);

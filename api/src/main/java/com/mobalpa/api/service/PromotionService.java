@@ -18,6 +18,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -281,11 +284,19 @@ public class PromotionService {
     
     @Transactional
     public Map<String, Object> claimCoupon(User user, CouponCode couponCode) {
-        LocalDateTime now = LocalDateTime.now();
-        if (couponCode.getDateStart() != null && couponCode.getDateStart().isAfter(now)) {
+        ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Europe/Paris"));
+        System.out.println("Current Time: " + now);
+
+        ZonedDateTime couponStart = couponCode.getDateStart().atZone(ZoneId.of("Europe/Paris"));
+        System.out.println("Coupon Start Time: " + couponStart);
+
+        ZonedDateTime couponEnd = couponCode.getDateEnd().atZone(ZoneId.of("Europe/Paris"));
+        System.out.println("Coupon End Time: " + couponEnd);
+
+        if (couponCode.getDateStart() != null && couponStart.isAfter(now)) {
             throw new RuntimeException("Coupon not yet valid");
         }
-        if (couponCode.getDateEnd() != null && couponCode.getDateEnd().isBefore(now)) {
+        if (couponCode.getDateEnd() != null && couponEnd.isBefore(now)) {
             throw new RuntimeException("Coupon expired");
         }
         if (couponCode.getMaxUse() != null && couponCode.getCurrentUse() >= couponCode.getMaxUse()) {
@@ -308,4 +319,29 @@ public class PromotionService {
 
         return Map.of("discountRate", couponCode.getDiscountRate(), "discountType", couponCode.getDiscountType());
     }    
+
+
+
+    /**
+     * Récupère tous les coupons d'un utilisateur donné.
+     *
+     * @param userUuid Le UUID de l'utilisateur.
+     * @return La liste des coupons associés à l'utilisateur.
+     */
+    public List<CouponCode> getUserCoupons(UUID userUuid) {
+        // Récupérer l'utilisateur à partir du UUID
+        User user = userRepository.findByUuid(userUuid)
+            .orElseThrow(() -> new RuntimeException("User not found"));
+
+        // Récupérer tous les UserCoupon associés à l'utilisateur
+        List<UserCoupon> userCoupons = userCouponRepository.findByUser(user);
+
+        // Extraire et retourner la liste des CouponCodes
+        List<CouponCode> coupons = new ArrayList<>();
+        for (UserCoupon userCoupon : userCoupons) {
+            coupons.add(userCoupon.getCoupon());
+        }
+
+        return coupons;
+    }
 }

@@ -11,6 +11,7 @@ import { IPayment } from '@interfaces/payment.interface';
 import { IOrder } from '@interfaces/order.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '@components/confirm-dialog/confirm-dialog.component';
+import { NewsletterService } from '@services/newsletter.service';
 
 @Component({
   selector: 'app-profile',
@@ -33,6 +34,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   successMessage: string | null = null;
   errorMessage: string | null = null;
+  subscribeNewsletter: boolean = false;
+  isSubscribed: boolean = false;
 
   payments: IPayment[] = [];
   orders: IOrder[] = [];
@@ -46,7 +49,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private orderService: OrderService,
     private productService: ProductService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private newsletterService: NewsletterService
   ) { }
 
   ngOnInit(): void {
@@ -55,6 +59,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this.loadPayments(this.user.uuid);
       this.loadUserData(this.user.uuid);
       this.loadOrders(this.user.uuid);
+      this.checkNewsletterSubscription();
+
     }
 
     this.userSubscription = this.authService.currentUser$.subscribe(user => {
@@ -65,7 +71,20 @@ export class ProfileComponent implements OnInit, OnDestroy {
       }
     });
   }
-
+  checkNewsletterSubscription() {
+    const uuid = this.user.uuid;
+    if (uuid) {
+      this.newsletterService.isSubscribed(uuid).subscribe(
+        (response) => {
+          this.isSubscribed = response.isSubscribed;
+          this.subscribeNewsletter = this.isSubscribed;
+        },
+        (error) => {
+          console.error('Erreur lors de la vérification de l\'inscription à la newsletter:', error);
+        }
+      );
+    }
+  }
   loadUserData(uuid: string): void {
     this.authService.loadUserData(uuid).subscribe();
   }
@@ -175,7 +194,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: { message: 'Êtes-vous sûr de vouloir supprimer cette méthode de paiement ?' },
     });
-  
+
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         const uuid = this.user.uuid;
@@ -193,7 +212,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         }
       }
     });
-  }  
+  }
 
   ngOnDestroy(): void {
     this.userSubscription?.unsubscribe();
@@ -223,6 +242,17 @@ export class ProfileComponent implements OnInit, OnDestroy {
         (updatedUser) => {
           this.successMessage = 'Modifications enregistrées avec succès!';
           this.errorMessage = null;
+
+          if (this.subscribeNewsletter && !this.isSubscribed) {
+            this.newsletterService.addNewsletter(uuid).subscribe(
+              (response) => {
+                console.log('Inscription à la newsletter réussie:', response.message);
+              },
+              (error) => {
+                console.error('Erreur lors de l\'inscription à la newsletter:', error);
+              }
+            );
+          }
         },
         (error) => {
           this.errorMessage = 'Erreur lors de la mise à jour des données utilisateur.';

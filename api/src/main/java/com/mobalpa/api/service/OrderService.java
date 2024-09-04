@@ -76,6 +76,7 @@ public class OrderService {
   public List<Order> getAllOrders() {
     List<Order> orders = orderRepository.findAll();
     orders.forEach(order -> order.getItems().size());
+    orders.forEach(order -> order.getDeliveryNumbers().size());
     return orders;
   }
 
@@ -319,6 +320,7 @@ public class OrderService {
           person.getEmail(),
           "Confirmation de votre commande - Mobalpa",
           "orderConfirmationTemplate.html",
+          null,
           invoicePdf,
           "invoice_" + invoice.getInvoiceNumber() + ".pdf",
           "${user.firstName}", person.getFirstname(),
