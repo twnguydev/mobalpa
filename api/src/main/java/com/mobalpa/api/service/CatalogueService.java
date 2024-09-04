@@ -25,6 +25,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Objects;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -112,31 +114,31 @@ public class CatalogueService {
     public List<ProductWithCampaignDTO> getAllProductsWithCampaign(ProductFilter productFilter) {
         List<ProductDTO> allProducts = getAllProducts(productFilter);
         List<Campaign> campaigns = campaignRepository.findAll();
-        LocalDateTime now = LocalDateTime.now();
+
+        ZoneId zoneId = ZoneId.of("Europe/Paris");
+        ZonedDateTime now = ZonedDateTime.now(zoneId);
+        System.out.println("Current Time: " + now);
+
+        List<Campaign> activeCampaigns = campaigns.stream()
+                .filter(campaign -> {
+                    ZonedDateTime couponStart = campaign.getDateStart().atZone(zoneId);
+                    ZonedDateTime couponEnd = campaign.getDateEnd().atZone(zoneId);
+                    return couponStart.isBefore(now) && couponEnd.isAfter(now);
+                })
+                .collect(Collectors.toList());
 
         return allProducts.stream()
                 .map(product -> {
-                    List<Campaign> activeCampaigns = campaigns.stream()
+                    List<Campaign> activeCampaignsForProduct = activeCampaigns.stream()
                             .filter(campaign -> campaign.getTargetUuid().equals(product.getUuid())
-                                    && campaign.getDateStart().isBefore(now)
-                                    && campaign.getDateEnd().isAfter(now))
+                                    || (campaign.getType() == Campaign.Type.SUBCATEGORY
+                                            && campaign.getTargetUuid().equals(product.getSubcategory().getUuid())))
                             .collect(Collectors.toList());
 
-                    List<Campaign> activeCampaignsOnSubcategory = campaigns.stream()
-                            .filter(campaign -> campaign.getType() == Campaign.Type.SUBCATEGORY
-                                    && campaign.getTargetUuid().equals(product.getSubcategory().getUuid())
-                                    && campaign.getDateStart().isBefore(now)
-                                    && campaign.getDateEnd().isAfter(now))
-                            .collect(Collectors.toList());
-
-                    List<Campaign> combinedCampaigns = new ArrayList<>();
-                    combinedCampaigns.addAll(activeCampaigns);
-                    combinedCampaigns.addAll(activeCampaignsOnSubcategory);
-
-                    if (!combinedCampaigns.isEmpty()) {
+                    if (!activeCampaignsForProduct.isEmpty()) {
                         ProductWithCampaignDTO productWithCampaign = new ProductWithCampaignDTO();
                         productWithCampaign.setProduct(product);
-                        productWithCampaign.setCampaigns(combinedCampaigns);
+                        productWithCampaign.setCampaigns(activeCampaignsForProduct);
                         return productWithCampaign;
                     } else {
                         return null;

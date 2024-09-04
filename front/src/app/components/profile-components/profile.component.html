@@ -227,6 +227,7 @@
                             <p><strong>TVA:</strong> {{ order.vat | number: '1.2-2' }} %</p>
                             <p><strong>Total HT:</strong> {{ order.totalHt | number: '1.2-2' }} €</p>
                             <p><strong>Total TTC:</strong> {{ order.totalTtc | number: '1.2-2' }} €</p>
+                            <p *ngIf="order.deliveryNumbers"><strong>Numéros de livraison:</strong> {{ order.deliveryNumbers.join(', ') }}</p>
                         </div>
 
                         <h4 class="text-md font-semibold mt-4">Articles de la commande:</h4>

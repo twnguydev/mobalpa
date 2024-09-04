@@ -32,6 +32,7 @@ import { QuelleSontLesFraisDeLivraisonComponent } from '@pages/livraison/quelle-
 import { CooperationComponent } from '@pages/cooperation/cooperation.component';
 import { FournisseurComponent } from '@pages/fournisseur/fournisseur.component';
 import { NouveauteComponent } from '@pages/nouveaute/nouveaute.component';
+import { UserPageComponent } from '@components/user-page/user-page.component';
 import { PromoPageComponent } from '@pages/promo-page/promo-page.component';
 
 
@@ -53,6 +54,7 @@ import { QuelsProduitsSontRetournesSousGarantieComponent } from '@components/foo
 import { OuDemanderLeServiceDeGarantieComponent } from '@components/footer-pages/service-de-garantie/parts/ou-demander-le-service-de-garantie/ou-demander-le-service-de-garantie.component';
 import { QueSePasseTIlSiLeCentreDeServiceNePeutPasReparerLeProduitPendantLaPeriodeDeGarantieComponent } from '@components/footer-pages/service-de-garantie/parts/que-se-passe-t-il-si-le-centre-de-service-ne-peut-pas-reparer-le-produit-pendant-la-periode-de-garantie/que-se-passe-t-il-si-le-centre-de-service-ne-peut-pas-reparer-le-produit-pendant-la-periode-de-garantie.component';
 import { DansQuelsCasLaGarantieNEstEllePasAssureeComponent } from '@components/footer-pages/service-de-garantie/parts/dans-quels-cas-la-garantie-n-est-elle-pas-assuree/dans-quels-cas-la-garantie-n-est-elle-pas-assuree.component';
+import { NewsletterSendComponent } from '@pages/espace-admin/component/newsletter-send/newsletter-send.component';
 
 export const routes: Routes = [
     { path: '', component: LandingPageComponent },
@@ -70,6 +72,7 @@ export const routes: Routes = [
     { path: 'categories/:categoryUri/:subcategoryUri/:productUri', component: ProductComponent },
 
     { path: 'profil', component: ProfileComponent, canActivate: [AuthGuard] },
+    { path: 'admin/utilisateur/:uuid', component: UserPageComponent, canActivate: [AdminGuard] },
 
     { path: 'mentions-legales', component: LegalNoticeComponent },
     { path: 'politique-de-confidentialite', component: PrivacyPolicyComponent },
@@ -77,6 +80,7 @@ export const routes: Routes = [
     { path: 'conditions-generales-utilisation', component: TermsOfUseComponent },
     { path: 'qui-sommes-nous', component: AboutAsComponent },
     { path: 'admin', component: EspaceAdminComponent, canActivate: [AdminGuard] },
+    { path: 'admin/newsletter/programmer', component: NewsletterSendComponent, canActivate: [AdminGuard] },
     { path: 'contactez-nous', component: ContactPageComponent },
     { path: 'livraison', component: LivraisonComponent },
     { path: 'livraison/quelles-sont-les-methodes-de-livraison', component: QuellesSontLesMethodesDeLivraisonComponent },

@@ -1,7 +1,6 @@
 package com.mobalpa.delivery.controller;
 
 import com.mobalpa.delivery.dto.ParcelDTO;
-import com.mobalpa.delivery.dto.StatusUpdateDTO;
 import com.mobalpa.delivery.model.Parcel;
 import com.mobalpa.delivery.service.ParcelService;
 import com.mobalpa.delivery.service.DepotService;
@@ -197,7 +196,7 @@ public class DeliveryController {
         })
         public ResponseEntity<Parcel> updateParcelStatus(
                         @PathVariable @Schema(description = "The delivery number of the parcel to update", example = "MOB_hgEaqkwEceUs") String deliveryNumber,
-                        @RequestBody @Schema(description = "The status update information", implementation = StatusUpdateDTO.class) StatusUpdateDTO status) {
+                        @RequestBody @Schema(description = "The status update information", implementation = String.class) String status) {
                 Parcel updatedParcel = parcelService.updateParcelStatus(deliveryNumber, status);
                 return ResponseEntity.ok(updatedParcel);
         }

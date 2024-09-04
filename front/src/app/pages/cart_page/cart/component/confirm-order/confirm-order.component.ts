@@ -228,6 +228,8 @@ export class ConfirmOrderComponent implements OnInit {
     totalHt: number,
     items: IOrderItem[]
   ): void {
+    const sanitizedItems = items.map(({ product, ...rest }) => rest);
+
     const orderDetails: IOrder = {
       deliveryMethod: deliveryMethod.name,
       deliveryAddress,
@@ -235,7 +237,7 @@ export class ConfirmOrderComponent implements OnInit {
       userUuid,
       reduction,
       totalHt,
-      items,
+      items: sanitizedItems
     };
 
     console.log('Creating order:', orderDetails);

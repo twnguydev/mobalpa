@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 import java.util.UUID;
+import java.time.LocalDate;
 
 @Service
 public class EmailService {
@@ -47,7 +48,13 @@ public class EmailService {
         return emailingRepository.findById(uuid);
     }
 
-    public void sendHtmlEmail(String to, String subject, String templateName, byte[] attachment, String attachmentName,
+    public String getTemplate(String templateName) throws IOException {
+        ClassPathResource resource = new ClassPathResource("templates/" + templateName);
+        byte[] byteArray = FileCopyUtils.copyToByteArray(resource.getInputStream());
+        return new String(byteArray, StandardCharsets.UTF_8);
+    }
+
+    public void sendHtmlEmail(String to, String subject, String templateName, LocalDate date, byte[] attachment, String attachmentName,
             String... replacements) throws MessagingException, IOException {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
@@ -61,13 +68,22 @@ public class EmailService {
             helper.addAttachment(attachmentName, new ByteArrayResource(attachment));
         }
 
+        if (date != null) {
+            helper.setSentDate(java.sql.Date.valueOf(date));
+        }
+
         mailSender.send(message);
     }
 
     private String getEmailContent(String templateName, String... replacements) throws IOException {
         ClassPathResource resource = new ClassPathResource("templates/" + templateName);
-        byte[] byteArray = FileCopyUtils.copyToByteArray(resource.getInputStream());
-        String content = new String(byteArray, StandardCharsets.UTF_8);
+        String content;
+        if (resource.exists()) {
+            byte[] byteArray = FileCopyUtils.copyToByteArray(resource.getInputStream());
+            content = new String(byteArray, StandardCharsets.UTF_8);
+        } else {
+            content = templateName;
+        }
 
         for (int i = 0; i < replacements.length; i += 2) {
             content = content.replace(replacements[i], replacements[i + 1]);

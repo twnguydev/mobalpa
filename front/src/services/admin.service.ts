@@ -7,6 +7,8 @@ import { AuthService } from '@services/auth.service';
 import { IProduct } from '@interfaces/product.interface';
 import { ICategory, ISubcategory } from '@interfaces/category.interface';
 import { IOrder } from '@interfaces/order.interface';
+import { ICoupon } from '@interfaces/coupon.interface';
+import { INewsletter, INewsletterSend } from '@interfaces/newsletter.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -29,12 +31,11 @@ export class AdminService {
     return this.http.post<IUser>(`${this.apiUrl}/users`, user, { headers });
   }
 
-  // updateUser(user: IUser): Observable<IUser> {
-  //   const headers: HttpHeaders | null = this.authService.getAuthHeaders();
-  //   if (!headers) return new Observable<IUser>();
-  //   return this.http.put<IUser>(`${this.apiUrl}/users/${user.id}`, user, { headers });
-  // }
-
+  updateUser(userId: string, updatedData: Partial<IUser>): Observable<IUser> {
+    const headers: HttpHeaders | null = this.authService.getAuthHeaders();
+    if (!headers) return new Observable<IUser>();
+    return this.http.patch<IUser>(`http://localhost:8080/api/users/${userId}`, updatedData, { headers });
+  }
   deleteUser(id: string): Observable<IUser> {
     const headers: HttpHeaders | null = this.authService.getAuthHeaders();
     if (!headers) return new Observable<IUser>();
@@ -76,7 +77,7 @@ export class AdminService {
     return this.http.get<any>(`${this.apiUrl}/coupons`, { headers });
   }
 
-  createCoupon(coupon: any): Observable<any> {
+  createCoupon(coupon: ICoupon): Observable<any> {
     const headers: HttpHeaders | null = this.authService.getAuthHeaders();
     if (!headers) return new Observable<any>();
     return this.http.post<any>(`${this.apiUrl}/coupons`, coupon, { headers });
@@ -187,10 +188,10 @@ export class AdminService {
     return response;
   }
 
-  getAllNewsletters(): Observable<any> {
+  getAllNewsletters(): Observable<INewsletter[]> {
     const headers: HttpHeaders | null = this.authService.getAuthHeaders();
-    if (!headers) return new Observable<any>();
-    return this.http.get<any>(`${this.apiUrl}/newsletters`, { headers });
+    if (!headers) return new Observable<INewsletter[]>();
+    return this.http.get<INewsletter[]>(`${this.apiUrl}/newsletters`, { headers });
   }
 
   deleteNewsletter(uuid: string): Observable<string> {
@@ -198,8 +199,32 @@ export class AdminService {
     if (!headers) return new Observable<string>();
 
     return this.http.delete(`${this.apiUrl}/newsletter/${uuid}`, {
-        headers,
-        responseType: 'text'
+      headers,
+      responseType: 'text'
     });
-}
+  }
+
+  getUserByUuid(uuid: string): Observable<IUser> {
+    const headers: HttpHeaders | null = this.authService.getAuthHeaders();
+    if (!headers) return new Observable<IUser>();
+    return this.http.get<IUser>(`${this.apiUrl}/users/details/${uuid}`, { headers });
+  }
+
+  getUserCoupons(userUuid: string): Observable<any[]> {
+    const headers: HttpHeaders | null = this.authService.getAuthHeaders();
+    if (!headers) return new Observable<any[]>();
+    return this.http.get<any[]>(`${this.apiUrl}/users/${userUuid}/coupons`, { headers });
+  }
+
+  getPaymentsByUserUuid(uuid: string): Observable<any> {
+    const headers: HttpHeaders | null = this.authService.getAuthHeaders();
+    if (!headers) return new Observable<any>();
+    return this.http.get<any>(`${this.apiUrl}/users/${uuid}/payments`, { headers });
+  }
+
+  sendNewsletter(newsletterData: INewsletterSend): Observable<{ message: string }> {
+    const headers: HttpHeaders | null = this.authService.getAuthHeaders();
+    if (!headers) return new Observable<{ message: string }>();
+    return this.http.post<{ message: string }>(`${this.apiUrl}/newsletter/send`, newsletterData, { headers });
+  }
 }

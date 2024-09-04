@@ -24,6 +24,7 @@ export class NouveauteComponent implements OnInit {
   error: string | null = null;
   productAdded: { [key: string]: boolean } = {};
   isUserAuthenticated: boolean = false;
+  isProductsLoading: boolean = false;
   productAddedOnCart: { [key: string]: boolean } = {};
   selectedProductColor: { [key: string]: IColor } = {};
   itemsPerPage: number = 10;
@@ -49,7 +50,7 @@ export class NouveauteComponent implements OnInit {
     'Vert': '#3CB371',
     Violet: '#8A2BE2'
   };
-  
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -60,10 +61,12 @@ export class NouveauteComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadProducts();
-    
+
   }
 
   loadProducts(): void {
+    this.isProductsLoading = true;
+
     this.productService.getProducts().subscribe(
       (products: IProduct[]) => {
         const currentDate = new Date();
@@ -74,7 +77,7 @@ export class NouveauteComponent implements OnInit {
 
         this.products = products.filter(product => {
           if (!product.createdAt) {
-            return false; 
+            return false;
           }
           const productDate = new Date(product.createdAt);
           return productDate >= startOfMonth && productDate <= endOfMonth;
@@ -89,9 +92,11 @@ export class NouveauteComponent implements OnInit {
         this.filteredProducts = [...this.products];
 
         this.paginateProducts();
+        this.isProductsLoading = false;
       },
       (error) => {
         this.error = 'Failed to load products';
+        this.isProductsLoading = false;
         console.error('Error loading products', error);
       }
     );
@@ -162,7 +167,7 @@ export class NouveauteComponent implements OnInit {
     console.log('Selected Product:', product);
     console.log('Selected Color:', color);
     console.log('Current Selection:', this.selectedProductColor[product.uuid]);
-  
+
     if (!this.selectedProductColor[product.uuid]) {
       this.selectedProductColor[product.uuid] = { uuid: '', name: '' };
     }
@@ -216,6 +221,8 @@ export class NouveauteComponent implements OnInit {
   }
 
   sortProducts(criteria: string): void {
+    this.isProductsLoading = true;
+
     switch (criteria) {
       case 'price-asc':
         this.filteredProducts.sort((a, b) => a.price - b.price);
@@ -223,10 +230,18 @@ export class NouveauteComponent implements OnInit {
       case 'price-desc':
         this.filteredProducts.sort((a, b) => b.price - a.price);
         break;
+      case 'relevance':
+        this.filteredProducts = this.filteredProducts.sort((a, b) => {
+          const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+          const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+          return dateB - dateA;
+        });
+        break;
       default:
         break;
     }
     this.paginateProducts();
+    this.isProductsLoading = false;
   }
 
   updateUrlParams(): void {
@@ -253,7 +268,7 @@ export class NouveauteComponent implements OnInit {
       queryParams: queryParams,
     });
   }
-  
+
   onSortChange(event: Event): void {
     const value = (event.target as HTMLSelectElement).value;
     this.selectedSort = value;

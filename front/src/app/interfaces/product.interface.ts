@@ -54,7 +54,6 @@ export interface IStore {
 export interface ICampaign {
   id: string;
   name: string;
-  description: string;
   discountRate: number;
   dateStart: Date;
   dateEnd: Date;

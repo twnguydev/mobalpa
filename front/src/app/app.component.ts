@@ -1,5 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { StatusBar } from '@capacitor/status-bar';
+import { Platform } from '@ionic/angular';
 import { RouterOutlet, RouterLink, RouterModule } from '@angular/router';
 import { LoginComponent } from '../app/components/login-components/login.component';
 import { HomeComponent } from '../app/components/home-components/home.component';
@@ -34,5 +36,16 @@ import { ProfileComponent } from '@components/profile-components/profile.compone
 })
 export class AppComponent {
   title = 'Hello World from Angular!';
+
+  constructor(private platform: Platform) {
+    this.initializeApp();
+  }
+
+  initializeApp() {
+    this.platform.ready().then(() => {
+      StatusBar.setBackgroundColor({ color: '#ffffff' });
+      StatusBar.setOverlaysWebView({ overlay: true });
+    });
+  }
 
 }

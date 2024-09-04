@@ -47,7 +47,7 @@ class SalesAnalyzer:
             product_sales.set_index('created_at', inplace=True)
             product_sales['quantity'] = product_sales['quantity'].astype(float)
             
-            # print(f"Product sales : {product_sales}")
+            print(f"Product sales : {product_sales}")
 
             if len(product_sales) < 5:
                 # print(f"Pas assez de données pour le produit {product_uuid}. Utilisation d'un modèle simple.")
@@ -147,7 +147,7 @@ class SalesAnalyzer:
                     })
 
         if not predictions:
-            print("Aucune prédiction générée. Vérifiez les données et les modèles.")
+            print("Aucune prédiction générée sur la période " + f"{start_date} - {end_date}.")
 
         return pd.DataFrame(predictions)
     

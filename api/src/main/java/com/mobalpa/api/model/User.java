@@ -2,13 +2,11 @@ package com.mobalpa.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.*;
@@ -17,10 +15,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import java.util.List;
 
 @Entity
 @Table(name = "\"user\"")
@@ -82,17 +80,21 @@ public class User implements UserDetails, Person {
     @JsonIgnore
     private Wishlist wishlist;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     private Set<Payment> payments = new HashSet<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("user")
     private List<Order> orders = new ArrayList<>();
 
-    // @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    // @JsonIgnore
-    // private Set<UserCoupon> userCoupons = new HashSet<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("user")
+    private Set<Ticket> tickets = new HashSet<>();
+
+    @OneToMany(mappedBy = "responder", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("responder")
+    private Set<Ticket> respondedTickets = new HashSet<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -125,12 +127,4 @@ public class User implements UserDetails, Person {
     public boolean isEnabled() {
         return active;
     }
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties("user")
-    private Set<Ticket> tickets = new HashSet<>();
-
-    @OneToMany(mappedBy = "responder", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties("responder")
-    private Set<Ticket> respondedTickets = new HashSet<>();
 }

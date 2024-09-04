@@ -7,6 +7,6 @@ COPY . ./
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-RUN chmod +x start.sh
+EXPOSE 8083
 
-CMD ["./start.sh"]
+CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:8083", "api:app"]

@@ -24,14 +24,14 @@
                 <div *ngIf="item.product" class="flex items-center space-x-4 md:space-x-6 col-span-1 md:col-span-2">
                     <a href="/categories/{{ item.product.uri }}"
                         class="flex items-center space-x-4 md:space-x-6 col-span-1 md:col-span-2">
-                        <img [src]="item.properties.images" alt="{{item.product.name}}"
+                        <img [src]="item.product.images[0].uri" alt="{{item.product.name}}"
                             class="w-20 h-20 md:w-32 md:h-32 object-cover rounded-3xl">
                         <div class="flex flex-col">
                             <h2 class="text-sm md:text-lg font-gotham">
                                 <b>{{ item.product.name }}</b>
                             </h2>
                             <p class="font-gotham text-sm md:text-base">Couleur: {{ item.selectedColor }}</p>
-                            <p class="font-gotham text-sm md:text-base">Marque: {{ item.properties.brand }}</p>
+                            <p class="font-gotham text-sm md:text-base">Marque: {{ item.product.brand.name }}</p>
                         </div>
                     </a>
                 </div>

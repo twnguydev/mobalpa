@@ -20,7 +20,7 @@ import java.util.Optional;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-@RestController
+@RestController("AdminVisitorController")
 @RequestMapping("/api/admin/visitors")
 @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_STORE_MANAGER')")
 @Tag(name = "Visitor management for admin users", description = "APIs for managing visitors for admin users")

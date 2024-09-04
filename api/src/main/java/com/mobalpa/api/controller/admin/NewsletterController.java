@@ -2,14 +2,20 @@ package com.mobalpa.api.controller.admin;
 
 import com.mobalpa.api.model.Newsletter;
 import com.mobalpa.api.model.User;
-import com.mobalpa.api.dto.NewsletterDTO;  
+import com.mobalpa.api.dto.NewsletterDTO;
+import com.mobalpa.api.dto.NewsletterSendDTO;
 import com.mobalpa.api.service.NewsletterService;
 import com.mobalpa.api.service.UserService;
+import com.mobalpa.api.service.EmailService;
+
+import jakarta.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.UUID;
 import java.util.Map;
 import java.util.HashMap;
@@ -25,6 +31,9 @@ public class NewsletterController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private EmailService emailService;
 
     @PostMapping("/newsletter")
     public ResponseEntity<Map<String, String>> addNewsletter(@RequestBody Map<String, String> request) {
@@ -65,8 +74,8 @@ public class NewsletterController {
     public ResponseEntity<List<NewsletterDTO>> getAllNewsletters() {
         List<Newsletter> newsletters = newsletterService.getAllNewsletters();
         List<NewsletterDTO> newsletterDTOs = newsletters.stream()
-            .map(this::convertToDTO)
-            .collect(Collectors.toList());
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
         return ResponseEntity.ok(newsletterDTOs);
     }
 
@@ -89,5 +98,62 @@ public class NewsletterController {
         dto.setId(newsletter.getUuid());
         dto.setEmail(newsletter.getUser().getEmail());
         return dto;
+    }
+
+    @PostMapping("/newsletter/send")
+    public ResponseEntity<Map<String, String>> sendNewsletter(@RequestBody NewsletterSendDTO newsletterSendDTO) {
+        Map<String, String> response = new HashMap<>();
+        try {
+            Map<String, String> placeholders = new HashMap<>();
+
+            placeholders.put("${subject}", newsletterSendDTO.getSubject());
+            placeholders.put("${contentInParagraphStrings}", String.join("<br><br>", newsletterSendDTO.getContentInParagraphStrings()));
+
+            if (newsletterSendDTO.getCampaign() != null) {
+                placeholders.put("${campaignName}", newsletterSendDTO.getCampaign().getName());
+            } else {
+                placeholders.put("${campaignName}", "");
+            }
+
+            int maxProducts = 5;
+
+            String productsGrid = "<table>";
+            for (int i = 0; i < Math.min(newsletterSendDTO.getProducts().length, maxProducts); i++) {
+                productsGrid += "<tr><td>" + newsletterSendDTO.getProducts()[i].getName() + "</td><td>" + newsletterSendDTO.getProducts()[i].getDescription() + "</td><td>" + newsletterSendDTO.getProducts()[i].getPrice() + "</td></tr>";
+            }
+            productsGrid += "</table>";
+
+            placeholders.put("${productsGrid}", productsGrid);
+            placeholders.put("${appName}", "Mobalpa");
+
+            String template = emailService.getTemplate("newsletter_template.html");
+
+            String filledTemplate = replacePlaceholders(template, placeholders);
+
+            for (String email : newsletterSendDTO.getEmails()) {
+                emailService.sendHtmlEmail(
+                    email,
+                    newsletterSendDTO.getSubject(),
+                    filledTemplate,
+                    newsletterSendDTO.getSendDate(),
+                    null,
+                    null
+                );
+            }
+    
+            response.put("message", "Newsletter sent successfully");
+            return ResponseEntity.ok(response);
+    
+        } catch (MessagingException | IOException e) {
+            response.put("message", "Failed to send newsletter");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+
+    private String replacePlaceholders(String template, Map<String, String> placeholders) {
+        for (Map.Entry<String, String> entry : placeholders.entrySet()) {
+            template = template.replace(entry.getKey(), entry.getValue());
+        }
+        return template;
     }
 }

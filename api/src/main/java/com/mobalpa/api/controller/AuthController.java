@@ -2,6 +2,7 @@ package com.mobalpa.api.controller;
 
 import com.mobalpa.api.dto.LoginDTO;
 import com.mobalpa.api.dto.LoginRequestDTO;
+import com.mobalpa.api.dto.RegisterRequestDTO;
 import com.mobalpa.api.model.User;
 import com.mobalpa.api.service.UserService;
 
@@ -59,9 +60,20 @@ public class AuthController {
             @ApiResponse(responseCode = "400", description = "Invalid user data provided", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Invalid user data provided\""))),
             @ApiResponse(responseCode = "403", description = "Unauthorized", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Unauthorized\"")))
     })
-    public ResponseEntity<?> registerUser(@RequestBody User user) {
+    public ResponseEntity<?> registerUser(@RequestBody RegisterRequestDTO registerUser) {
         try {
-            User registeredUser = userService.registerUser(user);
+            if (!registerUser.getTerms()) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of(
+                    "errors", List.of("Vous devez accepter les conditions d'utilisation.")
+                ));
+            }
+            if (registerUser.getPassword() == null || !registerUser.getPassword().equals(registerUser.getConfirmPassword())) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of(
+                    "errors", List.of("Les mots de passe ne correspondent pas.")
+                ));
+            }
+            
+            User registeredUser = userService.registerUser(registerUser);
             
             Map<String, Object> response = new HashMap<>();
             response.put("message", "Inscription réussie");

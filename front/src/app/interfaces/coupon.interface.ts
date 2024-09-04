@@ -1,6 +1,5 @@
 export interface ICoupon {
   id?: number;
-  code: string;
   name: string;
   discountRate: number;
   discountType: 'PERCENTAGE' | 'AMOUNT';
