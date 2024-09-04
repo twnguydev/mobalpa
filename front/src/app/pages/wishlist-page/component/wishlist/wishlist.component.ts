@@ -7,11 +7,12 @@ import { IWishlist, IWishlistItem } from '@interfaces/wishlist.interface';
 @Component({
   selector: 'app-wishlist',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,WishlistComponent],
   templateUrl: './wishlist.component.html',
   styleUrls: ['./wishlist.component.css']
 })
 export class WishlistComponent {
+  items!: IWishlistItem[];
   wishlist: IWishlist | null = null;
   wishlistNotFound: boolean = false;
   productAdded: { [key: string]: boolean } = {};
@@ -75,7 +76,22 @@ export class WishlistComponent {
 
   saveToCart(item: IWishlistItem): void {
     if (!this.authService.user) return;
-    this.userService.modifyCartFromLocalstorage('add', item);
+    const productWithCampaign = {
+      ...item.product,
+      campaigns: item.campaigns || []
+    };
+    const cartItem = {
+      productUuid: item.productUuid,
+      product: productWithCampaign,
+      selectedColor: item.selectedColor,
+      quantity: item.quantity,
+      properties: {
+        brand: item.product.brand.name,
+        images: item.product.images.find(image => image.color.name === item.selectedColor)?.uri || ''
+      }
+    };
+    console.log('Adding to cart', cartItem);
+    this.userService.modifyCartFromLocalstorage('add', cartItem);
     this.productAdded[item.productUuid] = true;
 
     setTimeout(() => {

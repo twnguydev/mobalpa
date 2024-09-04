@@ -15,7 +15,7 @@ export class PaginationComponent implements OnChanges {
   @Output() pageChange = new EventEmitter<number>();
 
   totalPages: number = 1;
-  pages: number[] = [];
+  pages: (number | string)[] = [];
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['totalItems'] || changes['itemsPerPage'] || changes['currentPage']) {
@@ -29,13 +29,49 @@ export class PaginationComponent implements OnChanges {
 
   calculatePages(): void {
     this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
-    this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
+
+    const maxPagesToShow = 5;
+    const visiblePages: (number | string)[] = [];
+
+    if (this.totalPages <= maxPagesToShow) {
+      this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
+      return;
+    }
+
+    const startPage = Math.max(1, this.currentPage - Math.floor(maxPagesToShow / 2));
+    const endPage = Math.min(this.totalPages, startPage + maxPagesToShow - 1);
+
+    if (startPage > 1) {
+      visiblePages.push(1);
+      if (startPage > 2) {
+        visiblePages.push('...');
+      }
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      visiblePages.push(i);
+    }
+
+    if (endPage < this.totalPages) {
+      if (endPage < this.totalPages - 1) {
+        visiblePages.push('...');
+      }
+      visiblePages.push(this.totalPages);
+    }
+
+    this.pages = visiblePages;
   }
 
-  changePage(page: number): void {
-    if (page >= 1 && page <= this.totalPages && page !== this.currentPage) {
-      this.currentPage = page;
-      this.pageChange.emit(page);
+  changePage(page: number | string): void {
+    if (page === '...') {
+      return;
+    }
+
+    const pageNumber = page as number;
+
+    if (pageNumber >= 1 && pageNumber <= this.totalPages && pageNumber !== this.currentPage) {
+      this.currentPage = pageNumber;
+      this.pageChange.emit(pageNumber);
     }
   }
 }

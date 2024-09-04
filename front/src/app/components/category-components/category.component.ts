@@ -65,13 +65,13 @@ export class CategoryComponent implements OnInit {
   ngOnInit(): void {
     this.categoryUri = this.route.snapshot.paramMap.get('categoryUri');
     this.subcategoryUri = this.route.snapshot.paramMap.get('subcategoryUri');
-    
+
     this.route.queryParams.subscribe(params => {
       this.selectedBrand = params['brandName'] || null;
       this.selectedColor = params['color'] || null;
       this.selectedPrice = params['maxPrice'] ? +params['maxPrice'] : this.maxPrice;
       this.selectedSort = params['sort'] || '';
-      
+
       if (this.subcategoryUri && this.categoryUri) {
         this.loadSubcategoryProducts(this.categoryUri, this.subcategoryUri);
         this.loadSubcategoryDetails(this.categoryUri, this.subcategoryUri);
@@ -87,12 +87,12 @@ export class CategoryComponent implements OnInit {
       if (brandSelect && this.selectedBrand) {
         brandSelect.value = this.selectedBrand;
       }
-  
+
       const colorSelect = document.querySelector('select[name="color"]') as HTMLSelectElement;
       if (colorSelect && this.selectedColor) {
         colorSelect.value = this.selectedColor;
       }
-  
+
       const priceInput = document.querySelector('input[name="maxPrice"]') as HTMLInputElement;
       if (priceInput && this.selectedPrice) {
         priceInput.value = this.selectedPrice.toString();
@@ -113,6 +113,7 @@ export class CategoryComponent implements OnInit {
           this.extractFilterData();
           this.updateSelectorsFromUrl();
           this.applyFilters();
+          console.log('Products loaded', this.allProducts);
         }
       },
       error: (error) => {
@@ -157,23 +158,23 @@ export class CategoryComponent implements OnInit {
 
   updateUrlParams(): void {
     const queryParams: any = {};
-  
+
     if (this.selectedBrand) {
       queryParams['brandName'] = this.selectedBrand;
     }
-  
+
     if (this.selectedColor) {
       queryParams['color'] = this.selectedColor;
     }
-  
+
     if (this.selectedPrice && this.selectedPrice !== this.maxPrice) {
       queryParams['maxPrice'] = this.selectedPrice;
     }
-  
+
     if (this.selectedSort) {
       queryParams['sort'] = this.selectedSort;
     }
-  
+
     this.router.navigate([], {
       relativeTo: this.route,
       queryParams: queryParams,
@@ -188,7 +189,7 @@ export class CategoryComponent implements OnInit {
         (product.price <= this.selectedPrice)
       );
     });
-  
+
     this.sortProducts(this.selectedSort);
     this.currentPage = 1;
     this.paginateProducts();
@@ -200,7 +201,7 @@ export class CategoryComponent implements OnInit {
     this.updateUrlParams();
     this.applyFilters();
   }
-  
+
   onColorChange(event: Event): void {
     const value = (event.target as HTMLSelectElement).value;
     this.selectedColor = value || null;
@@ -320,21 +321,21 @@ export class CategoryComponent implements OnInit {
       this.paginateProducts();
     }
   }
-  
+
   previousPage(): void {
     if (this.currentPage > 1) {
       this.currentPage--;
       this.paginateProducts();
     }
   }
-  
+
   goToPage(page: number): void {
     if (page >= 1 && page <= this.totalPages) {
       this.currentPage = page;
       this.paginateProducts();
     }
   }
-  
+
   get totalPages(): number {
     return Math.ceil(this.filteredProducts.length / this.itemsPerPage);
   }
@@ -345,7 +346,7 @@ export class CategoryComponent implements OnInit {
 
     const pages = [];
     for (let i = startPage; i <= endPage; i++) {
-        pages.push(i);
+      pages.push(i);
     }
     return pages;
   }

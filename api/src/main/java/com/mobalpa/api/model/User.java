@@ -90,9 +90,9 @@ public class User implements UserDetails, Person {
     @JsonIgnore
     private List<Order> orders = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonIgnore
-    private Set<UserCoupon> userCoupons = new HashSet<>();
+    // @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    // @JsonIgnore
+    // private Set<UserCoupon> userCoupons = new HashSet<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

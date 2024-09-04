@@ -12,6 +12,7 @@ import { UserService } from '@services/user.service';
 })
 export class ArticleMedium {
   @Input() product!: any;
+  @Input() campaigns!: any;
   productAddedOnCart: { [key: string]: boolean } = {};
 
   constructor(private userService: UserService) { }
@@ -19,10 +20,14 @@ export class ArticleMedium {
   ngOnInit(): void {
   }
 
-  addToCart(product: IProduct): void {
+  addToCart(product: IProduct, campaigns: any): void {
+    const productWithCampaign = {
+      ...product,
+      campaigns: campaigns
+    };
     const item = {
       productUuid: product.uuid,
-      product: product,
+      product: productWithCampaign,
       selectedColor: product.colors[0].name,
       quantity: 1,
       properties: {
@@ -30,6 +35,7 @@ export class ArticleMedium {
         images: product.images[0].uri
       }
     };
+    console.log('Adding to cart', item);
     this.userService.modifyCartFromLocalstorage('add', item);
     this.productAddedOnCart[product.uuid] = true;
     setTimeout(() => {

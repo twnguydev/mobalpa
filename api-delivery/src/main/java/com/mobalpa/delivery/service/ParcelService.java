@@ -1,6 +1,7 @@
 package com.mobalpa.delivery.service;
 
 import com.mobalpa.delivery.dto.ParcelDTO;
+import com.mobalpa.delivery.dto.StatusUpdateDTO;
 import com.mobalpa.delivery.model.Parcel;
 import com.mobalpa.delivery.model.ParcelItem;
 import com.mobalpa.delivery.model.Shipment;
@@ -111,9 +112,9 @@ public class ParcelService {
                 .orElseThrow(() -> new RuntimeException("Parcel not found"));
     }
 
-    public Parcel updateParcelStatus(String deliveryNumber, String status) {
+    public Parcel updateParcelStatus(String deliveryNumber, StatusUpdateDTO status) {
         Parcel parcel = getParcelByDeliveryNumber(deliveryNumber);
-        parcel.setStatus(status);
+        parcel.setStatus(status.getStatus());
         return parcelRepository.save(parcel);
     }
 

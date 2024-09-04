@@ -23,7 +23,7 @@
                 <p class="line-through text-gray-600 mt-2">{{ product.product.price | number: '1.2-2' }}€</p>
             </div>
         </a>
-        <button *ngIf="!productAddedOnCart[product.product.uuid]" (click)="addToCart(product.product)"
+        <button *ngIf="!productAddedOnCart[product.product.uuid]" (click)="addToCart(product.product, campaigns)"
             class="text-white bg-mobalpa-green-alternate mt-4 flex w-full h-9 justify-center items-center rounded-lg gap-x-2">
             Ajouter au panier
         </button>

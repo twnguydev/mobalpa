@@ -2,7 +2,7 @@
     <div
         class="h-88 bg-cover bg-center flex justify-center flex-col gap-10 items-center bg-[url('/assets/marbretexturevert.png')]">
 
-        <p class="text-white text-2xl md:text-4xl font-gotham">En quoi pouvons nous vous aidez ?</p>
+        <p class="text-white text-2xl md:text-4xl font-gotham">En quoi pouvons nous vous aider ?</p>
 
         <input class="w-1/2 p-3 rounded-2xl" type="text" [(ngModel)]="searchQuery" placeholder="Posez votre question">
     </div>
@@ -68,8 +68,8 @@
                             </span>
                         </div>
                         <input
-                            class="p-2 bg-emerald-green md:w-full w-full mt-1 lg:w-1/4 text-white hover:bg-emerald-600"
-                            type="submit" value="Envoyer" [disabled]="supForm.invalid">
+                            class="submit-button p-2 bg-emerald-green md:w-full w-full mt-1 lg:w-1/4 text-white hover:bg-emerald-600"
+                            type="submit"  value="Envoyer" [disabled]="supForm.invalid">
                         <div *ngIf="submissionSuccess" class="text-green-500 mt-4">
                             Votre demande a été envoyée avec succès !
                         </div>

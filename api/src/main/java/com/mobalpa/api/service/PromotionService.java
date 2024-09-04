@@ -273,10 +273,12 @@ public class PromotionService {
         return couponCodeRepository.save(coupon);
     }
 
+    @Transactional
     public void deleteCoupon(Integer id) {
+        userCouponRepository.deleteByCouponId(id);
         couponCodeRepository.deleteById(id);
     }
-
+    
     @Transactional
     public Map<String, Object> claimCoupon(User user, CouponCode couponCode) {
         LocalDateTime now = LocalDateTime.now();

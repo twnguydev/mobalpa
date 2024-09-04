@@ -1,6 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SupportPageComponent } from './support-page.component';
+import { DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { TicketService } from '@services/ticket.service';
 
 describe('SupportPageComponent', () => {
   let component: SupportPageComponent;
@@ -8,7 +12,8 @@ describe('SupportPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SupportPageComponent]
+      imports: [SupportPageComponent, HttpClientTestingModule],
+      providers: [TicketService]
     })
     .compileComponents();
 
@@ -17,7 +22,8 @@ describe('SupportPageComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('verifie si le component "support" est chargée dans le component principale ', () => {
+    const element: DebugElement = fixture.debugElement.query(By.css('app-support'));
+    expect(element).toBeTruthy();
   });
 });

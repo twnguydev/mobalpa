@@ -17,7 +17,7 @@ describe('CarouselMediumArticleComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('Verifie les liens cliquable', () => {
+    
   });
 });

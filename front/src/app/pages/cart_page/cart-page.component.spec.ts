@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CartPageComponent } from './cart-page.component';
+import { DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('CartPageComponent', () => {
   let component: CartPageComponent;
@@ -8,7 +11,7 @@ describe('CartPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CartPageComponent]
+      imports: [CartPageComponent,HttpClientTestingModule]
     })
     .compileComponents();
 
@@ -17,7 +20,9 @@ describe('CartPageComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('devrait charger le component "cartComponent"', () => {
+    const fixture = TestBed.createComponent(CartPageComponent);
+    const element: DebugElement = fixture.debugElement.query(By.css('app-cart'));
+    expect(element).toBeTruthy();
   });
 });

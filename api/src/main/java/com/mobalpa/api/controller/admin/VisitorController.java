@@ -17,9 +17,13 @@ import org.springframework.http.HttpStatus;
 import java.util.UUID;
 import java.util.Optional;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/api/admin/visitors")
 @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_STORE_MANAGER')")
+@Tag(name = "Visitor management for admin users", description = "APIs for managing visitors for admin users")
 public class VisitorController {
 
   @Autowired
@@ -32,6 +36,7 @@ public class VisitorController {
   private PaymentRepository paymentRepository;
 
   @GetMapping("/{uuid}")
+  @Operation(summary = "Get visitor by UUID", description = "Fetches a visitor by their unique identifier.")
   public ResponseEntity<?> getVisitorByUuid(@PathVariable UUID uuid) {
     try {
       Visitor visitor = visitorService.getVisitorByUuid(uuid);
@@ -42,11 +47,13 @@ public class VisitorController {
   }
 
   @GetMapping
+  @Operation(summary = "Get all visitors", description = "Fetches all visitors.")
   public ResponseEntity<?> getAllVisitors() {
     return ResponseEntity.ok(visitorService.getAllVisitors());
   }
 
   @PostMapping
+  @Operation(summary = "Create visitor", description = "Creates a new visitor.")
   public ResponseEntity<?> createVisitor(@RequestBody Visitor visitor) {
     try {
       Visitor createdVisitor = visitorService.registerVisitor(visitor);
@@ -57,12 +64,14 @@ public class VisitorController {
   }
 
   @DeleteMapping("/{uuid}")
+  @Operation(summary = "Delete visitor", description = "Deletes a visitor.")
   public ResponseEntity<?> deleteVisitor(@PathVariable UUID uuid) {
     visitorService.deleteVisitor(uuid);
     return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Visitor deleted");
   }
 
   @GetMapping("/{id}/orders")
+  @Operation(summary = "Get orders by visitor", description = "Fetches all orders for a visitor.")
   public ResponseEntity<?> getOrders(@PathVariable UUID id) {
     Visitor visitor = visitorService.getVisitorByUuid(id);
     if (visitor == null) {
@@ -77,6 +86,7 @@ public class VisitorController {
   }
 
   @GetMapping("/{id}/payments")
+  @Operation(summary = "Get payments by visitor", description = "Fetches all payments for a visitor.")
   public ResponseEntity<?> getPayments(@PathVariable UUID id) {
     Visitor visitor = visitorService.getVisitorByUuid(id);
     if (visitor == null) {
@@ -91,6 +101,7 @@ public class VisitorController {
   }
 
   @PostMapping("/{id}/payments")
+  @Operation(summary = "Add payment to visitor", description = "Adds a payment to a visitor.")
   public ResponseEntity<?> addPaymentToVisitor(@PathVariable UUID id, @RequestBody PaymentRequestDTO paymentDTO) {
     Optional<Visitor> visitorOptional = visitorRepository.findById(id);
     if (visitorOptional.isEmpty()) {
@@ -114,6 +125,7 @@ public class VisitorController {
   }
 
   @DeleteMapping("/{id}/payments/{paymentId}")
+  @Operation(summary = "Delete payment", description = "Deletes a payment.")
   public ResponseEntity<?> deletePayment(@PathVariable UUID id, @PathVariable UUID paymentId) {
     Optional<Visitor> visitorOptional = visitorRepository.findById(id);
     if (visitorOptional.isEmpty()) {

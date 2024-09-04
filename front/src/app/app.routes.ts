@@ -31,6 +31,8 @@ import { AnnulerCommandeEnCoursDeLivraisonComponent } from '@pages/livraison/ann
 import { QuelleSontLesFraisDeLivraisonComponent } from '@pages/livraison/quelle-sont-les-frais-de-livraison/quelle-sont-les-frais-de-livraison.component';
 import { CooperationComponent } from '@pages/cooperation/cooperation.component';
 import { FournisseurComponent } from '@pages/fournisseur/fournisseur.component';
+import { NouveauteComponent } from '@pages/nouveaute/nouveaute.component';
+import { PromoPageComponent } from '@pages/promo-page/promo-page.component';
 
 
 
@@ -73,7 +75,7 @@ export const routes: Routes = [
     { path: 'politique-de-confidentialite', component: PrivacyPolicyComponent },
     { path: 'conditions-generales-de-vente', component: TermsAndConditionsComponent },
     { path: 'conditions-generales-utilisation', component: TermsOfUseComponent },
-    { path: 'à-propos-de', component: AboutAsComponent },
+    { path: 'qui-sommes-nous', component: AboutAsComponent },
     { path: 'admin', component: EspaceAdminComponent, canActivate: [AdminGuard] },
     { path: 'contactez-nous', component: ContactPageComponent },
     { path: 'livraison', component: LivraisonComponent },
@@ -83,6 +85,8 @@ export const routes: Routes = [
     { path: 'livraison/quelle-sont-les-frais-de-livraison', component: QuelleSontLesFraisDeLivraisonComponent },
     { path: 'cooperation', component: CooperationComponent },
     { path: 'fournisseur', component: FournisseurComponent },
+    { path: 'nouveaute', component: NouveauteComponent },
+    { path: 'promo', component: PromoPageComponent },
 
 
 
