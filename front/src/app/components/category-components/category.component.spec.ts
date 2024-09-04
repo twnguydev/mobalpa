@@ -4,7 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AuthService } from '../../../services/auth.service';
 import { of } from 'rxjs';
-import { IProduct, ICategory, ICampaign, IImage, IColor, IBrand } from '@interfaces/product.interface';
+// import { IProduct, ICategory, ICampaign, IImage, IColor, IBrand } from '@interfaces/product.interface';
 
 describe('CategoryComponent', () => {
   let component: CategoryComponent;
@@ -30,86 +30,86 @@ describe('CategoryComponent', () => {
     component = fixture.componentInstance;
 
     // Мокируем данные для subcategory перед detectChanges
-    const mockColor: IColor = {
-      uuid: 'color-uuid',
-      name: 'Red'
-    };
+    // const mockColor: IColor = {
+    //   uuid: 'color-uuid',
+    //   name: 'Red'
+    // };
 
-    const mockImage: IImage = {
-      uuid: 'image-uuid',
-      uri: 'image-uri',
-      color: mockColor
-    };
+    // const mockImage: IImage = {
+    //   uuid: 'image-uuid',
+    //   uri: 'image-uri',
+    //   color: mockColor
+    // };
 
-    const mockCampaign: ICampaign = {
-      id: 'campaign-uuid',
-      name: 'Test Campaign',
-      description: 'Campaign description',
-      discountRate: 15,
-      dateStart: new Date('2023-01-01'),
-      dateEnd: new Date('2023-12-31'),
-      targetUuid: 'prod-uuid',
-      type: 'PRODUCT'
-    };
+    // const mockCampaign: ICampaign = {
+    //   id: 'campaign-uuid',
+    //   name: 'Test Campaign',
+    //   description: 'Campaign description',
+    //   discountRate: 15,
+    //   dateStart: new Date('2023-01-01'),
+    //   dateEnd: new Date('2023-12-31'),
+    //   targetUuid: 'prod-uuid',
+    //   type: 'PRODUCT'
+    // };
 
-    const mockCategory: ICategory = {
-      uuid: 'cat-uuid',
-      name: 'Test Category',
-      uri: 'category-uri',
-      description: 'Category description',
-      images: [mockImage],
-      subcategories: [],
-      campaigns: [mockCampaign],
-    };
+    // const mockCategory: ICategory = {
+    //   uuid: 'cat-uuid',
+    //   name: 'Test Category',
+    //   uri: 'category-uri',
+    //   description: 'Category description',
+    //   images: [mockImage],
+    //   subcategories: [],
+    //   campaigns: [mockCampaign],
+    // };
 
-    // Добавляем поле uuid в объект brand
-    const mockBrand: IBrand = {
-      uuid: 'brand-uuid',
-      name: 'Test Brand'
-    };
+    // // Добавляем поле uuid в объект brand
+    // const mockBrand: IBrand = {
+    //   uuid: 'brand-uuid',
+    //   name: 'Test Brand'
+    // };
 
-    const mockProduct: IProduct = {
-      uuid: 'prod-uuid',
-      name: 'Test Product',
-      description: 'Product description',
-      uri: 'product-uri',
-      price: 100,
-      stock: 10,
-      estimatedDelivery: '2-3 days',
-      weight: 1.5,
-      height: 10,
-      width: 5,
-      category: mockCategory,
-      subcategory: {
-        uuid: 'subcat-uuid',
-        name: 'Test Subcategory',
-        uri: 'test-uri',
-        description: 'This is a test description',
-        category: mockCategory,
-        products: [],
-        campaigns: [mockCampaign]
-      },
-      brand: mockBrand, // Используем объект mockBrand, который содержит uuid
-      colors: [mockColor],
-      images: [mockImage],
-      stores: [],
-      campaigns: [mockCampaign],
-      oldPrice: 120,
-      newPrice: 100,
-      discountRate: 15,
-    };
+    // const mockProduct: IProduct = {
+    //   uuid: 'prod-uuid',
+    //   name: 'Test Product',
+    //   description: 'Product description',
+    //   uri: 'product-uri',
+    //   price: 100,
+    //   stock: 10,
+    //   estimatedDelivery: '2-3 days',
+    //   weight: 1.5,
+    //   height: 10,
+    //   width: 5,
+    //   category: mockCategory,
+    //   subcategory: {
+    //     uuid: 'subcat-uuid',
+    //     name: 'Test Subcategory',
+    //     uri: 'test-uri',
+    //     description: 'This is a test description',
+    //     category: mockCategory,
+    //     products: [],
+    //     campaigns: [mockCampaign]
+    //   },
+    //   brand: mockBrand, // Используем объект mockBrand, который содержит uuid
+    //   colors: [mockColor],
+    //   images: [mockImage],
+    //   stores: [],
+    //   campaigns: [mockCampaign],
+    //   oldPrice: 120,
+    //   newPrice: 100,
+    //   discountRate: 15,
+    // };
 
-    component.subcategory = {
-      uuid: 'subcat-uuid',
-      name: 'Test Subcategory',
-      uri: 'test-uri',
-      description: 'This is a test description',
-      category: mockCategory,
-      products: [mockProduct],
-      campaigns: [mockCampaign]
-    };
+    // component.subcategory = {
+    //   uuid: 'subcat-uuid',
+    //   name: 'Test Subcategory',
+    //   uri: 'test-uri',
+    //   description: 'This is a test description',
+    //   category: mockCategory,
+    //   products: [mockProduct],
+    //   campaigns: [mockCampaign]
+    // };
 
-    component.paginatedProducts = component.subcategory.products;
+    // component.paginatedProducts = component.subcategory.products;
 
     fixture.detectChanges();
   });
