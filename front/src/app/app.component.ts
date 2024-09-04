@@ -35,7 +35,7 @@ import { ProfileComponent } from '@components/profile-components/profile.compone
   ]
 })
 export class AppComponent {
-  title = 'Hello World from Angular!';
+  title = 'Mobalpa & Archidéco - Spécialiste de la cuisine Cuisine et l\'Éctroménager';
 
   constructor(private platform: Platform) {
     this.initializeApp();

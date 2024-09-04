@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ShowCategorieOnPageComponent } from './show-categorie-on-page.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('ShowCategorieOnPageComponent', () => {
   let component: ShowCategorieOnPageComponent;
@@ -8,7 +9,7 @@ describe('ShowCategorieOnPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ShowCategorieOnPageComponent]
+      imports: [ShowCategorieOnPageComponent,HttpClientTestingModule]
     })
     .compileComponents();
 
