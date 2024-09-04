@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Réponse à votre demande de support</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+        body {
+            background-color: #f7fafc;
+            padding: 24px;
+            font-family: 'Inter', sans-serif;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background-color: #ffffff;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            border: 2px solid #1E4347;
+        }
+        .header {
+            background-color: #1E4347;
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2rem;
+            margin: 0;
+        }
+        .content {
+            padding: 24px;
+        }
+        .content h2 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2d3748;
+        }
+        .content p {
+            margin-top: 0.5rem;
+            line-height: 1.5;
+            color: #4a5568;
+        }
+        .promo-details {
+            margin-top: 16px;
+            padding: 16px;
+            background-color: #f7fafc;
+            border-radius: 0.5rem;
+            border: 1px solid #e2e8f0;
+        }
+        .promo-details p {
+            margin: 0;
+            padding: 4px 0;
+            font-weight: 600;
+        }
+        .promo-details code {
+            display: block;
+            background-color: #f1f5f9;
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .footer {
+            margin-top: 24px;
+            text-align: center;
+            color: #718096;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Votre demande de support</h1>
+        </div>
+        <div class="content">
+            <h2>Bonjour, ${fullName} !</h2>
+            <p>Nous avons le plaisir de vous informer que votre ticket a été résolu.</p>
+            <div class="promo-details">
+                <p>
+                    <br><br>
+                    <strong>Nom du ticket :</strong><br>
+                    <code>${ticketName}</code>
+                </p>
+                <p>
+                    <br><br>
+                    <strong>Contenu du ticket :</strong><br>
+                    <code>${issue}</code>
+                </p>
+                <p>
+                    <br><br>
+                    <strong>Détails de la résolution :</strong><br>
+                    <code>${resolution}</code>
+                </p>
+            </div>
+            <br><br>
+            <p>Si vous avez d'autres questions ou si vous avez besoin d'une assistance supplémentaire, n'hésitez pas à nous contacter.</p>
+        </div>
+        <div class="footer">
+            <p>Merci pour votre fidélité,<br>L'équipe support ${appName}</p>
+        </div>
+    </div>
+</body>
+</html>

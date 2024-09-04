@@ -1,0 +1,77 @@
+<div class="container mx-auto px-4 py-6 min-h-screen">
+  <div *ngIf="support" class="bg-white shadow-md rounded-lg p-6">
+    <h1 class="text-2xl font-bold mb-4">Détails du Ticket</h1>
+    <div *ngIf="errorMessage" class="text-red-500 mb-4">
+      {{ errorMessage }}
+    </div>
+
+    <div *ngIf="successMessage" class="text-green-500 mb-4">
+      {{ successMessage }}
+    </div>
+    <div class="mb-4">
+      <span class="font-semibold">ID Ticket :</span>
+      <span class="ml-2">{{ support.uuid }}</span>
+    </div>
+
+    <div class="mb-4">
+      <span class="font-semibold">Client :</span>
+      <span class="ml-2">{{ support.user.email }}</span>
+    </div>
+
+    <div class="mb-4">
+      <span class="font-semibold">Type :</span>
+      <span class="ml-2">{{ support.type }}</span>
+    </div>
+
+    <div class="mb-4">
+      <span class="font-semibold">Nom :</span>
+      <span class="ml-2">{{ support.name }}</span>
+    </div>
+
+    <div class="mb-4">
+      <span class="font-semibold">Problème :</span>
+      <span class="ml-2">{{ support.issue }}</span>
+    </div>
+
+    <div class="mb-4">
+      <span class="font-semibold">Créé le :</span>
+      <span class="ml-2">{{ support.createdAt | date: 'dd/MM/yy hh:mm:ss' }}</span>
+    </div>
+
+    <div class="mb-4">
+      <span class="font-semibold">Résolution :</span>
+      <span class="ml-2">{{ support.resolution ? support.resolution : 'Non résolu' }}</span>
+    </div>
+
+    <div class="mb-4">
+      <span class="font-semibold">Répondeur :</span>
+      <span class="ml-2">{{ support.responder ? support.responder.email : 'Non répondu' }}</span>
+    </div>
+
+    <!-- Button to show the resolve form -->
+    <div class="flex justify-between mb-4">
+      <button *ngIf="!support.resolution"
+       (click)="toggleResolveForm()" class="bg-mobalpa-green text-white px-4 py-2 rounded hover:bg-emerald-green">Répondre</button>
+      <button (click)="goBackToAdminPanel()" class="bg-emerald-green text-white px-4 py-2 rounded hover:bg-mobalpa-green">Retour</button>
+    </div>
+
+    <!-- Conditional form for resolving the ticket -->
+    <div *ngIf="showResolveForm" class="mt-4 p-4 border rounded-lg">
+      <h2 class="text-xl font-bold mb-4">Résoudre le Ticket</h2>
+
+      <form (ngSubmit)="resolveTicket()">
+        <input type="hidden" [(ngModel)]="responderUuid" name="responderUuid"/>
+
+        <div class="mb-4">
+          <label for="resolution" class="block text-gray-700">Résolution :</label>
+          <textarea id="resolution" [(ngModel)]="resolution" name="resolution" class="border rounded w-full py-2 px-3" rows="4"></textarea>
+        </div>
+
+        <div class="flex justify-end">
+          <button type="submit" class="bg-white border-4 border-emerald-green text-mobalpa-green hover:bg-emerald-green hover:text-white font-bold py-2 px-4 rounded ml-2">Envoyer</button>
+          <button type="button" (click)="toggleResolveForm()" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-700 ml-2">Annuler</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

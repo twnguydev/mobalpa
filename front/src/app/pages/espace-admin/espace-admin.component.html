@@ -552,28 +552,22 @@
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Id</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Email client</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Type</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nom</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Cause</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Objet</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date de création</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date de modification</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date de cloture</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Intervenant</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Solution</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date de cloture</th>
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
-            <tr *ngFor="let ticket of supportTickets">
+            <tr *ngFor="let ticket of supportTickets" (click)="viewTicketDetails(ticket.uuid)"
+              class="cursor-pointer hover:bg-gray-100">
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ ticket.uuid }}</td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ ticket.user.email }}</td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ ticket.type }}</td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ ticket.name }}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ ticket.issue }}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ ticket.createdAt }}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ ticket.updateAt }}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ ticket.closedAt }}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ ticket.responder }}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ ticket.resolution }}</td>
-
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ ticket.createdAt | date: 'dd/MM/yy hh:mm:ss' }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ ticket.responder.email }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ ticket.closedAt | date: 'dd/MM/yy hh:mm:ss' }}</td>
             </tr>
           </tbody>
         </table>

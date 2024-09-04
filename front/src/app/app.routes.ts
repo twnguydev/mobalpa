@@ -55,6 +55,7 @@ import { OuDemanderLeServiceDeGarantieComponent } from '@components/footer-pages
 import { QueSePasseTIlSiLeCentreDeServiceNePeutPasReparerLeProduitPendantLaPeriodeDeGarantieComponent } from '@components/footer-pages/service-de-garantie/parts/que-se-passe-t-il-si-le-centre-de-service-ne-peut-pas-reparer-le-produit-pendant-la-periode-de-garantie/que-se-passe-t-il-si-le-centre-de-service-ne-peut-pas-reparer-le-produit-pendant-la-periode-de-garantie.component';
 import { DansQuelsCasLaGarantieNEstEllePasAssureeComponent } from '@components/footer-pages/service-de-garantie/parts/dans-quels-cas-la-garantie-n-est-elle-pas-assuree/dans-quels-cas-la-garantie-n-est-elle-pas-assuree.component';
 import { NewsletterSendComponent } from '@pages/espace-admin/component/newsletter-send/newsletter-send.component';
+import { ResponseSupportComponent } from '@pages/espace-admin/component/support-response/response-support.component';
 
 export const routes: Routes = [
     { path: '', component: LandingPageComponent },
@@ -73,6 +74,7 @@ export const routes: Routes = [
 
     { path: 'profil', component: ProfileComponent, canActivate: [AuthGuard] },
     { path: 'admin/utilisateur/:uuid', component: UserPageComponent, canActivate: [AdminGuard] },
+    { path: 'admin/ticket/:uuid', component: ResponseSupportComponent, canActivate: [AdminGuard] },
 
     { path: 'mentions-legales', component: LegalNoticeComponent },
     { path: 'politique-de-confidentialite', component: PrivacyPolicyComponent },

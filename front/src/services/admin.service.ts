@@ -227,4 +227,24 @@ export class AdminService {
     if (!headers) return new Observable<{ message: string }>();
     return this.http.post<{ message: string }>(`${this.apiUrl}/newsletter/send`, newsletterData, { headers });
   }
+
+  getTicketByUuid(uuid: string): Observable<any> {
+    const headers: HttpHeaders | null = this.authService.getAuthHeaders();
+    if (!headers) return new Observable<any>();
+    return this.http.get<any>(`${this.apiUrl}/ticket/${uuid}`, { headers });
+  }
+ 
+  resolveTicket(ticketUuid: string, responderUuid: string, resolution: string): Observable<any> {
+    const headers = this.authService.getAuthHeaders();
+    if (!headers) {
+      return new Observable<any>();
+    }
+ 
+    const body = {
+      responderUuid: responderUuid,
+      resolution: resolution
+    };
+ 
+    return this.http.patch<any>(`${this.apiUrl}/ticket/${ticketUuid}/resolve`, body, { headers });
+  }
 }

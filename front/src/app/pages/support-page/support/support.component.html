@@ -30,11 +30,11 @@
                         <div class="w-full flex flex-wrap gap-4 my-2">
                             <div class="flex-grow">
                                 <select formControlName="requestType" class="bg-gray-100 p-2 h-10 w-full rounded-none">
-                                    <option value="0">Type de requête</option>
-                                    <option value="1">Service après-vente</option>
-                                    <option value="2">Réclamation sur un produit</option>
-                                    <option value="3">Livraison</option>
-                                    <option value="4">Autre</option>
+                                    <option disabled selected>Type de requête</option>
+                                    <option value="0">Service après-vente</option>
+                                    <option value="1">Réclamation sur un produit</option>
+                                    <option value="2">Livraison</option>
+                                    <option value="3">Autre</option>
                                 </select>
                                 <span
                                     *ngIf="supForm.get('requestType')?.touched && supForm.get('requestType')?.errors?.['required']"

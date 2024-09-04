@@ -1,5 +1,8 @@
+import { IUser } from "./user.interface";
+
 export interface ITicket {
   uuid: string;
+  user: IUser;
   subject: string;
   status: string;
   type: string;
@@ -8,6 +11,6 @@ export interface ITicket {
   createdAt: string;
   updatedAt: string;
   closedAt: string;
-  responder: string;
+  responder: IUser;
   resolution: string;
 }

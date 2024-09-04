@@ -642,6 +642,10 @@ export class EspaceAdminComponent implements OnInit {
     this.filterTickets();
   }
 
+  viewTicketDetails(ticketUuid: string): void {
+    this.router.navigate(['/admin/ticket/' + ticketUuid]);
+  }
+
   // Forecast
   loadForecast(): void {
     this.adminService.getForecast(false, this.reportType).subscribe(forecast => {
