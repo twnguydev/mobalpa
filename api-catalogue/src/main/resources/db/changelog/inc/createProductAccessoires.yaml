@@ -10,6 +10,7 @@ databaseChangeLog:
                 {
                   "_id": {"$binary": {"base64": "1Aa2BBjt27A9whsacnLikw==", "subType": "03"}},
                   "name": "Spatule en bois",
+                  "uri": "cuisines/ustensile-de-cuisine/spatule-en-bois",
                   "description": "Spatule en bois pour cuisine",
                   "price": 9.99,
                   "stock": 200,
@@ -36,6 +37,7 @@ databaseChangeLog:
                 {
                   "_id": {"$binary": {"base64": "2Bb3CCjt37A9whsacnLikw==", "subType": "03"}},
                   "name": "Vase en céramique",
+                  "uri": "cuisines/decoration-interieur/vase-en-ceramique",
                   "description": "Vase en céramique pour décoration intérieure",
                   "price": 29.99,
                   "stock": 150,
@@ -62,6 +64,7 @@ databaseChangeLog:
                 {
                   "_id": {"$binary": {"base64": "3Cc4DDjt47A9whsacnLikw==", "subType": "03"}},
                   "name": "Lanternes extérieures",
+                  "uri": "cuisines/decoration-exterieur/lanternes-exterieures",
                   "description": "Lanternes pour décoration extérieure",
                   "price": 39.99,
                   "stock": 100,

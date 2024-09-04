@@ -380,7 +380,7 @@ databaseChangeLog:
                       {
                         "_id": {"$binary": {"base64": "9snn3rbKRjABDmN7nej1xw==", "subType": "03"}},
                         "uri": "/images/pem/cafe-premium.jpeg",
-                        "color": {"$ref": "colors", "$id": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}
+                        "color": {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
                       }
                     ],
                     "_class": "com.mobalpa.catalogue.model.Product"
@@ -407,7 +407,7 @@ databaseChangeLog:
                       {
                         "_id": {"$binary": {"base64": "u8dtQZ4PQ1G4XYMRkFaj3w==", "subType": "03"}},
                         "uri": "/images/pem/cafe-eco.webp",
-                        "color": {"$ref": "colors", "$id": {"base64": "dQp3I4ZlV9UqoL3mKoZ2GQ==", "subType": "03"}}
+                        "color": {"$ref": "colors", "$id": {"$binary": {"base64": "dQp3I4ZlV9UqoL3mKoZ2GQ==", "subType": "03"}}}
                       }
                     ],
                     "_class": "com.mobalpa.catalogue.model.Product"
@@ -434,7 +434,7 @@ databaseChangeLog:
                       {
                         "_id": {"$binary": {"base64": "9Pn1RcgZTLe9JYP8hRM9VQ==", "subType": "03"}},
                         "uri": "/images/pem/cafe-compact.jpeg",
-                        "color": {"$ref": "colors", "$id": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}
+                        "color": {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
                       }
                     ],
                     "_class": "com.mobalpa.catalogue.model.Product"
@@ -461,7 +461,7 @@ databaseChangeLog:
                       {
                         "_id": {"$binary": {"base64": "URkFtEgnTZ2DLY8Mk3gHXw==", "subType": "03"}},
                         "uri": "/images/pem/cafe-pro.jpeg",
-                        "color": {"$ref": "colors", "$id": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}
+                        "color": {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
                       }
                     ],
                     "_class": "com.mobalpa.catalogue.model.Product"
@@ -488,7 +488,7 @@ databaseChangeLog:
                       {
                         "_id": {"$binary": {"base64": "8JkIz7hcTOC5HUp3K8Fr0A==", "subType": "03"}},
                         "uri": "/images/pem/cafe-vintage.webp",
-                        "color": {"$ref": "colors", "$id": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}
+                        "color": {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
                       }
                     ],
                     "_class": "com.mobalpa.catalogue.model.Product"
