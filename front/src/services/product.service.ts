@@ -22,7 +22,6 @@ export class ProductService {
       switchMap(products => {
         return this.http.get<ICampaign[]>(`${this.apiUrl}/campaigns`, { headers }).pipe(
           map(campaigns => {
-            console.log('Products fetched:', products);  
 
             return products.map(product => ({
               ...product,

@@ -13,11 +13,12 @@ import { UserService } from '@services/user.service';
 @Component({
   selector: 'app-nouveaute',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './nouveaute.component.html',
   styleUrl: './nouveaute.component.css'
 })
 export class NouveauteComponent implements OnInit {
+  allProducts: IProduct[] = [];
 
   products: IProduct[] = [];
   error: string | null = null;
@@ -34,6 +35,8 @@ export class NouveauteComponent implements OnInit {
   maxPrice: number = 0;
   selectedBrand: string | null = null;
   selectedColor: string | null = null;
+  colors: string[] = [];
+  brands: string[] = [];
 
   colorMap: { [key: string]: string } = {
     Rouge: '#FF0000',
@@ -62,12 +65,28 @@ export class NouveauteComponent implements OnInit {
   loadProducts(): void {
     this.productService.getProducts().subscribe(
       (products: IProduct[]) => {
-        this.products = products.sort((a, b) => {
-          const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0; // Use 0 or a default date if undefined
-          const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0; // Use 0 or a default date if undefined
+        const currentDate = new Date();
+
+        const startOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+
+        const endOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+
+        this.products = products.filter(product => {
+          if (!product.createdAt) {
+            return false; 
+          }
+          const productDate = new Date(product.createdAt);
+          return productDate >= startOfMonth && productDate <= endOfMonth;
+        });
+
+        this.products.sort((a, b) => {
+          const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+          const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
           return dateB - dateA;
         });
+
         this.filteredProducts = [...this.products];
+
         this.paginateProducts();
       },
       (error) => {
@@ -76,6 +95,8 @@ export class NouveauteComponent implements OnInit {
       }
     );
   }
+
+
 
 
   addToWishlist(product: IProduct): void {
@@ -226,6 +247,40 @@ export class NouveauteComponent implements OnInit {
     this.selectedSort = value;
     this.updateUrlParams();
     this.sortProducts(value);
+  }
+  updateSelectedPrice(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    const numericValue = Number(inputElement.value);
+    if (!isNaN(numericValue)) {
+      this.selectedPrice = numericValue;
+      this.updateUrlParams();
+      this.applyFilters();
+    }
+  }
+  applyFilters(): void {
+    this.filteredProducts = this.allProducts.filter(product => {
+      return (
+        (this.selectedBrand ? product.brand.name === this.selectedBrand : true) &&
+        (this.selectedColor ? product.colors.some(color => color.name === this.selectedColor) : true) &&
+        (product.price <= this.selectedPrice)
+      );
+    });
+
+    this.sortProducts(this.selectedSort);
+    this.currentPage = 1;
+    this.paginateProducts();
+  }
+  onBrandChange(event: Event): void {
+    const value = (event.target as HTMLSelectElement).value;
+    this.selectedBrand = value || null;
+    this.updateUrlParams();
+    this.applyFilters();
+  }
+  onColorChange(event: Event): void {
+    const value = (event.target as HTMLSelectElement).value;
+    this.selectedColor = value || null;
+    this.updateUrlParams();
+    this.applyFilters();
   }
 
 }
