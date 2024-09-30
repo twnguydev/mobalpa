@@ -43,7 +43,7 @@ public class CouponCode {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    @OneToMany(mappedBy = "coupon", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "coupon", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private Set<UserCoupon> userCoupons = new HashSet<>();
 
@@ -67,5 +67,16 @@ public class CouponCode {
     public enum DiscountType {
         PERCENTAGE,
         AMOUNT
+    }
+
+    @Transient
+    private List<User> enrichedTargetUsers;
+
+    public void setEnrichedTargetUsers(List<User> users) {
+        this.enrichedTargetUsers = users;
+    }
+
+    public List<User> getEnrichedTargetUsers() {
+        return enrichedTargetUsers;
     }
 }

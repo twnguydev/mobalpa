@@ -1,24 +1,23 @@
 <div class="flex w-screen">
   <!-- Sidebar -->
-  <div class="w-64 h-screen bg-gray-200 text-black p-4">
+  <div class="w-64 h-auto bg-gray-200 text-black p-4">
     <div class="border-b border-gray-600 mb-4">
       <div *ngFor="let tab of tabs; let i = index" (click)="selectTab(i)"
-           class="p-2 cursor-pointer text-start flex-1 sm:flex-auto hover:bg-gray-300 transition-colors"
-           [class.bg-emerald-green]="selectedTab === i" [class.text-white]="selectedTab === i">
+        class="p-2 cursor-pointer text-start flex-1 sm:flex-auto hover:bg-gray-300 transition-colors"
+        [class.bg-emerald-green]="selectedTab === i" [class.text-white]="selectedTab === i">
         {{ tab.title }}
       </div>
     </div>
   </div>
 
   <!-- Main Content -->
-  <div class="p-4 w-full overflow-auto">
+  <div class="p-4 w-full overflow-auto min-h-screen h-auto">
     <!-- Utilisateurs Tab -->
     <div *ngIf="selectedTab === 0" class="min-w-full">
       <div *ngIf="users.length > 0; else noUsers">
         <!-- Barre de Recherche -->
         <input type="text" class="mb-4 p-2 border border-gray-300 rounded w-full"
-               placeholder="Rechercher par prénom, nom, email, etc."
-               [(ngModel)]="searchTermUsers" (input)="filterUsers()" />
+          placeholder="Rechercher par prénom, nom, email, etc." [(ngModel)]="searchTermUsers" (input)="filterUsers()" />
 
         <table class="min-w-full divide-y divide-gray-200">
           <thead class="bg-gray-50">
@@ -29,30 +28,27 @@
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Téléphone</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Adresse</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ville</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Code Postal</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Code Postal
+              </th>
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
             <tr *ngFor="let user of filteredUsers">
-              <td class="px-6 py-4 whitespace-nowrap">{{ user.firstname }}</td>
-              <td class="px-6 py-4 whitespace-nowrap">{{ user.lastname }}</td>
-              <td class="px-6 py-4 whitespace-nowrap">{{ user.email }}</td>
-              <td class="px-6 py-4 whitespace-nowrap">{{ user.phoneNumber }}</td>
-              <td class="px-6 py-4 whitespace-nowrap">{{ user.address }}</td>
-              <td class="px-6 py-4 whitespace-nowrap">{{ user.city }}</td>
-              <td class="px-6 py-4 whitespace-nowrap">{{ user.zipcode }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.firstname }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.lastname }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.email }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.phoneNumber }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.address }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.city }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.zipcode }}</td>
+
             </tr>
           </tbody>
         </table>
 
         <!-- Pagination -->
-        <app-pagination
-          [currentPage]="currentPageUsers"
-          [itemsPerPage]="itemsPerPageUsers"
-          [totalItems]="users.length"
-          (pageChange)="onPageChangeUsers($event)"
-          class="mt-4"
-        ></app-pagination>
+        <app-pagination [currentPage]="currentPageUsers" [itemsPerPage]="itemsPerPageUsers" [totalItems]="users.length"
+          (pageChange)="onPageChangeUsers($event)" class="mt-4"></app-pagination>
       </div>
 
       <ng-template #noUsers>
@@ -65,14 +61,14 @@
       <div *ngIf="products.length > 0; else noProducts">
         <!-- Barre de Recherche -->
         <input type="text" class="mb-4 p-2 border border-gray-300 rounded w-full"
-               placeholder="Rechercher par nom, prix, etc."
-               [(ngModel)]="searchTermProducts" (input)="filterProducts()" />
+          placeholder="Rechercher par nom, prix, etc." [(ngModel)]="searchTermProducts" (input)="filterProducts()" />
 
         <table class="min-w-full divide-y divide-gray-200">
           <thead class="bg-gray-50">
             <tr>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nom</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description
+              </th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prix</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Marque</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Catégorie</th>
@@ -90,13 +86,8 @@
         </table>
 
         <!-- Pagination -->
-        <app-pagination
-          [currentPage]="currentPageProducts"
-          [itemsPerPage]="itemsPerPageProducts"
-          [totalItems]="products.length"
-          (pageChange)="onPageChangeProducts($event)"
-          class="mt-4"
-        ></app-pagination>
+        <app-pagination [currentPage]="currentPageProducts" [itemsPerPage]="itemsPerPageProducts"
+          [totalItems]="products.length" (pageChange)="onPageChangeProducts($event)" class="mt-4"></app-pagination>
       </div>
 
       <ng-template #noProducts>
@@ -109,14 +100,15 @@
       <div *ngIf="categories.length > 0; else noCategories">
         <!-- Barre de Recherche -->
         <input type="text" class="mb-4 p-2 border border-gray-300 rounded w-full"
-               placeholder="Rechercher par nom, description, etc."
-               [(ngModel)]="searchTermCategories" (input)="filterCategories()" />
+          placeholder="Rechercher par nom, description, etc." [(ngModel)]="searchTermCategories"
+          (input)="filterCategories()" />
 
         <table class="min-w-full divide-y divide-gray-200">
           <thead class="bg-gray-50">
             <tr>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nom</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description
+              </th>
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
@@ -124,7 +116,7 @@
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                 {{ category.name }}
                 <div *ngIf="category.images && category.images.length > 0">
-                  <img [src]="category.images[0].uri" alt="{{ category.name }}" class="w-16 h-16 object-cover"/>
+                  <img [src]="category.images[0].uri" alt="{{ category.name }}" class="w-16 h-16 object-cover" />
                 </div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
@@ -135,13 +127,8 @@
         </table>
 
         <!-- Pagination -->
-        <app-pagination
-          [currentPage]="currentPageCategories"
-          [itemsPerPage]="itemsPerPageCategories"
-          [totalItems]="categories.length"
-          (pageChange)="onPageChangeCategories($event)"
-          class="mt-4"
-        ></app-pagination>
+        <app-pagination [currentPage]="currentPageCategories" [itemsPerPage]="itemsPerPageCategories"
+          [totalItems]="categories.length" (pageChange)="onPageChangeCategories($event)" class="mt-4"></app-pagination>
       </div>
 
       <ng-template #noCategories>
@@ -154,32 +141,30 @@
       <div *ngIf="subcategories.length > 0; else noSubcategories">
         <!-- Barre de Recherche -->
         <input type="text" class="mb-4 p-2 border border-gray-300 rounded w-full"
-               placeholder="Rechercher par nom, description, etc."
-               [(ngModel)]="searchTermSubcategories" (input)="filterSubcategories()" />
+          placeholder="Rechercher par nom, description, etc." [(ngModel)]="searchTermSubcategories"
+          (input)="filterSubcategories()" />
 
         <table class="min-w-full divide-y divide-gray-200">
           <thead class="bg-gray-50">
             <tr>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nom</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description
+              </th>
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
             <tr *ngFor="let subcategory of filteredSubcategories">
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ subcategory.name }}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ subcategory.description || 'Non spécifié' }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ subcategory.description || 'Non spécifié'
+                }}</td>
             </tr>
           </tbody>
         </table>
 
         <!-- Pagination -->
-        <app-pagination
-          [currentPage]="currentPageSubcategories"
-          [itemsPerPage]="itemsPerPageSubcategories"
-          [totalItems]="subcategories.length"
-          (pageChange)="onPageChangeSubcategories($event)"
-          class="mt-4"
-        ></app-pagination>
+        <app-pagination [currentPage]="currentPageSubcategories" [itemsPerPage]="itemsPerPageSubcategories"
+          [totalItems]="subcategories.length" (pageChange)="onPageChangeSubcategories($event)"
+          class="mt-4"></app-pagination>
       </div>
 
       <ng-template #noSubcategories>
@@ -192,42 +177,45 @@
       <div *ngIf="orders.length > 0; else noOrders">
         <!-- Barre de Recherche -->
         <input type="text" class="mb-4 p-2 border border-gray-300 rounded w-full"
-               placeholder="Rechercher par numéro, client, etc."
-               [(ngModel)]="searchTermOrders" (input)="filterOrders()" />
+          placeholder="Rechercher par numéro, client, etc." [(ngModel)]="searchTermOrders" (input)="filterOrders()" />
+
 
         <table class="min-w-full divide-y divide-gray-200">
           <thead class="bg-gray-50">
             <tr>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Numéro de Commande</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Numéro de
+                Commande</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Numéro de de
+                Livraison</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Client</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Réduction</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Montant Total</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date de Commande</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Montant Total
+              </th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date de
+                Commande</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Statut</th>
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
             <tr *ngFor="let order of filteredOrders">
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.uuid }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.deliveryNumbers }}</td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                 {{ order.user?.firstname }} {{ order.user?.lastname }}
               </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.reduction }}%</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.totalTtc }} €</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.createdAt | date }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.reduction }}€</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.totalTtc | number:'1.2-2' }} €</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.createdAt | date:'dd/MM/yyyy' }}
+              </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.status }}</td>
+
             </tr>
           </tbody>
         </table>
 
         <!-- Pagination -->
-        <app-pagination
-          [currentPage]="currentPageOrders"
-          [itemsPerPage]="itemsPerPageOrders"
-          [totalItems]="orders.length"
-          (pageChange)="onPageChangeOrders($event)"
-          class="mt-4"
-        ></app-pagination>
+        <app-pagination [currentPage]="currentPageOrders" [itemsPerPage]="itemsPerPageOrders"
+          [totalItems]="orders.length" (pageChange)="onPageChangeOrders($event)" class="mt-4"></app-pagination>
       </div>
 
       <ng-template #noOrders>
@@ -237,41 +225,176 @@
 
     <!-- Code Promo Tab -->
     <div *ngIf="selectedTab === 5" class="min-w-full">
+      <button (click)="toggleFormVisibility()"
+        class="mb-4 bg-mobalpa-green text-white p-2 rounded hover:bg-emerald-green focus:outline-none">
+        {{ isFormVisible ? 'Annuler' : 'Créer un Coupon' }}
+      </button>
+      <div *ngIf="errorMessage" class="text-red-500 mb-4">
+        {{ errorMessage }}
+      </div>
+
+      <div *ngIf="successMessage" class="text-green-500 mb-4">
+        {{ successMessage }}
+      </div>
+
+      <!-- Formulaire compact pour créer un coupon -->
+      <form *ngIf="isFormVisible" (ngSubmit)="createCoupon()" #couponForm="ngForm"
+        class="bg-white p-4 rounded-lg shadow-md space-y-4 mb-4 border border-mobalpa-green">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="flex flex-col">
+            <label for="name" class="text-xs font-medium text-gray-700">Nom du Coupon</label>
+            <input type="text" id="name" [(ngModel)]="newCoupon.name" name="name" required
+              class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          </div>
+
+          <div class="flex flex-col">
+            <label for="discountRate" class="text-xs font-medium text-gray-700">Taux de Réduction (%) ou Montant</label>
+            <input type="number" id="discountRate" [(ngModel)]="newCoupon.discountRate" name="discountRate" required
+              class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          </div>
+
+          <div class="flex flex-col">
+            <label for="discountType" class="text-xs font-medium text-gray-700">Type de Réduction</label>
+            <select id="discountType" [(ngModel)]="newCoupon.discountType" name="discountType" required
+              class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <option value="PERCENTAGE">Pourcentage</option>
+              <option value="AMOUNT">Montant</option>
+            </select>
+          </div>
+
+          <div class="flex flex-col">
+            <label for="dateStart" class="text-xs font-medium text-gray-700">Date de Début</label>
+            <input type="datetime-local" id="dateStart" [(ngModel)]="newCoupon.dateStart" name="dateStart" required
+              step="1"
+              class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          </div>
+
+          <div class="flex flex-col">
+            <label for="dateEnd" class="text-xs font-medium text-gray-700">Date de Fin</label>
+            <input type="datetime-local" id="dateEnd" [(ngModel)]="newCoupon.dateEnd" name="dateEnd" required step="1"
+              class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          </div>
+
+          <div class="flex flex-col">
+            <label for="targetType" class="text-xs font-medium text-gray-700">Type de Cible</label>
+            <select id="targetType" [(ngModel)]="newCoupon.targetType" name="targetType" required
+              class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <option value="ALL_USERS">Tous les utilisateurs</option>
+              <option value="SPECIFIC_USERS">Utilisateurs spécifiques</option>
+            </select>
+          </div>
+
+          <div class="flex flex-col" *ngIf="newCoupon.targetType === 'SPECIFIC_USERS'">
+            <label for="targetUsers" class="text-xs font-medium text-gray-700">Utilisateurs Ciblés</label>
+            <div class="relative">
+              <input type="text" [(ngModel)]="searchTerm" (ngModelChange)="onSearchTermChangeUsers($event)"
+                (focus)="onInputFocus()" (blur)="onInputBlur()" placeholder="Rechercher des utilisateurs..."
+                class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full" />
+              <button type="button" (click)="toggleDropdown()"
+                class="absolute right-2 top-1/2 transform -translate-y-1/2">
+                <span class="text-gray-400">&#9660;</span>
+              </button>
+              <ul *ngIf="showDropdown && filteredUsers.length > 0"
+                class="absolute z-10 w-full bg-white border border-gray-300 rounded-md shadow-lg mt-1 max-h-60 overflow-y-auto">
+                <li *ngFor="let user of filteredUsers" (mousedown)="selectUser(user)"
+                  class="px-3 py-2 hover:bg-gray-100 cursor-pointer">
+                  {{ user.firstname }} {{ user.lastname }}
+                </li>
+              </ul>
+            </div>
+            <div class="mt-2 flex flex-wrap gap-2">
+              <span *ngFor="let user of selectedUsers"
+                class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-sm flex items-center">
+                {{ user.firstname }} {{ user.lastname }}
+                <button (click)="removeUser(user)" class="ml-1 text-blue-600 hover:text-blue-800">&times;</button>
+              </span>
+            </div>
+          </div>
+
+          <div class="flex flex-col">
+            <label for="maxUse" class="text-xs font-medium text-gray-700">Nombre d'Utilisations Max</label>
+            <input type="number" id="maxUse" [(ngModel)]="newCoupon.maxUse" name="maxUse" required
+              class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          </div>
+        </div>
+
+        <button type="submit"
+          class="w-1/3 bg-emerald-green  text-white py-2 rounded-md hover:bg-mobalpa-green focus:outline-none focus:bg-blue-600 transition-colors">
+          Créer Coupon
+        </button>
+      </form>
+
       <div *ngIf="codePromos.length > 0; else noCodepromo">
         <!-- Barre de Recherche -->
         <input type="text" class="mb-4 p-2 border border-gray-300 rounded w-full"
-               placeholder="Rechercher par code, description, etc."
-               [(ngModel)]="searchTermCodePromos" (input)="filterCodePromos()" />
+          placeholder="Rechercher par code, description, etc." [(ngModel)]="searchTermCodePromos"
+          (input)="filterCodePromos()" />
 
         <table class="min-w-full divide-y divide-gray-200">
           <thead class="bg-gray-50">
             <tr>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Code</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nom</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Réduction</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date de Début</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date de Fin</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cible</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date de Début
+              </th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date de Fin
+              </th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
             <tr *ngFor="let codePromo of codePromos">
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ codePromo.code }}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ codePromo.description }}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ codePromo.discount }}%</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ codePromo.startDate | date }}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ codePromo.endDate | date }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ codePromo.name }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                {{ codePromo.discountRate }}{{ codePromo.discountType === 'PERCENTAGE' ? '%' : '€' }}
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <ng-container *ngIf="codePromo.targetType === 'ALL_USERS'; else userList">
+                  Tous les utilisateurs
+                </ng-container>
+
+                <ng-template #userList>
+                  <ng-container *ngIf="codePromo.enrichedTargetUsers?.length > 0; else noUsers">
+                    <ng-container
+                      *ngIf="!showAllUsers && codePromo.enrichedTargetUsers.length > 2; else showAllUsersList">
+                      <ng-container *ngFor="let user of codePromo.enrichedTargetUsers.slice(0, 2); let last = last">
+                        {{ user.firstname }} {{ user.lastname }}<ng-container *ngIf="!last">, </ng-container>
+                      </ng-container>
+                      <button (click)="toggleShowAllUsers()" class="text-blue-500 underline">
+                        Voir plus
+                      </button>
+                    </ng-container>
+
+                    <ng-template #showAllUsersList>
+                      <ng-container *ngFor="let user of codePromo.enrichedTargetUsers; let last = last">
+                        {{ user.firstname }} {{ user.lastname }}<ng-container *ngIf="!last">, </ng-container>
+                      </ng-container>
+                    </ng-template>
+                  </ng-container>
+
+                  <ng-template #noUsers>
+                    Aucun utilisateur spécifié
+                  </ng-template>
+                </ng-template>
+              </td>
+
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ codePromo.dateStart | date:'dd/MM/yyyy
+                HH:mm:ss' }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ codePromo.dateEnd | date:'dd/MM/yyyy
+                HH:mm:ss' }}</td>
+
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <button (click)="deleteCoupon(codePromo.id)"
+                  class="text-white bg-red-500 p-2 rounded hover:bg-red-600">Supprimer</button>
+              </td>
             </tr>
           </tbody>
         </table>
 
         <!-- Pagination -->
-        <app-pagination
-          [currentPage]="currentPageCodePromos"
-          [itemsPerPage]="itemsPerPageCodePromos"
-          [totalItems]="codePromos.length"
-          (pageChange)="onPageChangeCodePromos($event)"
-          class="mt-4"
-        ></app-pagination>
+        <app-pagination [currentPage]="currentPageCodePromos" [itemsPerPage]="itemsPerPageCodePromos"
+          [totalItems]="codePromos.length" (pageChange)="onPageChangeCodePromos($event)" class="mt-4"></app-pagination>
       </div>
 
       <ng-template #noCodepromo>
@@ -279,11 +402,330 @@
       </ng-template>
     </div>
 
-    <!-- Statistiques Tab -->
+
+    <!-- Campaigns Tab -->
     <div *ngIf="selectedTab === 6" class="min-w-full">
-      <div *ngIf="statistics.length > 0; else noStatistique">
-        <!-- Contenu statistique à ajouter ici -->
+
+      <button (click)="toggleFormVisibility()"
+        class="mb-4 bg-mobalpa-green text-white p-2 rounded hover:bg-emerald-green focus:outline-none">
+        {{ isFormVisible ? 'Annuler' : 'Créer une Campagne' }}
+      </button>
+      <div *ngIf="errorMessage" class="text-red-500 mb-4">
+        {{ errorMessage }}
       </div>
+
+      <div *ngIf="successMessage" class="text-green-500 mb-4">
+        {{ successMessage }}
+      </div>
+
+      <!-- Formulaire compact pour créer une campagne -->
+<form *ngIf="isFormVisible" (ngSubmit)="createCampaign()" #campaignForm="ngForm" class="bg-white p-4 rounded-lg shadow-md space-y-4 mb-4 border border-mobalpa-green">
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div class="flex flex-col">
+      <label for="name" class="text-xs font-medium text-gray-700">Nom de la Campagne</label>
+      <input type="text" id="name" [(ngModel)]="newCampaign.name" name="name" required class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+    </div>
+
+    <div class="flex flex-col">
+      <label for="type" class="text-xs font-medium text-gray-700">Type de Campagne</label>
+      <select id="type" [(ngModel)]="newCampaign.type" name="type" required (change)="onCampaignTypeChange()" class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <option value="CATEGORY">Catégorie</option>
+        <option value="SUBCATEGORY">Sous-Catégorie</option>
+        <option value="PRODUCT">Produit</option>
+      </select>
+    </div>
+
+    <div class="flex flex-col">
+      <label for="discountRate" class="text-xs font-medium text-gray-700">Taux de Réduction (%)</label>
+      <input type="number" id="discountRate" [(ngModel)]="newCampaign.discountRate" name="discountRate" required class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+    </div>
+
+    <div class="flex flex-col">
+      <label for="dateStart" class="text-xs font-medium text-gray-700">Date de Début</label>
+      <input type="datetime-local" id="dateStart" [(ngModel)]="newCampaign.dateStart" name="dateStart" required step="1" class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+    </div>
+
+    <div class="flex flex-col">
+      <label for="dateEnd" class="text-xs font-medium text-gray-700">Date de Fin</label>
+      <input type="datetime-local" id="dateEnd" [(ngModel)]="newCampaign.dateEnd" name="dateEnd" required step="1" class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+    </div>
+
+    <div class="flex flex-col relative">
+      <label for="targetUuid" class="text-xs font-medium text-gray-700">Cible de la Campagne</label>
+      <input
+      type="text"
+      [(ngModel)]="searchTermCampaignTarget"
+      name="searchTerm"
+      (input)="onCampaignTargetSearchTermChange($event)"
+      (focus)="showCampaignTargetDropdown = true"
+      (blur)="onInputBlur2()"
+      [placeholder]="'Rechercher ' + newCampaign.type.toLowerCase()"
+      class="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+
+
+      <ul *ngIf="showCampaignTargetDropdown" class="absolute z-10 w-full mt-16 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-auto">
+        <li *ngFor="let target of filteredCampaignTargets"
+            (mousedown)="selectCampaignTarget(target)"
+            class="px-3 py-2 hover:bg-gray-100 cursor-pointer">
+          {{ target.name }}
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div *ngIf="selectedCampaignTarget" class="mt-2">
+    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">
+      {{ selectedCampaignTarget.name }}
+      <button type="button" (click)="removeCampaignTarget()" class="ml-2 text-blue-600 hover:text-blue-800">&times;</button>
+    </span>
+  </div>
+
+  <button type="submit" class="w-1/3 bg-emerald-green text-white py-2 rounded-md hover:bg-mobalpa-green focus:outline-none focus:bg-blue-600 transition-colors">
+    Créer Campagne
+  </button>
+</form>
+
+      <div *ngIf="campaigns.length > 0; else noCampaigns">
+        <!-- Barre de Recherche -->
+        <input type="text" class="mb-4 p-2 border border-gray-300 rounded w-full"
+          placeholder="Rechercher par nom, description, etc." [(ngModel)]="searchTermCampaigns"
+          (input)="filterCampaigns()" />
+        <table class="min-w-full divide-y divide-gray-200">
+            <thead>
+              <tr>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nom</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Réduction</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date de Début</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date de Fin</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Id Cible</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let campaign of campaigns">
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ campaign.name }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ campaign.type }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ campaign.discountRate}}%</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ campaign.dateStart | date:'dd/MM/yyyy' }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ campaign.dateEnd | date:'dd/MM/yyyy' }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ campaign.targetUuid }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <button (click)="deleteCampaign(campaign.id)" class="text-white bg-red-500 p-2 rounded hover:bg-red-600">Supprimer</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        <!-- Pagination -->
+
+        <app-pagination [currentPage]="currentPageCampaigns" [itemsPerPage]="itemsPerPageCampaigns"
+          [totalItems]="campaigns.length" (pageChange)="onPageChangeCampaigns($event)" class="mt-4"></app-pagination>
+      </div>
+      <ng-template #noCampaigns>
+        <p>Aucune campagne trouvée.</p>
+      </ng-template>
+    </div>
+
+
+    <!-- Ticket Tab -->
+    <div *ngIf="selectedTab === 7" class="min-w-full">
+      <div *ngIf="supportTickets.length > 0; else noTickets">
+        <!-- Barre de Recherche -->
+        <input type="text" class="mb-4 p-2 border border-gray-300 rounded w-full"
+          placeholder="Rechercher par titre, description, etc." [(ngModel)]="searchTermTickets"
+          (input)="filterTickets()" />
+
+
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Id</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Email client</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Type</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nom</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Cause</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Créé le :</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Modifié le :</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Fermé le :</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Résolue par :</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Solution</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <tr *ngFor="let ticket of supportTickets">
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ ticket.uuid }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ ticket.user.email }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ ticket.type }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ ticket.name }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ ticket.issue }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ ticket.createdAt }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ ticket.updateAt }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ ticket.closedAt }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ ticket.responder }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ ticket.resolution }}</td>
+
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Pagination -->
+        <app-pagination [currentPage]="currentPageSupportTickets" [itemsPerPage]="itemsPerPageSupportTickets"
+          [totalItems]="supportTickets.length" (pageChange)="onPageChangeSupportTickets($event)"
+          class="mt-4"></app-pagination>
+      </div>
+
+      <ng-template #noTickets>
+        <p>Aucun Ticket trouvé.</p>
+
+      </ng-template>
+    </div>
+
+    <!-- Statistiques Tab -->
+    <div *ngIf="selectedTab === 8" class="min-w-full">
+
+      <div *ngIf="forecast.length > 0 || summary.length > 0 || sales.length > 0; else noStatistique">
+        <!-- Contenu lorsque les données sont disponibles -->
+
+        <div class="flex items-center justify-center space-x-4 mb-4">
+          <div class="mt-1 px-4 py-2 block w-full border border-gray-300 rounded-md shadow-sm sm:text-sm">
+            <label for="start_date" class="block text-sm font-medium text-gray-700">Date de début</label>
+            <input id="start_date" name="start_date" type="date" [(ngModel)]="startDate" (change)="loadSales()"
+              class="border-none w-full h-full">
+          </div>
+          <div class="mt-1 px-4 py-2 block w-full border border-gray-300 rounded-md shadow-sm sm:text-sm">
+            <label for="end_date" class="block text-sm font-medium text-gray-700">Date de fin</label>
+            <input id="end_date" name="end_date" type="date" [(ngModel)]="endDate" (change)="loadSales()"
+              class="border-none w-full h-full">
+          </div>
+          <div class="mt-1 px-4 py-2 block w-full border border-gray-300 rounded-md shadow-sm sm:text-sm">
+            <label for="period" class="block text-sm font-medium text-gray-700">Périodicité</label>
+            <select id="period" name="period" [(ngModel)]="reportType" (change)="onReportTypeChange()"
+              class="border-none w-full h-full">
+              <option value="weekly">Hebdomadaire</option>
+              <option value="monthly">Mensuelle</option>
+              <option value="yearly">Annuelle</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Tableau pour Summary -->
+        <div class="flex justify-between items-center">
+          <h2 class="text-xl font-bold mb-4">Résumé</h2>
+          <button (click)="downloadCsvSummary()"
+            class="mb-4 bg-mobalpa-green text-white p-2 rounded hover:bg-emerald-green focus:outline-none">
+            Télécharger le rapport
+          </button>
+        </div>
+        <table class="min-w-full divide-y divide-gray-200 mb-10">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Période</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date de début</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date de fin</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Total des ventes HT</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Total des ventes TTC</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Total de TVA</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Total des frais de livraison
+              </th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Total des réductions</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Quantité totale vendue</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nombre total de ventes</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <tr *ngFor="let item of summary">
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ item['Période'] }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ item['Date de début'] }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ item['Date de fin'] }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ item['Total des ventes HT'] }} €</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ item['Total des ventes TTC'] }} €</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ item['Total de TVA'] }} €</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ item['Total des frais de livraison'] }} €
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ item['Total des réductions'] }} €</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ item['Quantité totale vendue'] }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ item['Nombre total de ventes'] }}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Tableau pour Sales -->
+        <div class="flex justify-between items-center">
+          <h2 class="text-xl font-bold mb-4">Ventes</h2>
+          <button (click)="downloadCsvSales()"
+            class="mb-4 bg-mobalpa-green text-white p-2 rounded hover:bg-emerald-green focus:outline-none">
+            Télécharger le rapport
+          </button>
+        </div>
+        <div *ngIf="sales.length > 0">
+          <table class="min-w-full divide-y divide-gray-200 mb-10">
+            <thead class="bg-gray-50">
+              <tr>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Frais de livraison</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">TVA</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Réduction</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Quantité</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Total HT</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Total TTC</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              <tr *ngFor="let item of sales">
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ item['delivery_fees'] | number: '1.2-2'
+                  }} €</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ item['vat'] | number: '1.2-2' }} €</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ item['reduction'] | number: '1.2-2' }}
+                  €</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ item['quantity'] | number: '1.2-2' }}
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ item['total_ht'] | number: '1.2-2' }} €
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ item['total_ttc'] | number: '1.2-2' }}
+                  €</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div *ngIf="sales.length === 0" class="text-gray-500 text-lg font-semibold mb-10">Aucune vente trouvée.</div>
+
+        <!-- Tableau pour Forecast -->
+        <div class="flex justify-between items-center">
+          <h2 class="text-xl font-bold mb-4">Prévisions</h2>
+          <button (click)="downloadCsvForecast()"
+            class="mb-4 bg-mobalpa-green text-white p-2 rounded hover:bg-emerald-green focus:outline-none">
+            Télécharger le rapport
+          </button>
+        </div>
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nom du produit</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date de prédiction de vente
+              </th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Quantité</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Total TTC</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Fiabilité</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <tr *ngFor="let item of filteredForecast">
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ item['Nom du produit'] }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ item['Date de prédiction de vente'] }}
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ item['Quantité de prédiction'] }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ item['Total TTC'] }} €</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ item['Fiabilité (%)'] }} %</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <app-pagination [currentPage]="currentPageForecast" [itemsPerPage]="itemsPerPageForecast"
+          [totalItems]="forecast.length" (pageChange)="onPageChangeForecast($event)" class="mt-4">
+        </app-pagination>
+        <div class="my-5"></div>
+      </div>
+
       <ng-template #noStatistique>
         <p>Aucune statistique trouvée.</p>
       </ng-template>

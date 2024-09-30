@@ -15,6 +15,7 @@ export interface IOrder {
   totalTtc?: number;
   createdAt?: string;
   status?: string;
+  deliveryNumbers?: string;
   deliveryFees?: number;
   deliveryAddress: string;
   paymentUuid?: string;

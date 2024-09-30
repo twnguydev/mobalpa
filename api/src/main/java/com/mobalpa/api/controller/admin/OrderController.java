@@ -23,8 +23,12 @@ import java.util.UUID;
 import java.util.List;
 import java.util.Map;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController("AdminOrderController")
 @RequestMapping("/api/admin/orders")
+@Tag(name = "Order management for admin users", description = "APIs for managing orders for admin users")
 public class OrderController {
 
     @Autowired
@@ -45,6 +49,7 @@ public class OrderController {
 
 
     @GetMapping
+    @Operation(summary = "Get all orders", description = "Fetches all orders.")
     public ResponseEntity<?> getAllOrders() {
         return ResponseEntity.ok(orderService.getAllOrders());
     }

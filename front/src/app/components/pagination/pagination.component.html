@@ -20,6 +20,14 @@
     </li>
     <li *ngFor="let page of pages">
       <button
+        *ngIf="page === -1"
+        class="px-3 py-2 border border-gray-300 bg-white text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
+        disabled
+      >
+        ...
+      </button>
+      <button
+        *ngIf="page !== -1"
         (click)="changePage(page)"
         [class.bg-mobalpa-green]="page === currentPage"
         [class.text-white]="page === currentPage"

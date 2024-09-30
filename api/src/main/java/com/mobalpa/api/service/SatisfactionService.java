@@ -61,4 +61,8 @@ public class SatisfactionService {
     public List<Satisfaction> getFirstThreeSatisfactions() {
         return satisfactionRepository.findTop3ByOrderByCreatedAtAsc();
     }
+
+    public List<Satisfaction> getProductSatisfaction(UUID productUuid) {
+        return satisfactionRepository.findByTargetUuidAndTargetType(productUuid, "PRODUCT");
+    }
 }

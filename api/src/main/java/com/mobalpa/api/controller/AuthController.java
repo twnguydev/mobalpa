@@ -17,8 +17,12 @@ import java.nio.file.Paths;
 import java.io.IOException;
 import java.util.Map;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("api/users")
+@Tag(name = "User authentication", description = "APIs for managing user authentication")
 public class AuthController {
 
     @Autowired
@@ -28,11 +32,13 @@ public class AuthController {
     private AuthenticationManager authenticationManager;
 
     @PostMapping("/register")
+    @Operation(summary = "Register user", description = "Registers a new user.")
     public ResponseEntity<?> registerUser(@RequestBody User user) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.registerUser(user));
     }
 
     @GetMapping("/confirm")
+    @Operation(summary = "Confirm user", description = "Confirms a user account.")
     public ResponseEntity<String> confirmUser(@RequestParam("token") String token) {
         User user = userService.confirmUser(token);
         
@@ -54,6 +60,7 @@ public class AuthController {
 
 
     @PostMapping("/login")
+    @Operation(summary = "Login user", description = "Logs in a user.")
     public ResponseEntity<?> loginUser(@RequestBody LoginDTO loginDTO) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword()));
         User user = userService.getUserByEmail(loginDTO.getEmail());
@@ -65,6 +72,7 @@ public class AuthController {
     }
 
     @PostMapping("/forgot-password")
+    @Operation(summary = "Forgot password", description = "Sends a password reset email.")
     public ResponseEntity<String> forgotPassword(@RequestBody Map<String, String> body) {
         String email = body.get("email");
         User user = userService.getUserByEmail(email);
@@ -76,6 +84,7 @@ public class AuthController {
     }
     
     @PostMapping("/reset-password")
+    @Operation(summary = "Reset password", description = "Resets a user's password.")
     public ResponseEntity<String> resetPassword(@RequestParam String token, @RequestBody Map<String, String> body) {
         String newPassword = body.get("newPassword");
         User user = userService.resetPassword(token, newPassword);

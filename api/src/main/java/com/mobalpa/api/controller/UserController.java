@@ -9,6 +9,10 @@ import com.mobalpa.api.repository.UserRepository;
 import com.mobalpa.api.dto.WishlistDTO;
 import com.mobalpa.api.dto.catalogue.ProductDTO;
 import com.mobalpa.api.service.WishlistService;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import com.mobalpa.api.dto.PaymentRequestDTO;
 import com.mobalpa.api.repository.PaymentRepository;
 
@@ -23,6 +27,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")
+@Tag(name = "Users, customers", description = "APIs for managing users")
 public class UserController {
 
   @Autowired
@@ -41,6 +46,7 @@ public class UserController {
   private CatalogueService catalogueService;
 
   @GetMapping("/{uuid}")
+  @Operation(summary = "Get user by UUID", description = "Fetches a user by their unique identifier.")
   public ResponseEntity<?> getUserByUuid(@PathVariable UUID uuid) {
     try {
       User user = userService.getUserByUuid(uuid);
@@ -51,6 +57,7 @@ public class UserController {
   }
 
   @PostMapping
+  @Operation(summary = "Create user", description = "Creates a new user.")
   public ResponseEntity<?> createUser(@RequestBody User user) {
     try {
       User createdUser = userService.createUser(user);
@@ -61,6 +68,7 @@ public class UserController {
   }
 
   @PatchMapping("/{uuid}")
+  @Operation(summary = "Update user", description = "Updates an existing user.")
   public ResponseEntity<?> updateUser(@PathVariable UUID uuid, @RequestBody User user) {
     try {
       System.out.println("User: " + user);
@@ -74,12 +82,14 @@ public class UserController {
   }
 
   @DeleteMapping("/{uuid}")
+  @Operation(summary = "Delete user", description = "Deletes a user.")
   public ResponseEntity<?> deleteUser(@PathVariable UUID uuid) {
     userService.deleteUser(uuid);
     return ResponseEntity.status(HttpStatus.NO_CONTENT).body("User deleted");
   }
 
   @GetMapping("/{id}/wishlist")
+  @Operation(summary = "Get user's wishlist", description = "Fetches a user's wishlist.")
   public ResponseEntity<?> getWishlist(@PathVariable UUID id) {
     User user = userService.getUserByUuid(id);
     if (user == null) {
@@ -102,6 +112,7 @@ public class UserController {
   }
 
   @PatchMapping("/{id}/wishlist")
+  @Operation(summary = "Modify user's wishlist", description = "Modifies a user's wishlist.")
   public ResponseEntity<?> modifyWishlist(@PathVariable UUID id, @RequestBody WishlistDTO request) {
     Wishlist wishlist;
     switch (request.getAction().toLowerCase()) {
@@ -119,6 +130,7 @@ public class UserController {
   }
 
   @GetMapping("/{id}/orders")
+  @Operation(summary = "Get user's orders", description = "Fetches a user's orders.")
   public ResponseEntity<?> getOrders(@PathVariable UUID id) {
     User user = userService.getUserByUuid(id);
     if (user == null) {
@@ -133,6 +145,7 @@ public class UserController {
   }
 
   @GetMapping("/{id}/payments")
+  @Operation(summary = "Get user's payments", description = "Fetches a user's payments.")
   public ResponseEntity<?> getPayments(@PathVariable UUID id) {
     User user = userService.getUserByUuid(id);
     if (user == null) {
@@ -147,6 +160,7 @@ public class UserController {
   }
 
   @PostMapping("/{id}/payments")
+  @Operation(summary = "Add payment to user", description = "Adds a payment to a user.")
   public ResponseEntity<?> addPaymentToUser(@PathVariable UUID id, @RequestBody PaymentRequestDTO paymentDTO) {
     Optional<User> userOptional = userRepository.findById(id);
     if (userOptional.isEmpty()) {
@@ -170,6 +184,7 @@ public class UserController {
   }
 
   @DeleteMapping("/{id}/payments/{paymentId}")
+  @Operation(summary = "Delete payment", description = "Deletes a payment.")
   public ResponseEntity<?> deletePayment(@PathVariable UUID id, @PathVariable UUID paymentId) {
     Optional<User> userOptional = userRepository.findById(id);
     if (userOptional.isEmpty()) {

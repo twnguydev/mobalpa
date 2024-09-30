@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.ArrayList;
 
 @Service
 public class PromotionService {
@@ -141,7 +142,20 @@ public class PromotionService {
     }
 
     public List<CouponCode> getAllCoupons() {
-        return couponCodeRepository.findAll();
+        List<CouponCode> coupons = couponCodeRepository.findAll();
+
+        for (CouponCode coupon : coupons) {
+            if (CouponCode.TargetType.SPECIFIC_USERS.equals(coupon.getTargetType())) {
+                List<User> targetUsers = new ArrayList<>();
+                for (String uuid : coupon.getTargetUsers()) {
+                    User user = userRepository.findByUuid(UUID.fromString(uuid))
+                        .orElseThrow(() -> new RuntimeException("User not found"));
+                    targetUsers.add(user);
+                }
+                coupon.setEnrichedTargetUsers(targetUsers); 
+            }
+        }
+        return coupons;
     }
 
     public Optional<CouponCode> getCouponById(Integer id) {
@@ -259,10 +273,12 @@ public class PromotionService {
         return couponCodeRepository.save(coupon);
     }
 
+    @Transactional
     public void deleteCoupon(Integer id) {
+        userCouponRepository.deleteByCouponId(id);
         couponCodeRepository.deleteById(id);
     }
-
+    
     @Transactional
     public Map<String, Object> claimCoupon(User user, CouponCode couponCode) {
         LocalDateTime now = LocalDateTime.now();
