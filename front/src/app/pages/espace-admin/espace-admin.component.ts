@@ -122,8 +122,8 @@ export class EspaceAdminComponent implements OnInit {
     id: '',
     name: '',
     discountRate: 0,
-    dateStart: new Date(),
-    dateEnd: new Date(),
+    dateStart: '',
+    dateEnd: '',
     targetUuid: '',
     type: 'CATEGORY'
   };
@@ -401,9 +401,6 @@ export class EspaceAdminComponent implements OnInit {
         .map(id => id.trim());
     }
 
-    this.newCoupon.dateStart += ":00";
-    this.newCoupon.dateEnd += ":00";
-
     this.adminService.createCoupon(this.newCoupon).subscribe({
       next: () => {
         this.successMessage = 'Coupon créé avec succès';
@@ -466,6 +463,9 @@ export class EspaceAdminComponent implements OnInit {
   }
 
   createCampaign(): void {
+    this.newCampaign.dateStart += ':00';
+    this.newCampaign.dateEnd += ':00';
+
     this.adminService.createCampaign(this.newCampaign).subscribe({
       next: () => {
         console.log('Campagne créée avec succès');
@@ -480,8 +480,8 @@ export class EspaceAdminComponent implements OnInit {
           id: '',
           name: '',
           discountRate: 0,
-          dateStart: new Date(),
-          dateEnd: new Date(),
+          dateStart: '',
+          dateEnd: '',
           targetUuid: '',
           type: 'PRODUCT'
         };

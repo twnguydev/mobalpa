@@ -45,8 +45,8 @@ describe('CategoryComponent', () => {
       id: 'campaign-uuid',
       name: 'Test Campaign',
       discountRate: 15,
-      dateStart: new Date('2023-01-01'),
-      dateEnd: new Date('2023-12-31'),
+      dateStart: '2023-01-01',
+      dateEnd: '2023-12-31',
       targetUuid: 'prod-uuid',
       type: 'PRODUCT'
     };

@@ -61,8 +61,8 @@ describe('ProductComponent', () => {
           id: 'campaign-uuid',
           name: 'Test Campaign',
           discountRate: 10,
-          dateStart: new Date('2024-01-01'),
-          dateEnd: new Date('2024-12-31'),
+          dateStart: '2024-01-01',
+          dateEnd: '2024-12-31',
           targetUuid: '123',
           type: 'PRODUCT'
         }
@@ -107,8 +107,8 @@ describe('ProductComponent', () => {
         id: 'campaign-uuid',
         name: 'Test Campaign',
         discountRate: 10,
-        dateStart: new Date('2024-01-01'),
-        dateEnd: new Date('2024-12-31'),
+        dateStart: '2024-01-01',
+        dateEnd: '2024-12-31',
         targetUuid: '123',
         type: 'PRODUCT'
       }

@@ -33,7 +33,8 @@
   <div class="flex flex-col gap-4 md:flex-row md:justify-between">
     <div class="w-full">
       <div *ngIf="order" class="bg-gray-100 rounded-3xl p-5">
-        <p class="text-2xl mb-10 text-center">Merci pour votre commande, {{ order.user.firstname }} {{ order.user.lastname }} !</p>
+        <p *ngIf="order.user" class="text-2xl mb-10 text-center">Merci pour votre commande, {{ order.user.firstname }} {{ order.user.lastname }} !</p>
+        <p *ngIf="order.visitor" class="text-2xl mb-10 text-center">Merci pour votre commande, {{ order.visitor.firstname }} {{ order.visitor.lastname }} !</p>
         <p class="text-lg mb-10">Toute l'équipe de Mobalpa vous remercie pour votre confiance. Vous allez recevoir un email de confirmation de commande dans quelques instants.</p>
         <p class="text-lg mb-2">Numéro de commande : <strong>{{ order.uuid }}</strong></p>
         <p class="text-lg mb-2">Numéro de livraison : <strong>{{ deliveryNumbersString }}</strong></p>

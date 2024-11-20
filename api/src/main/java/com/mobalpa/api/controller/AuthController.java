@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+// import org.springframework.security.authentication.AuthenticationManager;
+// import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -36,8 +36,8 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    // @Autowired
+    // private AuthenticationManager authenticationManager;
 
     @PostMapping("/register")
     @Operation(summary = "Register user", description = "Registers a new user.", security = @SecurityRequirement(name = "apiKey"))
@@ -132,8 +132,8 @@ public class AuthController {
             @ApiResponse(responseCode = "403", description = "Unauthorized", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Unauthorized\"")))
     })
     public ResponseEntity<?> loginUser(@RequestBody LoginDTO loginDTO) {
-        authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword()));
+        // authenticationManager
+        //         .authenticate(new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword()));
         User user = userService.getUserByEmail(loginDTO.getEmail());
         if (user.getToken() != null) {
             return ResponseEntity.badRequest().body("User account not confirmed.");

@@ -103,32 +103,6 @@
         <div *ngIf="filteredProducts.length === 0" class="flex justify-center text-xl text-gray-600 text-gotham">
             Aucun produit en promotion disponible actuellement.
         </div>
-        <!-- Pagination -->
-        <div class="flex justify-center space-x-2 mt-4 mb-10" *ngIf="totalPages > 1">
-            <button (click)="previousPage()" [disabled]="currentPage === 1" class="px-3 py-1 bg-gray-200 rounded">
-                Précédent
-            </button>
-            <button (click)="goToPage(1)"
-                [ngClass]="{'bg-blue-500 text-white': currentPage === 1, 'bg-gray-200': currentPage !== 1}"
-                class="px-3 py-1 rounded">
-                1
-            </button>
-            <button *ngIf="currentPage > 3" class="px-3 py-1 bg-gray-200 rounded">...</button>
-            <button *ngFor="let page of getDisplayedPages()" (click)="goToPage(page)"
-                [ngClass]="{'bg-blue-500 text-white': currentPage === page, 'bg-gray-200': currentPage !== page}"
-                class="px-3 py-1 rounded">
-                {{ page }}
-            </button>
-            <button *ngIf="currentPage < totalPages - 2" class="px-3 py-1 bg-gray-200 rounded">...</button>
-            <button (click)="goToPage(totalPages)"
-                [ngClass]="{'bg-blue-500 text-white': currentPage === totalPages, 'bg-gray-200': currentPage !== totalPages}"
-                class="px-3 py-1 rounded">
-                {{ totalPages }}
-            </button>
-            <button (click)="nextPage()" [disabled]="currentPage === totalPages" class="px-3 py-1 bg-gray-200 rounded">
-                Suivant
-            </button>
-        </div>
 
         <!-- Error Message -->
         <div *ngIf="error" class="error-message text-red-600">

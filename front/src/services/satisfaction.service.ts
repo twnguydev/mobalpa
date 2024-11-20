@@ -28,13 +28,13 @@ export class SatisfactionService {
     }
 
     getLandingPageSatisfaction(): Observable<any> {
-        const headers: HttpHeaders | null = this.authService.getAuthHeaders();
+        const headers: HttpHeaders | null = this.authService.getAuthHeaders() || this.authService.getXApiKeyHeaders();
         if (!headers) return new Observable<any>();
         return this.http.get<any>(this.apiUrl + "/satisfaction/home", { headers });
     }
 
     getProductSatisfactions(productUuid: string): Observable<any> {
-        const headers: HttpHeaders | null = this.authService.getAuthHeaders();
+        const headers: HttpHeaders | null = this.authService.getAuthHeaders() || this.authService.getXApiKeyHeaders();
         if (!headers) return new Observable<any>();
         return this.http.get<any>(this.apiUrl + "/satisfaction/product/" + productUuid, { headers });
     }

@@ -57,8 +57,8 @@ export interface ICampaign {
   id: string;
   name: string;
   discountRate: number;
-  dateStart: Date;
-  dateEnd: Date;
+  dateStart: string;
+  dateEnd: string;
   targetUuid: string;
   type: 'PRODUCT' | 'SUBCATEGORY' | 'CATEGORY';
 }
