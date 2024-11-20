@@ -6,10 +6,12 @@
     "baseUrl": "./",
     "paths": {
       "@components/*": ["src/app/components/*"],
+      "@pages/*": ["src/app/pages/*"],
       "@models/*": ["src/app/models/*"],
       "@shared/*": ["src/app/shared/*"],
       "@interfaces/*": ["src/app/interfaces/*"],
       "@services/*": ["src/services/*"],
+      "@env/*": ["src/environments/*"],
     },
     "strict": true,
     "noImplicitOverride": true,

@@ -1,0 +1,91 @@
+<div class="container mx-auto py-8 min-h-screen h-auto">
+    <h1 class="text-4xl font-bold mb-8 text-mobalpa-green">Liste de souhaits</h1>
+
+    <div *ngIf="wishlistNotFound" class="space-y-3 mb-16">
+        <p class="font-gotham text-2xl">Oh oh ! Votre liste de souhaits est vide.</p>
+        <p class="font-gotham text-2xl">Ajoutez des articles pour les retrouver ici.</p>
+    </div>
+
+    <div *ngIf="!wishlistNotFound && wishlist && wishlist.items.length > 0" class="space-y-3 mb-16">
+        <div class="w-full">
+            <!-- Header -->
+            <div
+                class="bg-gray-100 px-10 py-4 md:py-6 rounded-3xl grid grid-cols-6 gap-4 items-center m-2 hidden md:grid">
+                <p class="font-gotham text-sm md:text-base col-span-1 md:col-span-2">Article</p>
+                <p class="font-gotham text-sm md:text-base col-span-1">Quantité</p>
+                <p class="font-gotham text-sm text-center md:text-base col-span-1">Prix</p>
+                <p class="font-gotham text-sm text-center md:text-base col-span-2">Actions</p>
+            </div>
+
+            <!-- Items -->
+            <div *ngFor="let item of wishlist.items"
+                class="bg-gray-100 py-4 px-4 rounded-3xl grid grid-cols-1 md:grid-cols-6 gap-4 items-center m-2">
+                <!-- Article Column -->
+                <div *ngIf="item.product" class="flex items-center space-x-4 md:space-x-6 col-span-1 md:col-span-2">
+                    <a href="/categories/{{ item.product.uri }}"
+                        class="flex items-center space-x-4 md:space-x-6 col-span-1 md:col-span-2">
+                        <img [src]="item.product.images[0].uri" alt="{{item.product.name}}"
+                            class="w-20 h-20 md:w-32 md:h-32 object-cover rounded-3xl">
+                        <div class="flex flex-col">
+                            <h2 class="text-sm md:text-lg font-gotham">
+                                <b>{{ item.product.name }}</b>
+                            </h2>
+                            <p class="font-gotham text-sm md:text-base">Couleur: {{ item.selectedColor }}</p>
+                            <p class="font-gotham text-sm md:text-base">Marque: {{ item.product.brand.name }}</p>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Quantité Column -->
+                <div *ngIf="item.product" class="flex justify-center md:justify-start items-center col-span-1">
+                    <div class="flex items-center space-x-2">
+                        <button (click)="decreaseQuantity(item)"
+                            class="text-lg px-4 py-1 bg-mobalpa-green-alternate text-white rounded-2xl">-</button>
+                        <p class="font-gotham text-lg">{{ item.quantity }}</p>
+                        <button (click)="increaseQuantity(item)"
+                            class="text-lg px-4 py-1 bg-mobalpa-green-alternate text-white rounded-2xl">+</button>
+                    </div>
+                </div>
+
+                <!-- Prix Column -->
+                <div *ngIf="item.product"
+                    class="flex md:flex-col justify-center md:justify-start items-center col-span-1">
+                    <p *ngIf="item.product.newPrice" class="font-gotham text-mobalpa-green w-auto text-xl md:text-3xl">
+                        {{ (item.product.newPrice * item.quantity) | number:'1.2-2' }} €
+                    </p>
+
+                    <p class="font-gotham text-sm md:text-base">
+                        Prix unitaire : <br>
+                        <span *ngIf="item.product.discountRate && item.product.discountRate > 0" class="line-through">
+                            {{ item.product.oldPrice | number:'1.2-2' }} €
+                        </span>
+                        <span *ngIf="item.product.discountRate && item.product.discountRate > 0" class="text-red-600">
+                            {{ item.product.newPrice | number:'1.2-2' }} €
+                        </span>
+                        <span *ngIf="item.product.discountRate === 0">
+                            {{ item.product.price | number:'1.2-2' }} €
+                        </span>
+                    </p>
+
+                    <p class="font-gotham text-sm md:text-base" *ngIf="item.product.discountRate && item.product.discountRate > 0">
+                        Réduction: -{{ item.product.discountRate }}%
+                    </p>
+                </div>
+
+                <!-- Actions Column -->
+                <div *ngIf="item.product" class="flex justify-center md:justify-end items-center col-span-2 space-x-4">
+                    <button *ngIf="!productAdded[item.productUuid]" (click)="saveToCart(item)"
+                        class="w-full bg-mobalpa-green-alternate text-white p-2 rounded-lg">
+                        Ajouter au panier
+                    </button>
+                    <button *ngIf="productAdded[item.productUuid]"
+                        class="w-full text-mobalpa-green-alternate p-2 rounded-lg">
+                        Ajouté au panier
+                    </button>
+                    <button (click)="removeFromWishlist(item)"
+                        class="text-lg px-7 py-1 bg-custom-orange text-white rounded-2xl">Supprimer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

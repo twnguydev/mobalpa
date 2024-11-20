@@ -1,0 +1,496 @@
+databaseChangeLog:
+  - changeSet:
+      id: 5
+      author: Saskoue
+      changes:
+        - insertMany:
+            collectionName: "product"
+            documents: |
+              [
+                  {
+                    "_id": {"$binary": {"base64": "1Uu9ZZjt27A9whsacnLikw==", "subType": "03"}},
+                    "name": "Grille pain Deluxe",
+                    "description": "This is an example product description for Grille pain.",
+                    "price": 49.99,
+                    "stock": 100,
+                    "estimatedDelivery": {"$date": "2024-08-10T08:00:00.000Z"},
+                    "weight": 1.0,
+                    "height": 15.0,
+                    "width": 25.0,
+                    "uri": "petit-electromenager/grille-pain/grille-pain-deluxe",
+                    "createdAt": {"$date": "2024-08-05T14:24:23.967Z"},
+                    "category": {"$ref": "category", "$id": {"$binary": {"base64": "E0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                    "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "aUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                    "colors": [
+                      {"$ref": "colors", "$id": {"$binary": {"base64": "GE8esJRMho/wUZfnAf81pA==", "subType": "03"}}}
+                    ],
+                    "images": [
+                      {
+                        "_id": {"$binary": {"base64": "jE4GGTSY9QdpmgEZQt8snA==", "subType": "03"}},
+                        "uri": "/images/pem/grillepain.png",
+                        "color": {"$ref": "colors", "$id": {"$binary": {"base64": "GE8esJRMho/wUZfnAf81pA==", "subType": "03"}}}
+                      }
+                    ],
+                    "_class": "com.mobalpa.catalogue.model.Product"
+                  },
+                  {
+                    "_id": {"$binary": {"base64": "2Vu7YYgt37A9whsacnLikw==", "subType": "03"}},
+                    "name": "Micro-onde Pro",
+                    "description": "This is an example product description for Four à micro-onde.",
+                    "price": 89.99,
+                    "stock": 75,
+                    "estimatedDelivery": {"$date": "2024-08-12T08:00:00.000Z"},
+                    "weight": 2.0,
+                    "height": 20.0,
+                    "width": 30.0,
+                    "uri": "petit-electromenager/micro-onde/micro-onde-pro",
+                    "createdAt": {"$date": "2024-08-05T14:24:23.967Z"},
+                    "category": {"$ref": "category", "$id": {"$binary": {"base64": "E0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                    "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "bUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                    "colors": [
+                      {"$ref": "colors", "$id": {"$binary": {"base64": "GE8esJRMho/wUZfnAf81pA==", "subType": "03"}}}
+                    ],
+                    "images": [
+                      {
+                        "_id": {"$binary": {"base64": "wUVjFX29i1Wb/7CZ04pZuQ==", "subType": "03"}},
+                        "uri": "/images/pem/microonde5.png",
+                        "color": {"$ref": "colors", "$id": {"$binary": {"base64": "GE8esJRMho/wUZfnAf81pA==", "subType": "03"}}}
+                      }
+                    ],
+                    "_class": "com.mobalpa.catalogue.model.Product"
+                  },
+                  {
+                    "_id": {"$binary": {"base64": "aB2aYYjt47B9whsacnLikw==", "subType": "03"}},
+                    "name": "Micro-ondes Express",
+                    "description": "Préparez vos repas en un clin d'œil avec le Micro-ondes Express, parfait pour un usage quotidien rapide et efficace.",
+                    "price": 89.99,
+                    "stock": 50,
+                    "estimatedDelivery": {"$date": "2024-09-10T08:00:00.000Z"},
+                    "weight": 10.5,
+                    "height": 30.0,
+                    "width": 50.0,
+                    "uri": "petit-electromenager/micro-onde/micro-onde-express",
+                    "createdAt": {"$date": "2024-08-15T10:00:00.000Z"},
+                    "category": {"$ref": "category", "$id": {"$binary": {"base64": "E0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                    "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "bUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                    "colors": [
+                      {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                    ],
+                    "images": [
+                      {
+                        "_id": {"$binary": {"base64": "yF9GGTSY9SdpmgEZQt8snA==", "subType": "03"}},
+                        "uri": "/images/pem/microonde1.png",
+                        "color": {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                      }
+                    ],
+                    "_class": "com.mobalpa.catalogue.model.Product"
+                  },
+                  {
+                    "_id": {"$binary": {"base64": "dC3bYYjt47C9whsacnLikw==", "subType": "03"}},
+                    "name": "Micro-ondes Gourmet",
+                    "description": "Un micro-ondes haut de gamme pour les gourmets exigeants, offrant des performances exceptionnelles pour une cuisson précise.",
+                    "price": 149.99,
+                    "stock": 40,
+                    "estimatedDelivery": {"$date": "2024-09-12T08:00:00.000Z"},
+                    "weight": 12.0,
+                    "height": 35.0,
+                    "width": 55.0,
+                    "uri": "petit-electromenager/micro-onde/micro-onde-gourmet",
+                    "createdAt": {"$date": "2024-08-16T12:30:00.000Z"},
+                    "category": {"$ref": "category", "$id": {"$binary": {"base64": "E0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                    "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "bUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                    "colors": [
+                      {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                    ],
+                    "images": [
+                      {
+                        "_id": {"$binary": {"base64": "xG7GGTSY9TdpmgEZQt8snB==", "subType": "03"}},
+                        "uri": "/images/pem/microonde3.png",
+                        "color": {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                      }
+                    ],
+                    "_class": "com.mobalpa.catalogue.model.Product"
+                  },
+                  {
+                    "_id": {"$binary": {"base64": "eF4cYYjt48B9whsacnLikw==", "subType": "03"}},
+                    "name": "Micro-ondes Compact",
+                    "description": "Idéal pour les petits espaces, le Micro-ondes Compact offre toute la puissance nécessaire dans un format réduit.",
+                    "price": 79.99,
+                    "stock": 70,
+                    "estimatedDelivery": {"$date": "2024-09-15T08:00:00.000Z"},
+                    "weight": 8.5,
+                    "height": 25.0,
+                    "width": 45.0,
+                    "uri": "petit-electromenager/micro-onde/micro-onde-compact",
+                    "createdAt": {"$date": "2024-08-18T14:00:00.000Z"},
+                    "category": {"$ref": "category", "$id": {"$binary": {"base64": "E0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                    "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "bUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                    "colors": [
+                      {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                    ],
+                    "images": [
+                      {
+                        "_id": {"$binary": {"base64": "zH8GGTSY9UdpmgEZQt8snC==", "subType": "03"}},
+                        "uri": "/images/pem/microonde2.png",
+                        "color": {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                      }
+                    ],
+                    "_class": "com.mobalpa.catalogue.model.Product"
+                  },
+                  {
+                    "_id": {"$binary": {"base64": "gH5dYYjt49B9whsacnLikw==", "subType": "03"}},
+                    "name": "Micro-ondes Vintage",
+                    "description": "Alliez style rétro et technologie moderne avec le Micro-ondes Vintage, parfait pour une cuisine à la fois élégante et fonctionnelle.",
+                    "price": 129.99,
+                    "stock": 60,
+                    "estimatedDelivery": {"$date": "2024-09-18T08:00:00.000Z"},
+                    "weight": 11.0,
+                    "height": 32.0,
+                    "width": 52.0,
+                    "uri": "petit-electromenager/micro-onde/micro-onde-vintage",
+                    "createdAt": {"$date": "2024-08-20T15:00:00.000Z"},
+                    "category": {"$ref": "category", "$id": {"$binary": {"base64": "E0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                    "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "bUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                    "colors": [
+                      {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                    ],
+                    "images": [
+                      {
+                        "_id": {"$binary": {"base64": "pJ0GGTSY9VdpmgEZQt8snD==", "subType": "03"}},
+                        "uri": "/images/pem/microonde4.png",
+                        "color": {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                      }
+                    ],
+                    "_class": "com.mobalpa.catalogue.model.Product"
+                  },
+                  {
+                    "_id": {"$binary": {"base64": "iJ6eYYjt50B9whsacnLikw==", "subType": "03"}},
+                    "name": "Micro-ondes Ultra",
+                    "description": "Profitez de la technologie de pointe avec le Micro-ondes Ultra, offrant des fonctionnalités avancées pour une cuisson parfaite à chaque fois.",
+                    "price": 199.99,
+                    "stock": 30,
+                    "estimatedDelivery": {"$date": "2024-09-20T08:00:00.000Z"},
+                    "weight": 14.0,
+                    "height": 40.0,
+                    "width": 60.0,
+                    "uri": "petit-electromenager/micro-onde/micro-onde-ultra",
+                    "createdAt": {"$date": "2024-08-22T16:00:00.000Z"},
+                    "category": {"$ref": "category", "$id": {"$binary": {"base64": "E0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                    "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "bUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                    "colors": [
+                      {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                    ],
+                    "images": [
+                      {
+                        "_id": {"$binary": {"base64": "qK1GGTSY9WdpmgEZQt8snE==", "subType": "03"}},
+                        "uri": "/images/pem/microonde6.webp",
+                        "color": {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                      }
+                    ],
+                    "_class": "com.mobalpa.catalogue.model.Product"
+                  },
+                  {
+                    "_id": {"$binary": {"base64": "3Wv6ZZjt27A9whsacnLikw==", "subType": "03"}},
+                    "name": "Mixeur Turbo",
+                    "description": "This is an example product description for Mixeur.",
+                    "price": 59.99,
+                    "stock": 80,
+                    "estimatedDelivery": {"$date": "2024-08-15T08:00:00.000Z"},
+                    "weight": 1.2,
+                    "height": 25.0,
+                    "width": 15.0,
+                    "uri": "petit-electromenager/mixeur/mixeur-turbo",
+                    "createdAt": {"$date": "2024-08-05T14:24:23.967Z"},
+                    "category": {"$ref": "category", "$id": {"$binary": {"base64": "E0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                    "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "cUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                    "colors": [
+                      {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                    ],
+                    "images": [
+                      {
+                        "_id": {"$binary": {"base64": "kE3GGTSY9QdpmgEZQt8snA==", "subType": "03"}},
+                        "uri": "/images/pem/mixeur1.png",
+                        "color": {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                      }
+                    ],
+                    "_class": "com.mobalpa.catalogue.model.Product"
+                  },
+                  {
+                    "_id": {"$binary": {"base64": "1gP6YYdt48A9whsacnLikw==", "subType": "03"}},
+                    "name": "Mixeur Eco Plus",
+                    "description": "Un mixeur puissant pour les professionnels et les passionnés de cuisine, conçu pour des performances de pointe dans chaque recette.",
+                    "price": 99.99,
+                    "stock": 60,
+                    "estimatedDelivery": {"$date": "2024-08-20T08:00:00.000Z"},
+                    "weight": 1.8,
+                    "height": 30.0,
+                    "width": 18.0,
+                    "uri": "petit-electromenager/mixeur/mixeur-eco-plus",
+                    "createdAt": {"$date": "2024-08-10T10:20:30.000Z"},
+                    "category": {"$ref": "category", "$id": {"$binary": {"base64": "E0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                    "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "cUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                    "colors": [
+                      {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                    ],
+                    "images": [
+                      {
+                        "_id": {"$binary": {"base64": "nE4GGFSY9RdpngEZQt8snB==", "subType": "03"}},
+                        "uri": "/images/pem/mixeur2.jpeg",
+                        "color": {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                      }
+                    ],
+                    "_class": "com.mobalpa.catalogue.model.Product"
+                  },
+                  {
+                    "_id": {"$binary": {"base64": "2Lz8YYht37A8whdacnLikx==", "subType": "03"}},
+                    "name": "Mixeur Bouteillé",
+                    "description": "Mixez vos ingrédients préférés tout en respectant l'environnement avec notre Mixeur Éco, performant et éco-responsable.",
+                    "price": 49.99,
+                    "stock": 100,
+                    "estimatedDelivery": {"$date": "2024-08-25T08:00:00.000Z"},
+                    "weight": 1.1,
+                    "height": 24.0,
+                    "width": 14.0,
+                    "uri": "petit-electromenager/mixeur/mixeur-bouteillé",
+                    "createdAt": {"$date": "2024-08-12T11:30:45.000Z"},
+                    "category": {"$ref": "category", "$id": {"$binary": {"base64": "E0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                    "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "cUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                    "colors": [
+                      {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                    ],
+                    "images": [
+                      {
+                        "_id": {"$binary": {"base64": "lF7GGUSY9SdpmgEZQt8snC==", "subType": "03"}},
+                        "uri": "/images/pem/mixeur3.jpeg",
+                        "color": {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                      }
+                    ],
+                    "_class": "com.mobalpa.catalogue.model.Product"
+                  },
+                  {
+                    "_id": {"$binary": {"base64": "4Py7ZZjt48B9whdacnLikx==", "subType": "03"}},
+                    "name": "Mixeur Combo Pack",
+                    "description": "Mixez vos ingrédients préférés tout en respectant l'environnement avec notre Mixeur Éco, performant et éco-responsable.",
+                    "price": 125.00,
+                    "stock": 100,
+                    "estimatedDelivery": {"$date": "2024-08-25T08:00:00.000Z"},
+                    "weight": 1.1,
+                    "height": 24.0,
+                    "width": 14.0,
+                    "uri": "petit-electromenager/mixeur/mixeur-combo-pack",
+                    "createdAt": {"$date": "2024-08-12T11:30:45.000Z"},
+                    "category": {"$ref": "category", "$id": {"$binary": {"base64": "E0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                    "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "cUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                    "colors": [
+                      {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                    ],
+                    "images": [
+                      {
+                        "_id": {"$binary": {"base64": "lF7GGUSY9SdpmgEZQt8snC==", "subType": "03"}},
+                        "uri": "/images/pem/mixeur4.jpeg",
+                        "color": {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                      }
+                    ],
+                    "_class": "com.mobalpa.catalogue.model.Product"
+                  },
+                  {
+                    "_id": {"$binary": {"base64": "4Xy6VVgt37A9whsacnLikw==", "subType": "03"}},
+                    "name": "Friteuse Pro",
+                    "description": "This is an example product description for Friteuse.",
+                    "price": 79.99,
+                    "stock": 90,
+                    "estimatedDelivery": {"$date": "2024-08-18T08:00:00.000Z"},
+                    "weight": 2.5,
+                    "height": 20.0,
+                    "width": 20.0,
+                    "uri": "petit-electromenager/friteuse/friteuse-pro",
+                    "createdAt": {"$date": "2024-08-05T14:24:23.967Z"},
+                    "category": {"$ref": "category", "$id": {"$binary": {"base64": "E0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                    "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "dUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                    "colors": [
+                      {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                    ],
+                    "images": [
+                      {
+                        "_id": {"$binary": {"base64": "pF4GGTSY9QdpmgEZQt8snA==", "subType": "03"}},
+                        "uri": "/images/pem/friteuse.jpeg",
+                        "color": {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                      }
+                    ],
+                    "_class": "com.mobalpa.catalogue.model.Product"
+                  },
+                  {
+                    "_id": {"$binary": {"base64": "5Zz8YYht47A9whsacnLikw==", "subType": "03"}},
+                    "name": "Machine à café Deluxe",
+                    "description": "Un must-have pour les amateurs de style et de saveurs authentiques.",
+                    "price": 129.99,
+                    "stock": 50,
+                    "estimatedDelivery": {"$date": "2024-08-20T08:00:00.000Z"},
+                    "weight": 3.0,
+                    "height": 35.0,
+                    "width": 20.0,
+                    "uri": "petit-electromenager/machine-a-cafe/machine-a-cafe-deluxe",
+                    "createdAt": {"$date": "2024-08-05T14:24:23.967Z"},
+                    "category": {"$ref": "category", "$id": {"$binary": {"base64": "E0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                    "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "eUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                    "colors": [
+                      {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                    ],
+                    "images": [
+                      {
+                        "_id": {"$binary": {"base64": "nG5GGTSY9QdpmgEZQt8snA==", "subType": "03"}},
+                        "uri": "/images/pem/cafe2.png",
+                        "color": {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                      }
+                    ],
+                    "_class": "com.mobalpa.catalogue.model.Product"
+                  },
+                  {
+                    "_id": {"$binary": {"base64": "z6v9Zy57QYy0R0fgJWlbYA==", "subType": "03"}},
+                    "name": "Cafetière Premium",
+                    "description": "Commencez votre journée en beauté avec notre Cafetière Premium.",
+                    "price": 149.99,
+                    "stock": 45,
+                    "estimatedDelivery": {"$date": "2024-09-01T08:00:00.000Z"},
+                    "weight": 4.5,
+                    "height": 40.0,
+                    "width": 25.0,
+                    "uri": "petit-electromenager/cafetiere/cafetiere-premium",
+                    "createdAt": {"$date": "2024-08-10T10:20:30.000Z"},
+                    "category": {"$ref": "category", "$id": {"$binary": {"base64": "E0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                    "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "eUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                    "colors": [
+                      {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                    ],
+                    "images": [
+                      {
+                        "_id": {"$binary": {"base64": "9snn3rbKRjABDmN7nej1xw==", "subType": "03"}},
+                        "uri": "/images/pem/cafe-premium.jpeg",
+                        "color": {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                      }
+                    ],
+                    "_class": "com.mobalpa.catalogue.model.Product"
+                  },
+                  {
+                    "_id": {"$binary": {"base64": "XnHdEahgTly2lv7wq0JtxQ==", "subType": "03"}},
+                    "name": "Cafetière Eco Friendly",
+                    "description": "Savourez un café délicieusement éthique avec notre Cafetière Eco Friendly.",
+                    "price": 89.99,
+                    "stock": 75,
+                    "estimatedDelivery": {"$date": "2024-09-02T08:00:00.000Z"},
+                    "weight": 3.2,
+                    "height": 35.0,
+                    "width": 22.0,
+                    "uri": "petit-electromenager/cafetiere/cafetiere-eco-friendly",
+                    "createdAt": {"$date": "2024-08-11T11:30:45.000Z"},
+                    "category": {"$ref": "category", "$id": {"$binary": {"base64": "E0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                    "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "eUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                    "colors": [
+                      {"$ref": "colors", "$id": {"$binary": {"base64": "dQp3I4ZlV9UqoL3mKoZ2GQ==", "subType": "03"}}}
+                    ],
+                    "images": [
+                      {
+                        "_id": {"$binary": {"base64": "u8dtQZ4PQ1G4XYMRkFaj3w==", "subType": "03"}},
+                        "uri": "/images/pem/cafe-eco.webp",
+                        "color": {"$ref": "colors", "$id": {"$binary": {"base64": "dQp3I4ZlV9UqoL3mKoZ2GQ==", "subType": "03"}}}
+                      }
+                    ],
+                    "_class": "com.mobalpa.catalogue.model.Product"
+                  },
+                  {
+                    "_id": {"$binary": {"base64": "tQb+LOgZR4C1VY5+1yQwqA==", "subType": "03"}},
+                    "name": "Cafetière Compact",
+                    "description": "Découvrez la Cafetière Compact, l’alliée parfaite des petits espaces.",
+                    "price": 69.99,
+                    "stock": 100,
+                    "estimatedDelivery": {"$date": "2024-09-03T08:00:00.000Z"},
+                    "weight": 2.5,
+                    "height": 30.0,
+                    "width": 20.0,
+                    "uri": "petit-electromenager/cafetiere/cafetiere-compact",
+                    "createdAt": {"$date": "2024-08-12T12:40:50.000Z"},
+                    "category": {"$ref": "category", "$id": {"$binary": {"base64": "E0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                    "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "eUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                    "colors": [
+                      {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                    ],
+                    "images": [
+                      {
+                        "_id": {"$binary": {"base64": "9Pn1RcgZTLe9JYP8hRM9VQ==", "subType": "03"}},
+                        "uri": "/images/pem/cafe-compact.jpeg",
+                        "color": {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                      }
+                    ],
+                    "_class": "com.mobalpa.catalogue.model.Product"
+                  },
+                  {
+                    "_id": {"$binary": {"base64": "BkF6Rp8qTJS1OTpFsmEKMg==", "subType": "03"}},
+                    "name": "Cafetière Pro",
+                    "description": "Élevez votre expérience café avec la Cafetière Pro. Destinée aux vrais connaisseurs, elle garantit une extraction parfaite pour un café au goût intense.",
+                    "price": 199.99,
+                    "stock": 30,
+                    "estimatedDelivery": {"$date": "2024-09-04T08:00:00.000Z"},
+                    "weight": 6.0,
+                    "height": 45.0,
+                    "width": 30.0,
+                    "uri": "petit-electromenager/cafetiere/cafetiere-pro",
+                    "createdAt": {"$date": "2024-08-13T13:50:55.000Z"},
+                    "category": {"$ref": "category", "$id": {"$binary": {"base64": "E0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                    "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "eUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                    "colors": [
+                      {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                    ],
+                    "images": [
+                      {
+                        "_id": {"$binary": {"base64": "URkFtEgnTZ2DLY8Mk3gHXw==", "subType": "03"}},
+                        "uri": "/images/pem/cafe-pro.jpeg",
+                        "color": {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                      }
+                    ],
+                    "_class": "com.mobalpa.catalogue.model.Product"
+                  },
+                  {
+                    "_id": {"$binary": {"base64": "bIuGFnxkT6y9NTpKuoRIrQ==", "subType": "03"}},
+                    "name": "Cafetière Vintage",
+                    "description": "Voyagez dans le temps avec notre Cafetière Vintage. Inspirée des designs rétro, elle apporte une touche d’élégance à votre cuisine.",
+                    "price": 119.99,
+                    "stock": 60,
+                    "estimatedDelivery": {"$date": "2024-09-05T08:00:00.000Z"},
+                    "weight": 3.5,
+                    "height": 35.0,
+                    "width": 25.0,
+                    "uri": "petit-electromenager/cafetiere/cafetiere-vintage",
+                    "createdAt": {"$date": "2024-08-14T14:00:00.000Z"},
+                    "category": {"$ref": "category", "$id": {"$binary": {"base64": "E0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                    "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "eUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                    "colors": [
+                      {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                    ],
+                    "images": [
+                      {
+                        "_id": {"$binary": {"base64": "8JkIz7hcTOC5HUp3K8Fr0A==", "subType": "03"}},
+                        "uri": "/images/pem/cafe-vintage.webp",
+                        "color": {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                      }
+                    ],
+                    "_class": "com.mobalpa.catalogue.model.Product"
+                  }
+              ]

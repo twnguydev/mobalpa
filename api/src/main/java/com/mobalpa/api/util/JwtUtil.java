@@ -1,7 +1,10 @@
 package com.mobalpa.api.util;
 
 import com.mobalpa.api.model.User;
+import com.mobalpa.api.model.Role;
+
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -9,12 +12,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Component
 public class JwtUtil {
@@ -36,7 +38,16 @@ public class JwtUtil {
     }
 
     public Claims extractAllClaims(String token) {
-        return Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token).getBody();
+        try {
+            return Jwts.parserBuilder()
+                .setSigningKey(getSigningKey())
+                .setAllowedClockSkewSeconds(60)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+        } catch (ExpiredJwtException e) {
+            return e.getClaims();
+        }
     }
 
     public boolean validateToken(String token, String email) {
@@ -50,19 +61,12 @@ public class JwtUtil {
 
     public String generateToken(User user) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("firstname", user.getFirstname());
-        claims.put("lastname", user.getLastname());
         claims.put("email", user.getEmail());
-        claims.put("id", user.getUuid().toString());
-
-        LocalDateTime createdAt = user.getCreatedAt();
-        Date createdDate = Date.from(createdAt.atZone(ZoneId.systemDefault()).toInstant());
-        claims.put("createdTime", String.valueOf(createdDate.getTime()));
-
+        claims.put("role", user.getRoles().stream().map(Role::getName).collect(Collectors.toList()));
         return createToken(claims, user.getEmail());
     }
 
-    private String createToken(Map<String, Object> claims, String subject) {
+    public String createToken(Map<String, Object> claims, String subject) {
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(subject)
@@ -70,5 +74,5 @@ public class JwtUtil {
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
-    }
+    }    
 }

@@ -1,0 +1,32 @@
+@keyframes marquee {
+    0% {
+        transform: translateX(100%);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .text_move {
+        animation: marquee 30s linear infinite;
+    }
+}
+
+.text_move {
+    align-items: center;
+    display: flex;
+}
+
+.text_move p {
+    margin-left: 8px;
+}
+
+:root {
+    --safe-area-inset-top: env(safe-area-inset-top);
+}
+
+header {
+    padding-top: calc(10px + var(--safe-area-inset-top));
+}

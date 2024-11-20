@@ -1,0 +1,10 @@
+/* carousel-medium-article.component.css */
+#carouselContainer {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+}
+
+#carouselContainer .flex-shrink-0 {
+  flex-shrink: 0;
+}

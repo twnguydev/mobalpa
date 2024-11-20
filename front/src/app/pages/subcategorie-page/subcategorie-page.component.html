@@ -1,0 +1,18 @@
+<div class="container flex items-center justify-center flex-col max-h-screen min-h-[70vh] mx-auto px-4 py-10">
+    <h1 class="font-aquawax text-mobalpa-green text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl mb-20">
+        {{ parentCategoryName }}
+    </h1>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8 lg:grid-cols-3">
+        <div *ngFor="let subcategory of subcategories" class="relative group bg-gray-100 p-6 hover:shadow-lg transition-shadow">
+            <a [href]="'/categories/' + subcategory.uri" class="sublink flex items-center justify-between">
+                <p class="font-gotham text-start text-black text-base sm:text-lg md:text-xl lg:text-2xl font-bold">
+                    {{ subcategory.name }}
+                </p>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+            </a>
+        </div>
+    </div>
+</div>

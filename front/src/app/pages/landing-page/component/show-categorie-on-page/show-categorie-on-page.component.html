@@ -1,0 +1,10 @@
+<h1 class="px-4 mx-4 mt-20 text-4xl text-emerald-green font-aquawax lg:px-24">Toutes les catégories tendances</h1>
+<div class="py-4 mx-10 lg:mx-20 overflow-x-auto whitespace-nowrap flex md:flex-row justify-start items-center space-x-4 font-gotham">
+    <div *ngFor="let category of categories" class="text-center flex-shrink-0 w-72 md:w-96 text-xl md:text-3xl m-4">
+        <a href="/categories/{{ category.uri }}">
+            <div class="m-auto"><img class="h-64 w-full object-cover" src="{{ category.images[0].uri }}" alt=""></div>
+            <p class="mt-5">{{ category.name }}</p>
+            <p class="mt-5 text-sm max-h-16 overflow-hidden text-ellipsis whitespace-normal">{{ category.description }}</p>
+        </a>
+    </div>
+</div>

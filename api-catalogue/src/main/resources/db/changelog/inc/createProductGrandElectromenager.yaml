@@ -1,0 +1,955 @@
+databaseChangeLog:
+  - changeSet:
+      id: 7
+      author: Saskoue
+      changes:
+        - insertMany:
+            collectionName: "product"
+            documents: |
+              [
+                {
+                  "_id": {"$binary": {"base64": "Z1a1ZZjt27A9whsacnLikw==", "subType": "03"}},
+                  "name": "Four électrique",
+                  "description": "Four électrique avec convection",
+                  "price": 199.99,
+                  "stock": 30,
+                  "estimatedDelivery": {"$date": "2024-09-01T08:00:00.000Z"},
+                  "weight": 15.0,
+                  "height": 60.0,
+                  "width": 60.0,
+                  "uri": "grand-electromenager/four/four-electrique",
+                  "createdAt": {"$date": "2024-08-10T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "a1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "GE8esJRMho/wUZfnAf81pA==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "oE5GGTSY9QdpmgEZQt8snA==", "subType": "03"}},
+                      "uri": "/images/gem/four-electrique.webp",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "GE8esJRMho/wUZfnAf81pA==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "7Fv3XJpTQLe0Q0EzZn3pZA==", "subType": "03"}},
+                  "name": "Four à chaleur tournante",
+                  "description": "Four à chaleur tournante pour une cuisson homogène.",
+                  "price": 249.99,
+                  "stock": 40,
+                  "estimatedDelivery": {"$date": "2024-09-02T08:00:00.000Z"},
+                  "weight": 16.0,
+                  "height": 60.0,
+                  "width": 60.0,
+                  "uri": "grand-electromenager/four/four-chaleur-tournante",
+                  "createdAt": {"$date": "2024-08-11T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "a1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "Wv7FGTRX9QdpmgEZQt8snA==", "subType": "03"}},
+                      "uri": "/images/gem/four-chaleur-tournante.jpeg",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "qXv2YYop4Ne9Q7sacnLikw==", "subType": "03"}},
+                  "name": "Four multifonction",
+                  "description": "Four multifonction avec grille et rôtissoire intégrées.",
+                  "price": 279.99,
+                  "stock": 25,
+                  "estimatedDelivery": {"$date": "2024-09-03T08:00:00.000Z"},
+                  "weight": 18.0,
+                  "height": 60.0,
+                  "width": 60.0,
+                  "uri": "grand-electromenager/four/four-multifonction",
+                  "createdAt": {"$date": "2024-08-12T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "a1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "qY5GGTSY9QdpmgEZQt8snA==", "subType": "03"}},
+                      "uri": "/images/gem/four-multifonction.jpeg",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "qNv8YVgt17M9qhsacnLikg==", "subType": "03"}},
+                  "name": "Four à pyrolyse",
+                  "description": "Four à pyrolyse avec nettoyage automatique.",
+                  "price": 329.99,
+                  "stock": 20,
+                  "estimatedDelivery": {"$date": "2024-09-04T08:00:00.000Z"},
+                  "weight": 19.0,
+                  "height": 60.0,
+                  "width": 60.0,
+                  "uri": "grand-electromenager/four/four-pyrolyse",
+                  "createdAt": {"$date": "2024-08-13T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "a1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "oP8GGTyY9QdpmgEZQt8snA==", "subType": "03"}},
+                      "uri": "/images/gem/four-pyrolyse.jpeg",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "v7a1YJjx1Qe9whqacnLikw==", "subType": "03"}},
+                  "name": "Four encastrable",
+                  "description": "Four encastrable pour une intégration parfaite dans votre cuisine.",
+                  "price": 219.99,
+                  "stock": 35,
+                  "estimatedDelivery": {"$date": "2024-09-05T08:00:00.000Z"},
+                  "weight": 17.0,
+                  "height": 60.0,
+                  "width": 60.0,
+                  "uri": "grand-electromenager/four/four-encastrable",
+                  "createdAt": {"$date": "2024-08-14T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "a1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "nK8GGTSY9QdpmgEZQt8snA==", "subType": "03"}},
+                      "uri": "/images/gem/four-encastrable.jpeg",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "p6a1ZZjt37B9whaacnLikw==", "subType": "03"}},
+                  "name": "Four vapeur",
+                  "description": "Four vapeur pour des cuissons saines et savoureuses.",
+                  "price": 299.99,
+                  "stock": 28,
+                  "estimatedDelivery": {"$date": "2024-09-06T08:00:00.000Z"},
+                  "weight": 18.0,
+                  "height": 60.0,
+                  "width": 60.0,
+                  "uri": "grand-electromenager/four/four-vapeur",
+                  "createdAt": {"$date": "2024-08-15T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "a1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "Gx+KvG6zSbeY6kI5C1z5YA==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "gK5GGTSY9QdpmgEZQt8snA==", "subType": "03"}},
+                      "uri": "/images/gem/four-vapeur.jpeg",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "Gx+KvG6zSbeY6kI5C1z5YA==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "n2z1ZJgt17A8whnacnLikw==", "subType": "03"}},
+                  "name": "Four combiné micro-ondes",
+                  "description": "Four combiné micro-ondes, rapide et polyvalent.",
+                  "price": 349.99,
+                  "stock": 22,
+                  "estimatedDelivery": {"$date": "2024-09-07T08:00:00.000Z"},
+                  "weight": 20.0,
+                  "height": 60.0,
+                  "width": 60.0,
+                  "uri": "grand-electromenager/four/four-combine-micro-ondes",
+                  "createdAt": {"$date": "2024-08-16T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "a1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "nG6GGRBY9QdpmgEZQt8snA==", "subType": "03"}},
+                      "uri": "/images/gem/four-micro-ondes.avif",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "q6y1YJkt19Q8vhsacnLikw==", "subType": "03"}},
+                  "name": "Four à pizza",
+                  "description": "Four à pizza avec pierre réfractaire intégrée.",
+                  "price": 199.99,
+                  "stock": 45,
+                  "estimatedDelivery": {"$date": "2024-09-08T08:00:00.000Z"},
+                  "weight": 14.0,
+                  "height": 60.0,
+                  "width": 60.0,
+                  "uri": "grand-electromenager/four/four-a-pizza",
+                  "createdAt": {"$date": "2024-08-17T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "a1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "Gx+KvG6zSbeY6kI5C1z5YA==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "nH5GGTSY9QdpmgEZQt8snA==", "subType": "03"}},
+                      "uri": "/images/gem/four-pizza.jpeg",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "Gx+KvG6zSbeY6kI5C1z5YA==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "t8q2YJkt27M8vhsacnLikw==", "subType": "03"}},
+                  "name": "Four compact",
+                  "description": "Four compact, idéal pour les petites cuisines.",
+                  "price": 179.99,
+                  "stock": 50,
+                  "estimatedDelivery": {"$date": "2024-09-09T08:00:00.000Z"},
+                  "weight": 13.0,
+                  "height": 60.0,
+                  "width": 60.0,
+                  "uri": "grand-electromenager/four/four-compact",
+                  "createdAt": {"$date": "2024-08-18T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "a1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "nJ7GGTSY9QdpmgEZQt8snA==", "subType": "03"}},
+                      "uri": "/images/gem/four-compact.webp",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "v2q2ZZkt28A9xhsacnLikw==", "subType": "03"}},
+                  "name": "Four à chaleur pulsée",
+                  "description": "Four à chaleur pulsée pour des cuissons rapides et homogènes.",
+                  "price": 289.99,
+                  "stock": 38,
+                  "estimatedDelivery": {"$date": "2024-09-10T08:00:00.000Z"},
+                  "weight": 18.5,
+                  "height": 60.0,
+                  "width": 60.0,
+                  "uri": "grand-electromenager/four/four-chaleur-pulsee",
+                  "createdAt": {"$date": "2024-08-19T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "a1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "Gx+KvG6zSbeY6kI5C1z5YA==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "nK7GGTSY9QdpmgEZQt8snA==", "subType": "03"}},
+                      "uri": "/images/gem/four-chaleur-pulsee.webp",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "Gx+KvG6zSbeY6kI5C1z5YA==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "k5r1ZZjt29A9yhsacnLikw==", "subType": "03"}},
+                  "name": "Four à sole",
+                  "description": "Four à sole pour une cuisson traditionnelle.",
+                  "price": 189.99,
+                  "stock": 32,
+                  "estimatedDelivery": {"$date": "2024-09-11T08:00:00.000Z"},
+                  "weight": 16.0,
+                  "height": 60.0,
+                  "width": 60.0,
+                  "uri": "grand-electromenager/four/four-a-sole",
+                  "createdAt": {"$date": "2024-08-20T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "a1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "oP5GGTSY9QdpmgEZQt8snA==", "subType": "03"}},
+                      "uri": "/images/gem/four-a-sole.jpeg",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "Y2b2ZZjt27A9whsacnLikw==", "subType": "03"}},
+                  "name": "Cuisinière à gaz",
+                  "description": "Cuisinière à gaz avec four intégré",
+                  "price": 299.99,
+                  "stock": 20,
+                  "estimatedDelivery": {"$date": "2024-09-05T08:00:00.000Z"},
+                  "weight": 25.0,
+                  "height": 85.0,
+                  "width": 60.0,
+                  "uri": "grand-electromenager/cuisiniere/cuisiniere-a-gaz",
+                  "createdAt": {"$date": "2024-08-11T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "b1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "rUVkFX29i1Wb/7CZ04pZuQ==", "subType": "03"}},
+                      "uri": "/images/gem/cuisiniere-gaz.webp",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "A1d2ZZjt28B9whsacnLikQ==", "subType": "03"}},
+                  "name": "Cuisinière Électrique",
+                  "description": "Cuisinière électrique avec 4 plaques de cuisson.",
+                  "price": 349.99,
+                  "stock": 15,
+                  "estimatedDelivery": {"$date": "2024-09-10T08:00:00.000Z"},
+                  "weight": 28.0,
+                  "height": 85.0,
+                  "width": 60.0,
+                  "uri": "grand-electromenager/cuisiniere/cuisiniere-electrique",
+                  "createdAt": {"$date": "2024-08-12T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "b1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "sUVkFX29j2Xa/8CZ04pZuQ==", "subType": "03"}},
+                      "uri": "/images/gem/cuisiniere-electrique.jpeg",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "B2e3ZZjt27C9whsacnLikA==", "subType": "03"}},
+                  "name": "Cuisinière à Induction",
+                  "description": "Cuisinière avec plaques à induction pour une cuisson rapide.",
+                  "price": 499.99,
+                  "stock": 12,
+                  "estimatedDelivery": {"$date": "2024-09-15T08:00:00.000Z"},
+                  "weight": 30.0,
+                  "height": 85.0,
+                  "width": 60.0,
+                  "uri": "grand-electromenager/cuisiniere/cuisiniere-induction",
+                  "createdAt": {"$date": "2024-08-13T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "b1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "tUVkFX29j3Xa/8DZ04pZuQ==", "subType": "03"}},
+                      "uri": "/images/gem/cuisiniere-induction.png",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "C3f4ZZjt28D9whsacnLikA==", "subType": "03"}},
+                  "name": "Cuisinière à Bois",
+                  "description": "Cuisinière traditionnelle à bois pour une cuisine rustique.",
+                  "price": 699.99,
+                  "stock": 8,
+                  "estimatedDelivery": {"$date": "2024-09-20T08:00:00.000Z"},
+                  "weight": 50.0,
+                  "height": 85.0,
+                  "width": 65.0,
+                  "uri": "grand-electromenager/cuisiniere/cuisiniere-a-bois",
+                  "createdAt": {"$date": "2024-08-14T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "b1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "uUVkFX29j4Xa/8DZ04pZuQ==", "subType": "03"}},
+                      "uri": "/images/gem/cuisiniere-bois.png",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "D4g5ZZjt27C9whsacnLikA==", "subType": "03"}},
+                  "name": "Cuisinière Mixte",
+                  "description": "Cuisinière mixte avec plaques à gaz et électriques.",
+                  "price": 549.99,
+                  "stock": 10,
+                  "estimatedDelivery": {"$date": "2024-09-25T08:00:00.000Z"},
+                  "weight": 32.0,
+                  "height": 85.0,
+                  "width": 60.0,
+                  "uri": "grand-electromenager/cuisiniere/cuisiniere-mixte",
+                  "createdAt": {"$date": "2024-08-15T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "b1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "vUVkFX29j5Xa/8DZ04pZuQ==", "subType": "03"}},
+                      "uri": "/images/gem/cuisiniere-mixte.jpeg",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "E5h6ZZjt28D9whsacnLikA==", "subType": "03"}},
+                  "name": "Cuisinière à Gaz 5 Feux",
+                  "description": "Cuisinière à gaz avec 5 feux pour les grands repas.",
+                  "price": 599.99,
+                  "stock": 7,
+                  "estimatedDelivery": {"$date": "2024-09-30T08:00:00.000Z"},
+                  "weight": 35.0,
+                  "height": 85.0,
+                  "width": 70.0,
+                  "uri": "grand-electromenager/cuisiniere/cuisiniere-a-gaz-5-feux",
+                  "createdAt": {"$date": "2024-08-16T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "b1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "Gx+KvG6zSbeY6kI5C1z5YA==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "wUVkFX29j6Xa/8DZ04pZuQ==", "subType": "03"}},
+                      "uri": "/images/gem/cuisiniere-a-gaz-5-feux.webp",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "Gx+KvG6zSbeY6kI5C1z5YA==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "F6i7ZZjt27E9whsacnLikA==", "subType": "03"}},
+                  "name": "Cuisinière Multifonction",
+                  "description": "Cuisinière multifonction avec four à chaleur tournante.",
+                  "price": 649.99,
+                  "stock": 11,
+                  "estimatedDelivery": {"$date": "2024-10-05T08:00:00.000Z"},
+                  "weight": 38.0,
+                  "height": 85.0,
+                  "width": 65.0,
+                  "uri": "grand-electromenager/cuisiniere/cuisiniere-multifonction",
+                  "createdAt": {"$date": "2024-08-17T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "b1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "xUVkFX29j7Xa/8DZ04pZuQ==", "subType": "03"}},
+                      "uri": "/images/gem/cuisiniere-multifonction.jpg",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "G7j8ZZjt28F9whsacnLikA==", "subType": "03"}},
+                  "name": "Cuisinière Vitrocéramique",
+                  "description": "Cuisinière avec plaques vitrocéramiques et four grill.",
+                  "price": 449.99,
+                  "stock": 14,
+                  "estimatedDelivery": {"$date": "2024-10-10T08:00:00.000Z"},
+                  "weight": 29.0,
+                  "height": 85.0,
+                  "width": 60.0,
+                  "uri": "grand-electromenager/cuisiniere/cuisiniere-vitroceramique",
+                  "createdAt": {"$date": "2024-08-18T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "b1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "Gx+KvG6zSbeY6kI5C1z5YA==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "yUVkFX29j8Xa/8DZ04pZuQ==", "subType": "03"}},
+                      "uri": "/images/gem/cuisiniere-vitroceramique.png",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "H8k9ZZjt27G9whsacnLikA==", "subType": "03"}},
+                  "name": "Cuisinière Compacte",
+                  "description": "Cuisinière compacte idéale pour les petits espaces.",
+                  "price": 299.99,
+                  "stock": 18,
+                  "estimatedDelivery": {"$date": "2024-10-15T08:00:00.000Z"},
+                  "weight": 25.0,
+                  "height": 85.0,
+                  "width": 50.0,
+                  "uri": "grand-electromenager/cuisiniere/cuisiniere-compacte",
+                  "createdAt": {"$date": "2024-08-19T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "b1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "zUVkFX29j9Xa/8DZ04pZuQ==", "subType": "03"}},
+                      "uri": "/images/gem/cuisiniere-compacte.jpeg",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "I9l0ZZjt28G9whsacnLikA==", "subType": "03"}},
+                  "name": "Cuisinière Professionnelle",
+                  "description": "Cuisinière professionnelle pour les passionnés de cuisine.",
+                  "price": 999.99,
+                  "stock": 5,
+                  "estimatedDelivery": {"$date": "2024-10-20T08:00:00.000Z"},
+                  "weight": 70.0,
+                  "height": 85.0,
+                  "width": 90.0,
+                  "uri": "grand-electromenager/cuisiniere/cuisiniere-professionnelle",
+                  "createdAt": {"$date": "2024-08-20T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "b1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "aUVkFX29k0Xa/8DZ04pZuQ==", "subType": "03"}},
+                      "uri": "/images/gem/cuisiniere-professionnelle.jpeg",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "J0m1ZZjt27H9whsacnLikA==", "subType": "03"}},
+                  "name": "Cuisinière Inox",
+                  "description": "Cuisinière en inox avec finitions modernes et robustes.",
+                  "price": 799.99,
+                  "stock": 9,
+                  "estimatedDelivery": {"$date": "2024-10-25T08:00:00.000Z"},
+                  "weight": 45.0,
+                  "height": 85.0,
+                  "width": 60.0,
+                  "uri": "grand-electromenager/cuisiniere/cuisiniere-inox",
+                  "createdAt": {"$date": "2024-08-21T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "b1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "bUVkFX29k1Xa/8DZ04pZuQ==", "subType": "03"}},
+                      "uri": "/images/gem/cuisiniere-inox.jpg",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "X3d3ZZjt27A9whsacnLikw==", "subType": "03"}},
+                  "name": "Machine à laver",
+                  "description": "Machine à laver 7kg",
+                  "price": 399.99,
+                  "stock": 15,
+                  "estimatedDelivery": {"$date": "2024-09-10T08:00:00.000Z"},
+                  "weight": 60.0,
+                  "height": 85.0,
+                  "width": 60.0,
+                  "uri": "grand-electromenager/machine-a-laver/machine-a-laver-7kg",
+                  "createdAt": {"$date": "2024-08-12T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "c1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "sE7GGTSY9QdpmgEZQt8snA==", "subType": "03"}},
+                      "uri": "/images/pem/seche3.png",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "W4e4ZZjt27A9whsacnLikw==", "subType": "03"}},
+                  "name": "Réfrigérateur",
+                  "description": "Réfrigérateur combiné 300L",
+                  "price": 499.99,
+                  "stock": 10,
+                  "estimatedDelivery": {"$date": "2024-09-15T08:00:00.000Z"},
+                  "weight": 70.0,
+                  "height": 185.0,
+                  "width": 60.0,
+                  "uri": "grand-electromenager/refrigerateur/refrigerateur-combine-300l",
+                  "createdAt": {"$date": "2024-08-13T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "d1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "vUVmFX29i1Wb/7CZ04pZuQ==", "subType": "03"}},
+                      "uri": "/images/kitchen-ecommerce/retro-wood.png",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "V5f5ZZjt27A9whsacnLikw==", "subType": "03"}},
+                  "name": "Lave-vaisselle",
+                  "description": "Lave-vaisselle 12 couverts",
+                  "price": 399.99,
+                  "stock": 25,
+                  "estimatedDelivery": {"$date": "2024-09-20T08:00:00.000Z"},
+                  "weight": 50.0,
+                  "height": 85.0,
+                  "width": 60.0,
+                  "uri": "grand-electromenager/lave-vaisselle/lave-vaisselle-12-couverts",
+                  "createdAt": {"$date": "2024-08-14T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "e1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "xUVnFX29i1Wb/7CZ04pZuQ==", "subType": "03"}},
+                      "uri": "/images/gem/lave-vaiselle.jpeg",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "F7f5YZrt27A9whzbcXLikA==", "subType": "03"}},
+                  "name": "Lave-vaisselle Eco",
+                  "description": "Lave-vaisselle éco, faible consommation d'eau et d'énergie.",
+                  "price": 349.99,
+                  "stock": 20,
+                  "estimatedDelivery": {"$date": "2024-09-21T08:00:00.000Z"},
+                  "weight": 45.0,
+                  "height": 85.0,
+                  "width": 60.0,
+                  "uri": "grand-electromenager/lave-vaisselle/lave-vaisselle-eco",
+                  "createdAt": {"$date": "2024-08-15T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "e1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "dQp3I4ZlV9UqoL3mKoZ2GQ==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "xMVnGZ29j1Xa/7CZ04lZuQ==", "subType": "03"}},
+                      "uri": "/images/gem/lave-vaiselle-eco.jpeg",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "dQp3I4ZlV9UqoL3mKoZ2GQ==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "X2h5YZbt28A9whracnLikQ==", "subType": "03"}},
+                  "name": "Lave-vaisselle Pro",
+                  "description": "Lave-vaisselle professionnel avec grande capacité.",
+                  "price": 599.99,
+                  "stock": 15,
+                  "estimatedDelivery": {"$date": "2024-09-22T08:00:00.000Z"},
+                  "weight": 60.0,
+                  "height": 90.0,
+                  "width": 65.0,
+                  "uri": "grand-electromenager/lave-vaisselle/lave-vaisselle-pro",
+                  "createdAt": {"$date": "2024-08-16T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "e1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "Gx+KvG6zSbeY6kI5C1z5YA==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "yNVnHX29k2Xa/8DZ04mZuQ==", "subType": "03"}},
+                      "uri": "/images/gem/lave-vaiselle-pro.jpeg",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "Gx+KvG6zSbeY6kI5C1z5YA==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "Q3g5ZZmt27B9whsacnLikA==", "subType": "03"}},
+                  "name": "Lave-vaisselle Compact",
+                  "description": "Lave-vaisselle compact pour les petites cuisines.",
+                  "price": 299.99,
+                  "stock": 30,
+                  "estimatedDelivery": {"$date": "2024-09-23T08:00:00.000Z"},
+                  "weight": 40.0,
+                  "height": 75.0,
+                  "width": 55.0,
+                  "uri": "grand-electromenager/lave-vaisselle/lave-vaisselle-compact",
+                  "createdAt": {"$date": "2024-08-17T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "e1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "zWVnFX29k3Xa/9CZ04nZuQ==", "subType": "03"}},
+                      "uri": "/images/gem/lave-vaiselle-compact.jpeg",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "T9h5ZZkt28B9xhsacnLikQ==", "subType": "03"}},
+                  "name": "Lave-vaisselle Silence",
+                  "description": "Lave-vaisselle silencieux, idéal pour les cuisines ouvertes.",
+                  "price": 449.99,
+                  "stock": 18,
+                  "estimatedDelivery": {"$date": "2024-09-24T08:00:00.000Z"},
+                  "weight": 55.0,
+                  "height": 85.0,
+                  "width": 60.0,
+                  "uri": "grand-electromenager/lave-vaisselle/lave-vaisselle-silence",
+                  "createdAt": {"$date": "2024-08-18T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "e1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "aNVnGX29j4Xa/8DZ04pZuQ==", "subType": "03"}},
+                      "uri": "/images/gem/lave-vaiselle-silence.jpeg",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "V1i5ZZjt27C9whsacnLikA==", "subType": "03"}},
+                  "name": "Lave-vaisselle Familial",
+                  "description": "Lave-vaisselle grande capacité pour les familles nombreuses.",
+                  "price": 499.99,
+                  "stock": 10,
+                  "estimatedDelivery": {"$date": "2024-09-25T08:00:00.000Z"},
+                  "weight": 65.0,
+                  "height": 85.0,
+                  "width": 65.0,
+                  "uri": "grand-electromenager/lave-vaisselle/lave-vaisselle-familial",
+                  "createdAt": {"$date": "2024-08-19T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "e1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "bNVnFX29j2Xa/8DZ04nZuQ==", "subType": "03"}},
+                      "uri": "/images/gem/lave-vaiselle-familial.webp",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "R2h5YZst28A9whsacnLikA==", "subType": "03"}},
+                  "name": "Lave-vaisselle Express",
+                  "description": "Lave-vaisselle express, idéal pour les repas rapides.",
+                  "price": 429.99,
+                  "stock": 22,
+                  "estimatedDelivery": {"$date": "2024-09-26T08:00:00.000Z"},
+                  "weight": 52.0,
+                  "height": 85.0,
+                  "width": 60.0,
+                  "uri": "grand-electromenager/lave-vaisselle/lave-vaisselle-express",
+                  "createdAt": {"$date": "2024-08-20T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "e1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "cNVnFX29j3Xa/8DZ04nZuQ==", "subType": "03"}},
+                      "uri": "/images/gem/lave-vaiselle-express.webp",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "M3i5ZZrt27A9xhsacnLikA==", "subType": "03"}},
+                  "name": "Lave-vaisselle Smart",
+                  "description": "Lave-vaisselle intelligent avec connectivité Wi-Fi.",
+                  "price": 549.99,
+                  "stock": 14,
+                  "estimatedDelivery": {"$date": "2024-09-27T08:00:00.000Z"},
+                  "weight": 57.0,
+                  "height": 85.0,
+                  "width": 60.0,
+                  "uri": "grand-electromenager/lave-vaisselle/lave-vaisselle-smart",
+                  "createdAt": {"$date": "2024-08-21T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "e1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "dNVnFX29j4Xa/8DZ04nZuQ==", "subType": "03"}},
+                      "uri": "/images/gem/lave-vaiselle-smart.jpeg",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "P3h5ZZkt28A9whsacnLikQ==", "subType": "03"}},
+                  "name": "Lave-vaisselle Luxe",
+                  "description": "Lave-vaisselle de luxe, finition en acier inoxydable.",
+                  "price": 699.99,
+                  "stock": 8,
+                  "estimatedDelivery": {"$date": "2024-09-28T08:00:00.000Z"},
+                  "weight": 70.0,
+                  "height": 85.0,
+                  "width": 60.0,
+                  "uri": "grand-electromenager/lave-vaisselle/lave-vaisselle-luxe",
+                  "createdAt": {"$date": "2024-08-22T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "e1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "eNVnFX29j5Xa/8DZ04nZuQ==", "subType": "03"}},
+                      "uri": "/images/gem/lave-vaiselle-luxe.jpeg",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "O3i5YZut27B9whsacnLikA==", "subType": "03"}},
+                  "name": "Lave-vaisselle Inox",
+                  "description": "Lave-vaisselle en acier inoxydable pour une durabilité accrue.",
+                  "price": 499.99,
+                  "stock": 12,
+                  "estimatedDelivery": {"$date": "2024-09-29T08:00:00.000Z"},
+                  "weight": 65.0,
+                  "height": 85.0,
+                  "width": 60.0,
+                  "uri": "grand-electromenager/lave-vaisselle/lave-vaisselle-inox",
+                  "createdAt": {"$date": "2024-08-23T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "e1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "Gx+KvG6zSbeY6kI5C1z5YA==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "fNVnGX29j6Xa/8DZ04nZuQ==", "subType": "03"}},
+                      "uri": "/images/gem/lave-vaiselle-inox.jpeg",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "Gx+KvG6zSbeY6kI5C1z5YA==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "W3h5ZZlt28A9whsacnLikA==", "subType": "03"}},
+                  "name": "Lave-vaisselle Rapide",
+                  "description": "Lave-vaisselle avec cycle rapide pour un gain de temps optimal.",
+                  "price": 379.99,
+                  "stock": 20,
+                  "estimatedDelivery": {"$date": "2024-09-30T08:00:00.000Z"},
+                  "weight": 48.0,
+                  "height": 85.0,
+                  "width": 60.0,
+                  "uri": "grand-electromenager/lave-vaisselle/lave-vaisselle-rapide",
+                  "createdAt": {"$date": "2024-08-24T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "B0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "e1BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "gNVnFX29j7Xa/8DZ04nZuQ==", "subType": "03"}},
+                      "uri": "/images/gem/lave-vaiselle-rapide.jpeg",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                }
+              ]

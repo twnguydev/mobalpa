@@ -1,0 +1,91 @@
+databaseChangeLog:
+  - changeSet:
+      id: 13
+      author: Saskoue
+      changes:
+        - insertMany:
+            collectionName: "product"
+            documents: |
+              [
+                {
+                  "_id": {"$binary": {"base64": "1Aa2BBjt27A9whsacnLikw==", "subType": "03"}},
+                  "name": "Spatule en bois",
+                  "uri": "cuisines/ustensile-de-cuisine/spatule-en-bois",
+                  "description": "Spatule en bois pour cuisine",
+                  "price": 9.99,
+                  "stock": 200,
+                  "estimatedDelivery": {"$date": "2024-08-15T08:00:00.000Z"},
+                  "weight": 0.2,
+                  "height": 30.0,
+                  "width": 5.0,
+                  "createdAt": {"$date": "2024-08-01T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "C0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "j0BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "GE8esJRMho/wUZfnAf81pA==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "oF5GGTSY9QdpmgEZQt8snA==", "subType": "03"}},
+                      "uri": "/images/pem/spatulerouge.jpeg",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "GE8esJRMho/wUZfnAf81pA==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "2Bb3CCjt37A9whsacnLikw==", "subType": "03"}},
+                  "name": "Vase en céramique",
+                  "uri": "cuisines/decoration-interieur/vase-en-ceramique",
+                  "description": "Vase en céramique pour décoration intérieure",
+                  "price": 29.99,
+                  "stock": 150,
+                  "estimatedDelivery": {"$date": "2024-08-20T08:00:00.000Z"},
+                  "weight": 1.5,
+                  "height": 25.0,
+                  "width": 15.0,
+                  "createdAt": {"$date": "2024-08-01T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "C0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "k0BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "LUSI2mi0zpRNFJTZbEQOgg==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "pG6GGTSY9QdpmgEZQt8snA==", "subType": "03"}},
+                      "uri": "/images/pem/vasebleu.jpeg",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "LUSI2mi0zpRNFJTZbEQOgg==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                  "_id": {"$binary": {"base64": "3Cc4DDjt47A9whsacnLikw==", "subType": "03"}},
+                  "name": "Lanternes extérieures",
+                  "uri": "cuisines/decoration-exterieur/lanternes-exterieures",
+                  "description": "Lanternes pour décoration extérieure",
+                  "price": 39.99,
+                  "stock": 100,
+                  "estimatedDelivery": {"$date": "2024-08-25T08:00:00.000Z"},
+                  "weight": 2.0,
+                  "height": 35.0,
+                  "width": 20.0,
+                  "createdAt": {"$date": "2024-08-01T14:24:23.967Z"},
+                  "category": {"$ref": "category", "$id": {"$binary": {"base64": "C0oZQEgbc/27DcERW8OFmA==", "subType": "03"}}},
+                  "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "l0BzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                  "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                  "colors": [
+                    {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                  ],
+                  "images": [
+                    {
+                      "_id": {"$binary": {"base64": "qH7GGTSY9QdpmgEZQt8snA==", "subType": "03"}},
+                      "uri": "/images/pem/lanterne.jpeg",
+                      "color": {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                    }
+                  ],
+                  "_class": "com.mobalpa.catalogue.model.Product"
+                }
+              ]

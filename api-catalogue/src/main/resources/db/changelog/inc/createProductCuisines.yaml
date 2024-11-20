@@ -1,0 +1,384 @@
+databaseChangeLog:
+  - changeSet:
+      id: 3
+      author: Saskoue
+      changes:
+        - insertMany:
+            collectionName: "product"
+            documents: |
+              [
+                  {
+                    "_id": {"$binary": {"base64": "DEIS5Wjt27A9whsacnLikw==", "subType": "03"}},
+                    "name": "Escapade",
+                    "description": "This is an example product description.",
+                    "price": 99.99,
+                    "stock": 50,
+                    "estimatedDelivery": {"$date": "2024-08-01T08:00:00.000Z"},
+                    "weight": 1.5,
+                    "uri": "cuisines/plan-de-travail/escapade",
+                    "height": 10.0,
+                    "width": 20.0,
+                    "createdAt": {"$date": "2024-08-05T14:24:23.967Z"},
+                    "category": {"$ref": "category", "$id": {"$binary": {"base64": "bkQwUIC3k4R8r3ZrTsocow==", "subType": "03"}}},
+                    "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "jUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                    "colors": [
+                      {"$ref": "colors", "$id": {"$binary": {"base64": "GE8esJRMho/wUZfnAf81pA==", "subType": "03"}}},
+                      {"$ref": "colors", "$id": {"$binary": {"base64": "LUSI2mi0zpRNFJTZbEQOgg==", "subType": "03"}}}
+                    ],
+                    "images": [
+                      {
+                        "_id": {"$binary": {"base64": "jE4GGTSY9QdpmgEZQt8snA==", "subType": "03"}},
+                        "uri": "/images/kitchen-ecommerce/escapade-saumon.png",
+                        "color": {"$ref": "colors", "$id": {"$binary": {"base64": "GE8esJRMho/wUZfnAf81pA==", "subType": "03"}}}
+                      },
+                      {
+                        "_id": {"$binary": {"base64": "wUVjFX29i1Wb/7CZ04pZuQ==", "subType": "03"}},
+                        "uri": "/images/kitchen-ecommerce/escapade-turquoise.png",
+                        "color": {"$ref": "colors", "$id": {"$binary": {"base64": "LUSI2mi0zpRNFJTZbEQOgg==", "subType": "03"}}}
+                      }
+                    ],
+                    "_class": "com.mobalpa.catalogue.model.Product"
+                  },
+                  {
+                    "_id": {"$binary": {"base64": "HG82LWJTXb2PKNtfJfb9Xg==", "subType": "03"}},
+                    "name": "Eveil",
+                    "description": "This is an example product description.",
+                    "price": 149.99,
+                    "stock": 50,
+                    "estimatedDelivery": {"$date": "2024-08-01T08:00:00.000Z"},
+                    "weight": 1.5,
+                    "uri": "cuisines/plan-de-travail/eveil",
+                    "height": 10.0,
+                    "width": 20.0,
+                    "createdAt": {"$date": "2024-08-05T14:24:23.967Z"},
+                    "category": {"$ref": "category", "$id": {"$binary": {"base64": "bkQwUIC3k4R8r3ZrTsocow==", "subType": "03"}}},
+                    "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "jUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                    "colors": [
+                        {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}},
+                        {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                    ],
+                    "images": [
+                        {
+                            "_id": {"$binary": {"base64": "GZk4THBwhRLVeK5yYHc+AA==", "subType": "03"}},
+                            "uri": "/images/kitchen-ecommerce/eveil-black.png",
+                            "color": {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                        },
+                        {
+                            "_id": {"$binary": {"base64": "K2lFNzqJhXtVaE0vZjmvVw==", "subType": "03"}},
+                            "uri": "/images/kitchen-ecommerce/eveil-blanc.png",
+                            "color": {"$ref": "colors", "$id": {"$binary": {"base64": "rm4mC+RV7ru0Rjb4bq7oMQ==", "subType": "03"}}}
+                        }
+                    ],
+                    "_class": "com.mobalpa.catalogue.model.Product"
+                  },
+                  {
+                    "_id": {"$binary": {"base64": "bHF0T4Vf2RBqlc1vJcXqQA==", "subType": "03"}},
+                    "name": "Expressive",
+                    "description": "This is an example product description.",
+                    "price": 249.99,
+                    "stock": 12,
+                    "estimatedDelivery": {"$date": "2024-08-01T08:00:00.000Z"},
+                    "weight": 3,
+                    "uri": "cuisines/plan-de-travail/expressive",
+                    "height": 12.5,
+                    "width": 30.0,
+                    "createdAt": {"$date": "2024-08-05T14:24:23.967Z"},
+                    "category": {"$ref": "category", "$id": {"$binary": {"base64": "bkQwUIC3k4R8r3ZrTsocow==", "subType": "03"}}},
+                    "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "jUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                    "colors": [
+                        {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                    ],
+                    "images": [
+                        {
+                            "_id": {"$binary": {"base64": "bHF0T4Vf2RBqlc1vJcXqQA==", "subType": "03"}},
+                            "uri": "/images/kitchen-ecommerce/expressive.png",
+                            "color": {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                        }
+                    ],
+                    "_class": "com.mobalpa.catalogue.model.Product"
+                  },
+                  {
+                    "_id": {"$binary": {"base64": "aW5gTjF9u5RppK5tNkXZyQ==", "subType": "03"}},
+                    "name": "Rétro",
+                    "description": "This is an example product description.",
+                    "price": 70.00,
+                    "stock": 12,
+                    "estimatedDelivery": {"$date": "2024-08-01T08:00:00.000Z"},
+                    "weight": 3,
+                    "uri": "cuisines/plan-de-travail/retro",
+                    "height": 12.5,
+                    "width": 30.0,
+                    "createdAt": {"$date": "2024-08-05T14:24:23.967Z"},
+                    "category": {"$ref": "category", "$id": {"$binary": {"base64": "bkQwUIC3k4R8r3ZrTsocow==", "subType": "03"}}},
+                    "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "jUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                    "colors": [
+                        {"$ref": "colors", "$id": {"$binary": {"base64": "uWd9H5JtL4HkpY6pRqX2HQ==", "subType": "03"}}},
+                        {"$ref": "colors", "$id": {"$binary": {"base64": "GE8esJRMho/wUZfnAf81pA==", "subType": "03"}}}
+                    ],
+                    "images": [
+                        {
+                            "_id": {"$binary": {"base64": "lNp4vIXMk6XZr9s3KJd4GQ==", "subType": "03"}},
+                            "uri": "/images/kitchen-ecommerce/retro-jaune.png",
+                            "color": {"$ref": "colors", "$id": {"$binary": {"base64": "uWd9H5JtL4HkpY6pRqX2HQ==", "subType": "03"}}}
+                        },
+                        {
+                            "_id": {"$binary": {"base64": "zPj6Q9Mzv8FdpX7tJnX9JQ==", "subType": "03"}},
+                            "uri": "/images/kitchen-ecommerce/retro-red.png",
+                            "color": {"$ref": "colors", "$id": {"$binary": {"base64": "GE8esJRMho/wUZfnAf81pA==", "subType": "03"}}}
+                        }
+                    ],
+                    "_class": "com.mobalpa.catalogue.model.Product"
+                  },
+                  {
+                    "_id": {"$binary": {"base64": "mWr4C5TpN9XqrU2yKkG5Gg==", "subType": "03"}},
+                    "name": "Rive",
+                    "description": "This is an example product description.",
+                    "price": 90.00,
+                    "stock": 12,
+                    "estimatedDelivery": {"$date": "2024-08-01T08:00:00.000Z"},
+                    "weight": 3,
+                    "uri": "cuisines/plan-de-travail/rive",
+                    "height": 12.5,
+                    "width": 30.0,
+                    "createdAt": {"$date": "2024-08-05T14:24:23.967Z"},
+                    "category": {"$ref": "category", "$id": {"$binary": {"base64": "bkQwUIC3k4R8r3ZrTsocow==", "subType": "03"}}},
+                    "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "jUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                    "colors": [
+                        {"$ref": "colors", "$id": {"$binary": {"base64": "eXt8O9MnN2VqlW5rNpY8Fw==", "subType": "03"}}},
+                        {"$ref": "colors", "$id": {"$binary": {"base64": "dQp3I4ZlV9UqoL3mKoZ2GQ==", "subType": "03"}}}
+                    ],
+                    "images": [
+                        {
+                            "_id": {"$binary": {"base64": "bHr7K8WjP2T8lK1mJqX9Fw==", "subType": "03"}},
+                            "uri": "/images/kitchen-ecommerce/rive-blue.png",
+                            "color": {"$ref": "colors", "$id": {"$binary": {"base64": "eXt8O9MnN2VqlW5rNpY8Fw==", "subType": "03"}}}
+                        },
+                        {
+                            "_id": {"$binary": {"base64": "cPw5L7UnT3R6oZ8oMoX7Gw==", "subType": "03"}},
+                            "uri": "/images/kitchen-ecommerce/rive-canard.png",
+                            "color": {"$ref": "colors", "$id": {"$binary": {"base64": "dQp3I4ZlV9UqoL3mKoZ2GQ==", "subType": "03"}}}
+                        }
+                    ],
+                    "_class": "com.mobalpa.catalogue.model.Product"
+                  },
+                  {
+                    "_id": {"$binary": {"base64": "fHq6J3BlR8WspX7nLkV9Gg==", "subType": "03"}},
+                    "name": "Serenite",
+                    "description": "This is an example product description.",
+                    "price": 139.99,
+                    "stock": 12,
+                    "estimatedDelivery": {"$date": "2024-08-01T08:00:00.000Z"},
+                    "weight": 3,
+                    "uri": "cuisines/plan-de-travail/serenite",
+                    "height": 12.5,
+                    "width": 30.0,
+                    "createdAt": {"$date": "2024-08-05T14:24:23.967Z"},
+                    "category": {"$ref": "category", "$id": {"$binary": {"base64": "bkQwUIC3k4R8r3ZrTsocow==", "subType": "03"}}},
+                    "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "jUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "FEeXxhxlAKo23eoNLE4TjA==", "subType": "03"}}},
+                    "colors": [
+                        {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                    ],
+                    "images": [
+                        {
+                            "_id": {"$binary": {"base64": "fHq6J3BlR8WspX7nLkV9Gg==", "subType": "03"}},
+                            "uri": "/images/kitchen-ecommerce/serenite.png",
+                            "color": {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                        }
+                    ],
+                    "_class": "com.mobalpa.catalogue.model.Product"
+                  },
+                  {
+                    "_id": {"$binary": {"base64": "6I+LA+sQQAqCZSZSQJAqTA==", "subType": "03"}},
+                    "name": "Brooklyn",
+                    "description": "This is an example product description.",
+                    "price": 825,
+                    "stock": 12,
+                    "estimatedDelivery": {"$date": "2024-08-01T08:00:00.000Z"},
+                    "weight": 3,
+                    "uri": "cuisines/plan-de-travail/brooklyn",
+                    "height": 12.5,
+                    "width": 30.0,
+                    "createdAt": {"$date": "2024-08-05T14:24:23.967Z"},
+                    "category": {"$ref": "category", "$id": {"$binary": {"base64": "bkQwUIC3k4R8r3ZrTsocow==", "subType": "03"}}},
+                    "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "jUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "Y8sB2mASGqiY3msNSocRzg==", "subType": "03"}}},
+                    "colors": [
+                        {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                    ],
+                    "images": [
+                        {
+                            "_id": {"$binary": {"base64": "3TP6vML7TNyKhPNkuxwMuQ==", "subType": "03"}},
+                            "uri": "/images/kitchen-ecommerce/brooklyn.png",
+                            "color": {"$ref": "colors", "$id": {"$binary": {"base64": "U0xRVjN+Rbe8jD4n1dC3aQ==", "subType": "03"}}}
+                        }
+                    ],
+                    "_class": "com.mobalpa.catalogue.model.Product"
+                  },
+                  {
+                    "_id": {"$binary": {"base64": "WEQExTBaRiuyF3qa9JYDTQ==", "subType": "03"}},
+                    "name": "Bucolique",
+                    "description": "This is an example product description.",
+                    "price": 449.99,
+                    "stock": 12,
+                    "estimatedDelivery": {"$date": "2024-08-01T08:00:00.000Z"},
+                    "weight": 3,
+                    "uri": "cuisines/plan-de-travail/bucolique",
+                    "height": 12.5,
+                    "width": 30.0,
+                    "createdAt": {"$date": "2024-08-05T14:24:23.967Z"},
+                    "category": {"$ref": "category", "$id": {"$binary": {"base64": "bkQwUIC3k4R8r3ZrTsocow==", "subType": "03"}}},
+                    "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "jUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "Y8sB2mASGqiY3msNSocRzg==", "subType": "03"}}},
+                    "colors": [
+                        {"$ref": "colors", "$id": {"$binary": {"base64": "uWd9H5JtL4HkpY6pRqX2HQ==", "subType": "03"}}}
+                    ],
+                    "images": [
+                        {
+                            "_id": {"$binary": {"base64": "OXvIM7MqRfG9O29mQmsjfw==", "subType": "03"}},
+                            "uri": "/images/kitchen-ecommerce/bucolique.png",
+                            "color": {"$ref": "colors", "$id": {"$binary": {"base64": "uWd9H5JtL4HkpY6pRqX2HQ==", "subType": "03"}}}
+                        }
+                    ],
+                    "_class": "com.mobalpa.catalogue.model.Product"
+                  },
+                  {
+                    "_id": {"$binary": {"base64": "ki8jGry5SX6hTQyfR2MCDQ==", "subType": "03"}},
+                    "name": "Campagne",
+                    "description": "This is an example product description.",
+                    "price": 599.99,
+                    "stock": 12,
+                    "estimatedDelivery": {"$date": "2024-08-01T08:00:00.000Z"},
+                    "weight": 3,
+                    "uri": "cuisines/plan-de-travail/campagne",
+                    "height": 12.5,
+                    "width": 30.0,
+                    "createdAt": {"$date": "2024-08-05T14:24:23.967Z"},
+                    "category": {"$ref": "category", "$id": {"$binary": {"base64": "bkQwUIC3k4R8r3ZrTsocow==", "subType": "03"}}},
+                    "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "jUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "Y8sB2mASGqiY3msNSocRzg==", "subType": "03"}}},
+                    "colors": [
+                        {"$ref": "colors", "$id": {"$binary": {"base64": "uWd9H5JtL4HkpY6pRqX2HQ==", "subType": "03"}}}
+                    ],
+                    "images": [
+                        {
+                            "_id": {"$binary": {"base64": "OXvIM7MqRfG9O29mQmsjfw==", "subType": "03"}},
+                            "uri": "/images/kitchen-ecommerce/campagne.png",
+                            "color": {"$ref": "colors", "$id": {"$binary": {"base64": "uWd9H5JtL4HkpY6pRqX2HQ==", "subType": "03"}}}
+                        }
+                    ],
+                    "_class": "com.mobalpa.catalogue.model.Product"
+                  },
+                  {
+                    "_id": {"$binary": {"base64": "H2r7V4RFHJz67zXcOud31A==", "subType": "03"}},
+                    "name": "Table de cuisine",
+                    "description": "Modern kitchen table with sleek design.",
+                    "price": 150.00,
+                    "stock": 30,
+                    "estimatedDelivery": {"$date": "2024-08-10T08:00:00.000Z"},
+                    "weight": 20.0,
+                    "height": 75.0,
+                    "width": 120.0,
+                    "createdAt": {"$date": "2024-08-01T14:24:23.967Z"},
+                    "category": {"$ref": "category", "$id": {"$binary": {"base64": "bkQwUIC3k4R8r3ZrTsocow==", "subType": "03"}}},
+                    "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "kUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "Y8sB2mASGqiY3msNSocRzg==", "subType": "03"}}},
+                    "colors": [
+                      {"$ref": "colors", "$id": {"$binary": {"base64": "LUSI2mi0zpRNFJTZbEQOgg==", "subType": "03"}}}
+                    ],
+                    "images": [
+                      {
+                        "_id": {"$binary": {"base64": "i9d8Fz8h8Ux7DfFm90a5lA==", "subType": "03"}},
+                        "uri": "/images/kitchen-ecommerce/esthete-blue.png",
+                        "color": {"$ref": "colors", "$id": {"$binary": {"base64": "LUSI2mi0zpRNFJTZbEQOgg==", "subType": "03"}}}
+                      }
+                    ],
+                    "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                    "_id": {"$binary": {"base64": "Q1z9zY4vXt8hQvJfG2s1oA==", "subType": "03"}},
+                    "name": "Chaise de bureau",
+                    "description": "Comfortable office chair with ergonomic design.",
+                    "price": 200.00,
+                    "stock": 40,
+                    "estimatedDelivery": {"$date": "2024-08-15T08:00:00.000Z"},
+                    "weight": 15.0,
+                    "height": 110.0,
+                    "width": 50.0,
+                    "uri": "cuisines/chaise/chaise-de-bureau",
+                    "createdAt": {"$date": "2024-08-03T14:24:23.967Z"},
+                    "category": {"$ref": "category", "$id": {"$binary": {"base64": "bkQwUIC3k4R8r3ZrTsocow==", "subType": "03"}}},
+                    "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "lUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "Y8sB2mASGqiY3msNSocRzg==", "subType": "03"}}},
+                    "colors": [
+                      {"$ref": "colors", "$id": {"$binary": {"base64": "LUSI2mi0zpRNFJTZbEQOgg==", "subType": "03"}}}
+                    ],
+                    "images": [
+                      {
+                        "_id": {"$binary": {"base64": "m4o7Pz9y2Wx1LfNh50b6lA==", "subType": "03"}},
+                        "uri": "/images/kitchen-ecommerce/symb-turquoise.png",
+                        "color": {"$ref": "colors", "$id": {"$binary": {"base64": "LUSI2mi0zpRNFJTZbEQOgg==", "subType": "03"}}}
+                      }
+                    ],
+                    "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                    "_id": {"$binary": {"base64": "W3y6vR1lIv6tTfPqF3w2jA==", "subType": "03"}},
+                    "name": "Meuble TV",
+                    "description": "Elegant TV stand with storage compartments.",
+                    "price": 250.00,
+                    "stock": 20,
+                    "estimatedDelivery": {"$date": "2024-08-20T08:00:00.000Z"},
+                    "weight": 25.0,
+                    "height": 60.0,
+                    "width": 150.0,
+                    "uri": "cuisines/meuble-de-rangement/meuble-tv",
+                    "createdAt": {"$date": "2024-08-05T14:24:23.967Z"},
+                    "category": {"$ref": "category", "$id": {"$binary": {"base64": "bkQwUIC3k4R8r3ZrTsocow==", "subType": "03"}}},
+                    "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "mUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "Y8sB2mASGqiY3msNSocRzg==", "subType": "03"}}},
+                    "colors": [
+                      {"$ref": "colors", "$id": {"$binary": {"base64": "GE8esJRMho/wUZfnAf81pA==", "subType": "03"}}}
+                    ],
+                    "images": [
+                      {
+                        "_id": {"$binary": {"base64": "k9e6Ez7u6Tx5DfLm40e7lA==", "subType": "03"}},
+                        "uri": "/images/kitchen-ecommerce/ressource-rose.png",
+                        "color": {"$ref": "colors", "$id": {"$binary": {"base64": "GE8esJRMho/wUZfnAf81pA==", "subType": "03"}}}
+                      }
+                    ],
+                    "_class": "com.mobalpa.catalogue.model.Product"
+                },
+                {
+                    "_id": {"$binary": {"base64": "T2f8tW2nOv5rLfOnG3v5kA==", "subType": "03"}},
+                    "name": "Canapé",
+                    "description": "Luxurious sofa with comfortable cushions.",
+                    "price": 500.00,
+                    "stock": 15,
+                    "estimatedDelivery": {"$date": "2024-08-25T08:00:00.000Z"},
+                    "weight": 35.0,
+                    "height": 90.0,
+                    "width": 200.0,
+                    "uri": "cuisines/chaise/canape",
+                    "createdAt": {"$date": "2024-08-07T14:24:23.967Z"},
+                    "category": {"$ref": "category", "$id": {"$binary": {"base64": "bkQwUIC3k4R8r3ZrTsocow==", "subType": "03"}}},
+                    "subcategory": {"$ref": "subcategory", "$id": {"$binary": {"base64": "nUBzEwv4EBu2gqn367EavA==", "subType": "03"}}},
+                    "brand": {"$ref": "brand", "$id": {"$binary": {"base64": "Y8sB2mASGqiY3msNSocRzg==", "subType": "03"}}},
+                    "colors": [
+                      {"$ref": "colors", "$id": {"$binary": {"base64": "GE8esJRMho/wUZfnAf81pA==", "subType": "03"}}}
+                    ],
+                    "images": [
+                      {
+                        "_id": {"$binary": {"base64": "u9o6Gz7v8Tx6GgMm20e8lA==", "subType": "03"}},
+                        "uri": "/images/kitchen-ecommerce/chill-saumon.png",
+                        "color": {"$ref": "colors", "$id": {"$binary": {"base64": "GE8esJRMho/wUZfnAf81pA==", "subType": "03"}}}
+                      }
+                    ],
+                    "_class": "com.mobalpa.catalogue.model.Product"
+                }
+              ]

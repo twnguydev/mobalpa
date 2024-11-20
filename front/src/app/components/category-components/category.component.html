@@ -1,0 +1,138 @@
+<div *ngIf="isSubcategoryLoading" class="min-h-screen flex items-center justify-center">
+    <div class="lds-dual-ring"></div>
+</div>
+
+<div class="mx-5 py-8 min-h-screen h-auto" *ngIf="!isSubcategoryLoading && subcategory">
+    <h1 class="text-3xl sm:text-4xl font-bold mb-6 sm:mb-8 text-mobalpa-green">{{ subcategory.name }}</h1>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <select class="border border-gray-300 p-2 rounded-lg" (change)="onBrandChange($event)" name="brandName">
+            <option value="">Marque</option>
+            <option *ngFor="let brand of brands" [value]="brand">{{ brand }}</option>
+        </select>
+        <select class="border border-gray-300 p-2 rounded-lg" (change)="onColorChange($event)" name="color">
+            <option value="">Couleur</option>
+            <option *ngFor="let color of colors" [value]="color">{{ color }}</option>
+        </select>
+        <div class="border border-gray-300 p-2 rounded-lg">
+            <input *ngIf="minPrice !== null && maxPrice !== null" type="range" class="w-full accent-indigo-600"
+                name="maxPrice" [min]="minPrice" [max]="maxPrice" [(ngModel)]="selectedPrice"
+                (input)="updateSelectedPrice($event)" />
+            <div class="flex justify-between text-gray-500 mt-2 text-xs sm:text-sm">
+                <span>{{ minPrice }} €</span>
+                <span>{{ selectedPrice }} €</span>
+                <span>{{ maxPrice }} €</span>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="isProductsLoading" class="min-h-screen flex items-center justify-center">
+        <div class="lds-dual-ring"></div>
+    </div>
+
+    <div *ngIf="!isProductsLoading && allProducts">
+        <div class="flex flex-col sm:flex-row justify-between items-center mb-4">
+            <span class="text-gray-700">{{ filteredProducts.length }} article<span
+                    *ngIf="filteredProducts.length > 1">s</span> trouvé<span
+                    *ngIf="filteredProducts.length > 1">s</span></span>
+            <div class="flex items-center space-x-2 mt-2 sm:mt-0">
+                <span class="text-gray-500">Trier par:</span>
+                <select class="border border-gray-300 p-2 rounded-lg" (change)="onSortChange($event)" name="sort">
+                    <option value="relevance">Pertinence</option>
+                    <option value="price-asc">Prix : du moins cher au plus cher</option>
+                    <option value="price-desc">Prix : du plus cher au moins cher</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 mb-8">
+            <div *ngFor="let product of paginatedProducts" class="border p-4 rounded-lg flex flex-col">
+                <a href="/categories/{{ product.uri }}" class="flex items-center space-x-1">
+                    <span class="text-sm text-custom-blue ml-1">{{ product.category.name }}</span>
+                </a>
+                <a href="/categories/{{ product.uri }}" class="block">
+                    <div class="flex items-center justify-center">
+                        <img [src]="product.images[0].uri" alt="{{ product.name }}"
+                            class="w-40 h-auto object-cover mb-4">
+                    </div>
+                    <h2 class="flex items-center justify-start gap-x-4 text-lg font-bold mb-2">{{ product.name }}
+                        <span *ngIf="discountRate(product) !== null" class="text-xl font-semibold text-red-600">&mdash;
+                            {{
+                            discountRate(product) | number: '1.0' }}%</span>
+                    </h2>
+                    <p class="text-sm text-gray-500">{{ product.description }}</p>
+                    <div class="flex items-center justify-between mt-4">
+                        <div class="flex items-center space-x-2">
+                            <span class="text-gray-500">{{ product.brand.name }}</span>
+                        </div>
+                    </div>
+                </a>
+                <div class="flex items-center justify-between my-2">
+                    <div class="flex items-center space-x-2">
+                        <span *ngFor="let color of product.colors" [style.background-color]="getColorHex(color.name)"
+                            [ngClass]="{
+                        'w-6 h-6 rounded-full cursor-pointer transition border-2': true,
+                        'border-black': selectedProductColor[product.uuid]?.name === color.name,
+                        'border-gray-300': selectedProductColor[product.uuid]?.name !== color.name
+                    }" (click)="selectColor(product, color)">
+                        </span>
+                    </div>
+                </div>
+                <p class="text-xl font-semibold mb-2">
+                    <span *ngIf="discountedPrice(product) else noDiscount">
+                        <span>{{ discountedPrice(product) | number: '1.2-2' }} €</span>
+                        <span class="ml-2 text-sm line-through text-gray-500">{{ product.price | number: '1.2-2' }}
+                            €</span>
+                    </span>
+                    <ng-template #noDiscount>
+                        {{ product.price | number: '1.2-2' }} €
+                    </ng-template>
+                </p>
+                <p class="text-sm text-green-600" *ngIf="product.stock > 0">En stock</p>
+                <p class="text-sm text-red-600" *ngIf="product.stock === 0">Rupture de stock</p>
+                <div class="mt-auto">
+                    <button *ngIf="!productAddedOnCart[product.uuid]" (click)="addToCart(product)"
+                        class="mt-4 w-full bg-mobalpa-green-alternate text-white p-2 rounded-lg">
+                        Ajouter au panier
+                    </button>
+                    <button *ngIf="productAddedOnCart[product.uuid]"
+                        class="mt-4 w-full text-mobalpa-green-alternate p-2 rounded-lg">
+                        Ajouté au panier
+                    </button>
+                    <button *ngIf="!productAdded[product.uuid] && isUserAuthenticated" (click)="addToWishlist(product)"
+                        class="mt-2 w-full bg-gray-200 text-gray-700 p-2 rounded-lg">
+                        Ajouter à la liste de souhaits
+                    </button>
+                    <button *ngIf="productAdded[product.uuid] && isUserAuthenticated"
+                        class="mt-2 w-full text-gray-700 p-2 rounded-lg">
+                        Ajouté à la liste de souhaits
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex justify-center space-x-2 mt-4" *ngIf="totalPages > 1">
+            <button (click)="previousPage()" [disabled]="currentPage === 1" class="px-3 py-1 bg-gray-200 rounded">
+                Précédent
+            </button>
+            <button (click)="goToPage(1)" [class.bg-blue-500]="currentPage === 1" [class.text-white]="currentPage === 1"
+                class="px-3 py-1 bg-gray-200 rounded">
+                1
+            </button>
+            <button *ngIf="currentPage > 3" class="px-3 py-1 bg-gray-200 rounded">...</button>
+            <button *ngFor="let page of getDisplayedPages()" (click)="goToPage(page)"
+                [class.bg-blue-500]="currentPage === page" [class.text-white]="currentPage === page"
+                class="px-3 py-1 bg-gray-200 rounded">
+                {{ page }}
+            </button>
+            <button *ngIf="currentPage < totalPages - 2" class="px-3 py-1 bg-gray-200 rounded">...</button>
+            <button (click)="goToPage(totalPages)" [class.bg-blue-500]="currentPage === totalPages"
+                [class.text-white]="currentPage === totalPages" class="px-3 py-1 bg-gray-200 rounded">
+                {{ totalPages }}
+            </button>
+            <button (click)="nextPage()" [disabled]="currentPage === totalPages" class="px-3 py-1 bg-gray-200 rounded">
+                Suivant
+            </button>
+        </div>
+    </div>
+</div>
